@@ -7,6 +7,6 @@
     <title>Buddy app |Profile</title>
 </head>
 <body>
-    
+    <?php include_once("include/nav.inc.php"); ?>
 </body>
 </html>
