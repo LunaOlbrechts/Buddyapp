@@ -10,6 +10,6 @@
     <title>Buddy app |Signup</title>
 </head>
 <body>
-    
+  
 </body>
 </html>

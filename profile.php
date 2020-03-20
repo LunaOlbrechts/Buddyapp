@@ -8,6 +8,8 @@
     <title>Buddy app |Profile</title>
 </head>
 <body>
+    <?php include_once("include/nav.inc.php"); ?>
+
     <div class="buddyProfile d-flex justify-content-center container">
         <form method="POST">
 
