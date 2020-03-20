@@ -44,14 +44,22 @@
 
                 <div class="form-group">
                     <div class="interests">
-                        <h5>Favorite activity</h5>
+                        <h5>Opleidingsjaar</h5>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="backend_development">
-                            <label class="form-check-label" for="inlineCheckbox1">Going to the movies</label>
+                            <input class="form-check-input" type="checkbox" id="1Imd" value="1Imd">
+                            <label class="form-check-label" for="1Imd">1 IMD</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="frontend_development">
-                            <label class="form-check-label" for="inlineCheckbox2">Shopping</label>
+                            <input class="form-check-input" type="checkbox" id="2Imd" value="2Imd">
+                            <label class="form-check-label" for="2Imd">2 IMD</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="3Imd" value="3Imd">
+                            <label class="form-check-label" for="3Imd">3 IMD</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="aangepastProgramma" value="aangepastProgramma">
+                            <label class="form-check-label" for="aangepastProgramma">Aangepast programma</label>
                         </div>
                     </div>
                 </div>
