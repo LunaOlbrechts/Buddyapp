@@ -13,10 +13,16 @@
     <div class="buddyProfile">
         <div class="form container">
             <form method="POST">
+            <h4 class="title-complete-profile">Complete your profile</h4>
+
+                <div class="form-group">
+                <h5>Location</h5>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="Adress">
+                </div>
 
                 <div class="form-group">
                     <div class="interests">
-                        <h4>Your interests</h4>
+                        <h5>Working interests</h5>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="backend_development">
                             <label class="form-check-label" for="inlineCheckbox1">backend development</label>
@@ -36,9 +42,23 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div class="interests">
+                        <h5>Favorite activity</h5>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="backend_development">
+                            <label class="form-check-label" for="inlineCheckbox1">Going to the movies</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="frontend_development">
+                            <label class="form-check-label" for="inlineCheckbox2">Shopping</label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <div class="pushnotification">
-                        <h4>Pushnotifications</h4>
+                        <h5>Pushnotifications</h5>
                         <div class="form-group custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitch1">
                             <label class="custom-control-label" for="customSwitch1">Pushnotifications on</label>
