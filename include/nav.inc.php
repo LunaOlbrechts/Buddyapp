@@ -1,5 +1,5 @@
 <?php
-    include_once("../classes/User.php");
+    //include_once("../classes/User.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
