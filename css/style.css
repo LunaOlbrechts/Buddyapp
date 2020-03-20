@@ -1,0 +1,16 @@
+.buddyProfile{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+}
+
+.form{
+  background-color: rgb(226, 226, 226);
+}
+
+.container{
+  width: 450px !important;
+  padding: 1em;
+}
