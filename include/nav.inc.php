@@ -11,7 +11,7 @@
     <title>Navigation</title>
 </head>
 <body>
-    <nav class="navbar bg-light">
+    <nav class="navbar nav bg-light">
         <a href="index.php" class="logo">Buddy app</a>
         <a href="index.php">Home</a>
         <a href="mylist.php"></a>

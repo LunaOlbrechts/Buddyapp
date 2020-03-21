@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,69 +15,84 @@
     <?php include_once("include/nav.inc.php"); ?>
 
     <div class="buddyProfile">
-        <div class="form container">
-            <form method="POST">
-            <h4 class="title-complete-profile">Complete your profile</h4>
+        <div class="container">
+            <form method="POST" class="form">
+            <h4 class="title-complete-profile">Vervolledig jouw profiel</h4>
+                <div class="alert alert-danger" role="alert">
+                    A simple danger alert—check it out!
+                </div>
 
                 <div class="form-group">
-                <h5>Location</h5>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Adress">
+                <p class="form-title">Plaats</p>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="Plaats">
                 </div>
 
                 <div class="form-group">
                     <div class="interests">
-                        <h5>Working interests</h5>
+                        <p class="form-title">Opleiding interesses</p>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="backend_development">
-                            <label class="form-check-label" for="inlineCheckbox1">backend development</label>
+                            <input class="form-check-input" type="checkbox" id="inputBackendDevelopment" value="inputBackendDevelopment">
+                            <label class="form-check-label" for="inputBackendDevelopment">backend development</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="frontend_development">
-                            <label class="form-check-label" for="inlineCheckbox2">frontend development</label>
+                            <input class="form-check-input" type="checkbox" id="inputFrontendDevelopment" value="inputFrontendDevelopment">
+                            <label class="form-check-label" for="inputFrontendDevelopment">frontend development</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="3d_design">
-                            <label class="form-check-label" for="inlineCheckbox3">3D design</label>
+                            <input class="form-check-input" type="checkbox" id="input3dDesign" value="input3dDesign">
+                            <label class="form-check-label" for="input3dDesign">3D design</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="web_design">
-                            <label class="form-check-label" for="inlineCheckbox4">Web design</label>
+                            <input class="form-check-input" type="checkbox" id="inputWebDesign" value="inputWebDesign">
+                            <label class="form-check-label" for="inputWebDesign">Web design</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="interests">
-                        <h5>Opleidingsjaar</h5>
+                        <p class="form-title">Opleidingsjaar</p>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="1Imd" value="1Imd">
-                            <label class="form-check-label" for="1Imd">1 IMD</label>
+                            <input class="form-check-input" type="checkbox" id="input1Imd" value="input1Imd">
+                            <label class="form-check-label" for="input1Imd">1 IMD</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="2Imd" value="2Imd">
-                            <label class="form-check-label" for="2Imd">2 IMD</label>
+                            <input class="form-check-input" type="checkbox" id="input2Imd" value="input2Imd">
+                            <label class="form-check-label" for="input2Imd">2 IMD</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="3Imd" value="3Imd">
-                            <label class="form-check-label" for="3Imd">3 IMD</label>
+                            <input class="form-check-input" type="checkbox" id="input3Imd" value="input3Imd">
+                            <label class="form-check-label" for="input3Imd">3 IMD</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="aangepastProgramma" value="aangepastProgramma">
-                            <label class="form-check-label" for="aangepastProgramma">Aangepast programma</label>
+                            <input class="form-check-input" type="checkbox" id="inputAangepastProgramma" value="inputAangepastProgramma">
+                            <label class="form-check-label" for="inputAangepastProgramma">Aangepast programma</label>
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1" class="form-title">Welk type sporter ben jij?</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                    <option>Waterrat</option>
+                    <option>Krachtpatser</option>
+                    <option>Uithoudingsvermogen</option>
+                    <option>Teamplayer</option>
+                    <option>Zetelhanger</option>
+                    </select>
                 </div>
 
                 <div class="form-row">
                     <div class="pushnotification">
-                        <h5>Pushnotifications</h5>
+                        <p class="form-title">Pushnotifications</p>
                         <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1">Pushnotifications on</label>
+                            <input type="checkbox" class="custom-control-input" id="switchPushnotification">
+                            <label class="custom-control-label" for="switchPushnotification">Inschakelen</label>
                         </div>
                     </div>
                 </div>
-
+                
+                <button class="btn btn-primary" id="submit" type="submit">Submit form</button>
             </form>
         </div>
     </div>
