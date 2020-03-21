@@ -11,6 +11,20 @@
     <title>Buddy app | Login</title>
 </head>
 <body>
+<<<<<<< Updated upstream
     
+=======
+<form action="" method="post">
+        <div>
+            <label for="email">E-mail:</label><br>
+            <input type="text" id='name' name='name'><br>
+        </div>
+        <div>
+            <label for="password">Password:</label><br>
+            <input type="password" id='password' name='password'><br>
+        </div>
+    </form>
+
+>>>>>>> Stashed changes
 </body>
 </html>
