@@ -30,7 +30,10 @@
             <input type="password" id='password' name='password'><br>
         </div>
 
-
+        <div>
+        <br><br>
+            <input type="submite" value="Log in">
+        </div>
     </form>
 
 </body>
