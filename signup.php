@@ -1,6 +1,26 @@
 <?php
     include_once(__DIR__ . "/classes/User.php");
 
+    if(!empty($_POST)) {
+
+        try {
+            $user = new User();
+            $user->setEmail($_POST['email']);
+            $user->setFirstName($_POST['firstname']);
+            $user->setLastName($_POST['lastname']);
+            $user->setPassword($_POST['password']);
+
+           // echo $user->getLastName();
+
+            $user->save();
+            $success = "user saved!";
+        } catch (\Throwable $th) {
+            //throw error
+
+            $error = $th->getMessage();
+        }
+        
+    }
 
 
 
