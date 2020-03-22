@@ -1,4 +1,8 @@
-<?php 
+<?php
+    include_once(__DIR__ . "/classes/User.php");
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -12,5 +16,44 @@
 </head>
 <body>
     <?php include_once("include/nav.inc.php"); ?>
+
+    <?php if(isset($error)): ?>
+            <div class="error"><?php echo $error; ?></div>
+    <?php endif; ?>
+
+        <?php if(isset($success)): ?>
+                <div class="success"><?php echo $success ?></div>
+        <?php endif; ?>        
+
+
+    <form action="" method="post">
+
+        <div>
+            <label for="email">E-mail</label>
+            <input type="text" name="email" id="email">
+        </div>
+
+        <div>
+            <label for="firstname">Firstname</label>
+            <input type="text" name="firstname" id="firstname">
+        </div>
+
+        <div>
+            <label for="lastname">Lastname</label>
+            <input type="text" name="lastname" id="lastname">
+        </div>
+
+        <div>
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password">
+        </div>
+
+        <div>
+            <input type="submit" value="Sign me up">
+        </div>
+    
+    
+    </form>
+
 </body>
 </html>
