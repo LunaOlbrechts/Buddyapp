@@ -10,14 +10,13 @@
     // valideer al wat kan mislopen in dit formulier via PHP
     // uitloggen is mogelijk
 
-    if(isset($_POST['login-submit'])){
+    /*function canLogin($email, $password){
+		$conn = new mysqli("localhost","root","");
+		$email = $conn->real_escape_string($email);
+		$sql = "select * from tl_user where email = '$email'";
 
-    } else{
-        
-    }
 
-
-    /*$host = "localhost";
+    $host = "localhost";
     $user = "root";
     $password = "";
     $db = "buddy_app";
