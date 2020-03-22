@@ -4,6 +4,7 @@ class User{
     private $firstName;
     private $lastName;
     private $email;
+    private $password;
 
 
     /*
@@ -20,6 +21,26 @@ class User{
     public function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of password
+     */ 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */ 
+    public function setPassword($password)
+    {
+        $this->password = $password;
 
         return $this;
     }
