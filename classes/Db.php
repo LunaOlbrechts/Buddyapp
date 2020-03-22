@@ -10,11 +10,9 @@
 
             if(self::$conn === null) {
                 self::$conn = new PDO('mysql:host=' . SETTINGS['db']['host'] . ';dbname=' . SETTINGS['db']['db'] , SETTINGS['db']['user'], SETTINGS['db']['password'] );
-                echo "if";
                 return self::$conn;
             }
             else {
-                echo "else";
                 return self::$conn;
             }
         }

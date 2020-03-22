@@ -5,15 +5,15 @@
 
         try {
             $user = new User();
-            $user->setEmail($_POST['email']);
-            $user->setFirstName($_POST['firstname']);
-            $user->setLastName($_POST['lastname']);
-            $user->setPassword($_POST['password']);
+            $user->setEmail(htmlspecialchars($_POST['email']));
+            $user->setFirstName(htmlspecialchars($_POST['firstname']));
+            $user->setLastName(htmlspecialchars($_POST['lastname']));
+            $user->setPassword(htmlspecialchars($_POST['password']));
 
-           // echo $user->getLastName();
 
             $user->save();
-            $success = "user saved!";
+            header('location:complete.profile.php');
+          //  $success = "user saved!";
         } catch (\Throwable $th) {
             //throw error
 
@@ -22,8 +22,6 @@
        
     }
 
-    $users = User::getAll();
-    var_dump($users);
 
 
 ?>

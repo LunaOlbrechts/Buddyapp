@@ -114,13 +114,5 @@ class User{
     
     }
 
-    public static function getAll(){
-        $conn = Db::getConnection();
-
-        $statement = $conn->prepare("select * from tl_user");
-        $statement->execute();
-        $users = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $users;
-    }
     
 }
