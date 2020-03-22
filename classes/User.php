@@ -87,10 +87,10 @@ class User{
 
     public function save(){
         // connection
-        $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "root");
+        $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "");
     
         // insert query
-        $statement = $conn->prepare("insert into tl_users (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password" );
+        $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
         
         
         $firstname = $this->getFirstName();
@@ -111,5 +111,13 @@ class User{
     
     }
 
+    public static function getAll(){
+        $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "");
+
+        $statement = $conn->prepare("select * from tl_user");
+        $statement->execute();
+        $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
     
 }

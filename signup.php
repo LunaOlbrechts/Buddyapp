@@ -19,9 +19,11 @@
 
             $error = $th->getMessage();
         }
-        
+       
     }
 
+    $users = User::getAll();
+    var_dump($users);
 
 
 ?>
