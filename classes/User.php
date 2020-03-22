@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+include_once(__DIR__ . "/Db.php");
+
 
 class User{
     private $firstName;
@@ -87,7 +90,7 @@ class User{
 
     public function save(){
         // connection
-        $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "");
+        $conn = Db::getConnection();
     
         // insert query
         $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
@@ -112,7 +115,7 @@ class User{
     }
 
     public static function getAll(){
-        $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "");
+        $conn = Db::getConnection();
 
         $statement = $conn->prepare("select * from tl_user");
         $statement->execute();
