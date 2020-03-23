@@ -92,6 +92,8 @@ class User{
         // connection
         $conn = Db::getConnection();
 
+   
+
         // CHECK IF EMAIL IS TAKEN
         if (isset($_POST['email'])) {
             $email = $this->getEmail();

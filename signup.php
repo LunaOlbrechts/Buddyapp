@@ -69,6 +69,11 @@
         </div>
 
         <div>
+            <label for="passwordconf">Password Confirm:</label>
+            <input type="password" name="passwordconf" id="passwordconf">
+        </div>
+
+        <div>
             <input class="btn btn-primary" type="submit" value="Sign me up">
         </div>
     
