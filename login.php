@@ -10,25 +10,20 @@
     // valideer al wat kan mislopen in dit formulier via PHP
     // uitloggen is mogelijk
 
-    /*function canLogin($email, $password){
-		$conn = new mysqli("localhost","root","");
-		$email = $conn->real_escape_string($email);
-		$sql = "select * from tl_user where email = '$email'";
+    /*session_start();
 
+    $conn = mysqli_connect('localhost','root','');
 
-    $host = "localhost";
-    $user = "root";
-    $password = "";
-    $db = "buddy_app";
+    mysqli_select_db($conn,'buddy_app');
 
-    mysql_connect($host,$user,$password);
-    $mysql_select_db($db);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    if(isset(['email'])){
-        $email=$_POST['email'];
-        $password=$_POST['password'];
+    $sql = "select * from tl_user where email = '$email' && password = '$password";
 
-        $sql="select * from tl_user where user='".$email."' AND "
+    $result = mysqli_query($conn,$sql);
+    if($result->num_rows != 1){
+        return false;
     }*/
 
 ?><!DOCTYPE html>
@@ -42,7 +37,17 @@
 </head>
 <body>
     <form action="" method="post">
+        <div class="container mt-5">
         <h2 form__title>Sign In</h2>
+
+        <?php if(isset($error)): ?>
+				<div class="form__error">
+					<p>
+						<?php echo $error;?>
+					</p>
+				</div>
+		<?php endif; ?>
+
         <div class="form-group">
             <label for="email">E-mail:</label>
             <input class="form-control" type="text" id='email' name='email' placeholder="Enter e-mail">
@@ -53,7 +58,8 @@
         </div>
 
         <div class="form-group">
-            <input class="btn" type="submit" value="Log in"> 
+            <input class="btn border" type="submit" value="Log in"> 
+        </div>
         </div>
     </form>
 
