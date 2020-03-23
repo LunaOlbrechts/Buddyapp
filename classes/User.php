@@ -91,6 +91,22 @@ class User{
     public function save(){
         // connection
         $conn = Db::getConnection();
+
+        // CHECK IF EMAIL IS TAKEN
+        if (isset($_POST['email'])) {
+            $email = $this->getEmail();
+            $conn = Db::getConnection();
+            $sql = "SELECT * FROM tl_user WHERE email='$email'";
+            $results = $conn->query($sql);
+    	    if ($results->rowCount() > 0) {
+  	            echo "taken";	
+    	    }else{
+  	            echo "not_taken";
+  	        }
+  	        exit();
+
+        }         
+
     
         // insert query
         $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
