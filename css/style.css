@@ -11,21 +11,27 @@
 */
 
 .buddyProfile{
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(255, 255, 255);
+  background: rgb(255, 255, 255);
+ 
 }
 .form{
-  background-color: rgb(226, 226, 226);
+  background-color: rgb(240, 236, 236);
   padding-top: 46px;
   border-radius: 0.5em;
-  margin-top: 100px;
+  margin-top: 50px;
   padding:20px;
+  display: grid;
 }
 .title-complete-profile{
   padding-bottom: 0.6em;
+  text-align: center;
+}
+.alert{
+  text-align: center !important;
 }
 .form-title{
   padding-top: 0.8em;
@@ -34,8 +40,15 @@
 }
 .btn{
   margin-top: 2.3em;
+  display: flex !important;
+  justify-content: center !important;
+  width: 30%;
 }
-
+.btn-submit{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 @media (min-width: 576px) {
  
 }

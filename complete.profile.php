@@ -1,5 +1,32 @@
 <?php
+    session_start();
 
+    $user = "root";
+    $pass = "root";
+    
+
+    if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]){
+        
+        // check !empty post
+        if(!empty($_POST) ){
+            // check !empty fields
+            $location = $_POST['inputLocation'];
+            $schoolYear = $_POST['schoolYear'];
+            $sportType = $_POST['sportType'];
+
+            if(!empty($location) && !empty($schoolYear) && !empty($sportType) ){
+                //conn database 
+                $conn = new PDO('mysql:host=localhost;dbname=buddy_app', $user, $pass);
+                $query = $conn->prepare("INSERT INTO tl_users (location, schoolYear, sportType)
+                VALUES ($location, $schoolYear, $sportType)");
+                $query->execute();
+
+                $result = $query->fetch(PDO::FETCH_ASSOC);                
+
+            }
+        
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -24,56 +51,44 @@
 
                 <div class="form-group">
                 <p class="form-title">Plaats</p>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Plaats">
+                    <input type="text" class="form-control" name="inputLocation" placeholder="Plaats">
                 </div>
 
                 <div class="form-group">
                     <div class="interests">
                         <p class="form-title">Opleiding interesses</p>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inputBackendDevelopment" value="inputBackendDevelopment">
+                            <input class="form-check-input" type="checkbox" name="inputBackendDevelopment" value="inputBackendDevelopment">
                             <label class="form-check-label" for="inputBackendDevelopment">backend development</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inputFrontendDevelopment" value="inputFrontendDevelopment">
+                            <input class="form-check-input" type="checkbox" name="inputFrontendDevelopment" value="inputFrontendDevelopment">
                             <label class="form-check-label" for="inputFrontendDevelopment">frontend development</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="input3dDesign" value="input3dDesign">
+                            <input class="form-check-input" type="checkbox" name="input3dDesign" value="input3dDesign">
                             <label class="form-check-label" for="input3dDesign">3D design</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inputWebDesign" value="inputWebDesign">
+                            <input class="form-check-input" type="checkbox" name="inputWebDesign" value="inputWebDesign">
                             <label class="form-check-label" for="inputWebDesign">Web design</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="interests">
-                        <p class="form-title">Opleidingsjaar</p>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="input1Imd" value="input1Imd">
-                            <label class="form-check-label" for="input1Imd">1 IMD</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="input2Imd" value="input2Imd">
-                            <label class="form-check-label" for="input2Imd">2 IMD</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="input3Imd" value="input3Imd">
-                            <label class="form-check-label" for="input3Imd">3 IMD</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inputAangepastProgramma" value="inputAangepastProgramma">
-                            <label class="form-check-label" for="inputAangepastProgramma">Aangepast programma</label>
-                        </div>
-                    </div>
+                    <label for="exampleFormControlSelect1" class="form-title">Opleidingsjaar</label>
+                    <select class="form-control" name="schoolYear">
+                    <option>1 IMD</option>
+                    <option>2 IMD</option>
+                    <option>3 IMD</option>
+                    <option>Aangepast programma</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlSelect1" class="form-title">Welk type sporter ben jij?</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
+                    <select class="form-control" name="sportType">
                     <option>Waterrat</option>
                     <option>Krachtpatser</option>
                     <option>Uithoudingsvermogen</option>
@@ -91,8 +106,9 @@
                         </div>
                     </div>
                 </div>
-                
-                <button class="btn btn-primary" id="submit" type="submit">Submit form</button>
+                <div class="btn-submit">
+                    <button class="btn btn-primary" id="submit" type="submit">Submit form</button>
+                </div>
             </form>
         </div>
     </div>
