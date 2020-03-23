@@ -1,0 +1,60 @@
+
+/* ======================
+      Navigation bar
+   ======================
+*/
+
+
+/* ======================
+      Complete profile
+   ======================
+*/
+
+.buddyProfile{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(255, 255, 255);
+ 
+}
+.form{
+  background-color: rgb(240, 236, 236);
+  padding-top: 46px;
+  border-radius: 0.5em;
+  margin-top: 50px;
+  padding:20px;
+  display: grid;
+}
+.title-complete-profile{
+  padding-bottom: 0.6em;
+  text-align: center;
+}
+.alert{
+  text-align: center !important;
+}
+.form-title{
+  padding-top: 0.8em;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+.btn{
+  margin-top: 2.3em;
+  display: flex !important;
+  justify-content: center !important;
+  width: 30%;
+}
+.btn-submit{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 576px) {
+ 
+}
+
+@media (min-width: 992px) {
+  .container{
+    width: 700px !important;
+  }
+}
