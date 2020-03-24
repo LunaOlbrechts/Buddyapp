@@ -1,7 +1,6 @@
 <?php
+    include_once(__DIR__ . "/classes/User.php");
     session_start();
-
-    //only for testing
 
     $_SESSION["logged_in"] = true;
     $_SESSION["user_id"] = 1;
@@ -9,37 +8,26 @@
 
     $showError = false;
 
-    $user = "root";
-    $pass = "root";
-
-
     if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]){
         // check !empty post
         if(!empty($_POST) ){
-            // check !empty fields
-            $location = $_POST['inputLocation'];
-            $schoolYear = $_POST['schoolYear'];
-            $sportType = $_POST['sportType'];
-            $workingInterest = $_POST[''];
-
-            if(!empty($location) /*&& !empty($sportType) */&& !empty($schoolYear) && !empty($sportType) ){
                 //conn database 
                 try{
-                    $conn = new PDO('mysql:host=localhost;dbname=buddy_app', $user, $pass);
-                    $query = $conn->prepare("UPDATE tl_users SET city = '$location', schoolYear = '$schoolYear',
-                    sportType = '$sportType' WHERE id = $id");
-                    $query->execute();
+                    $user = new User();
 
-                    $result = $query->fetch(PDO::FETCH_ASSOC);
+                    $user->setLocation($_POST['inputLocation']);
+                    $user->setSchoolYear($_POST['schoolYear']);
+                    $user->setSportType($_POST['sportType']);
+                    $user->setId($id);
+
+                    $user->saveCompletedProfile();
                 }
                 catch(\Throwable $th){
                     $error = $th->getMessage();
                 }
-            }
-            else{
-                $showError = true;
-            }
-        
+        }
+        else{
+            $showError = true;
         }
     }
 ?>
