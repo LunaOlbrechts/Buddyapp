@@ -11,7 +11,7 @@
             $user->setPassword(htmlspecialchars($_POST['password']));
 
             $user->save();
-          //  $success = "user saved!";
+           $success = "user saved!";
         } catch (\Throwable $th) {
             //throw error
 
@@ -36,7 +36,7 @@
     <?php include_once("include/nav.inc.php"); ?>
 
     <?php if(isset($error)): ?>
-            <div class="error"><?php echo $errors; ?></div>
+            <div class="error"><?php echo $error; ?></div>
     <?php endif; ?>
 
         <?php if(isset($success)): ?>
@@ -45,6 +45,7 @@
 
  
     <form action="" method="post">
+
 
         <div>
             <label for="email">E-mail:</label>

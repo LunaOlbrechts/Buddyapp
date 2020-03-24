@@ -23,6 +23,9 @@ class User{
      */ 
     public function setEmail($email)
     {
+        if(empty($_POST['email'])){
+            throw new Exception("E-mail cannot be empty");
+        }
         $this->email = $email;
 
         return $this;
@@ -43,6 +46,9 @@ class User{
      */ 
     public function setFirstName($firstName)
     {
+        if(empty($_POST['firstname'])){
+            throw new Exception("Firstname cannot be empty");
+        }
         $this->firstName = $firstName;
 
         return $this;
@@ -63,6 +69,9 @@ class User{
      */ 
     public function setLastName($lastName)
     {
+        if(empty($_POST['lastname'])){
+            throw new Exception("Lastname cannot be empty");
+        }
         $this->lastName = $lastName;
 
         return $this;
@@ -73,7 +82,6 @@ class User{
      */ 
     public function getPassword()
     {
-        
         return $this->password;
     }
 
@@ -84,6 +92,12 @@ class User{
      */ 
     public function setPassword($password)
     {
+        if(empty($_POST['password'])){
+            throw new Exception("Password cannot be empty");
+        }
+        if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordconf']) {
+           throw new Exception("The two passwords do not match");
+        }
         $password = password_hash($this->getPassword(), PASSWORD_BCRYPT, ['cost' => 12]);
         $this->password = $password;
 
@@ -93,27 +107,12 @@ class User{
     public function save(){
         // connection
         session_start();
-        $errors = [];
         $conn = Db::getConnection();
 
         // check if nothing is empty
 
         if (isset($_POST['signup-btn'])) {
-            if (empty($_POST['firstname'])) {
-                $errors['firstname'] = 'firstname required';
-            }
-            if (empty($_POST['lastname'])) {
-                $errors['lastname'] = 'lastname required';
-            }
-            if (empty($_POST['email'])) {
-                $errors['email'] = 'Email required';
-            }
-            if (empty($_POST['password'])) {
-                $errors['password'] = 'Password required';
-            }
-            
-
-          
+     
 
            // CHECK IF EMAIL IS TAKEN
            if (isset($_POST['email'])) {
@@ -122,14 +121,13 @@ class User{
             $sql = "SELECT * FROM tl_user WHERE email='$email'";
             $results = $conn->query($sql);
             if ($results->rowCount() > 0) {
-                $errors['email'] = "Email already exists";
+                $th['emailExist'] = "Email already exists";
                   echo "taken";	
             }
         }
 
     
         // insert query
-        if (count($errors) === 0) {
 
         $firstname = $this->getFirstName();
         $lastname = $this->getLastName();
@@ -146,12 +144,10 @@ class User{
     
         $result = $statement->execute();
         echo "saved to database";
-
-}
     
 
 // return result
-// return $result;
+return $result;
 
 }
    
