@@ -10,22 +10,44 @@
     // valideer al wat kan mislopen in dit formulier via PHP
     // uitloggen is mogelijk
 
-    /*session_start();
+    // connect to db 
+    $conn = new PDO("mysql:host=db;dbname=buddy_app","root","");
 
-    $conn = mysqli_connect('localhost','root','');
-
-    mysqli_select_db($conn,'buddy_app');
-
+    // get values from form
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "select * from tl_user where email = '$email' && password = '$password";
+    session_start();
 
+    if (isset($_POST)){
+        $email = mysqli_real_escape_string($conn,$email);
+        $password = mysqli_real_escape_string($conn,$password);
+
+    // query
+    $statement = $conn->prepare("insert into tl_user (email, password)");
+    $sql = "select * from 'tl_user' where email = '$email' && password = '" .md5($password)."'";
+    
     $result = mysqli_query($conn,$sql);
-    if($result->num_rows != 1){
-        return false;
-    }*/
+    $rows = mysqli_num_rows($sql);
+    if($rows == 1){
+        $_SESSION['email'] = $email;
+        echo header("Welcome");
+    } else{
+        echo header("Username/ password in incorrect");
+    } 
 
+    }
+
+    // if form was submit
+	if( !empty($_POST) ) {
+        // check if required fields are not empty
+        $email =  $_POST ['email'];
+        $password =  $_POST ['password'];
+        if( !empty($email) && !empty($password) ){
+        
+        }
+    }
+    
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,14 +62,6 @@
         <div class="container mt-5">
         <h2 form__title>Sign In</h2>
 
-        <?php if(isset($error)): ?>
-				<div class="form__error">
-					<p>
-						<?php echo $error;?>
-					</p>
-				</div>
-		<?php endif; ?>
-
         <div class="form-group">
             <label for="email">E-mail:</label>
             <input class="form-control" type="text" id='email' name='email' placeholder="Enter e-mail">
@@ -58,7 +72,7 @@
         </div>
 
         <div class="form-group">
-            <input class="btn border" type="submit" value="Log in"> 
+            <input class="btn border" type="submit" name="submit" value="Log in"> 
         </div>
         </div>
     </form>
