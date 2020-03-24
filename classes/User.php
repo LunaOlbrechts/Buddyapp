@@ -121,7 +121,7 @@ class User{
             $sql = "SELECT * FROM tl_user WHERE email='$email'";
             $results = $conn->query($sql);
             if ($results->rowCount() > 0) {
-                $th['emailExist'] = "Email already exists";
+                throw new Exception("Email is already used");
                   echo "taken";	
             }
         }
