@@ -73,6 +73,7 @@ class User{
      */ 
     public function getPassword()
     {
+        
         return $this->password;
     }
 
@@ -83,6 +84,7 @@ class User{
      */ 
     public function setPassword($password)
     {
+        $password = password_hash($this->getPassword(), PASSWORD_BCRYPT, ['cost' => 12]);
         $this->password = $password;
 
         return $this;
@@ -90,47 +92,69 @@ class User{
 
     public function save(){
         // connection
+        session_start();
+        $errors = [];
         $conn = Db::getConnection();
 
-   
+        // check if nothing is empty
 
-        // CHECK IF EMAIL IS TAKEN
-        if (isset($_POST['email'])) {
+        if (isset($_POST['signup-btn'])) {
+            if (empty($_POST['firstname'])) {
+                $errors['firstname'] = 'firstname required';
+            }
+            if (empty($_POST['lastname'])) {
+                $errors['lastname'] = 'lastname required';
+            }
+            if (empty($_POST['email'])) {
+                $errors['email'] = 'Email required';
+            }
+            if (empty($_POST['password'])) {
+                $errors['password'] = 'Password required';
+            }
+            
+
+          
+
+           // CHECK IF EMAIL IS TAKEN
+           if (isset($_POST['email'])) {
             $email = $this->getEmail();
             $conn = Db::getConnection();
             $sql = "SELECT * FROM tl_user WHERE email='$email'";
             $results = $conn->query($sql);
-    	    if ($results->rowCount() > 0) {
-  	            echo "taken";	
-    	    }else{
-  	            echo "not_taken";
-  	        }
-  	        exit();
-
-        }         
+            if ($results->rowCount() > 0) {
+                $errors['email'] = "Email already exists";
+                  echo "taken";	
+            }
+        }
 
     
         // insert query
-        $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
-        
-        
+        if (count($errors) === 0) {
+
         $firstname = $this->getFirstName();
         $lastname = $this->getLastName();
         $email = $this->getEmail();
         $password = $this->getPassword();
-    
-        
+
+        $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
+                   
+            
         $statement->bindValue(":firstName", $firstname);
         $statement->bindValue(":lastName", $lastname);
         $statement->bindValue(":email", $email);
         $statement->bindValue(":password", $password);
     
         $result = $statement->execute();
+        echo "saved to database";
+
+}
     
-        // return result
-        return $result;
-    
+
+// return result
+// return $result;
+
+}
+   
     }
 
-    
 }

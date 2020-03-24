@@ -10,9 +10,7 @@
             $user->setLastName(htmlspecialchars($_POST['lastname']));
             $user->setPassword(htmlspecialchars($_POST['password']));
 
-
             $user->save();
-            header('location:complete.profile.php');
           //  $success = "user saved!";
         } catch (\Throwable $th) {
             //throw error
@@ -38,7 +36,7 @@
     <?php include_once("include/nav.inc.php"); ?>
 
     <?php if(isset($error)): ?>
-            <div class="error"><?php echo $error; ?></div>
+            <div class="error"><?php echo $errors; ?></div>
     <?php endif; ?>
 
         <?php if(isset($success)): ?>
@@ -74,9 +72,8 @@
         </div>
 
         <div>
-            <input class="btn btn-primary" type="submit" value="Sign me up">
-        </div>
-    
+            <input class="btn btn-primary" name="signup-btn" type="submit" value="Sign me up">
+        </div>    
     
     </form>
 
