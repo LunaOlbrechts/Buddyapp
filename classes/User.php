@@ -133,26 +133,4 @@ class User
 
         return $this;
     }
-
-
-    public function saveCompletedProfile()
-    {   
-        $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "root");
-        $statement = $conn->prepare("UPDATE tl_users SET city = :location, schoolYear = :schoolYear, 
-        sportType = :sportType WHERE id = :id");
-
-        $location = $this->getLocation();
-        $schoolYear = $this->getSchoolYear();
-        $sportType = $this->getSportType();
-        $id = $this->getId();
-
-        $statement->bindValue(":location", $location);
-        $statement->bindValue(":schoolYear", $schoolYear);
-        $statement->bindValue(":sportType", $sportType);
-        $statement->bindValue(":id", $id);
-
-        $result = $statement->execute();
-
-        return $result;
-    }
 }

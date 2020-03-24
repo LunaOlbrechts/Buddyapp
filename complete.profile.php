@@ -1,7 +1,10 @@
 <?php
     include_once(__DIR__ . "/classes/User.php");
+    include_once(__DIR__ . "/classes/UserManager.php");
+
     session_start();
 
+    // TODO: replace hardcoded values
     $_SESSION["logged_in"] = true;
     $_SESSION["user_id"] = 1;
     $id =  $_SESSION["user_id"];
@@ -20,7 +23,7 @@
                     $user->setSportType($_POST['sportType']);
                     $user->setId($id);
 
-                    $user->saveCompletedProfile();
+                    UserManager::saveCompletedProfile($user);
 
                     $successMessage = "Your profile is complete";
                 }
@@ -28,9 +31,9 @@
                     $error = $th->getMessage();
                 }
         }
-        else{
-            $showError = true;
-        }
+    }
+    else{
+        
     }
 ?>
 
