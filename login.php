@@ -2,6 +2,7 @@
     include_once(__DIR__ . "/classes/User.php");
 
     // make form log in user
+    // check ih 
     // if user doesn't exist in db => message: "can't login user" of "mag niet leeg zijn" "geen geldig email"
     // if user exists in db => go to profile.php of that user
     // user presses button "log out" => then go back to login.php
@@ -40,12 +41,23 @@
 
     // if form was submit
 	if( !empty($_POST) ) {
-        // check if required fields are not empty
+    // check if required fields are not empty
         $email =  $_POST ['email'];
         $password =  $_POST ['password'];
+
         if( !empty($email) && !empty($password) ){
-        
-        }
+            // check if email & password match
+            if (canLogin($email, $password)) {
+                $_SESSION["email"] = $email;
+                $_SESSION["password"] = $password;
+            } else{
+        header("Can't log you in");
+    } 
+    }else{
+        header("You need to fill in the form");
+    }
+
+
     }
     
 ?><!DOCTYPE html>
