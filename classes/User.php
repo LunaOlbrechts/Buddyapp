@@ -84,6 +84,11 @@ class User
      */
     public function setLocation($location)
     {
+        if(empty($location)){
+            $showError = true;
+            $message= "Location can't be empty";
+            throw new Exception($message);
+        }
         $this->location = $location;
 
         return $this;
@@ -131,8 +136,7 @@ class User
 
 
     public function saveCompletedProfile()
-    {
-
+    {   
         $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "root");
         $statement = $conn->prepare("UPDATE tl_users SET city = :location, schoolYear = :schoolYear, 
         sportType = :sportType WHERE id = :id");
@@ -148,8 +152,6 @@ class User
         $statement->bindValue(":id", $id);
 
         $result = $statement->execute();
-        var_dump($result);
-
 
         return $result;
     }

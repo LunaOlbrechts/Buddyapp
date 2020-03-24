@@ -21,6 +21,8 @@
                     $user->setId($id);
 
                     $user->saveCompletedProfile();
+
+                    $successMessage = "Your profile is complete";
                 }
                 catch(\Throwable $th){
                     $error = $th->getMessage();
@@ -48,10 +50,12 @@
         <div class="container">
             <form method="POST" class="form">
             <h4 class="title-complete-profile">Vervolledig jouw profiel</h4>
-              <?php if($showError):?>  <div class="alert alert-danger" role="alert">
-                    Je moet alle velden invullen
-                </div>
-            <?php endif?>
+                <?php if(isset($error)):?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error; ?>
+                    </div>
+                <?php endif ?>
+                <?php if(!isset($successMessage)):?>
                 <div class="form-group">
                 <p class="form-title">Plaats</p>
                     <input type="text" class="form-control" name="inputLocation" placeholder="Plaats">
@@ -109,9 +113,16 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="btn-submit">
                     <button class="btn btn-primary" id="submit" type="submit">Submit form</button>
                 </div>
+                <?php endif?>
+                <?php if(isset($successMessage)): ?>
+                <div class="alert alert-success" role="alert">
+                    <?php echo $successMessage; ?>
+                </div>
+                <?php endif ?>
             </form>
         </div>
     </div>
