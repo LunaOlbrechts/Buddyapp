@@ -1,28 +1,43 @@
 <?php
     session_start();
 
+    //only for testing
+
+    $_SESSION["logged_in"] = true;
+    $_SESSION["user_id"] = 1;
+    $id =  $_SESSION["user_id"];
+
+    $showError = false;
+
     $user = "root";
     $pass = "root";
-    
+
 
     if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]){
-        
         // check !empty post
         if(!empty($_POST) ){
             // check !empty fields
             $location = $_POST['inputLocation'];
             $schoolYear = $_POST['schoolYear'];
             $sportType = $_POST['sportType'];
+            $workingInterest = $_POST[''];
 
-            if(!empty($location) && !empty($schoolYear) && !empty($sportType) ){
+            if(!empty($location) /*&& !empty($sportType) */&& !empty($schoolYear) && !empty($sportType) ){
                 //conn database 
-                $conn = new PDO('mysql:host=localhost;dbname=buddy_app', $user, $pass);
-                $query = $conn->prepare("INSERT INTO tl_users (location, schoolYear, sportType)
-                VALUES ($location, $schoolYear, $sportType)");
-                $query->execute();
+                try{
+                    $conn = new PDO('mysql:host=localhost;dbname=buddy_app', $user, $pass);
+                    $query = $conn->prepare("UPDATE tl_users SET city = '$location', schoolYear = '$schoolYear',
+                    sportType = '$sportType' WHERE id = $id");
+                    $query->execute();
 
-                $result = $query->fetch(PDO::FETCH_ASSOC);                
-
+                    $result = $query->fetch(PDO::FETCH_ASSOC);
+                }
+                catch(\Throwable $th){
+                    $error = $th->getMessage();
+                }
+            }
+            else{
+                $showError = true;
             }
         
         }
@@ -45,10 +60,10 @@
         <div class="container">
             <form method="POST" class="form">
             <h4 class="title-complete-profile">Vervolledig jouw profiel</h4>
-                <div class="alert alert-danger" role="alert">
-                    A simple danger alert—check it out!
+              <?php if($showError):?>  <div class="alert alert-danger" role="alert">
+                    Je moet alle velden invullen
                 </div>
-
+            <?php endif?>
                 <div class="form-group">
                 <p class="form-title">Plaats</p>
                     <input type="text" class="form-control" name="inputLocation" placeholder="Plaats">

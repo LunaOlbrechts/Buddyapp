@@ -44,4 +44,8 @@ class User{
 
         return $this;
     }
+
+    public function saveCompletedProfile(){
+        
+    }
 }
