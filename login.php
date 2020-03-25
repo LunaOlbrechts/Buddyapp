@@ -34,16 +34,29 @@
 
     }
 
-    if(!isset($_POST['submit'])){
-        if(empty($_POST['email']) && empty($_POST['password'])){
-            $error = "Username & password are required.";
-        } elseif (empty($_POST['email'])){
-            $error = "Fill in the email";
-        } elseif (empty($_POST['password'])){
-            $error = "Fill in the password";
+    function canLogin($email,$password){
+        if('email' === $email && 'password' === $password){
+            return true;
+        } return false;
+    }
+
+    if(!empty($_POST) ) {
+    $email =  $_POST ['email'];
+	$password =  $_POST ['password'];
+        if( !empty($email) && !empty($password) ){
+            if(canLogin($email,$password)){
+                $_SESSION["email"] = $email;
+                //$_SESSION["logged_in"] = true;
+            } else{
+            $error = "Cannot log you in";
+            }
+        } elseif( empty($email) && empty($password) ){
+            $error = "Email & password are required";
+        } elseif(empty($email)){
+            $error = "Email is required";
+        } elseif(empty($password)){
+            $error = "Password is required";
         }
-    } else{
-        $error = "Can't log you in";
     }
 
     /*
@@ -163,7 +176,7 @@ session_start();
         <h2 form__title>Sign In</h2>
 
         <?php if(isset($error)): ?>
-				<div class="form__error mr-5">
+				<div class="mr-5">
 					<p>
 						<?php echo $error;?>
 					</p>
