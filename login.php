@@ -38,24 +38,6 @@
         }
     }
 
-    /*if( !empty($_POST) ) {
-        // check if required fields are not empty
-            $email =  $_POST ['email'];
-            $password =  $_POST ['password'];
-    
-            if( !empty($email) && !empty($password) ){
-                // check if email & password match
-                if (canLogin($email, $password)) {
-                    $_SESSION["email"] = $email;
-                    $_SESSION["password"] = $password;
-                } else{
-            header("Can't log you in");
-        } 
-        }else{
-            header("You need to fill in the form");
-        }
-    }*/
-
     /*
     // if form is submit
     if( !empty($_POST) ) {
