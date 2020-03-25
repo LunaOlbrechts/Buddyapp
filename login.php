@@ -23,17 +23,27 @@
         $password = mysqli_real_escape_string($conn,$password);
 
         $password = md5($password);
-        var_dump($password);
+        //var_dump($password);
         $sql = "SELECT * FROM tl_user WHERE email='$email' AND password='$password'";
-        $result = mysqli_query($conn,$sql);
-
+        $result = $conn->query($sql);
         if(mysqli_num_rows($result) == 1){
-            $_SESSION['message'] = "You are logged in";
-            $_SESSION['email'] = $email;
             header('Location:index.php');
         } else{
-            $_SESSION['message'] = "username/ password comni incorrect";
+            
         }
+
+    }
+
+    if(!isset($_POST['submit'])){
+        if(empty($_POST['email']) && empty($_POST['password'])){
+            $error = "Username & password are required.";
+        } elseif (empty($_POST['email'])){
+            $error = "Fill in the email";
+        } elseif (empty($_POST['password'])){
+            $error = "Fill in the password";
+        }
+    } else{
+        $error = "Can't log you in";
     }
 
     /*
@@ -153,7 +163,7 @@ session_start();
         <h2 form__title>Sign In</h2>
 
         <?php if(isset($error)): ?>
-				<div class="form__error">
+				<div class="form__error mr-5">
 					<p>
 						<?php echo $error;?>
 					</p>
@@ -170,7 +180,7 @@ session_start();
         </div>
 
         <div class="form-group">
-            <input class="btn border" type="submit" value="Log in"> 
+            <input class="btn border" type="submit" value="Log in" name='submit'> 
         </div>
         </div>
     </form>
