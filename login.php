@@ -38,7 +38,7 @@
         }
     }
 
-    if( !empty($_POST) ) {
+    /*if( !empty($_POST) ) {
         // check if required fields are not empty
             $email =  $_POST ['email'];
             $password =  $_POST ['password'];
@@ -54,7 +54,7 @@
         }else{
             header("You need to fill in the form");
         }
-    }
+    }*/
 
     /*
     // if form is submit
