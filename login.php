@@ -125,12 +125,12 @@ session_start();
         <h2 form__title>Sign In</h2>
 
         <?php if(isset($error)): ?>
-				<div class="bg-light" >
+				<div class="form__error">
 					<p>
 						<?php echo $error;?>
 					</p>
 				</div>
-			<?php endif; ?>
+		<?php endif; ?>
 
         <div class="form-group">
             <label for="email">E-mail:</label>
@@ -142,7 +142,7 @@ session_start();
         </div>
 
         <div class="form-group">
-            <input class="btn border" type="submit" name="submit" value="Log in"> 
+            <input class="btn border" type="submit" value="Log in"> 
         </div>
         </div>
     </form>
