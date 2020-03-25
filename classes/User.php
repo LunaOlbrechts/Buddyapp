@@ -8,8 +8,11 @@ class User
     private $email;
     private $password;
     private $location;
+    private $courseInterests;
     private $schoolYear;
     private $sportType;
+    private $goingOutType;
+
 
     /**
      * Get the value of id
@@ -130,6 +133,46 @@ class User
     public function setSportType($sportType)
     {
         $this->sportType = $sportType;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of courseInterests
+     */ 
+    public function getCourseInterests()
+    {
+        return $this->courseInterests;
+    }
+
+    /**
+     * Set the value of courseInterests
+     *
+     * @return  self
+     */ 
+    public function setCourseInterests($courseInterests)
+    {
+        $this->courseInterests = $courseInterests;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of goingOutType
+     */ 
+    public function getGoingOutType()
+    {
+        return $this->goingOutType;
+    }
+
+    /**
+     * Set the value of goingOutType
+     *
+     * @return  self
+     */ 
+    public function setGoingOutType($goingOutType)
+    {
+        $this->goingOutType = $goingOutType;
 
         return $this;
     }
