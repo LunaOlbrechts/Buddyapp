@@ -11,6 +11,31 @@
     // valideer al wat kan mislopen in dit formulier via PHP
     // uitloggen is mogelijk
 
+    session_start();
+
+    $conn = new mysqli("localhost","root","","buddy_app");
+
+    if(isset($_POST['submit'])){
+      
+
+        $email = mysqli_real_escape_string($_POST['email']);
+        $password = mysqli_real_escape_string($_POST['password']);
+
+        $password = md5($password);
+        var_dump($password);
+        $sql = "SELECT * FROM tl_user WHERE email='$email' AND password='$password'";
+        $result = mysqli_query($conn,$sql);
+
+        if(mysqli_num_rows($result) == 1){
+            $_SESSION['message'] = "You are logged in";
+            $_SESSION['email'] = $email;
+            header('Location:index.php');
+        } else{
+            $_SESSION['message'] = "username/ password comni incorrect";
+        }
+    }
+
+    /*
     //start a session at the beginning of your file 
     session_start();
 
@@ -18,17 +43,19 @@
     $conn = new mysqli("localhost","root","","buddy_app");
 
 
-    if(isset($_POST['submit'])){
+    if(!empty($_POST['submit'])){
+        session_start();
         $email = $_POST['email'];
         $password = $_POST['password'];
 
         $email = mysqli_real_escape_string($conn,$email);
         $password = mysqli_real_escape_string($conn,$password);
 
+        var_dump($password);
         $password = md5($password);
         $sql = "SELECT * FROM tl_user WHERE email='$email' AND password='$password'";
         $result = mysqli_query($conn,$sql);
-        var_dump($password);
+        
         if(mysqli_num_rows($result) == 1){
             $_SESSION['message'] = "You are logged in";
             $_SESSION['email'] = $email;
@@ -36,7 +63,7 @@
         }else{
             $_SESSION['message'] = "Email/password incorrect";
         }
-    }
+    }*/
 
     /*
     // if form is submit
