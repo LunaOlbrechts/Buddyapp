@@ -11,13 +11,63 @@
     // valideer al wat kan mislopen in dit formulier via PHP
     // uitloggen is mogelijk
 
+    //start a session at the beginning of your file 
+    session_start();
+
     // connect to db 
-    $conn = new PDO("mysql:host=db;dbname=buddy_app","root","");
+    $conn = new mysqli("localhost","root","","buddy_app");
 
-    // get values from form
-    $email = $_POST['email'];
-    $password = $_POST['password'];
 
+    if(isset($_POST['submit'])){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $email = mysqli_real_escape_string($conn,$email);
+        $password = mysqli_real_escape_string($conn,$password);
+
+        $password = md5($password);
+        $sql = "SELECT * FROM tl_user WHERE email='$email' AND password='$password'";
+        $result = mysqli_query($conn,$sql);
+        var_dump($password);
+        if(mysqli_num_rows($result) == 1){
+            $_SESSION['message'] = "You are logged in";
+            $_SESSION['email'] = $email;
+            header('Location:complete.profile.php'); // go to profile page 
+        }else{
+            $_SESSION['message'] = "Email/password incorrect";
+        }
+    }
+
+    /*
+    // if form is submit
+    if( !empty($_POST) ) {
+        // check if required fields are not empty
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+
+        // query 
+        if(isset($_POST['submit'])){
+            if(!empty($email) && !empty($password)){
+            
+            } else{
+            $error = 'Fill in email & password';
+            }
+    } else{
+        $error = 'Cannot log you in';
+    } 
+
+    }
+    */
+
+/*
+session_start();
+    if(empty($email) && empty($password)){
+        $sql = "select * from 'tl_user' where email = '$email' && password = '" .md5($password)."'";
+    }
+*/
+
+
+/*
     session_start();
 
     if (isset($_POST)){
@@ -58,7 +108,7 @@
     }
 
 
-    }
+    }*/
     
 ?><!DOCTYPE html>
 <html lang="en">
@@ -73,6 +123,14 @@
     <form action="" method="post">
         <div class="container mt-5">
         <h2 form__title>Sign In</h2>
+
+        <?php if(isset($error)): ?>
+				<div class="bg-light" >
+					<p>
+						<?php echo $error;?>
+					</p>
+				</div>
+			<?php endif; ?>
 
         <div class="form-group">
             <label for="email">E-mail:</label>
