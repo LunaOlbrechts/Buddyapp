@@ -18,14 +18,18 @@
                 try{
                     $user = new User();
 
+                    $user->setId($id);
                     $user->setLocation($_POST['inputLocation']);
+                    $user->setCourseInterests($_POST['checkListInterests']);
                     $user->setSchoolYear($_POST['schoolYear']);
                     $user->setSportType($_POST['sportType']);
-                    $user->setId($id);
+                    $user->setGoingOutType($_POST['goingOutType']);
 
                     UserManager::saveCompletedProfile($user);
 
                     $successMessage = "Your profile is complete";
+
+                    header("Location: index.php");
                 }
                 catch(\Throwable $th){
                     $error = $th->getMessage();
@@ -68,19 +72,19 @@
                     <div class="interests">
                         <p class="form-title">Opleiding interesses</p>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="inputBackendDevelopment" value="inputBackendDevelopment">
+                            <input class="form-check-input" type="checkbox" name="checkListInterests[]" value="inputBackendDevelopment">
                             <label class="form-check-label" for="inputBackendDevelopment">backend development</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="inputFrontendDevelopment" value="inputFrontendDevelopment">
+                            <input class="form-check-input" type="checkbox" name="checkListInterests[]" value="inputFrontendDevelopment">
                             <label class="form-check-label" for="inputFrontendDevelopment">frontend development</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="input3dDesign" value="input3dDesign">
+                            <input class="form-check-input" type="checkbox" name="checkListInterests[]" value="input3dDesign">
                             <label class="form-check-label" for="input3dDesign">3D design</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="inputWebDesign" value="inputWebDesign">
+                            <input class="form-check-input" type="checkbox" name="checkListInterests[]" value="inputWebDesign">
                             <label class="form-check-label" for="inputWebDesign">Web design</label>
                         </div>
                     </div>
@@ -107,19 +111,18 @@
                     </select>
                 </div>
 
-                <div class="form-row">
-                    <div class="pushnotification">
-                        <p class="form-title">Pushnotifications</p>
-                        <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="switchPushnotification">
-                            <label class="custom-control-label" for="switchPushnotification">Inschakelen</label>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1" class="form-title">Welk type uitgaanstype ben jij?</label>
+                    <select class="form-control" name="goingOutType">
+                    <option>Party animal</option>
+                    <option>Gezellig samen met vrienden</option>
+                    <option>Home sweet home</option>
+                    </select>
                 </div>
-
                 <div class="btn-submit">
                     <button class="btn btn-primary" id="submit" type="submit">Submit form</button>
                 </div>
+
                 <?php endif?>
                 <?php if(isset($successMessage)): ?>
                 <div class="alert alert-success" role="alert">
