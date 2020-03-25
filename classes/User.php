@@ -1,15 +1,39 @@
-<?php 
+<?php
 
-class User{
+class User
+{
+    private $id;
     private $firstName;
     private $lastName;
     private $email;
     private $password;
+    private $location;
+    private $schoolYear;
+    private $sportType;
 
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /*
         Get the value of email
-     */ 
+     */
     public function getEmail()
     {
         return $this->email;
@@ -17,7 +41,7 @@ class User{
 
     /*
         Set the value of email
-     */ 
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -27,7 +51,7 @@ class User{
 
     /**
      * Get the value of password
-     */ 
+     */
     public function getPassword()
     {
         return $this->password;
@@ -37,10 +61,75 @@ class User{
      * Set the value of password
      *
      * @return  self
-     */ 
+     */
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of location
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set the value of location
+     *
+     * @return  self
+     */
+    public function setLocation($location)
+    {
+        if(empty($location)){
+            $showError = true;
+            $message= "Location can't be empty";
+            throw new Exception($message);
+        }
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of schoolYear
+     */
+    public function getSchoolYear()
+    {
+        return $this->schoolYear;
+    }
+
+    /**
+     * Set the value of schoolYear
+     *
+     * @return  self
+     */
+    public function setSchoolYear($schoolYear)
+    {
+        $this->schoolYear = $schoolYear;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sportType
+     */
+    public function getSportType()
+    {
+        return $this->sportType;
+    }
+
+    /**
+     * Set the value of sportType
+     *
+     * @return  self
+     */
+    public function setSportType($sportType)
+    {
+        $this->sportType = $sportType;
 
         return $this;
     }

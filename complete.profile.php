@@ -1,31 +1,39 @@
 <?php
+    include_once(__DIR__ . "/classes/User.php");
+    include_once(__DIR__ . "/classes/UserManager.php");
+
     session_start();
 
-    $user = "root";
-    $pass = "root";
-    
+    // TODO: replace hardcoded values
+    $_SESSION["logged_in"] = true;
+    $_SESSION["user_id"] = 1;
+    $id =  $_SESSION["user_id"];
+
+    $showError = false;
 
     if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]){
-        
         // check !empty post
         if(!empty($_POST) ){
-            // check !empty fields
-            $location = $_POST['inputLocation'];
-            $schoolYear = $_POST['schoolYear'];
-            $sportType = $_POST['sportType'];
-
-            if(!empty($location) && !empty($schoolYear) && !empty($sportType) ){
                 //conn database 
-                $conn = new PDO('mysql:host=localhost;dbname=buddy_app', $user, $pass);
-                $query = $conn->prepare("INSERT INTO tl_users (location, schoolYear, sportType)
-                VALUES ($location, $schoolYear, $sportType)");
-                $query->execute();
+                try{
+                    $user = new User();
 
-                $result = $query->fetch(PDO::FETCH_ASSOC);                
+                    $user->setLocation($_POST['inputLocation']);
+                    $user->setSchoolYear($_POST['schoolYear']);
+                    $user->setSportType($_POST['sportType']);
+                    $user->setId($id);
 
-            }
-        
+                    UserManager::saveCompletedProfile($user);
+
+                    $successMessage = "Your profile is complete";
+                }
+                catch(\Throwable $th){
+                    $error = $th->getMessage();
+                }
         }
+    }
+    else{
+        
     }
 ?>
 
@@ -45,10 +53,12 @@
         <div class="container">
             <form method="POST" class="form">
             <h4 class="title-complete-profile">Vervolledig jouw profiel</h4>
-                <div class="alert alert-danger" role="alert">
-                    A simple danger alert—check it out!
-                </div>
-
+                <?php if(isset($error)):?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error; ?>
+                    </div>
+                <?php endif ?>
+                <?php if(!isset($successMessage)):?>
                 <div class="form-group">
                 <p class="form-title">Plaats</p>
                     <input type="text" class="form-control" name="inputLocation" placeholder="Plaats">
@@ -106,9 +116,16 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="btn-submit">
                     <button class="btn btn-primary" id="submit" type="submit">Submit form</button>
                 </div>
+                <?php endif?>
+                <?php if(isset($successMessage)): ?>
+                <div class="alert alert-success" role="alert">
+                    <?php echo $successMessage; ?>
+                </div>
+                <?php endif ?>
             </form>
         </div>
     </div>
