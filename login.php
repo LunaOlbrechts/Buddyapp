@@ -15,11 +15,12 @@
 
     $conn = new mysqli("localhost","root","","buddy_app");
 
-    if(isset($_POST['submit'])){
-      
-
-        $email = mysqli_real_escape_string($_POST['email']);
-        $password = mysqli_real_escape_string($_POST['password']);
+    if(!empty($_POST)){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        
+        $email = mysqli_real_escape_string($conn,$email);
+        $password = mysqli_real_escape_string($conn,$password);
 
         $password = md5($password);
         var_dump($password);
