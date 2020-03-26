@@ -14,7 +14,7 @@
     session_start();
 
     function canLogin($email,$password){
-        $conn = new mysqli("localhost","root","","buddy_app");
+        $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "");
         $email = mysqli_real_escape_string($conn,$email);
         $password = mysqli_real_escape_string($conn,$password);
         $sql = "select password from tl_user where email='$email'";
@@ -22,8 +22,8 @@
         if($result->num_rows != 1){
 			return false;
         }
-        var_dump($password);
-        $user = $result->fetch_assoc();  //fetch=pakken
+        //var_dump($password);
+        $user = $result->fetchAll(PDO::FETCH_ASSOC);  //fetch=pakken
 		$hash = $user['password'];
 		if(password_verify($password, $hash)){
 			return true;
