@@ -10,10 +10,8 @@
             $user->setLastName(htmlspecialchars($_POST['lastname']));
             $user->setPassword(htmlspecialchars($_POST['password']));
 
-
             $user->save();
-            header('location:complete.profile.php');
-          //  $success = "user saved!";
+           $success = "user saved!";
         } catch (\Throwable $th) {
             //throw error
 
@@ -48,6 +46,7 @@
  
     <form action="" method="post">
 
+
         <div>
             <label for="email">E-mail:</label>
             <input type="text" name="email" id="email">
@@ -65,13 +64,17 @@
 
         <div>
             <label for="password">Password:</label>
-            <input type="text" name="password" id="password">
+            <input type="password" name="password" id="password">
         </div>
 
         <div>
-            <input class="btn btn-primary" type="submit" value="Sign me up">
+            <label for="passwordconf">Password Confirm:</label>
+            <input type="password" name="passwordconf" id="passwordconf">
         </div>
-    
+
+        <div>
+            <input class="btn btn-primary" name="signup-btn" type="submit" value="Sign me up">
+        </div>    
     
     </form>
 
