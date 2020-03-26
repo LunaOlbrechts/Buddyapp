@@ -15,21 +15,39 @@
 
     function canLogin($email,$password){
         $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "");
-        $email = mysqli_real_escape_string($conn,$email);
-        $password = mysqli_real_escape_string($conn,$password);
+        //$email = mysqli_real_escape_string($conn,$email);
+        //$password = mysqli_real_escape_string($conn,$password);
         $sql = "select password from tl_user where email='$email'";
-        $result = $conn->query($sql);
-        if($result->num_rows != 1){
+        
+        $result = $conn->prepare($sql);
+        $result->execute();
+        $user = $result->fetchAll(PDO::FETCH_ASSOC);
+		/*if($result->num_rows != 1){
 			return false;
-        }
-        //var_dump($password);
-        $user = $result->fetchAll(PDO::FETCH_ASSOC);  //fetch=pakken
-		$hash = $user['password'];
+		}*/
+
+		//$user = $result->fetchAll(PDO::FETCH_ASSOC);  //fetch=pakken
+        $hash = $user['password'];
+        var_dump($hash);
 		if(password_verify($password, $hash)){
 			return true;
 		}else{
 			return false;
 		}
+
+        /*$result = $conn->query($sql);
+        if($result->num_rows != 1){
+			return false;
+        }
+        //var_dump($password);
+        $user = $result->fetchAll(PDO::FETCH_ASSOC);  //fetch=pakken
+        $hash = $user['password'];
+        var_dump($hash);
+		if(password_verify($password, $hash)){
+			return true;
+		}else{
+			return false;
+		}*/
     }
 
     /*session_start();
