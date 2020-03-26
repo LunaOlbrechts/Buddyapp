@@ -12,6 +12,7 @@
 
             $user->save();
            $success = "user saved!";
+           header("Location: complete.profile.php");
         } catch (\Throwable $th) {
             //throw error
 
