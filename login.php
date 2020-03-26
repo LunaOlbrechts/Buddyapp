@@ -13,6 +13,27 @@
 
     session_start();
 
+    function canLogin($email,$password){
+        $conn = new mysqli("localhost","root","","buddy_app");
+        $email = mysqli_real_escape_string($conn,$email);
+        $password = mysqli_real_escape_string($conn,$password);
+        $sql = "select password from tl_user where email='$email'";
+        $result = $conn->query($sql);
+        if($result->num_rows != 1){
+			return false;
+        }
+        var_dump($password);
+        $user = $result->fetch_assoc();  //fetch=pakken
+		$hash = $user['password'];
+		if(password_verify($password, $hash)){
+			return true;
+		}else{
+			return false;
+		}
+    }
+
+    /*session_start();
+
     $conn = new mysqli("localhost","root","","buddy_app");
 
     if(!empty($_POST)){
@@ -38,15 +59,17 @@
         if('email' === $email && 'password' === $password){
             return true;
         } return false;
-    }
+    }*/
 
+    // if form was submit
     if(!empty($_POST) ) {
     $email =  $_POST ['email'];
-	$password =  $_POST ['password'];
+    $password =  $_POST ['password'];
+    // check if required fields are not empty
         if( !empty($email) && !empty($password) ){
-            if(canLogin($email,$password)){
+            if(canLogin($email,$password) === true){ // if email & password match
                 $_SESSION["email"] = $email;
-                //$_SESSION["logged_in"] = true;
+                header('Location: index.php');	// direct to index.php
             } else{
             $error = "Cannot log you in";
             }
