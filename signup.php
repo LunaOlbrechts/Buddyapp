@@ -1,6 +1,26 @@
 <?php
     include_once(__DIR__ . "/classes/User.php");
 
+    if(!empty($_POST)) {
+
+        try {
+            $user = new User();
+            $user->setEmail(htmlspecialchars($_POST['email']));
+            $user->setFirstName(htmlspecialchars($_POST['firstname']));
+            $user->setLastName(htmlspecialchars($_POST['lastname']));
+            $user->setPassword(htmlspecialchars($_POST['password']));
+
+
+            $user->save();
+            header('location:complete.profile.php');
+          //  $success = "user saved!";
+        } catch (\Throwable $th) {
+            //throw error
+
+            $error = $th->getMessage();
+        }
+       
+    }
 
 
 
@@ -25,31 +45,31 @@
                 <div class="success"><?php echo $success ?></div>
         <?php endif; ?>        
 
-
+ 
     <form action="" method="post">
 
         <div>
-            <label for="email">E-mail</label>
+            <label for="email">E-mail:</label>
             <input type="text" name="email" id="email">
         </div>
 
         <div>
-            <label for="firstname">Firstname</label>
+            <label for="firstname">First name:</label>
             <input type="text" name="firstname" id="firstname">
         </div>
 
         <div>
-            <label for="lastname">Lastname</label>
+            <label for="lastname">Last name:</label>
             <input type="text" name="lastname" id="lastname">
         </div>
 
         <div>
-            <label for="password">Password</label>
+            <label for="password">Password:</label>
             <input type="text" name="password" id="password">
         </div>
 
         <div>
-            <input type="submit" value="Sign me up">
+            <input class="btn btn-primary" type="submit" value="Sign me up">
         </div>
     
     
