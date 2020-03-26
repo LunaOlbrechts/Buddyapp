@@ -35,48 +35,54 @@
 <body>
     <?php include_once("include/nav.inc.php"); ?>
 
+    <div class="container mt-5">
+
+    <h2 form__title>Register</h2>
+
     <?php if(isset($error)): ?>
-            <div class="error"><?php echo $error; ?></div>
+            <div class="error mr-5"><?php echo $error; ?></div>
     <?php endif; ?>
 
         <?php if(isset($success)): ?>
-                <div class="success"><?php echo $success ?></div>
+                <div class="success mr-5"><?php echo $success ?></div>
         <?php endif; ?>        
 
  
     <form action="" method="post">
 
 
-        <div>
+        <div class="form-group">
             <label for="email">E-mail:</label>
-            <input type="text" name="email" id="email">
+            <input class="form-control" type="text" name="email" id="email" placeholder="Enter your first e-mail">
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="firstname">First name:</label>
-            <input type="text" name="firstname" id="firstname">
+            <input class="form-control" type="text" name="firstname" id="firstname" placeholder="Enter your first name">
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="lastname">Last name:</label>
-            <input type="text" name="lastname" id="lastname">
+            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Enter your last name">
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password">
+            <input class="form-control" type="password" name="password" id="password">
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="passwordconf">Password Confirm:</label>
-            <input type="password" name="passwordconf" id="passwordconf">
+            <input class="form-control" type="password" name="passwordconf" id="passwordconf">
         </div>
 
         <div>
-            <input class="btn btn-primary" name="signup-btn" type="submit" value="Sign me up">
+            <input class="btn border" name="signup-btn" type="submit" value="Sign me up">
         </div>    
     
     </form>
+
+    </div>
 
   
 </body>
