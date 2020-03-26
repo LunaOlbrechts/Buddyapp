@@ -28,15 +28,75 @@ class UserManager{
         return $result;
     }
 
-    public function getUserFromDatabase(int $userId) {
-        // Query (get user from database)
+    public static function getUserFromDatabase()
+    {
+        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
 
-        //Map to user object
-        $user = new User();
+        $statement = $conn->prepare("select * from tl_user where id=1");
+        $statement->execute();
+        $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $userData;
+    }
 
-        // Set all properties from database to $user
+    public function updateUserDetails(User $user)
+    {
+        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+        $sql = "UPDATE tl_user SET description = :description WHERE id = :id";
+        $statement = $conn->prepare($sql);
 
-        // return $user;
+        $description = $user->getDescription();
+        //$email = $user->getEmail();
+        // $profilePicture = $user->getProfilePicture();
+        $id = 1;
+
+        $statement->bindValue(":description", $description);
+        //$statement->bindValue(":email", $email);
+        // $statement->bindValue(":profilePicture", $profilePicture);
+        $statement->bindValue(":id", $id);
+
+        $result = $statement->execute();
+
+        return $result;
+    }
+
+    public function updateUserProfilePicture(User $user)
+    {
+        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+        $sql = "UPDATE tl_user SET profilePicture = :profilePicture WHERE id = :id";
+        $statement = $conn->prepare($sql);
+
+        $profilePicture = $user->getProfilePicture();
+        $id = 1;
+
+        $statement->bindValue(":profilePicture", $profilePicture);
+        $statement->bindValue(":id", $id);
+
+        $result = $statement->execute();
+
+        return $result;
+    }
+
+    public function updateEmail(User $user)
+    {
+        $email = $user->getEmail();
+        $password = $user->getPasswordForEmailVerification();
+
+        if ($password = 1234) {
+            $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+            $sql = "UPDATE tl_user SET email = :email WHERE id = :id";
+            $statement = $conn->prepare($sql);
+
+            $id = 1;
+
+            $statement->bindValue(":email", $email);
+            $statement->bindValue(":id", $id);
+
+            $result = $statement->execute();
+        } else {
+            throw new Exception("Password is incorrect");
+        }
+
+        return $result;
     }
 }
 

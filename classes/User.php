@@ -12,6 +12,9 @@ class User
     private $schoolYear;
     private $sportType;
     private $goingOutType;
+    private $description;
+    private $profilePicture;
+    private $passwordForEmailVerification;
 
 
     /**
@@ -173,6 +176,70 @@ class User
     public function setGoingOutType($goingOutType)
     {
         $this->goingOutType = $goingOutType;
+
+        return $this;
+    }
+
+        /**
+     * Get the value of description
+     */ 
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @return  self
+     */ 
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of profilePicture
+     */ 
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * Set the value of profilePicture
+     *
+     * @return  self
+     */ 
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of passwordForEmailVerification
+     */ 
+    public function getPasswordForEmailVerification()
+    {
+        return $this->passwordForEmailVerification;
+    }
+
+    /**
+     * Set the value of passwordForEmailVerification
+     *
+     * @return  self
+     */ 
+    public function setPasswordForEmailVerification($passwordForEmailVerification)
+    {
+        if ($passwordForEmailVerification != 1234){
+            throw new Exception("Password is incorrect!");
+        }
+        
+        $this->passwordForEmailVerification = $passwordForEmailVerification;
 
         return $this;
     }
