@@ -128,7 +128,8 @@ class User{
 
         // CHECK IF USERNAME IS @student.thomasmore.be
         $domainWhiteList = ['student.thomasmore.be'];
-        $domain = array_pop(explode('@', $email));
+        $tmp = explode('@', $email);
+        $domain = array_pop($tmp);
 
         if(!in_array($domain, $domainWhiteList)) {
             throw new Exception("Username should end with @student.thomasmore.be");
