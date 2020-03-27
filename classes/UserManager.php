@@ -87,7 +87,7 @@ class UserManager
         $result = $statement->fetchAll();
         $password = $result[0]["password"];
 
-        $passwordEntered = $user->getPasswordForEmailVerification();
+        $passwordEntered = $user->getPasswordForVerification();
         $email = $user->getEmail();
 
         if (password_verify($passwordEntered, $password)) {
@@ -108,22 +108,65 @@ class UserManager
         return $result;
     }
 
-    public static function logIn(User $user){
-        $passwordEntered = $user->getPasswordForEmailVerification();
-        $email = $user->getEmail();
+    public static function updatePassword(User $user)
+    {
+        $oldPassword = $user->getPasswordForVerification();
+        $newPassword = $user->getNewPassword();
+        $repeatedNewPassword = $user->getRepeatedNewPassword();
 
-        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "");
-        $sql = "SELECT password FROM tl_user WHERE email = :email";
+        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+        $sql = "SELECT password FROM tl_user WHERE id = 4 LIMIT 1";
         $statement = $conn->prepare($sql);
-        $statement->bindValue(":email",$email);
         $statement->execute();
+
         $result = $statement->fetchAll();
         $password = $result[0]["password"];
-            if (password_verify($passwordEntered, $password)) {
-                    echo "Wachtwoord juist!";
-                    header("Location:index.php");
+
+        if ($newPassword = $repeatedNewPassword) {
+            if (password_verify($oldPassword, $password)) {
+                $hashedNewPassword = password_hash($newPassword, PASSWORD_BCRYPT, ['cost' => 12]);
+                $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+                $sql = "UPDATE tl_user SET password = :password WHERE id = :id";
+                $statement = $conn->prepare($sql);
+
+                $id = 4;
+
+                $statement->bindValue(":password", $hashedNewPassword);
+                $statement->bindValue(":id", $id);
+
+                $result = $statement->execute();
             } else {
-                    throw new Exception("Password is incorrect");
+                throw new Exception("Old Password is incorrect");
             }
+        } else {
+            throw new Exception("Reapated new password is not the same!");
         }
     }
+
+    public static function logIn(User $user)
+    {
+        $passwordEntered = $user->getPasswordForVerification();
+        $email = $user->getEmail();
+
+        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+        $sql = "SELECT password, id FROM tl_user WHERE email = :email";
+        $statement = $conn->prepare($sql);
+        $statement->bindValue(":email", $email);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        print_r($result);
+        $password = $result[0]["password"];
+        $userId = $result[0]["id"];
+        if (password_verify($passwordEntered, $password)) {
+            echo "Wachtwoord juist!";
+            session_start();
+            $_SESSION['user_id'] = $userId;
+            $_SESSION['logged_in'] = true;
+            echo $_SESSION["logged_in"];
+            echo $_SESSION["user_id"];
+            header("Location:complete.profile.php");
+        } else {
+            throw new Exception("Password is incorrect");
+        }
+    }
+}

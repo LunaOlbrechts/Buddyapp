@@ -16,7 +16,9 @@ class User
     private $goingOutType;
     private $description;
     private $profilePicture;
-    private $passwordForEmailVerification;
+    private $passwordForVerification;
+    private $newPassword;
+    private $repeatedNewPassword;
 
 
     /**
@@ -233,22 +235,22 @@ class User
     }
 
     /**
-     * Get the value of passwordForEmailVerification
+     * Get the value of passwordForVerification
      */
-    public function getPasswordForEmailVerification()
+    public function getPasswordForVerification()
     {
-        return $this->passwordForEmailVerification;
+        return $this->passwordForVerification;
     }
 
     /**
-     * Set the value of passwordForEmailVerification
+     * Set the value of passwordForVerification
      *
      * @return  self
      */
-    public function setPasswordForEmailVerification($passwordForEmailVerification)
+    public function setPasswordForVerification($passwordForVerification)
     {
 
-        $this->passwordForEmailVerification = $passwordForEmailVerification;
+        $this->passwordForVerification = $passwordForVerification;
 
         return $this;
     }
@@ -354,5 +356,45 @@ class User
             // return result
             return $result;
         }
+    }
+
+    /**
+     * Get the value of newPassword
+     */ 
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
+
+    /**
+     * Set the value of newPassword
+     *
+     * @return  self
+     */ 
+    public function setNewPassword($newPassword)
+    {
+        $this->newPassword = $newPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of repeatedNewPassword
+     */ 
+    public function getRepeatedNewPassword()
+    {
+        return $this->repeatedNewPassword;
+    }
+
+    /**
+     * Set the value of repeatedNewPassword
+     *
+     * @return  self
+     */ 
+    public function setRepeatedNewPassword($repeatedNewPassword)
+    {
+        $this->repeatedNewPassword = $repeatedNewPassword;
+
+        return $this;
     }
 }

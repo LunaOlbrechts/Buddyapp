@@ -12,8 +12,6 @@ include_once(__DIR__ . "/classes/UserManager.php");
 // valideer al wat kan mislopen in dit formulier via PHP
 // uitloggen is mogelijk
 
-session_start();
-
 // if form was submit
 if (!empty($_POST)) {
     $email =  $_POST['email'];
@@ -22,12 +20,11 @@ if (!empty($_POST)) {
     if (!empty($email) && !empty($password)) {
         try {
             $user = new User();
-            $user->setPasswordForEmailVerification($_POST['password']);
+            $user->setPasswordForVerification($_POST['password']);
             $user->setEmail($_POST['email']);
 
             UserManager::logIn($user);
-            $_SESSION['user_id'] = ;
-            $_SESSION['logged_in'] = true;
+            
             $error = "Logged in!";
         } catch (\Throwable $th) {
             $error = $th->getMessage();

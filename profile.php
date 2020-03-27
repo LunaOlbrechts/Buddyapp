@@ -50,7 +50,7 @@ if ($_POST['updateDetails']) {
 } else if ($_POST['updateEmail']) {
     try {
         $user = new User();
-        $user->setPasswordForEmailVerification($_POST['passwordForEmailVerification']);
+        $user->setPasswordForVerification($_POST['passwordForEmailVerification']);
         $user->setEmail($_POST['email']);
 
         UserManager::updateEmail($user);
@@ -61,6 +61,13 @@ if ($_POST['updateDetails']) {
     }
 } else if ($_POST['updatePassword']) {
     try {
+        $user = new User();
+        $user->setPasswordForVerification($_POST['oldPassword']);
+        $user->setnewPassword($_POST['newPassword']);
+        $user->setRepeatedNewPassword($_POST['reapeatNewPassword']);
+
+        UserManager::updatePassword($user);
+
         $passwordSuccess = "Your password has been updated!";
     } catch (\Throwable $th) {
         $passworderror = $th->getMessage();
