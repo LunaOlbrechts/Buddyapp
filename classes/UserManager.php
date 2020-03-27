@@ -7,7 +7,7 @@ class UserManager
     public static function saveCompletedProfile(User $user)
     {
         $conn = new PDO('mysql:host=localhost;dbname=buddy_app', "root", "root");
-        $statement = $conn->prepare("UPDATE tl_users SET city = :location, courseInterests = :courseInterests, schoolYear = :schoolYear, 
+        $statement = $conn->prepare("UPDATE tl_user SET city = :location, courseInterests = :courseInterests, schoolYear = :schoolYear, 
         sportType = :sportType, goingOutType = :goingOutType WHERE id = :id");
 
         $id = $user->getId();
