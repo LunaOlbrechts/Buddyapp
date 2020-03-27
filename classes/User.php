@@ -83,7 +83,6 @@ class User
         if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordconf']) {
             throw new Exception("The two passwords do not match");
         }
-        $password = password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]);
         $this->password = $password;
 
         return $this;
