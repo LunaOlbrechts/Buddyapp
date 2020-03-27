@@ -113,7 +113,7 @@ class UserManager
         $email = $user->getEmail();
 
         $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "");
-        $sql = "SELECT password FROM tl_user WHERE email = :email";
+        $sql = "SELECT password, id FROM tl_user WHERE email = :email";
         $statement = $conn->prepare($sql);
         $statement->bindValue(":email",$email);
         $statement->execute();
