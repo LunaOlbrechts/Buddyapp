@@ -5,7 +5,7 @@
             "user"      => "root",
             "password"  => "root",
             "host"      => "localhost",
-            "port"      => 80,
+            "port"      => 8888,
             "db"        => "buddy_app"
         ]
     ];
