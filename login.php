@@ -27,7 +27,7 @@ if (!empty($_POST)) {
 
             UserManager::logIn($user);
 
-            $error = "Loged in!";
+            $error = "Logged in!";
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }

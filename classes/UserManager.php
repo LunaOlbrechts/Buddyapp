@@ -109,6 +109,21 @@ class UserManager
     }
 
     public static function logIn(User $user){
-        throw new Exception("YOU ARE IN THE UserManger Class");
+        $passwordEntered = $user->getPasswordForEmailVerification();
+        $email = $user->getEmail();
+
+        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "");
+        $sql = "SELECT password FROM tl_user WHERE email = :email";
+        $statement = $conn->prepare($sql);
+        $statement->bindValue(":email",$email);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        $password = $result[0]["password"];
+            if (password_verify($passwordEntered, $password)) {
+                    echo "Wachtwoord juist!";
+                    header("Location:index.php");
+            } else {
+                    throw new Exception("Password is incorrect");
+            }
+        }
     }
-}
