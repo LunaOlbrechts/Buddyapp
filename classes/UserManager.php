@@ -149,10 +149,10 @@ class UserManager
         $statement->bindValue(":email", $email);
         $statement->execute();
         $result = $statement->fetchAll();
-        print_r($result);
+        //print_r($result);
         $password = $result[0]["password"];
         $userId = $result[0]["id"];
-        echo $password;
+        //echo $password;
         if (password_verify($passwordEntered, $password)) {
             session_start();
             $_SESSION['user_id'] = $userId;
