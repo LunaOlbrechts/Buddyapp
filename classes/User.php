@@ -247,9 +247,6 @@ class User
      */
     public function setPasswordForEmailVerification($passwordForEmailVerification)
     {
-        if ($passwordForEmailVerification != 1234) {
-            throw new Exception("Password is incorrect!");
-        }
 
         $this->passwordForEmailVerification = $passwordForEmailVerification;
 
