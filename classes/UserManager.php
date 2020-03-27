@@ -148,10 +148,10 @@ class UserManager
         $statement = $conn->prepare($sql);
         $statement->bindValue(":email", $email);
         $statement->execute();
-        $result = $statement->fetchAll();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
         //print_r($result);
-        $password = $result[0]["password"];
-        $userId = $result[0]["id"];
+        $password = $result["password"];
+        $userId = $result["id"];
         //echo $password;
         if (password_verify($passwordEntered, $password)) {
             session_start();
