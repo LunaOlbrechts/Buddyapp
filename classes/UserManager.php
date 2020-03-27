@@ -159,7 +159,7 @@ class UserManager
             $_SESSION['logged_in'] = true;
             header("Location:complete.profile.php");
         } else {
-            throw new Exception("Password is incorrect");
+            throw new Exception("Email & password don't match");
         }
     }
 }
