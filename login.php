@@ -22,7 +22,7 @@ if (!empty($_POST)) {
             $user = new User();
             $user->setPasswordForVerification($_POST['password']);
             $user->setEmail($_POST['email']);
-
+            
             UserManager::logIn($user);
             
             $error = "Logged in!";

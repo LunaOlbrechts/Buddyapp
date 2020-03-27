@@ -31,9 +31,10 @@ class UserManager
 
     public static function getUserFromDatabase()
     {
-        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+        $conn = Db::getConnection();
 
-        $statement = $conn->prepare("select * from tl_user where id=4");
+        $statement = $conn->prepare("select * from tl_user where id= :id");
+        $statement->bindValue(":id", $_SESSION["user_id"]);
         $statement->execute();
         $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $userData;
@@ -41,18 +42,14 @@ class UserManager
 
     public function updateUserDetails(User $user)
     {
-        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+        $conn = Db::getConnection();
         $sql = "UPDATE tl_user SET description = :description WHERE id = :id";
         $statement = $conn->prepare($sql);
 
         $description = $user->getDescription();
-        //$email = $user->getEmail();
-        // $profilePicture = $user->getProfilePicture();
-        $id = 4;
+        $id = $user->getId();
 
         $statement->bindValue(":description", $description);
-        //$statement->bindValue(":email", $email);
-        // $statement->bindValue(":profilePicture", $profilePicture);
         $statement->bindValue(":id", $id);
 
         $result = $statement->execute();
@@ -62,12 +59,12 @@ class UserManager
 
     public function updateUserProfilePicture(User $user)
     {
-        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+        $conn = Db::getConnection();
         $sql = "UPDATE tl_user SET profilePicture = :profilePicture WHERE id = :id";
         $statement = $conn->prepare($sql);
 
         $profilePicture = $user->getProfilePicture();
-        $id = 4;
+        $id = $user->getId();
 
         $statement->bindValue(":profilePicture", $profilePicture);
         $statement->bindValue(":id", $id);
@@ -79,11 +76,12 @@ class UserManager
 
     public function updateEmail(User $user)
     {
-        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
-        $sql = "SELECT password FROM tl_user WHERE id = 4 LIMIT 1";
+        $conn = Db::getConnection();
+        $sql = "SELECT password FROM tl_user WHERE id = :id LIMIT 1";
         $statement = $conn->prepare($sql);
+        $id = $user->getId();
+        $statement->bindValue(":id", $id);
         $statement->execute();
-
         $result = $statement->fetchAll();
         $password = $result[0]["password"];
 
@@ -91,12 +89,9 @@ class UserManager
         $email = $user->getEmail();
 
         if (password_verify($passwordEntered, $password)) {
-            $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+            $conn = Db::getConnection();
             $sql = "UPDATE tl_user SET email = :email WHERE id = :id";
             $statement = $conn->prepare($sql);
-
-            $id = 4;
-
             $statement->bindValue(":email", $email);
             $statement->bindValue(":id", $id);
 
@@ -114,9 +109,11 @@ class UserManager
         $newPassword = $user->getNewPassword();
         $repeatedNewPassword = $user->getRepeatedNewPassword();
 
-        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
-        $sql = "SELECT password FROM tl_user WHERE id = 4 LIMIT 1";
+        $conn = Db::getConnection();
+        $sql = "SELECT password FROM tl_user WHERE id = :id LIMIT 1";
         $statement = $conn->prepare($sql);
+        $id = $user->getId();
+        $statement->bindValue(":id", $id);
         $statement->execute();
 
         $result = $statement->fetchAll();
@@ -125,12 +122,9 @@ class UserManager
         if ($newPassword = $repeatedNewPassword) {
             if (password_verify($oldPassword, $password)) {
                 $hashedNewPassword = password_hash($newPassword, PASSWORD_BCRYPT, ['cost' => 12]);
-                $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+                $conn = Db::getConnection();
                 $sql = "UPDATE tl_user SET password = :password WHERE id = :id";
                 $statement = $conn->prepare($sql);
-
-                $id = 4;
-
                 $statement->bindValue(":password", $hashedNewPassword);
                 $statement->bindValue(":id", $id);
 
@@ -148,7 +142,7 @@ class UserManager
         $passwordEntered = $user->getPasswordForVerification();
         $email = $user->getEmail();
 
-        $conn = new PDO("mysql:host=localhost;dbname=buddy_app", "root", "root");
+        $conn = Db::getConnection();
         $sql = "SELECT password, id FROM tl_user WHERE email = :email";
         $statement = $conn->prepare($sql);
         $statement->bindValue(":email", $email);
@@ -157,13 +151,11 @@ class UserManager
         print_r($result);
         $password = $result[0]["password"];
         $userId = $result[0]["id"];
+        echo $password;
         if (password_verify($passwordEntered, $password)) {
-            echo "Wachtwoord juist!";
             session_start();
             $_SESSION['user_id'] = $userId;
             $_SESSION['logged_in'] = true;
-            echo $_SESSION["logged_in"];
-            echo $_SESSION["user_id"];
             header("Location:complete.profile.php");
         } else {
             throw new Exception("Password is incorrect");

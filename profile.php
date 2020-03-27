@@ -3,75 +3,84 @@
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
 
+session_start();
+$id =  $_SESSION["user_id"];
 
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if ($_POST['updateDetails']) {
+        try {
+            if (!empty($_POST['updateDetails'])) {
+                $user = new User();
+                $user->setDescription($_POST['description']);
+                $user->setId($id);
 
-if ($_POST['updateDetails']) {
-    try {
-        if (!empty($_POST['updateDetails'])) {
-            $user = new User();
-            $user->setDescription($_POST['description']);
+                UserManager::updateUserDetails($user);
 
-            UserManager::updateUserDetails($user);
-
-            $profileInformationSuccess = "Successfully updated your profile information!";
+                $profileInformationSuccess = "Successfully updated your profile information!";
+            }
+        } catch (\Throwable $th) {
+            $profileInformationError = $th->getMessage();
         }
-    } catch (\Throwable $th) {
-        $profileInformationError = $th->getMessage();
-    }
-} else if ($_POST['updateProfilePicture']) {
-    try {
-        $file = $_FILES["profilePicture"]["name"];
-        $image_file = time() . str_replace(' ', '_', $file);
-        $type = $_FILES["profilePicture"]["type"]; //file name "txt_file" 
-        $temp = $_FILES["profilePicture"]["tmp_name"];
-        $size = $_FILES["profilePicture"]["size"];
+    } else if ($_POST['updateProfilePicture']) {
+        try {
+            $file = $_FILES["profilePicture"]["name"];
+            $image_file = time() . str_replace(' ', '_', $file);
+            $type = $_FILES["profilePicture"]["type"]; //file name "txt_file" 
+            $temp = $_FILES["profilePicture"]["tmp_name"];
+            $size = $_FILES["profilePicture"]["size"];
 
-        if (!empty($file)) {
-            if ($type == "image/jpg" || $type == 'image/jpeg' || $type == 'image/png') //check file extension
-            {
-                if ($size < 5000000) {
-                    move_uploaded_file($temp, "uploads/" . $image_file); //move upload file temperory directory to your upload folder
-                    $user = new User();
-                    $user->setProfilePicture("uploads/" . $image_file);
-                    UserManager::updateUserProfilePicture($user);
-                    $ProfilePicturesuccess = "Your profile picture has been updated!";
+            if (!empty($file)) {
+                if ($type == "image/jpg" || $type == 'image/jpeg' || $type == 'image/png') //check file extension
+                {
+                    if ($size < 5000000) {
+                        move_uploaded_file($temp, "uploads/" . $image_file); //move upload file temperory directory to your upload folder
+                        $user = new User();
+                        $user->setProfilePicture("uploads/" . $image_file);
+                        $user->setId($id);
+                        UserManager::updateUserProfilePicture($user);
+                        $ProfilePicturesuccess = "Your profile picture has been updated!";
+                    } else {
+                        $ProfilePictureError = "The max upload size is 5MB!"; //error message file extension
+                    }
                 } else {
-                    $ProfilePictureError = "The max upload size is 5MB!"; //error message file extension
+                    $ProfilePictureError = "Only files with the extension JPG , JPEG , PNG are supported!"; //error message file extension
                 }
             } else {
-                $ProfilePictureError = "Only files with the extension JPG , JPEG , PNG are supported!"; //error message file extension
+                $ProfilePictureError = "You need to upload a picture first!";
             }
-        } else {
-            $ProfilePictureError = "You need to upload a picture first!";
+        } catch (\Throwable $th) {
+            $ProfilePictureError = $th->getMessage();
         }
-    } catch (\Throwable $th) {
-        $ProfilePictureError = $th->getMessage();
+    } else if ($_POST['updateEmail']) {
+        try {
+            $user = new User();
+            $user->setPasswordForVerification($_POST['passwordForEmailVerification']);
+            $user->setEmail($_POST['email']);
+            $user->setId($id);
+
+            UserManager::updateEmail($user);
+
+            $emailSuccess = "Your email has been updated";
+        } catch (\Throwable $th) {
+            $emailerror = $th->getMessage();
+        }
+    } else if ($_POST['updatePassword']) {
+        try {
+            $user = new User();
+            $user->setPasswordForVerification($_POST['oldPassword']);
+            $user->setnewPassword($_POST['newPassword']);
+            $user->setRepeatedNewPassword($_POST['reapeatNewPassword']);
+            $user->setId($id);
+
+            UserManager::updatePassword($user);
+
+            $passwordSuccess = "Your password has been updated!";
+        } catch (\Throwable $th) {
+            $passworderror = $th->getMessage();
+        }
     }
-} else if ($_POST['updateEmail']) {
-    try {
-        $user = new User();
-        $user->setPasswordForVerification($_POST['passwordForEmailVerification']);
-        $user->setEmail($_POST['email']);
-
-        UserManager::updateEmail($user);
-
-        $emailSuccess = "Your email has been updated";
-    } catch (\Throwable $th) {
-        $emailerror = $th->getMessage();
-    }
-} else if ($_POST['updatePassword']) {
-    try {
-        $user = new User();
-        $user->setPasswordForVerification($_POST['oldPassword']);
-        $user->setnewPassword($_POST['newPassword']);
-        $user->setRepeatedNewPassword($_POST['reapeatNewPassword']);
-
-        UserManager::updatePassword($user);
-
-        $passwordSuccess = "Your password has been updated!";
-    } catch (\Throwable $th) {
-        $passworderror = $th->getMessage();
-    }
+} else {
+    header("Location: login.php");
 }
 
 

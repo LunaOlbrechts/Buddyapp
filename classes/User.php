@@ -83,7 +83,7 @@ class User
         if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordconf']) {
             throw new Exception("The two passwords do not match");
         }
-        $password = password_hash($this->getPassword(), PASSWORD_BCRYPT, ['cost' => 12]);
+        $password = password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]);
         $this->password = $password;
 
         return $this;
@@ -303,8 +303,6 @@ class User
 
     public function save()
     {
-        // connection
-        session_start();
         $conn = Db::getConnection();
 
         // check if nothing is empty

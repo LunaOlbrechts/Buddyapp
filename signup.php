@@ -9,10 +9,10 @@
             $user->setFirstName(htmlspecialchars($_POST['firstname']));
             $user->setLastName(htmlspecialchars($_POST['lastname']));
             $user->setPassword(htmlspecialchars($_POST['password']));
-
+            echo $user->getPassword();
             $user->save();
            $success = "user saved!";
-           header("Location: complete.profile.php");
+           header("Location: login.php");
         } catch (\Throwable $th) {
             //throw error
 
