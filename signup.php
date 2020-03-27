@@ -9,7 +9,7 @@
             $user->setFirstName(htmlspecialchars($_POST['firstname']));
             $user->setLastName(htmlspecialchars($_POST['lastname']));
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
-            echo $user->getPassword();
+            //echo $user->getPassword();
             $user->save();
            $success = "user saved!";
            header("Location: login.php");
