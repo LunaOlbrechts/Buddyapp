@@ -1,5 +1,6 @@
 <?php
-    //include_once("../classes/User.php");
+       // include_once("../classes/User.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,7 @@
             <input type="text">
         </form>
         
-        <a href="logout.php" class="navbar__logout">Hi, logout?</a>
+        <a href="logout.php" class="navbar__logout">Hi,  logout?</a>
     </nav>
 </body>
 </html>

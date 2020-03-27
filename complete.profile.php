@@ -4,7 +4,10 @@
 
     session_start();
 
-    // TODO: replace hardcoded values
+    /*
+        TODO: replace hardcoded values from the session id value 
+        that is given by the login and signup feature 
+    */
     $_SESSION["logged_in"] = true;
     $_SESSION["user_id"] = 1;
     $id =  $_SESSION["user_id"];
@@ -14,7 +17,7 @@
     if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]){
         // check !empty post
         if(!empty($_POST) ){
-                //conn database 
+                //try catch set properties and connect to database 
                 try{
                     $user = new User();
 
@@ -37,7 +40,7 @@
         }
     }
     else{
-        
+        header("Location: login.php");
     }
 ?>
 
