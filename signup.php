@@ -34,7 +34,6 @@
     <title>Buddy app |Signup</title>
 </head>
 <body>
-    <?php include_once("include/nav.inc.php"); ?>
 
     <div class="container mt-5">
 

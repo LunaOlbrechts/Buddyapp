@@ -77,6 +77,10 @@ if (!empty($_POST)) {
             <div class="form-group">
                 <input class="btn border" type="submit" value="Log in" name='submit'>
             </div>
+
+            <div>
+                <a href="signup.php">Don't have an account yet? Sign up here</a>
+            </div>
         </div>
     </form>
 
