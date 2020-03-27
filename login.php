@@ -26,7 +26,8 @@ if (!empty($_POST)) {
             $user->setEmail($_POST['email']);
 
             UserManager::logIn($user);
-
+            $_SESSION['user_id'] = ;
+            $_SESSION['logged_in'] = true;
             $error = "Logged in!";
         } catch (\Throwable $th) {
             $error = $th->getMessage();
