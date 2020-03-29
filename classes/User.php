@@ -41,6 +41,54 @@ class User
         return $this;
     }
 
+     /**
+     * Get the value of firstName
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set the value of firstName
+     *
+     * @return  self
+     */
+    public function setFirstName($firstName)
+    {
+        if (empty($_POST['firstname'])) {
+            throw new Exception("Firstname cannot be empty");
+        }
+
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of lastName
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set the value of lastName
+     *
+     * @return  self
+     */
+    public function setLastName($lastName)
+    {
+        if (empty($_POST['lastname'])) {
+            throw new Exception("Lastname cannot be empty");
+        }
+
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
     /*
         Get the value of email
      */
@@ -57,6 +105,7 @@ class User
         if (empty($_POST['email'])) {
             throw new Exception("E-mail cannot be empty");
         }
+
         $this->email = $email;
 
         return $this;
@@ -83,7 +132,60 @@ class User
         if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordconf']) {
             throw new Exception("The two passwords do not match");
         }
+
         $this->password = $password;
+
+        return $this;
+    }
+
+     /**
+     * Get the value of passwordForVerification
+     */
+    public function getPasswordForVerification()
+    {
+        return $this->passwordForVerification;
+    }
+
+    /**
+     * Set the value of passwordForVerification
+     *
+     * @return  self
+     */
+    public function setPasswordForVerification($passwordForVerification)
+    {
+        $this->passwordForVerification = $passwordForVerification;
+
+        return $this;
+    }
+
+     /**
+     * Set the value of newPassword
+     *
+     * @return  self
+     */ 
+    public function setNewPassword($newPassword)
+    {
+        $this->newPassword = $newPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of repeatedNewPassword
+     */ 
+    public function getRepeatedNewPassword()
+    {
+        return $this->repeatedNewPassword;
+    }
+
+    /**
+     * Set the value of repeatedNewPassword
+     *
+     * @return  self
+     */ 
+    public function setRepeatedNewPassword($repeatedNewPassword)
+    {
+        $this->repeatedNewPassword = $repeatedNewPassword;
 
         return $this;
     }
@@ -108,6 +210,7 @@ class User
             $message = "Location can't be empty";
             throw new Exception($message);
         }
+
         $this->location = $location;
 
         return $this;
@@ -232,74 +335,7 @@ class User
 
         return $this;
     }
-
-    /**
-     * Get the value of passwordForVerification
-     */
-    public function getPasswordForVerification()
-    {
-        return $this->passwordForVerification;
-    }
-
-    /**
-     * Set the value of passwordForVerification
-     *
-     * @return  self
-     */
-    public function setPasswordForVerification($passwordForVerification)
-    {
-
-        $this->passwordForVerification = $passwordForVerification;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of firstName
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * Set the value of firstName
-     *
-     * @return  self
-     */
-    public function setFirstName($firstName)
-    {
-        if (empty($_POST['firstname'])) {
-            throw new Exception("Firstname cannot be empty");
-        }
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of lastName
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Set the value of lastName
-     *
-     * @return  self
-     */
-    public function setLastName($lastName)
-    {
-        if (empty($_POST['lastname'])) {
-            throw new Exception("Lastname cannot be empty");
-        }
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
+   
     public function save()
     {
         $conn = Db::getConnection();
@@ -315,8 +351,10 @@ class User
                 $conn = Db::getConnection();
                 $sql = "SELECT * FROM tl_user WHERE email='$email'";
                 $results = $conn->query($sql);
+
                 if ($results->rowCount() > 0) {
                     throw new Exception("Email is already used");
+
                     echo "taken";
                 }
             }
@@ -330,26 +368,23 @@ class User
                 throw new Exception("Username should end with @student.thomasmore.be");
             }
 
-
             // insert query
 
-            $firstname = $this->getFirstName();
-            $lastname = $this->getLastName();
+            $firstName = $this->getFirstName();
+            $lastName = $this->getLastName();
             $email = $this->getEmail();
             $password = $this->getPassword();
 
             $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
 
-
-            $statement->bindValue(":firstName", $firstname);
-            $statement->bindValue(":lastName", $lastname);
+            $statement->bindValue(":firstName", $firstName);
+            $statement->bindValue(":lastName", $lastName);
             $statement->bindValue(":email", $email);
             $statement->bindValue(":password", $password);
 
             $result = $statement->execute();
             echo "saved to database";
-
-
+            
             // return result
             return $result;
         }
@@ -361,37 +396,5 @@ class User
     public function getNewPassword()
     {
         return $this->newPassword;
-    }
-
-    /**
-     * Set the value of newPassword
-     *
-     * @return  self
-     */ 
-    public function setNewPassword($newPassword)
-    {
-        $this->newPassword = $newPassword;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of repeatedNewPassword
-     */ 
-    public function getRepeatedNewPassword()
-    {
-        return $this->repeatedNewPassword;
-    }
-
-    /**
-     * Set the value of repeatedNewPassword
-     *
-     * @return  self
-     */ 
-    public function setRepeatedNewPassword($repeatedNewPassword)
-    {
-        $this->repeatedNewPassword = $repeatedNewPassword;
-
-        return $this;
     }
 }

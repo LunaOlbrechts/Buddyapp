@@ -38,6 +38,7 @@ class UserManager
         $statement->bindValue(":id", $_SESSION["user_id"]);
         $statement->execute();
         $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
         return $userData;
     }
 
@@ -80,9 +81,11 @@ class UserManager
         $conn = Db::getConnection();
         $sql = "SELECT password FROM tl_user WHERE id = :id LIMIT 1";
         $statement = $conn->prepare($sql);
+
         $id = $user->getId();
         $statement->bindValue(":id", $id);
         $statement->execute();
+
         $result = $statement->fetchAll();
         $password = $result[0]["password"];
 
@@ -93,6 +96,7 @@ class UserManager
             $conn = Db::getConnection();
             $sql = "UPDATE tl_user SET email = :email WHERE id = :id";
             $statement = $conn->prepare($sql);
+
             $statement->bindValue(":email", $email);
             $statement->bindValue(":id", $id);
 
@@ -146,12 +150,15 @@ class UserManager
         $conn = Db::getConnection();
         $sql = "SELECT password, id FROM tl_user WHERE email = :email";
         $statement = $conn->prepare($sql);
+    
         $statement->bindValue(":email", $email);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
+
         //print_r($result);
         $password = $result["password"];
         $userId = $result["id"];
+
         //echo $password;
         if (password_verify($passwordEntered, $password)) {
             session_start();
