@@ -20,7 +20,6 @@ class User
     private $newPassword;
     private $repeatedNewPassword;
 
-
     /**
      * Get the value of id
      */
@@ -344,7 +343,6 @@ class User
 
         if (isset($_POST['signup-btn'])) {
 
-
             // CHECK IF EMAIL IS TAKEN
             if (isset($_POST['email'])) {
                 $email = $this->getEmail();
@@ -384,7 +382,7 @@ class User
 
             $result = $statement->execute();
             echo "saved to database";
-            
+
             // return result
             return $result;
         }

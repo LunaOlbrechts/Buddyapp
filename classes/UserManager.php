@@ -1,12 +1,9 @@
 <?php
 
-
 class UserManager
 {
-
     public static function saveCompletedProfile(User $user)
     {
-
         $conn = Db::getConnection();
         $statement = $conn->prepare("UPDATE tl_user SET city = :location, courseInterests = :courseInterests, schoolYear = :schoolYear, 
         sportType = :sportType, goingOutType = :goingOutType WHERE id = :id");
@@ -38,7 +35,7 @@ class UserManager
         $statement->bindValue(":id", $_SESSION["user_id"]);
         $statement->execute();
         $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+        
         return $userData;
     }
 
@@ -130,6 +127,7 @@ class UserManager
                 $conn = Db::getConnection();
                 $sql = "UPDATE tl_user SET password = :password WHERE id = :id";
                 $statement = $conn->prepare($sql);
+
                 $statement->bindValue(":password", $hashedNewPassword);
                 $statement->bindValue(":id", $id);
 
@@ -168,5 +166,31 @@ class UserManager
         } else {
             throw new Exception("Email & password don't match");
         }
+    }
+
+    public static function matchUsersByFilters()
+    {
+        $currentUser = self::getUserFromDatabase();
+
+        $location = $currentUser[0]['city'];
+        $courseInterests = $currentUser[0]['courseInterests'];
+        $schoolYear = $currentUser[0]['schoolYear'];
+        $sportType = $currentUser[0]['sportType'];
+        $goingOutType = $currentUser[0]['goingOutType'];
+
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE city = :city OR courseInterests = :courseInterests
+        OR schoolYear = :schoolYear OR sportType = :sportType OR goingOutType = :goingOutType");
+
+        $statement->bindValue(":city",$location);
+        $statement->bindValue(":courseInterests",$courseInterests);
+        $statement->bindValue(":schoolYear",$schoolYear);
+        $statement->bindValue(":sportType",$sportType);
+        $statement->bindValue(":goingOutType",$goingOutType);
+
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
     }
 }
