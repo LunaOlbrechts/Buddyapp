@@ -1,12 +1,10 @@
 <?php
 
-
 class UserManager
 {
 
     public static function saveCompletedProfile(User $user)
     {
-
         $conn = Db::getConnection();
         $statement = $conn->prepare("UPDATE tl_user SET city = :location, courseInterests = :courseInterests, schoolYear = :schoolYear, 
         sportType = :sportType, goingOutType = :goingOutType WHERE id = :id");
@@ -35,7 +33,9 @@ class UserManager
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("select * from tl_user where id= :id");
+
         $statement->bindValue(":id", $_SESSION["user_id"]);
+
         $statement->execute();
         $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -130,6 +130,7 @@ class UserManager
                 $conn = Db::getConnection();
                 $sql = "UPDATE tl_user SET password = :password WHERE id = :id";
                 $statement = $conn->prepare($sql);
+
                 $statement->bindValue(":password", $hashedNewPassword);
                 $statement->bindValue(":id", $id);
 
@@ -161,10 +162,8 @@ class UserManager
 
         //echo $password;
         if (password_verify($passwordEntered, $password)) {
-            session_start();
-            $_SESSION['user_id'] = $userId;
-            $_SESSION['logged_in'] = true;
-            header("Location:complete.profile.php");
+            $succesMessage= "You are logged in";
+            return $succesMessage;
         } else {
             throw new Exception("Email & password don't match");
         }
