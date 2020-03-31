@@ -1,12 +1,15 @@
 <?php
-session_start();
-$id =  $_SESSION["user_id"];
+    session_start();
+    
+    $id =  $_SESSION["user_id"];
 
-if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
-} else {
-    header("Location: login.php");
-}
+    } 
+    else{
+        header("Location: login.php");
+    }
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

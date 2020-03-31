@@ -2,6 +2,7 @@
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
 
+session_start();
 // make form log in user
 // check ih 
 // if user doesn't exist in db => message: "can't login user" of "mag niet leeg zijn" "geen geldig email"
@@ -25,7 +26,11 @@ if (!empty($_POST)) {
             
             UserManager::logIn($user);
             
-            $error = "Logged in!";
+            $_SESSION['user_id'] = $userId;
+            $_SESSION['logged_in'] = true;
+
+            header("Location: index.php");
+
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
@@ -76,6 +81,10 @@ if (!empty($_POST)) {
 
             <div class="form-group">
                 <input class="btn border" type="submit" value="Log in" name='submit'>
+            </div>
+
+            <div>
+                <a href="signup.php">Don't have an account yet? Sign up here</a>
             </div>
         </div>
     </form>

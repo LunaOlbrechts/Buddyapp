@@ -5,20 +5,18 @@
 
         try {
             $user = new User();
-            $user->setEmail(htmlspecialchars($_POST['email']));
-            $user->setFirstName(htmlspecialchars($_POST['firstname']));
-            $user->setLastName(htmlspecialchars($_POST['lastname']));
-            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
-            echo $user->getPassword();
+            $user->setEmail(htmlspecialchars($_POST['email']) );
+            $user->setFirstName(htmlspecialchars($_POST['firstname']) );
+            $user->setLastName(htmlspecialchars($_POST['lastname']) );
+            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]) );
+            //echo $user->getPassword();
             $user->save();
            $success = "user saved!";
            header("Location: login.php");
         } catch (\Throwable $th) {
             //throw error
-
             $error = $th->getMessage();
         }
-       
     }
 
 
@@ -34,7 +32,6 @@
     <title>Buddy app |Signup</title>
 </head>
 <body>
-    <?php include_once("include/nav.inc.php"); ?>
 
     <div class="container mt-5">
 

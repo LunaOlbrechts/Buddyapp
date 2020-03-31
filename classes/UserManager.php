@@ -1,12 +1,10 @@
 <?php
 
-
 class UserManager
 {
 
     public static function saveCompletedProfile(User $user)
     {
-
         $conn = Db::getConnection();
         $statement = $conn->prepare("UPDATE tl_user SET city = :location, courseInterests = :courseInterests, schoolYear = :schoolYear, 
         sportType = :sportType, goingOutType = :goingOutType WHERE id = :id");
@@ -35,9 +33,12 @@ class UserManager
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("select * from tl_user where id= :id");
+
         $statement->bindValue(":id", $_SESSION["user_id"]);
+
         $statement->execute();
         $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
         return $userData;
     }
 
@@ -80,9 +81,11 @@ class UserManager
         $conn = Db::getConnection();
         $sql = "SELECT password FROM tl_user WHERE id = :id LIMIT 1";
         $statement = $conn->prepare($sql);
+
         $id = $user->getId();
         $statement->bindValue(":id", $id);
         $statement->execute();
+
         $result = $statement->fetchAll();
         $password = $result[0]["password"];
 
@@ -93,6 +96,7 @@ class UserManager
             $conn = Db::getConnection();
             $sql = "UPDATE tl_user SET email = :email WHERE id = :id";
             $statement = $conn->prepare($sql);
+
             $statement->bindValue(":email", $email);
             $statement->bindValue(":id", $id);
 
@@ -126,6 +130,7 @@ class UserManager
                 $conn = Db::getConnection();
                 $sql = "UPDATE tl_user SET password = :password WHERE id = :id";
                 $statement = $conn->prepare($sql);
+
                 $statement->bindValue(":password", $hashedNewPassword);
                 $statement->bindValue(":id", $id);
 
@@ -146,20 +151,21 @@ class UserManager
         $conn = Db::getConnection();
         $sql = "SELECT password, id FROM tl_user WHERE email = :email";
         $statement = $conn->prepare($sql);
+    
         $statement->bindValue(":email", $email);
         $statement->execute();
-        $result = $statement->fetchAll();
-        print_r($result);
-        $password = $result[0]["password"];
-        $userId = $result[0]["id"];
-        echo $password;
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        //print_r($result);
+        $password = $result["password"];
+        $userId = $result["id"];
+
+        //echo $password;
         if (password_verify($passwordEntered, $password)) {
-            session_start();
-            $_SESSION['user_id'] = $userId;
-            $_SESSION['logged_in'] = true;
-            header("Location:complete.profile.php");
+            $succesMessage= "You are logged in";
+            return $succesMessage;
         } else {
-            throw new Exception("Password is incorrect");
+            throw new Exception("Email & password don't match");
         }
     }
 }

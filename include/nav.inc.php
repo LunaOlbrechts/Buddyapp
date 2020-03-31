@@ -21,7 +21,7 @@
             <input type="text">
         </form>
         
-        <a href="logout.php" class="navbar__logout">Hi,  logout?</a>
+        <a href="logout.php" class="navbar__logout">Hi,logout?</a>
     </nav>
 </body>
 </html>
