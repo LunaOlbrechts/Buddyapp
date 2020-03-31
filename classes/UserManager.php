@@ -5,19 +5,19 @@ class UserManager
     public static function saveCompletedProfile(User $user)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("UPDATE tl_user SET city = :location, courseInterests = :courseInterests, schoolYear = :schoolYear, 
+        $statement = $conn->prepare("UPDATE tl_user SET city = :location, mainCourseInterest = :mainCourseInterest, schoolYear = :schoolYear, 
         sportType = :sportType, goingOutType = :goingOutType WHERE id = :id");
 
         $id = $user->getId();
         $location = $user->getLocation();
-        $courseInterests = $user->getCourseInterests();
+        $mainCourseInterest = $user->getMainCourseInterest();
         $schoolYear = $user->getSchoolYear();
         $sportType = $user->getSportType();
         $goingOutType = $user->getGoingOutType();
 
         $statement->bindValue(":id", $id);
         $statement->bindValue(":location", $location);
-        $statement->bindValue(":courseInterests", json_encode($courseInterests));
+        $statement->bindValue(":mainCourseInterest", json_encode($mainCourseInterest));
         $statement->bindValue(":schoolYear", $schoolYear);
         $statement->bindValue(":sportType", $sportType);
         $statement->bindValue(":goingOutType", $goingOutType);

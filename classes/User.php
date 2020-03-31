@@ -10,7 +10,7 @@ class User
     private $email;
     private $password;
     private $location;
-    private $courseInterests;
+    private $mainCourseInterest;
     private $schoolYear;
     private $sportType;
     private $goingOutType;
@@ -258,9 +258,9 @@ class User
     /**
      * Get the value of courseInterests
      */
-    public function getCourseInterests()
+    public function getMainCourseInterest()
     {
-        return $this->courseInterests;
+        return $this->mainCourseInterest;
     }
 
     /**
@@ -268,9 +268,9 @@ class User
      *
      * @return  self
      */
-    public function setCourseInterests($courseInterests)
+    public function setMainCourseInterest($mainCourseInterest)
     {
-        $this->courseInterests = $courseInterests;
+        $this->mainCourseInterest = $mainCourseInterest;
 
         return $this;
     }

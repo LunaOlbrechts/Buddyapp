@@ -25,8 +25,7 @@
 </head>
 <body>
     <?php include_once("include/nav.inc.php"); ?>
-    <h1 class="col-md-4" >Welkom!</h1>
-
+    
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
         <?php foreach($userMatches as $user):?>
@@ -37,9 +36,7 @@
                 <p class="card-text"><?php ?></p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
+                <li class="list-group-item"></li>
             </ul>
             <div class="card-body">
                 <a href="#" class="card-link">Match</a>
