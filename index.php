@@ -10,7 +10,10 @@
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         
-        $userMatches = UserManager::matchUsersByFilters();
+        $currentUser = UserManager::getUserFromDatabase();
+        $matchedUsers = UserManager::matchUsersByFilters($currentUser);
+        $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
+        
     } 
     else{
         header("Location: login.php");
@@ -25,19 +28,21 @@
 </head>
 <body>
     <?php include_once("include/nav.inc.php"); ?>
-    
+
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
-        <?php foreach($userMatches as $user):?>
+        <?php foreach($scoresOfMatchedUsers as $matchedUser =>$user):?>
         <div class="card" style="width: 18rem;">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"><?php echo $user['firstName']?></h5>
                 <p class="card-text"><?php ?></p>
             </div>
+            <?php foreach($user['filters'] as $userFilter): ?>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"></li>
+                <li class="list-group-item"><?php echo $userFilter?></li>
             </ul>
+            <?php endforeach ?>
             <div class="card-body">
                 <a href="#" class="card-link">Match</a>
             <a href="#" class="card-link">Open chat</a>

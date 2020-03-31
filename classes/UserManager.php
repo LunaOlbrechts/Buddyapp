@@ -35,7 +35,7 @@ class UserManager
         $statement->bindValue(":id", $_SESSION["user_id"]);
         $statement->execute();
         $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $userData;
     }
 
@@ -148,7 +148,7 @@ class UserManager
         $conn = Db::getConnection();
         $sql = "SELECT password, id FROM tl_user WHERE email = :email";
         $statement = $conn->prepare($sql);
-    
+
         $statement->bindValue(":email", $email);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -162,35 +162,80 @@ class UserManager
             session_start();
             $_SESSION['user_id'] = $userId;
             $_SESSION['logged_in'] = true;
-            header("Location:complete.profile.php");
+            header("Location:complete.profile.php");  //redirect moet in de frontend
         } else {
             throw new Exception("Email & password don't match");
         }
     }
 
-    public static function matchUsersByFilters()
+    public static function matchUsersByFilters($currentUser)
     {
-        $currentUser = self::getUserFromDatabase();
-
         $location = $currentUser[0]['city'];
-        $courseInterests = $currentUser[0]['courseInterests'];
+        $mainCourseInterest = $currentUser[0]['mainCourseInterest'];
         $schoolYear = $currentUser[0]['schoolYear'];
         $sportType = $currentUser[0]['sportType'];
         $goingOutType = $currentUser[0]['goingOutType'];
 
         $conn = Db::getConnection();
-        $statement = $conn->prepare("SELECT * FROM tl_user WHERE city = :city OR courseInterests = :courseInterests
+
+        //Select users that have minimum one match with the current user filters 
+
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE city = :city OR mainCourseInterest = :mainCourseInterest
         OR schoolYear = :schoolYear OR sportType = :sportType OR goingOutType = :goingOutType");
 
-        $statement->bindValue(":city",$location);
-        $statement->bindValue(":courseInterests",$courseInterests);
-        $statement->bindValue(":schoolYear",$schoolYear);
-        $statement->bindValue(":sportType",$sportType);
-        $statement->bindValue(":goingOutType",$goingOutType);
+        $statement->bindValue(":city", $location);
+        $statement->bindValue(":mainCourseInterest", $mainCourseInterest);
+        $statement->bindValue(":schoolYear", $schoolYear);
+        $statement->bindValue(":sportType", $sportType);
+        $statement->bindValue(":goingOutType", $goingOutType);
 
         $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $matchedUsers = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return $result;
+        return $matchedUsers;
+    }
+
+    public static function getScoresOfMatchedUsers($currentUser, $matchedUsers)
+    {
+        $matchedScores = [];
+
+        foreach ($matchedUsers as $matchedUser) {
+            $newUser = [
+                'user_id' => $matchedUser['id'],
+                'firstName' => $matchedUser['firstName'],
+                'lastName' => $matchedUser['lastName'],
+                'filters' => [
+                    "city" => $matchedUser['city'],
+                    'mainCourseInterest' => $matchedUser['mainCourseInterest'],
+                    'schoolYear' => $matchedUser['schoolYear'],
+                    'sportType' => $matchedUser['sportType'],
+                    'goingOutType' => $matchedUser['goingOutType'],
+                ],
+                'score' => 0
+            ];
+
+            if ($currentUser[0]['city'] == $matchedUser['city']) {
+                $newUser['score'] += 20;
+            }
+
+            if ($currentUser[0]['mainCourseInterest'] == $matchedUser['mainCourseInterest']) {
+                $newUser['score'] += 20;
+            }
+
+            if ($currentUser[0]['schoolYear'] == $matchedUser['schoolYear']) {
+                $newUser['score'] += 20;
+            }
+
+            if ($currentUser[0]['sportType'] == $matchedUser['sportType']) {
+                $newUser['score'] += 20;
+            }
+
+            if ($currentUser[0]['goingOutType'] == $matchedUser['goingOutType']) {
+                $newUser['score'] += 20;
+            }
+
+            $matchedScores[] = $newUser;
+        }
+        return $matchedScores;
     }
 }
