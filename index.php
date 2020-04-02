@@ -20,5 +20,6 @@
 <body>
     <?php include_once("include/nav.inc.php"); ?>
     <h1 class="col-md-4" >Welkom!</h1>
+    <?php echo json_encode($_SESSION) ?>
 </body>
 </html>

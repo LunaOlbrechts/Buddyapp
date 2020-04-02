@@ -160,6 +160,8 @@ class UserManager
         $password = $result["password"];
         $userId = $result["id"];
 
+        $user->setId($userId);
+
         //echo $password;
         if (password_verify($passwordEntered, $password)) {
             $succesMessage= "You are logged in";

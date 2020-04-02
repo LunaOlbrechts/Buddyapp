@@ -26,7 +26,7 @@ if (!empty($_POST)) {
             
             UserManager::logIn($user);
             
-            $_SESSION['user_id'] = $userId;
+            $_SESSION['user_id'] = $user->getId();
             $_SESSION['logged_in'] = true;
 
             header("Location: index.php");
