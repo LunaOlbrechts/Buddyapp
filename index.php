@@ -6,24 +6,23 @@
     
     // change hardcoded values 
     $_SESSION['logged_in'] = true;
-    $_SESSION['user_id']= 1;
+    $_SESSION['user_id']= 2;
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         
         $currentUser = UserManager::getUserFromDatabase();
         $matchedUsers = UserManager::matchUsersByFilters($currentUser);
         $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
-        
     } 
-    else{
+    else {
         header("Location: login.php");
     }
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <title>Home</title>
 </head>
 <body>
@@ -32,24 +31,27 @@
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
         <?php foreach($scoresOfMatchedUsers as $matchedUser =>$user):?>
+        <?php if($user['user_id'] != $_SESSION['user_id']): ?>
         <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="<?php echo $user['profilePicture']?>" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title"><?php echo $user['firstName']?></h5>
-                <p class="card-text"><?php ?></p>
+                <h5 class="card-title"><?php echo $user['firstName'] . " " . $user['lastName'] ?></h5>
+                <p class="card-text">jullie hebben dit gemeen:</p>
+                <?php foreach($user['matches'] as $match):?>
+                <ul>
+                    <?php if(trim($match) !== ''):?><li><?php echo $match . ", " ?></li><?php endif ?>
+                </ul>
+                <?php endforeach?>
             </div>
-            <?php foreach($user['filters'] as $userFilter): ?>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><?php echo $userFilter?></li>
-            </ul>
-            <?php endforeach ?>
+
             <div class="card-body">
-                <a href="#" class="card-link">Match</a>
-            <a href="#" class="card-link">Open chat</a>
+                <a href="#" class="card-link" id="match">Match</a>
             </div>
         </div>
+        <?php endif ?>
         <?php endforeach ?>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

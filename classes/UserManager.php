@@ -204,6 +204,7 @@ class UserManager
                 'user_id' => $matchedUser['id'],
                 'firstName' => $matchedUser['firstName'],
                 'lastName' => $matchedUser['lastName'],
+                'profilePicture' => $matchedUser['profilePicture'],
                 'filters' => [
                     "city" => $matchedUser['city'],
                     'mainCourseInterest' => $matchedUser['mainCourseInterest'],
@@ -211,27 +212,39 @@ class UserManager
                     'sportType' => $matchedUser['sportType'],
                     'goingOutType' => $matchedUser['goingOutType'],
                 ],
-                'score' => 0
+                'score' => 0,
+                'matches'=>[
+                    "city" => "",
+                    "mainCourseInterest" => "",
+                    "schoolYear" => "",
+                    "sportType" => "",
+                    "goingOutType" => ""
+                ]
             ];
 
             if ($currentUser[0]['city'] == $matchedUser['city']) {
                 $newUser['score'] += 20;
+                $newUser['matches']['city'] = $matchedUser['city'];
             }
 
             if ($currentUser[0]['mainCourseInterest'] == $matchedUser['mainCourseInterest']) {
                 $newUser['score'] += 20;
+                $newUser['matches']['mainCourseInterest'] = $matchedUser['mainCourseInterest'];
             }
 
             if ($currentUser[0]['schoolYear'] == $matchedUser['schoolYear']) {
                 $newUser['score'] += 20;
+                $newUser['matches']['schoolYear'] = $matchedUser['schoolYear'];
             }
 
             if ($currentUser[0]['sportType'] == $matchedUser['sportType']) {
                 $newUser['score'] += 20;
+                $newUser['matches']['sportType'] = $matchedUser['sportType'];
             }
 
             if ($currentUser[0]['goingOutType'] == $matchedUser['goingOutType']) {
                 $newUser['score'] += 20;
+                $newUser['matches']['goingOutType'] = $matchedUser['goingOutType'];
             }
 
             $matchedScores[] = $newUser;
