@@ -148,7 +148,7 @@ class UserManager
         $email = $user->getEmail();
 
         $conn = Db::getConnection();
-        $sql = "SELECT password, id FROM tl_user WHERE email = :email";
+        $sql = "SELECT password, id, firstName, lastName FROM tl_user WHERE email = :email";
         $statement = $conn->prepare($sql);
 
         $statement->bindValue(":email", $email);
@@ -158,14 +158,16 @@ class UserManager
         //print_r($result);
         $password = $result["password"];
         $userId = $result["id"];
-
-        $user->setId($userId);
+        $firstName = $result["firstName"];
+        $lastName = $result["lastName"];
 
         //echo $password;
         if (password_verify($passwordEntered, $password)) {
             session_start();
             $_SESSION['user_id'] = $userId;
             $_SESSION['logged_in'] = true;
+            $_SESSION['firstName'] = $firstName;
+            $_SESSION['lastName'] = $lastName;
             header("Location:complete.profile.php");  //redirect moet in de frontend
         } else {
             throw new Exception("Email & password don't match");
