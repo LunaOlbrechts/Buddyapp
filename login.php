@@ -25,9 +25,6 @@ if (!empty($_POST)) {
             $user->setEmail($_POST['email']);
             
             UserManager::logIn($user);
-            
-            $_SESSION['user_id'] = $user->getId();
-            $_SESSION['logged_in'] = true;
 
             header("Location: index.php");
 

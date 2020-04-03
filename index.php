@@ -3,10 +3,6 @@
     include_once(__DIR__ . "/classes/UserManager.php");
 
     session_start();
-    
-    // change hardcoded values 
-    $_SESSION['logged_in'] = true;
-    $_SESSION['user_id']= 1;
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $currentUser = UserManager::getUserFromDatabase();
