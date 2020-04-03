@@ -51,17 +51,17 @@
 
         <div class="form-group">
             <label for="email">E-mail:</label>
-            <input class="form-control" type="text" name="email" id="email" placeholder="Enter your first e-mail" value="l@student.thomasmore.be">
+            <input class="form-control" type="text" name="email" id="email" placeholder="Enter your e-mail">
         </div>
 
         <div class="form-group">
             <label for="firstname">First name:</label>
-            <input class="form-control" type="text" name="firstname" id="firstname" placeholder="Enter your first name" value="Luna">
+            <input class="form-control" type="text" name="firstname" id="firstname" placeholder="Enter your first name">
         </div>
 
         <div class="form-group">
             <label for="lastname">Last name:</label>
-            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Enter your last name" value="Olbrechts">
+            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Enter your last name">
         </div>
 
         <div class="form-group">
@@ -74,10 +74,13 @@
             <input class="form-control" type="password" name="passwordconf" id="passwordconf">
         </div>
 
-        <div>
+        <div class="form-group">
             <input class="btn border" name="signup-btn" type="submit" value="Sign me up">
         </div>    
     
+        <div>
+            <a href="login.php">Already have an account? Log in here</a>
+        </div>
     </form>
 
     </div>

@@ -19,6 +19,7 @@ class User
     private $passwordForVerification;
     private $newPassword;
     private $repeatedNewPassword;
+    private $buddyType;
 
     /**
      * Get the value of id
@@ -418,5 +419,25 @@ class User
     public function getNewPassword()
     {
         return $this->newPassword;
+    }
+
+    /**
+     * Get the value of buddyType
+     */ 
+    public function getBuddyType()
+    {
+        return $this->buddyType;
+    }
+
+    /**
+     * Set the value of buddyType
+     *
+     * @return  self
+     */ 
+    public function setBuddyType($buddyType)
+    {
+        $this->buddyType = $buddyType;
+
+        return $this;
     }
 }

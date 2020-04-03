@@ -6,7 +6,7 @@ class UserManager
     {
         $conn = Db::getConnection();
         $statement = $conn->prepare("UPDATE tl_user SET city = :location, mainCourseInterest = :mainCourseInterest, schoolYear = :schoolYear, 
-        sportType = :sportType, goingOutType = :goingOutType WHERE id = :id");
+        sportType = :sportType, goingOutType = :goingOutType, buddyType = :buddyType WHERE id = :id");
 
         $id = $user->getId();
         $location = $user->getLocation();
@@ -14,6 +14,7 @@ class UserManager
         $schoolYear = $user->getSchoolYear();
         $sportType = $user->getSportType();
         $goingOutType = $user->getGoingOutType();
+        $buddyType = $user->getBuddyType();
 
         $statement->bindValue(":id", $id);
         $statement->bindValue(":location", $location);
@@ -21,6 +22,7 @@ class UserManager
         $statement->bindValue(":schoolYear", $schoolYear);
         $statement->bindValue(":sportType", $sportType);
         $statement->bindValue(":goingOutType", $goingOutType);
+        $statement->bindValue(":buddyType", $buddyType);
 
         $result = $statement->execute();
 
