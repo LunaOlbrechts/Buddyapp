@@ -2,7 +2,6 @@
     include_once(__DIR__ . "/classes/User.php");
 
     if(!empty($_POST)) {
-
         try {
             $user = new User();
             $user->setEmail(htmlspecialchars($_POST['email']) );
@@ -11,8 +10,9 @@
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]) );
             //echo $user->getPassword();
             $user->save();
-           $success = "user saved!";
-           header("Location: login.php");
+
+            $success = "user saved!";
+            header("Location: complete.profile.php");
         } catch (\Throwable $th) {
             //throw error
             $error = $th->getMessage();
@@ -51,17 +51,17 @@
 
         <div class="form-group">
             <label for="email">E-mail:</label>
-            <input class="form-control" type="text" name="email" id="email" placeholder="Enter your first e-mail">
+            <input class="form-control" type="text" name="email" id="email" placeholder="Enter your first e-mail" value="l@student.thomasmore.be">
         </div>
 
         <div class="form-group">
             <label for="firstname">First name:</label>
-            <input class="form-control" type="text" name="firstname" id="firstname" placeholder="Enter your first name">
+            <input class="form-control" type="text" name="firstname" id="firstname" placeholder="Enter your first name" value="Luna">
         </div>
 
         <div class="form-group">
             <label for="lastname">Last name:</label>
-            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Enter your last name">
+            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Enter your last name" value="Olbrechts">
         </div>
 
         <div class="form-group">

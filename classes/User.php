@@ -10,7 +10,7 @@ class User
     private $email;
     private $password;
     private $location;
-    private $courseInterests;
+    private $mainCourseInterest;
     private $schoolYear;
     private $sportType;
     private $goingOutType;
@@ -19,7 +19,6 @@ class User
     private $passwordForVerification;
     private $newPassword;
     private $repeatedNewPassword;
-
 
     /**
      * Get the value of id
@@ -231,6 +230,12 @@ class User
      */
     public function setSchoolYear($schoolYear)
     {
+        if (empty($schoolYear)) {
+            $showError = true;
+            $message = "school year can't be empty";
+            throw new Exception($message);
+        }
+
         $this->schoolYear = $schoolYear;
 
         return $this;
@@ -251,6 +256,12 @@ class User
      */
     public function setSportType($sportType)
     {
+        if (empty($sportType)) {
+            $showError = true;
+            $message = "sport type can't be empty";
+            throw new Exception($message);
+        }
+
         $this->sportType = $sportType;
 
         return $this;
@@ -259,9 +270,9 @@ class User
     /**
      * Get the value of courseInterests
      */
-    public function getCourseInterests()
+    public function getMainCourseInterest()
     {
-        return $this->courseInterests;
+        return $this->mainCourseInterest;
     }
 
     /**
@@ -269,9 +280,15 @@ class User
      *
      * @return  self
      */
-    public function setCourseInterests($courseInterests)
+    public function setMainCourseInterest($mainCourseInterest)
     {
-        $this->courseInterests = $courseInterests;
+        if (empty($mainCourseInterest)) {
+            $showError = true;
+            $message = "course intererest can't be empty";
+            throw new Exception($message);
+        }
+
+        $this->mainCourseInterest = $mainCourseInterest;
 
         return $this;
     }
@@ -291,6 +308,12 @@ class User
      */
     public function setGoingOutType($goingOutType)
     {
+        if (empty($goingOutType)) {
+            $showError = true;
+            $message = "going-out type can't be empty";
+            throw new Exception($message);
+        }
+
         $this->goingOutType = $goingOutType;
 
         return $this;
@@ -344,7 +367,6 @@ class User
 
         if (isset($_POST['signup-btn'])) {
 
-
             // CHECK IF EMAIL IS TAKEN
             if (isset($_POST['email'])) {
                 $email = $this->getEmail();
@@ -384,7 +406,7 @@ class User
 
             $result = $statement->execute();
             echo "saved to database";
-            
+
             // return result
             return $result;
         }
