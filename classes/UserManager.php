@@ -174,7 +174,7 @@ class UserManager
     public static function matches(User $user)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select * from tl_user");
+        $statement = $conn->prepare("SELECT a.* FROM tl_user a JOIN (SELECT email, matchId, COUNT(*) FROM tl_user GROUP BY matchId HAVING count(*) > 1) b ON  a.matchId = b.matchId ORDER BY a.matchId");
         $statement->execute();
         $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 

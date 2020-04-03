@@ -1,16 +1,19 @@
 <?php
+
+    
     include_once(__DIR__ . "/classes/User.php");
     include_once(__DIR__ . "/classes/UserManager.php");
 
     session_start();
     $id =  $_SESSION["user_id"];
 
-    
+
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $user = new User();
         $user->setId($id);
         $users = Usermanager::matches($user);
-        // var_dump($users);            
+       // $users = Usermanager::matches2($user);
+       // var_dump($users);            
     } else {
         header("Location: login.php");
     }
@@ -32,7 +35,7 @@
 
     <?php foreach($users as $user): ?>
         <h2><?php echo $user['email']; ?></h2>
-
     <?php endforeach; ?>
+
 </body>
 </html>
