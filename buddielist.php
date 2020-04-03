@@ -12,7 +12,6 @@
         $user = new User();
         $user->setId($id);
         $users = Usermanager::matches($user);
-       // $users = Usermanager::matches2($user);
        // var_dump($users);            
     } else {
         header("Location: login.php");
@@ -33,8 +32,24 @@
     <?php include_once("include/nav.inc.php"); ?>
     <h1 class="col-md-4" >This is a list of all people with their buddy!</h1>
 
-    <?php foreach($users as $user): ?>
-        <h2><?php echo $user['email']; ?></h2>
+    
+    <?php
+    $i = 0;
+    foreach($users as $user): 
+    ?>
+        <h2><?php 
+        ++$i;
+        if($i==1) {
+            echo "<row>";
+            echo "<item>" . $user['email'] . "</item>";
+        }
+        if($i==2) {
+            echo "<item>" . $user['email'] . "</item>";
+            echo "</row>";
+            $i=0;          
+        }
+       // echo $user['email']; 
+       ?></h2>
     <?php endforeach; ?>
 
 </body>

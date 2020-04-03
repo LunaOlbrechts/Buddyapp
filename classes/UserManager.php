@@ -171,7 +171,7 @@ class UserManager
         }
     }
 
-    public static function matches(User $user)
+    public static function matches()
     {
         $conn = Db::getConnection();
         $statement = $conn->prepare("SELECT a.* FROM tl_user a JOIN (SELECT email, matchId, COUNT(*) FROM tl_user GROUP BY matchId HAVING count(*) > 1) b ON  a.matchId = b.matchId ORDER BY a.matchId");
