@@ -23,8 +23,6 @@
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <?php echo json_encode($_SESSION) ?>
-
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
         <?php foreach($scoresOfMatchedUsers as $matchedUser =>$user):?>
