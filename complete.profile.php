@@ -25,6 +25,7 @@
                     $user->setSchoolYear($_POST['schoolYear']);
                     $user->setSportType($_POST['sportType']);
                     $user->setGoingOutType($_POST['goingOutType']);
+                    $user->setBuddyType($_POST['buddyType']);
 
                     UserManager::saveCompletedProfile($user);
 
@@ -71,15 +72,15 @@
 
                 <label>Opleidingsinteresse</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="exampleRadios1" value="option1" checked>
+                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="Frontend development" value="Frontend development" checked>
                     <label class="form-check-label" for="exampleRadios1">Frontend development</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="exampleRadios2" value="option2">
+                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="Backend development" value="Backend development">
                     <label class="form-check-label" for="exampleRadios2">Backend development</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="exampleRadios3" value="option3">
+                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="Web design" value="Web design">
                     <label class="form-check-label" for="exampleRadios3">Web design</label>
                 </div>
 
@@ -92,6 +93,16 @@
                         <option <?php if(isset($_POST['schoolYear']) && $_POST['schoolYear'] == '3 IMD'): echo "selected" ?><?php endif ?>>3 IMD</option>
                         <option <?php if(isset($_POST['schoolYear']) && $_POST['schoolYear'] == 'Aangepast programma'): echo "selected" ?><?php endif ?>>Aangepast programma</option>
                     </select>
+                </div>
+
+                <label>Buddy</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="lookingForABuddy" name="buddyType" value="lookingForABuddy" checked>
+                    <label class="form-check-label" for="lookingForABuddy">Ik ben op zoek naar een buddy</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="wantToBeABuddy" name="buddyType" value="wantToBeABuddy">
+                    <label class="form-check-label" for="isABuddy">Ik wil een buddy zijn</label>
                 </div>
 
                 <div class="form-group">
