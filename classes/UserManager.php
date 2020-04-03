@@ -170,4 +170,16 @@ class UserManager
             throw new Exception("Email & password don't match");
         }
     }
+
+    public static function matches(User $user)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from tl_user");
+        $statement->execute();
+        $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $users;
+
+    }
+    
 }
