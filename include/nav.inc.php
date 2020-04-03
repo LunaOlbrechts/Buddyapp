@@ -1,6 +1,8 @@
 <?php
-       // include_once("../classes/User.php");
+       include_once(__CLASS__ ."classes/User.php");
+       include_once(__CLASS__ ."classes/UserManager.php");
 
+        $currentUser = UserManager::getUserFromDatabase();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +22,11 @@
         <form action="" method="post">
             <input type="text">
         </form>
-        
-        <a href="logout.php" class="navbar__logout">Hi,logout?</a>
+
+        <a href="logout.php" class="navbar__logout">Hi <?php echo $currentUser[0]['firstName']?>, logout?</a>
+        <a class="navbar-brand" href="#">
+            <img src="<?php echo $currentUser[0]['profilePicture']?>" width="50" height="50" alt="profile picture">
+        </a>
     </nav>
 </body>
 </html>

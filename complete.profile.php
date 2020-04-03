@@ -8,22 +8,22 @@
         TODO: replace hardcoded values from the session id value 
         that is given by the login and signup feature 
     */
-    // $_SESSION["logged_in"] = true;
-    // $_SESSION["user_id"] = 1;
-    $id =  $_SESSION["user_id"];
+        $_SESSION["logged_in"] = true;
+        $_SESSION["user_id"] = 1;
+        $id =  $_SESSION["user_id"];
 
     $showError = false;
 
-    if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]){
+    if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         // check !empty post
-        if(!empty($_POST) ){
+        if (!empty($_POST) ) {
                 //try catch set properties and connect to database 
-                try{
+                try {
                     $user = new User();
-
+                    
                     $user->setId($id);
                     $user->setLocation($_POST['inputLocation']);
-                    $user->setCourseInterests($_POST['checkListInterests']);
+                    $user->setMainCourseInterest($_POST['mainCourseInterest']);
                     $user->setSchoolYear($_POST['schoolYear']);
                     $user->setSportType($_POST['sportType']);
                     $user->setGoingOutType($_POST['goingOutType']);
@@ -34,12 +34,12 @@
 
                     header("Location: index.php");
                 }
-                catch(\Throwable $th){
+                catch (\Throwable $th) {
                     $error = $th->getMessage();
                 }
         }
     }
-    else{
+    else {
         header("Location: login.php");
     }
 ?>
@@ -73,29 +73,20 @@
 
                 <div class="form-group">
                     <div class="interests">
-                        <p class="form-title">Opleiding interesses</p>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="checkListInterests[]" value="inputBackendDevelopment">
-                            <label class="form-check-label" for="inputBackendDevelopment">backend development</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="checkListInterests[]" value="inputFrontendDevelopment">
-                            <label class="form-check-label" for="inputFrontendDevelopment">frontend development</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="checkListInterests[]" value="input3dDesign">
-                            <label class="form-check-label" for="input3dDesign">3D design</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="checkListInterests[]" value="inputWebDesign">
-                            <label class="form-check-label" for="inputWebDesign">Web design</label>
-                        </div>
+                        <label for="exampleFormControlSelect1" class="form-title">Opleidingsinteresse</label>
+                        <select class="form-control" name="mainCourseInterest">
+                            <option selected>kies een optie</option>
+                            <option>Frontend development</option>
+                            <option>Backend development</option>
+                            <option>Web design</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlSelect1" class="form-title">Opleidingsjaar</label>
                     <select class="form-control" name="schoolYear">
+                    <option selected>kies een optie</option>
                     <option>1 IMD</option>
                     <option>2 IMD</option>
                     <option>3 IMD</option>
@@ -106,6 +97,7 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1" class="form-title">Welk type sporter ben jij?</label>
                     <select class="form-control" name="sportType">
+                    <option selected>kies een optie</option>
                     <option>Waterrat</option>
                     <option>Krachtpatser</option>
                     <option>Uithoudingsvermogen</option>
@@ -117,6 +109,7 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1" class="form-title">Welk type uitgaanstype ben jij?</label>
                     <select class="form-control" name="goingOutType">
+                    <option selected>kies een optie</option>
                     <option>Party animal</option>
                     <option>Gezellig samen met vrienden</option>
                     <option>Home sweet home</option>
