@@ -19,6 +19,7 @@ class User
     private $passwordForVerification;
     private $newPassword;
     private $repeatedNewPassword;
+    private $matchId;
 
 
     /**
@@ -396,5 +397,25 @@ class User
     public function getNewPassword()
     {
         return $this->newPassword;
+    }
+
+    /**
+     * Get the value of matchId
+     */ 
+    public function getMatchId()
+    {
+        return $this->matchId;
+    }
+
+    /**
+     * Set the value of matchId
+     *
+     * @return  self
+     */ 
+    public function setMatchId($matchId)
+    {
+        $this->matchId = $matchId;
+
+        return $this;
     }
 }
