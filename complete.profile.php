@@ -16,7 +16,7 @@
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         // check !empty post
-        if (!empty($_POST) ) {
+        if (!empty($_POST)) {
                 //try catch set properties and connect to database 
                 try {
                     $user = new User();
@@ -68,51 +68,53 @@
                 <?php if(!isset($successMessage)):?>
                 <div class="form-group">
                 <p class="form-title">Plaats</p>
-                    <input type="text" class="form-control" name="inputLocation" placeholder="Plaats">
+                    <input type="text" class="form-control" name="inputLocation" placeholder="Plaats" value="<?php if(isset($_POST['inputLocation'])): echo $_POST['inputLocation'] ?><?php endif ?>">
                 </div>
 
-                <div class="form-group">
-                    <div class="interests">
-                        <label for="exampleFormControlSelect1" class="form-title">Opleidingsinteresse</label>
-                        <select class="form-control" name="mainCourseInterest">
-                            <option selected>kies een optie</option>
-                            <option>Frontend development</option>
-                            <option>Backend development</option>
-                            <option>Web design</option>
-                        </select>
-                    </div>
+                <label>Opleidingsinteresse</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">Frontend development</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="exampleRadios2" value="option2">
+                    <label class="form-check-label" for="exampleRadios2">Backend development</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="mainCourseInterest" id="exampleRadios3" value="option3">
+                    <label class="form-check-label" for="exampleRadios3">Web design</label>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlSelect1" class="form-title">Opleidingsjaar</label>
                     <select class="form-control" name="schoolYear">
-                    <option selected>kies een optie</option>
-                    <option>1 IMD</option>
-                    <option>2 IMD</option>
-                    <option>3 IMD</option>
-                    <option>Aangepast programma</option>
+                        <option selected></option>
+                        <option <?php if(isset($_POST['schoolYear']) && $_POST['schoolYear'] == '1 IMD'): echo "selected" ?><?php endif ?>>1 IMD</option>
+                        <option <?php if(isset($_POST['schoolYear']) && $_POST['schoolYear'] == '2 IMD'): echo "selected" ?><?php endif ?>>2 IMD</option>
+                        <option <?php if(isset($_POST['schoolYear']) && $_POST['schoolYear'] == '3 IMD'): echo "selected" ?><?php endif ?>>3 IMD</option>
+                        <option <?php if(isset($_POST['schoolYear']) && $_POST['schoolYear'] == 'Aangepast programma'): echo "selected" ?><?php endif ?>>Aangepast programma</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlSelect1" class="form-title">Welk type sporter ben jij?</label>
                     <select class="form-control" name="sportType">
-                    <option selected>kies een optie</option>
-                    <option>Waterrat</option>
-                    <option>Krachtpatser</option>
-                    <option>Uithoudingsvermogen</option>
-                    <option>Teamplayer</option>
-                    <option>Zetelhanger</option>
+                        <option selected></option>
+                        <option <?php if(isset($_POST['sportType']) && $_POST['sportType'] == 'Waterrat'): echo "selected" ?><?php endif ?>>Waterrat</option>
+                        <option <?php if(isset($_POST['sportType']) && $_POST['sportType'] == 'Krachtpatser'): echo "selected" ?><?php endif ?>>Krachtpatser</option>
+                        <option <?php if(isset($_POST['sportType']) && $_POST['sportType'] == 'Uithoudingsvermogen'): echo "selected" ?><?php endif ?>>Uithoudingsvermogen</option>
+                        <option <?php if(isset($_POST['sportType']) && $_POST['sportType'] == 'Teamplayer'): echo "selected" ?><?php endif ?>>Teamplayer</option>
+                        <option <?php if(isset($_POST['sportType']) && $_POST['sportType'] == 'Zetelhanger'): echo "selected" ?><?php endif ?>>Zetelhanger</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlSelect1" class="form-title">Welk type uitgaanstype ben jij?</label>
                     <select class="form-control" name="goingOutType">
-                    <option selected>kies een optie</option>
-                    <option>Party animal</option>
-                    <option>Gezellig samen met vrienden</option>
-                    <option>Home sweet home</option>
+                        <option selected></option>
+                        <option <?php if(isset($_POST['goingOutType']) && $_POST['goingOutType'] == 'Party animal'): echo "selected" ?><?php endif ?>>Party animal</option>
+                        <option <?php if(isset($_POST['goingOutType']) && $_POST['goingOutType'] == 'Gezellig samen met vrienden'): echo "selected" ?><?php endif ?>>Gezellig samen met vrienden</option>
+                        <option <?php if(isset($_POST['goingOutType']) && $_POST['goingOutType'] == '>Home sweet home'): echo "selected" ?><?php endif ?>>Home sweet home</option>
                     </select>
                 </div>
                 <div class="btn-submit">

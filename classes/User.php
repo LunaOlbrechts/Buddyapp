@@ -230,6 +230,12 @@ class User
      */
     public function setSchoolYear($schoolYear)
     {
+        if (empty($schoolYear)) {
+            $showError = true;
+            $message = "school year can't be empty";
+            throw new Exception($message);
+        }
+
         $this->schoolYear = $schoolYear;
 
         return $this;
@@ -250,6 +256,12 @@ class User
      */
     public function setSportType($sportType)
     {
+        if (empty($sportType)) {
+            $showError = true;
+            $message = "sport type can't be empty";
+            throw new Exception($message);
+        }
+
         $this->sportType = $sportType;
 
         return $this;
@@ -270,6 +282,12 @@ class User
      */
     public function setMainCourseInterest($mainCourseInterest)
     {
+        if (empty($mainCourseInterest)) {
+            $showError = true;
+            $message = "course intererest can't be empty";
+            throw new Exception($message);
+        }
+
         $this->mainCourseInterest = $mainCourseInterest;
 
         return $this;
@@ -290,6 +308,12 @@ class User
      */
     public function setGoingOutType($goingOutType)
     {
+        if (empty($goingOutType)) {
+            $showError = true;
+            $message = "going-out type can't be empty";
+            throw new Exception($message);
+        }
+
         $this->goingOutType = $goingOutType;
 
         return $this;
