@@ -9,7 +9,6 @@
     $_SESSION['user_id']= 1;
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-        
         $currentUser = UserManager::getUserFromDatabase();
         $matchedUsers = UserManager::matchUsersByFilters($currentUser);
         $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
@@ -36,7 +35,7 @@
             <img src="<?php echo $user['profilePicture']?>" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"><?php echo $user['firstName'] . " " . $user['lastName'] ?></h5>
-                <p class="card-text">jullie hebben dit gemeen:</p>
+                <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
                 <?php foreach($user['matches'] as $match):?>
                 <ul>
                     <?php if(trim($match) !== ''):?><li><?php echo $match . ", " ?></li><?php endif ?>
