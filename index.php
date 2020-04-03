@@ -6,7 +6,7 @@
     
     // change hardcoded values 
     $_SESSION['logged_in'] = true;
-    $_SESSION['user_id']= 2;
+    $_SESSION['user_id']= 1;
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         
@@ -26,7 +26,7 @@
     <title>Home</title>
 </head>
 <body>
-    <?php include_once("include/nav.inc.php"); ?>
+    <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
