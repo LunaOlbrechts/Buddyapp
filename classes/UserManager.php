@@ -203,6 +203,24 @@ class UserManager
         return $matchedUsers;
     }
 
+    public static function matchUsersByFiltersChat()
+    {
+        $conn = Db::getConnection();
+
+        //Select users that have minimum one match with the current user filters 
+
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName = :firstName");
+
+        $reciever = $_SESSION['reciever'];
+
+        $statement->bindValue(":firstName", $reciever);
+
+        $statement->execute();
+        $matchedUsers = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $matchedUsers;
+    }
+
     public static function getScoresOfMatchedUsers($currentUser, $matchedUsers)
     {
         $matchedScores = [];

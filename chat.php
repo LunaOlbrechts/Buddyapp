@@ -2,6 +2,8 @@
 session_start();
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/Chat.php");
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/UserManager.php");
 
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
@@ -24,9 +26,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 $conn = Db::getConnection();
 $sender = $_SESSION['firstName'];
 $reciever = $_SESSION['reciever'];
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (sender = '".$sender."' AND reciever = '".$reciever."') OR (sender = '".$reciever."' AND reciever = '".$sender."') ORDER BY created_on ASC");
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (sender = '" . $sender . "' AND reciever = '" . $reciever . "') OR (sender = '" . $reciever . "' AND reciever = '" . $sender . "') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+$currentUser = UserManager::getUserFromDatabase();
+$matchedUsers = UserManager::matchUsersByFiltersChat();
+$scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
 
 ?>
 <style>
@@ -72,6 +78,19 @@ $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
     <div class="container">
+        <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
+            <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
+                <p class="card-text">Je hebt deze kenmerken gemeen met <?php echo $user['firstName']?>:</p>
+                <?php foreach ($user['matches'] as $match) : ?>
+                    <ul>
+                        <?php if (trim($match) !== '') : ?><li><?php echo $match . ", " ?></li><?php endif ?>
+                    </ul>
+                <?php endforeach ?>
+            <?php endif ?>
+        <?php endforeach ?>
+    </div>
+
+    <div class="container">
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
                 <span><?php echo $message['sender']; ?></span>
@@ -85,8 +104,8 @@ $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
         <form method="POST" enctype="multipart/form-data">
             <textarea name="message" class="form-control" placeholder="Type your message here..."></textarea>
             <div class="btn-group" role="group" aria-label="Basic example">
-            <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
-            <input type="submit" value="Be My Buddy" class="btn btn-success"></input>
+                <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
+                <input type="submit" value="Be My Buddy" class="btn btn-success"></input>
             </div>
         </form>
     </div>
