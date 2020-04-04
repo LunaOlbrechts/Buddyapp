@@ -3,12 +3,14 @@ session_start();
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/Chat.php");
 
+
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
-            $message->setName($_SESSION["firstName"]);
+            $message->setSender($_SESSION['firstName']);
+            $message->setReciever($_SESSION['reciever']);
             Chat::sendMessage($message);
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
@@ -18,10 +20,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
+// Get messages for specific chat
 $conn = Db::getConnection();
-$statement = $conn->prepare("select * from tl_chat");
+$sender = $_SESSION['firstName'];
+$reciever = $_SESSION['reciever'];
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (sender = '".$sender."' AND reciever = '".$reciever."') OR (sender = '".$reciever."' AND reciever = '".$sender."') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <style>
     span {
@@ -38,7 +44,7 @@ $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     .display-chat {
-        height: 300px;
+        height: 50vh;
         margin-bottom: 4%;
         overflow: auto;
         padding: 15px;
@@ -60,16 +66,15 @@ $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chat</title>
 </head>
 
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
-
     <div class="container">
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
-                <span><?php echo $message['name']; ?></span>
+                <span><?php echo $message['sender']; ?></span>
                 <div class="message">
                     <p>
                         <?php echo $message['message']; ?>
@@ -79,7 +84,10 @@ $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <form method="POST" enctype="multipart/form-data">
             <textarea name="message" class="form-control" placeholder="Type your message here..."></textarea>
-            <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary"></input>
+            <div class="btn-group" role="group" aria-label="Basic example">
+            <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
+            <input type="submit" value="Be My Buddy" class="btn btn-success"></input>
+            </div>
         </form>
     </div>
 </body>

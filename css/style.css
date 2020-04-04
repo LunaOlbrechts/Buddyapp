@@ -49,6 +49,11 @@
   display: flex;
   justify-content: center;
 }
+
+.card{
+
+}
+
 @media (min-width: 576px) {
  
 }
