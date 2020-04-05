@@ -17,7 +17,8 @@
     <nav class="navbar nav bg-light">
         <a href="index.php" class="logo">Buddy app</a>
         <a href="index.php">Home</a>
-        <a href="mylist.php"></a>
+        <!--<a href="mylist.php"></a>-->
+        <a href="search.php">Search for a buddy</a>
         
         <form action="" method="post">
             <input type="text">

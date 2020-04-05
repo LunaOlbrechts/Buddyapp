@@ -259,4 +259,35 @@ class UserManager
         }
         return $matchedScores;
     }
+    
+    public static function searchBuddyByFilter($searchBuddy)
+    {
+        $searchFirstName = $searchBuddy[0]['firstName'];
+        $searchLastName = $searchBuddy[0]['lastName'];
+        $location = $searchBuddy[0]['city'];
+        $mainCourseInterest = $searchBuddy[0]['mainCourseInterest'];
+        $schoolYear = $searchBuddy[0]['schoolYear'];
+        $sportType = $searchBuddy[0]['sportType'];
+        $goingOutType = $searchBuddy[0]['goingOutType'];
+
+        $conn = Db::getConnection();
+
+        //Select users that have minimum one match with the current user filters 
+
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName LIKE :%searchFirstName% OR lastName LIKE :%searchFirstName% OR city = :city OR mainCourseInterest = :mainCourseInterest
+        OR schoolYear = :schoolYear OR sportType = :sportType OR goingOutType = :goingOutType");
+
+        $statement->bindValue(":%searchFirstName%", $searchFirstName);
+        $statement->bindValue(":%searchFirstName%", $searchLastName);
+        $statement->bindValue(":city", $location);
+        $statement->bindValue(":mainCourseInterest", $mainCourseInterest);
+        $statement->bindValue(":schoolYear", $schoolYear);
+        $statement->bindValue(":sportType", $sportType);
+        $statement->bindValue(":goingOutType", $goingOutType);
+
+        $statement->execute();
+        $searchBuddy = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $searchBuddy;
+     }
 }

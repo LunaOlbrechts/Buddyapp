@@ -94,8 +94,9 @@
                         <option <?php if(isset($_POST['schoolYear']) && $_POST['schoolYear'] == 'Aangepast programma'): echo "selected" ?><?php endif ?>>Aangepast programma</option>
                     </select>
                 </div>
-
-                <label>Buddy</label>
+                
+                <div class="form-group">
+                <label class="form-title">Buddy</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="lookingForABuddy" name="buddyType" value="lookingForABuddy" checked>
                     <label class="form-check-label" for="lookingForABuddy">Ik ben op zoek naar een buddy</label>
@@ -103,6 +104,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="wantToBeABuddy" name="buddyType" value="wantToBeABuddy">
                     <label class="form-check-label" for="isABuddy">Ik wil een buddy zijn</label>
+                </div>
                 </div>
 
                 <div class="form-group">
@@ -118,7 +120,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1" class="form-title">Welk type uitgaanstype ben jij?</label>
+                    <label for="exampleFormControlSelect1" class="form-title">Welk uitgaanstype ben jij?</label>
                     <select class="form-control" name="goingOutType">
                         <option selected></option>
                         <option <?php if(isset($_POST['goingOutType']) && $_POST['goingOutType'] == 'Party animal'): echo "selected" ?><?php endif ?>>Party animal</option>
