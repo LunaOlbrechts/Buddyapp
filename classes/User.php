@@ -20,6 +20,8 @@ class User
     private $newPassword;
     private $repeatedNewPassword;
     private $buddyType;
+    private $matchId;
+
 
     /**
      * Get the value of id
@@ -437,6 +439,22 @@ class User
     public function setBuddyType($buddyType)
     {
         $this->buddyType = $buddyType;
+     /* Get the value of matchId
+     */
+    } 
+    public function getMatchId()
+    {
+        return $this->matchId;
+    }
+
+    /**
+     * Set the value of matchId
+     *
+     * @return  self
+     */ 
+    public function setMatchId($matchId)
+    {
+        $this->matchId = $matchId;
 
         return $this;
     }
