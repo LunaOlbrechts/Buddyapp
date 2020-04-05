@@ -2,6 +2,59 @@
 
 class UserManager
 {
+    public function save(User $user)
+    {
+        $conn = Db::getConnection();
+
+        // check if nothing is empty
+
+        if (isset($_POST['signup-btn'])) {
+
+            // CHECK IF EMAIL IS TAKEN
+            if (isset($_POST['email'])) {
+                $email = $user->getEmail();
+                $conn = Db::getConnection();
+                $sql = "SELECT * FROM tl_user WHERE email='$email'";
+                $results = $conn->query($sql);
+
+                if ($results->rowCount() > 0) {
+                    throw new Exception("Email is already used");
+
+                    echo "taken";
+                }
+            }
+
+            // CHECK IF USERNAME IS @student.thomasmore.be
+            $domainWhiteList = ['student.thomasmore.be'];
+            $tmp = explode('@', $email);
+            $domain = array_pop($tmp);
+
+            if (!in_array($domain, $domainWhiteList)) {
+                throw new Exception("Username should end with @student.thomasmore.be");
+            }
+
+            // insert query
+
+            $firstName = $user->getFirstName();
+            $lastName = $user->getLastName();
+            $email = $user->getEmail();
+            $password = $user->getPassword();
+
+            $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
+
+            $statement->bindValue(":firstName", $firstName);
+            $statement->bindValue(":lastName", $lastName);
+            $statement->bindValue(":email", $email);
+            $statement->bindValue(":password", $password);
+
+            $result = $statement->execute();
+            echo "saved to database";
+
+            // return result
+            return $result;
+        }
+    }
+
     public static function saveCompletedProfile(User $user)
     {
         $conn = Db::getConnection();

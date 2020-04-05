@@ -1,5 +1,6 @@
 <?php
     include_once(__DIR__ . "/classes/User.php");
+    include_once(__DIR__ . "/classes/UserManager.php");
 
     if(!empty($_POST)) {
         try {
@@ -9,7 +10,7 @@
             $user->setLastName(htmlspecialchars($_POST['lastname']) );
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]) );
             //echo $user->getPassword();
-            $user->save();
+            UserManager::save($user);
 
             $success = "user saved!";
             header("Location: complete.profile.php");
