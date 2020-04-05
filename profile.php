@@ -108,16 +108,16 @@ $userData = UserManager::getUserFromDatabase($user);
                 <h2>Profile Picture</h2>
                 <?php if (isset($ProfilePictureError)) : ?>
                     <div class="alert alert-danger" role="alert">
-                        <?php echo $ProfilePictureError ?>
+                        <?php echo htmlspecialchars($ProfilePictureError) ?>
                     </div>
                 <?php endif; ?>
                 <?php if (isset($ProfilePicturesuccess)) : ?>
                     <div class="alert alert-success" role="alert">
-                        <?php echo $ProfilePicturesuccess ?>
+                        <?php echo htmlspecialchars($ProfilePicturesuccess) ?>
                     </div>
                 <?php endif; ?>
                 <form method="POST" enctype="multipart/form-data">
-                    <div style="background-image: url(<?php echo $data['profilePicture'] ?>); width: 200px; height: 200px; background-size: cover; background-position: center" ;></div>
+                    <div style="background-image: url(<?php echo htmlspecialchars($data['profilePicture']) ?>); width: 200px; height: 200px; background-size: cover; background-position: center" ;></div>
                     <div class="form-group mt-3">
                         <label>Change Profile Picture</label>
                         <input type="file" name="profilePicture" class="form-control" />
@@ -130,18 +130,18 @@ $userData = UserManager::getUserFromDatabase($user);
                 <h2>Profile Information</h2>
                 <?php if (isset($profileInformationSuccess)) : ?>
                     <div class="alert alert-success" role="alert">
-                        <?php echo $profileInformationSuccess ?>
+                        <?php echo htmlspecialchars($profileInformationSuccess) ?>
                     </div>
                 <?php endif; ?>
                 <?php if (isset($profileInformationError)) : ?>
                     <div class="alert alert-danger" role="alert">
-                        <?php echo $profileInformationError ?>
+                        <?php echo htmlspecialchars($profileInformationError) ?>
                     </div>
                 <?php endif; ?>
                 <form method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea name="description" class="form-control" rows="3"><?php echo $data['description'] ?></textarea>
+                        <textarea name="description" class="form-control" rows="3"><?php echo htmlspecialchars($data['description']) ?></textarea>
                     </div>
                     <input class="btn btn-primary m-0" type="submit" value="Update Information" name="updateDetails">
                 </form>
@@ -151,18 +151,18 @@ $userData = UserManager::getUserFromDatabase($user);
                 <h2>Change Email Address</h2>
                 <?php if (isset($emailSuccess)) : ?>
                     <div class="alert alert-success" role="alert">
-                        <?php echo $emailSuccess ?>
+                        <?php echo htmlspecialchars($emailSuccess) ?>
                     </div>
                 <?php endif; ?>
                 <?php if (isset($emailerror)) : ?>
                     <div class="alert alert-danger" role="alert">
-                        <?php echo $emailerror ?>
+                        <?php echo htmlspecialchars($emailerror) ?>
                     </div>
                 <?php endif; ?>
                 <form method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Email address</label>
-                        <input name="email" value="<?php echo $data['email'] ?>" type="email" class="form-control" placeholder="Enter email">
+                        <input name="email" value="<?php echo htmlspecialchars($data['email']) ?>" type="email" class="form-control" placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Enter password as verification</label>
@@ -176,12 +176,12 @@ $userData = UserManager::getUserFromDatabase($user);
                 <h2>Change Password</h2>
                 <?php if (isset($passwordSuccess)) : ?>
                     <div class="alert alert-success" role="alert">
-                        <?php echo $passwordSuccess ?>
+                        <?php echo htmlspecialchars($passwordSuccess) ?>
                     </div>
                 <?php endif; ?>
                 <?php if (isset($passworderror)) : ?>
                     <div class="alert alert-danger" role="alert">
-                        <?php echo $passworderror ?>
+                        <?php echo htmlspecialchars($passworderror) ?>
                     </div>
                 <?php endif; ?>
                 <form method="POST" enctype="multipart/form-data">

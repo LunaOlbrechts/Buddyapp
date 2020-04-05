@@ -67,7 +67,7 @@
                 <?php if(!isset($successMessage)):?>
                 <div class="form-group">
                 <p class="form-title">Plaats</p>
-                    <input type="text" class="form-control" name="inputLocation" placeholder="Plaats" value="<?php if(isset($_POST['inputLocation'])): echo $_POST['inputLocation'] ?><?php endif ?>">
+                    <input type="text" class="form-control" name="inputLocation" placeholder="Plaats" value="<?php if(isset($_POST['inputLocation'])): echo htmlspecialchars($_POST['inputLocation']) ?><?php endif ?>">
                 </div>
 
                 <label>Opleidingsinteresse</label>

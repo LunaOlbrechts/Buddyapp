@@ -40,9 +40,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
                 <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
                     <div class="card" style="width: 300px;">
-                        <div style="background-image: url(<?php echo $user['profilePicture'] ?>); width: 300px; height: 250px; background-size: cover; background-position: center" ;></div>
+                        <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); width: 300px; height: 250px; background-size: cover; background-position: center" ;></div>
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $user['firstName'] . " " . $user['lastName'] ?></h5>
+                            <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
                             <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
                             <?php foreach ($user['matches'] as $match) : ?>
                                 <ul>
@@ -50,7 +50,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 </ul>
                             <?php endforeach ?>
                             <form method="POST" enctype="multipart/form-data">
-                                <input type="hidden" value="<?php echo $user['firstName'] ?>" name="reciever"></input>
+                                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="reciever"></input>
                                 <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
                             </form>
                         </div>

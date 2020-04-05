@@ -39,7 +39,7 @@
     <h2 form__title>Register</h2>
 
     <?php if(isset($error)): ?>
-            <div class="error mr-5"><?php echo $error; ?></div>
+            <div class="error mr-5"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
 
         <?php if(isset($success)): ?>
