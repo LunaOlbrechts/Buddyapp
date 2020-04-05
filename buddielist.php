@@ -30,27 +30,28 @@
 </head>
 <body>
     <?php include_once("include/nav.inc.php"); ?>
-    <h1 class="col-md-4" >This is a list of all people with their buddy!</h1>
+    <div class="container mt-5">
+        <h1 class="col-md-4">Buddy list!</h1>
 
-    
-    <?php
-    $i = 0;
-    foreach($users as $user): 
-    ?>
-        <h2><?php 
-        ++$i;
-        if($i==1) {
-            echo "<row>";
-            echo "<item>" . $user['email'] . "</item>";
-        }
-        if($i==2) {
-            echo "<item>" . $user['email'] . "</item>";
-            echo "</row>";
-            $i=0;          
-        }
-       // echo $user['email']; 
-       ?></h2>
-    <?php endforeach; ?>
 
+        <?php
+        $i = 0;
+        foreach($users as $user): 
+        ?>
+            <h3><?php 
+            ++$i;
+            if($i==1) {
+                echo "<br>";
+                echo $user['firstName'] . " " . $user['lastName'];
+                echo " is buddies with";
+            } 
+            if($i==2) {
+                echo $user['firstName'] . " " . $user['lastName'];
+                $i=0;          
+            }
+           // echo $user['email']; 
+           ?></h3>
+        <?php endforeach; ?>
+    </div>
 </body>
 </html>
