@@ -38,7 +38,8 @@
         $i = 0;
         foreach($users as $user): 
         ?>
-            <h3><?php 
+        <h3>
+            <?php 
             ++$i;
             if($i==1) {
                 echo "<br>";
@@ -50,7 +51,8 @@
                 $i=0;          
             }
            // echo $user['email']; 
-           ?></h3>
+           ?>
+        </h3>
         <?php endforeach; ?>
     </div>
 </body>
