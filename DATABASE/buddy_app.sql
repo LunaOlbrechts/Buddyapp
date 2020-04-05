@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2020 at 11:29 AM
+-- Generation Time: Apr 05, 2020 at 12:09 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -41,7 +41,7 @@ CREATE TABLE `tl_user` (
   `schoolYear` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `sportType` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `goingOutType` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `matchId` int(11) NOT NULL
+  `matchId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -55,7 +55,9 @@ INSERT INTO `tl_user` (`id`, `firstName`, `lastName`, `email`, `description`, `p
 (10, 'Jos', 'Aelbrecht', 'L0706641@student.thomasmore.be', '', '', '$2y$12$/zOUv/t2xAhNHCUb1TTRo.K6lHScsdRSdO9xQ1.HrxA39YS1BdQLm', '', '', '', '', '', 3),
 (11, 'Frank', 'Aelbrecht', 'ror0706641@student.thomasmore.be', '', '', '$2y$12$AVJ6pTADce/OeCgS1bHH/OiWV3PTJUtxgcNH.KEFRbGNtXEMZPD9a', '', '', '', '', '', 2),
 (12, 'Fredyy', 'Aelbrecht', 'lowie@student.thomasmore.be', '', '', '$2y$12$BOcUSCdhzGUVC7ai7IwVJuJsztO4aIw/tY0DN/6l0L3ZVDA5lwo2S', '', '', '', '', '', 1),
-(13, 'Jefke', 'Aelbrecht', 'aelbrecht@student.thomasmore.be', 'hallo', 'uploads/1585333212BACKGROUND.jpg', '$2y$12$VKz30nRbk4otBzVAV4RgqOpkb/3nA/Uw6UHB4DvkPHg3.PWurIMfa', 'Bornem', '[\"inputBackendDevelopment\"]', '1 IMD', 'Waterrat', 'Party animal', 4);
+(13, 'Jefke', 'Aelbrecht', 'aelbrecht@student.thomasmore.be', 'hallo', 'uploads/1585333212BACKGROUND.jpg', '$2y$12$VKz30nRbk4otBzVAV4RgqOpkb/3nA/Uw6UHB4DvkPHg3.PWurIMfa', 'Bornem', '[\"inputBackendDevelopment\"]', '1 IMD', 'Waterrat', 'Party animal', 4),
+(16, 'Lowie', 'Aelbrecht', 'aelbrecht.lowie@student.thomasmore.be', '', '', '$2y$12$OYuriu4pQofTzZOvblVYv.0AA9IoUNrq8Pxt.6YnqOEXYna2AsNrm', '', '', '', '', '', NULL),
+(17, 'Lowie', 'Aelbrecht', 'aelbrechtlowie@student.thomasmore.be', '', '', '$2y$12$lkLrjdsh6SKHnAV3TKEhEOSBq4DCmfW4HUMABZ/4i9xPfagQJ9C7u', '', '', '', '', '', NULL);
 
 --
 -- Indexes for dumped tables
@@ -75,7 +77,7 @@ ALTER TABLE `tl_user`
 -- AUTO_INCREMENT for table `tl_user`
 --
 ALTER TABLE `tl_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

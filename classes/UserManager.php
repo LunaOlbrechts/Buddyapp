@@ -2,7 +2,7 @@
 
 class UserManager
 {
-    public function save(User $user)
+    public static function save(User $user)
     {
         $conn = Db::getConnection();
 
