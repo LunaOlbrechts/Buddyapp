@@ -18,7 +18,7 @@ class UserManager
 
         $statement->bindValue(":id", $id);
         $statement->bindValue(":location", $location);
-        $statement->bindValue(":mainCourseInterest", json_encode($mainCourseInterest));
+        $statement->bindValue(":mainCourseInterest",$mainCourseInterest);
         $statement->bindValue(":schoolYear", $schoolYear);
         $statement->bindValue(":sportType", $sportType);
         $statement->bindValue(":goingOutType", $goingOutType);
@@ -269,8 +269,8 @@ class UserManager
         $sportType = $_POST['sportType'];
         $goingOutType = $_POST['goingOutType'];
         
-        $statement = ("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
-        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
+        $statement = ("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest AND  schoolYear = :schoolYear 
+        AND sportType = :sportType AND goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
 
         $query = $conn->prepare($statement);
 
@@ -283,7 +283,7 @@ class UserManager
 
         $count = $query->fetchAll(PDO::FETCH_ASSOC);
         //var_dump($_POST);
-        var_dump($count);
+        //var_dump($count);
         return $count;
     }
         /*
@@ -313,7 +313,7 @@ class UserManager
 
         $searchField = $_POST['searchField'];
 
-        $statement = ("SELECT * FROM tl_user WHERE firstName LIKE :name OR lastName LIKE :name");
+        $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
         
         $query = $conn->prepare($statement);
         
@@ -327,6 +327,34 @@ class UserManager
         //var_dump($count);
         //var_dump($_POST);
         return $count;
+
+        /*$conn = Db::getConnection();
+
+        $searchField = $_POST['searchField'];
+
+        $statement = "SELECT COUNT(*) FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)";
+        
+        //$query = $conn->prepare($statement);
+
+        if($result = $conn->query($statement)){
+            if($result->fetchColumn() > 0);
+
+            $query = "SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)";
+            foreach($conn->query($statement) as $name => $name){
+                print '<div>' . $name['firstName'] . " ". $name['lastName'] . '</div>';
+            }
+        }
+        
+        $query->bindValue(':name', '%'.$searchField.'%');
+        //var_dump($searchField);
+
+        $query->execute();
+        //"SELECT * from tl_user WHERE firstName LIKE '%$searchName% OR lastName LIKE '%$searchName%"
+        
+        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        //var_dump($count);
+        //var_dump($_POST);
+        return $count;*/
      }
 
 }

@@ -7,27 +7,10 @@
     $succes1 = '';
     $succes2 = '';
 
-    /*if(isset($_POST['searchField'])){
-        $searchName = UserManager::searchName();
-        if(empty($_POST['searchField'])){
-            $error1 = 'Typ a name';
-        }else{
-            if(!isset($_POST['searchName'])){
-                    $error1 = 'No result';
-                } elseif(isset($_POST['searchName'])){
-                    foreach($searchName as $name){
-                        $succes1 .= '<div>' . $name['firstName'] . " ". $name['lastName'] . '</div>';
-                    }
-                }
-        }
-    }*/
-
     if(isset($_POST['searchField'])){
         $searchName = UserManager::searchName();
         if(!empty($_POST['searchField'])){
-            if(!isset($_POST['searchName'])){
-                $error1 = 'No result';
-            } else{
+            if(isset($_POST['searchName'])){
                 foreach($searchName as $name){
                     $succes1 .= '<div>' . $name['firstName'] . " ". $name['lastName'] . '</div>';
                 }
@@ -37,33 +20,18 @@
         }
     }
 
-    /*
-    1. Get info from radio button
-    
-    */
-
-    if(isset($_POST['schoolYear']) || isset($_POST['sportType']) || isset($_POST['goingOutType']) || isset($_POST['mainCourseInterest'])){
+    if(isset($_POST['mainCourseInterest']) && isset($_POST['schoolYear']) && isset($_POST['sportType']) && isset($_POST['goingOutType'])){
         $searchBuddy = UserManager::searchBuddyByFilter();
-        if(!isset($_POST['submitBuddy'])){
-                $error2;
-            } else{
+        if(!empty($_POST['mainCourseInterest']) || !empty($_POST['schoolYear']) || !empty($_POST['sportType']) || !empty($_POST['goingOutType'])){
+            if(isset($_POST['searchBuddy'])){
                 foreach($searchBuddy as $name){
                     $succes2 .= '<div>' . $name['firstName'] . " ". $name['lastName'] . '</div>';
                 }
             }
-    }
-
-    /*
-    if(isset($_POST['submitBuddy'])){
-        $searchBuddy = UserManager::searchBuddyByFilter();
-        if(!isset($_POST['submitBuddy'])){
-            $error2 = "No result";
         }else{
-            foreach($searchBuddy as $name){
-                $succes2 .= '<div>' . $name['firstName'] . " ". $name['lastName'] . '</div>';
-            }
-        }
-    }*/
+            $error2 = "Fill in every category";
+        } 
+    }   
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -174,7 +142,7 @@
         </div>
 
         <div>
-        <input class="btn border" type="submit" value="Search for a buddy" name='submitBuddy'>
+        <input class="btn border" type="submit" value="Search for a buddy" name='searchBuddy'>
         </div>
 
         <div class="form-group">
