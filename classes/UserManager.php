@@ -71,7 +71,7 @@ class UserManager
 
         $statement->bindValue(":id", $id);
         $statement->bindValue(":location", $location);
-        $statement->bindValue(":mainCourseInterest", json_encode($mainCourseInterest));
+        $statement->bindValue(":mainCourseInterest",$mainCourseInterest);
         $statement->bindValue(":schoolYear", $schoolYear);
         $statement->bindValue(":sportType", $sportType);
         $statement->bindValue(":goingOutType", $goingOutType);
@@ -341,4 +341,102 @@ class UserManager
 
     }
     
+    
+    public static function searchBuddyByFilter()
+    {
+        $conn = Db::getConnection();
+
+        $mainCourseInterest = $_POST['mainCourseInterest'];
+        $schoolYear = $_POST['schoolYear'];
+        $sportType = $_POST['sportType'];
+        $goingOutType = $_POST['goingOutType'];
+        
+        $statement = ("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest AND  schoolYear = :schoolYear 
+        AND sportType = :sportType AND goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
+
+        $query = $conn->prepare($statement);
+
+        $query->bindValue(':mainCourseInterest', $mainCourseInterest);
+        $query->bindValue(':schoolYear', $schoolYear);
+        $query->bindValue(':sportType', $sportType);
+        $query->bindValue(':goingOutType', $goingOutType);
+
+        $query->execute();
+
+        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        //var_dump($_POST);
+        //var_dump($count);
+        return $count;
+    }
+        /*
+        $conn = Db::getConnection();
+
+        //Select users that have minimum one match with the current user filters 
+
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName LIKE :%searchFirstName% OR lastName LIKE :%searchFirstName% OR city = :city OR mainCourseInterest = :mainCourseInterest
+        OR schoolYear = :schoolYear OR sportType = :sportType OR goingOutType = :goingOutType");
+
+        $statement->bindValue(":%searchFirstName%", $searchFirstName);
+        $statement->bindValue(":%searchFirstName%", $searchLastName);
+        $statement->bindValue(":city", $location);
+        $statement->bindValue(":mainCourseInterest", $mainCourseInterest);
+        $statement->bindValue(":schoolYear", $schoolYear);
+        $statement->bindValue(":sportType", $sportType);
+        $statement->bindValue(":goingOutType", $goingOutType);
+
+        $statement->execute();
+        $searchBuddy = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $searchBuddy;*/
+
+     public static function searchName()
+     {
+        $conn = Db::getConnection();
+
+        $searchField = $_POST['searchField'];
+
+        $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
+        
+        $query = $conn->prepare($statement);
+        
+        $query->bindValue(':name', '%'.$searchField.'%');
+        //var_dump($searchField);
+
+        $query->execute();
+        //"SELECT * from tl_user WHERE firstName LIKE '%$searchName% OR lastName LIKE '%$searchName%"
+        
+        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        //var_dump($count);
+        //var_dump($_POST);
+        return $count;
+
+        /*$conn = Db::getConnection();
+
+        $searchField = $_POST['searchField'];
+
+        $statement = "SELECT COUNT(*) FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)";
+        
+        //$query = $conn->prepare($statement);
+
+        if($result = $conn->query($statement)){
+            if($result->fetchColumn() > 0);
+
+            $query = "SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)";
+            foreach($conn->query($statement) as $name => $name){
+                print '<div>' . $name['firstName'] . " ". $name['lastName'] . '</div>';
+            }
+        }
+        
+        $query->bindValue(':name', '%'.$searchField.'%');
+        //var_dump($searchField);
+
+        $query->execute();
+        //"SELECT * from tl_user WHERE firstName LIKE '%$searchName% OR lastName LIKE '%$searchName%"
+        
+        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        //var_dump($count);
+        //var_dump($_POST);
+        return $count;*/
+     }
+
 }
