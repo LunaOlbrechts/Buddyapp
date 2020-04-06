@@ -71,7 +71,7 @@ class UserManager
 
         $statement->bindValue(":id", $id);
         $statement->bindValue(":location", $location);
-        $statement->bindValue(":mainCourseInterest",$mainCourseInterest);
+        $statement->bindValue(":mainCourseInterest", $mainCourseInterest);
         $statement->bindValue(":schoolYear", $schoolYear);
         $statement->bindValue(":sportType", $sportType);
         $statement->bindValue(":goingOutType", $goingOutType);
