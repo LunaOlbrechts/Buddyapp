@@ -262,7 +262,7 @@ class UserManager
     
     public static function searchBuddyByFilter($searchBuddy)
     {
-        $searchFirstName = $searchBuddy[0]['firstName'];
+        /*$searchFirstName = $searchBuddy[0]['firstName'];
         $searchLastName = $searchBuddy[0]['lastName'];
         $location = $searchBuddy[0]['city'];
         $mainCourseInterest = $searchBuddy[0]['mainCourseInterest'];
@@ -288,6 +288,29 @@ class UserManager
         $statement->execute();
         $searchBuddy = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return $searchBuddy;
+        return $searchBuddy;*/
      }
+
+     public static function searchName()
+     {
+        $conn = Db::getConnection();
+
+        $searchField = $_POST['searchField'];
+
+        $statement = ("SELECT * from tl_user WHERE firstname LIKE :name OR lastname LIKE :name");
+        
+        $query = $conn->prepare($statement);
+        
+        $query->bindValue(':name', '%'.$searchField.'%');
+        $query->bindValue(':name', '%'.$searchField);
+        //var_dump($searchField);
+
+        $query->execute();
+        //"SELECT * from tl_user WHERE firstName LIKE '%$searchName% OR lastName LIKE '%$searchName%"
+        
+        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        //var_dump($count);
+        return $count;
+     }
+
 }

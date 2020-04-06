@@ -4,13 +4,22 @@
 
     session_start();
 
-    if(isset($_POST['submitBuddy'])){
-        $user = UserManager::getUserFromDatabase();
+    $succes = '';
 
-        UserManager::searchBuddyByFilter($searchBuddy);
-
+    if(isset($_POST['searchField'])){
+        $searchName = UserManager::searchName();
+        if(empty($_POST['searchField'])){
+            $error = 'Typ a name';
+        }else{
+            if(!isset($_POST['searchName'])){
+                    $error = 'No result';
+                } else{
+                    foreach($searchName as $name){
+                        $succes .= '<div>' . $name['firstName'] . " ". $name['lastName'] . '</div>';
+                    }
+                }
+        }
     }
-    
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -22,12 +31,50 @@
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
     
-    <form action="" method="POST">
+    <form action="search.php" method="POST">
     <div class="container mt-5">
+
         <div class="form-group">
-            <label for="email"><b>Naam</b></label>
-            <input class="form-control" type="text" name="search" placeholder="Naam">
+            <label for="email"><b>Name</b></label>
+            <input class="form-control" type="text" name="searchField" placeholder="Name">
         </div>
+
+        <div class="form-group">
+            <input class="btn border" type="submit" value="Search for a name" name='searchName'>
+        </div>
+
+        <div class="form-group">
+        <?php if(isset($error)): ?>
+            <p>
+                <?php echo $error; ?>
+            </p>
+        <?php endif; ?>
+
+        <?php if(isset($succes)): ?>
+            <p>
+                <?php echo $succes; ?>
+            </p>
+        <?php endif; ?>
+        </div>
+
+        <!--<div class="container mt-5">
+        <table class="table">
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+            </tr>
+            <tr>
+                <?php if(isset($error)): ?>
+                    <p>
+                        <?php echo $error; ?>
+                    </p>
+                <?php endif; ?>
+
+                <td></td> 
+                <td></td>
+            </tr>
+        </table>
+        </div>-->
 
         <div class="form-group">
         <label><b>Opleidingsinteresses</b></label>
@@ -111,10 +158,40 @@
         <tr>
             <th>First name</th>
             <th>Last name</th>
-        <tr>
-            <td> <?php echo $searchBuddy['firstName']; ?> </td>
-            <td> <?php echo $searchBuddy['lastName']; ?> </td>
         </tr>
+        <!--<?php 
+        if(isset($_POST['submitBuddy'])){
+            $mainCourseInterest = $_POST['mainCourseInterest'];
+            $schoolYear = $_POST['schoolYear'];
+            $sportType = $_POST['sportType'];
+            $goingOutType = $_POST['goingOutType'];
+
+            if($mainCourseInterest != "" || $schoolYear != "" || $sportType != "" || $goingOutType != ""){
+            //$sportType = $_POST['sportType'];
+                echo $query = "SELECT * FROM tl_user WHERE mainCourseInterest = '$mainCourseInterest' OR schoolYear = '$schoolYear' 
+                OR sportType = '$sportType' OR goingOutType = '$goingOutType'";
+
+                $data = mysqli_query($conn,$query);
+
+                if(mysqli_num_rows($data) > 0){
+                    while($row = mysqli_fetch_assoc($data)){
+                        $firstName = $row['firstName'];
+                        $lastName = $row['lastName'];
+                        $mainCourseInterest = $row['mainCourseInterest'];
+                        $schoolYear = $row['schoolYear'];
+                        $sportType = $row['sportType'];
+                        $goingOutType = $row['goingOutType'];
+                    }
+                }else{
+
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td> <?php echo $firstName; ?> </td>
+            <td> <?php echo $lastName; ?> </td>
+        </tr>-->
     </table>
     </div>
 
