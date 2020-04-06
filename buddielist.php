@@ -38,21 +38,30 @@
         $i = 0;
         foreach($users as $user): 
         ?>
-        <h3>
+        
             <?php 
             ++$i;
-            if($i==1) {
-                echo "<br>";
-                echo $user['firstName'] . " " . $user['lastName'];
-                echo " is buddies with";
-            } 
+            if($i==1)
+            {
+                
+                 ?>
+                <table class="table table-striped table-bordered table-hover">
+                <th scope="col">
+                    <?php echo $user['firstName'] . " " . $user['lastName'];
+                          echo  " is buddies with"; 
+                    
+           } 
             if($i==2) {
-                echo $user['firstName'] . " " . $user['lastName'];
-                $i=0;          
+
+                         echo  $user['firstName'] . " " . $user['lastName']; ?>
+                </th>
+                </table>
+                <?php $i=0;          
             }
            // echo $user['email']; 
            ?>
-        </h3>
+        
+        
         <?php endforeach; ?>
     </div>
 </body>
