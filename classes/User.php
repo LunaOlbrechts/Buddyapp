@@ -21,6 +21,7 @@ class User
     private $repeatedNewPassword;
     private $buddyType;
     private $matchId;
+    private $status;
 
 
     /**
@@ -403,6 +404,26 @@ class User
     public function setMatchId($matchId)
     {
         $this->matchId = $matchId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */ 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @return  self
+     */ 
+    public function setStatus($status)
+    {
+        $this->status = $status;
 
         return $this;
     }

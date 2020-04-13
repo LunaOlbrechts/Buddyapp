@@ -4,6 +4,10 @@ include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/Chat.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/Buddies.php");
+
+
+$id =  $_SESSION["user_id"];
 
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
@@ -20,6 +24,21 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     }
 } else {
     header("Location: login.php");
+}
+
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if ($_POST['buddy']) {
+       try {
+        $buddy = new Buddies();
+        $buddy->setSender($_SESSION['firstName']);
+        $buddy->setReciever($_SESSION['reciever']);
+        Buddies::sendRequest($buddy);
+        // Buddies::makeBuddy($buddy);        
+       } catch (\Throwable $th) {
+           
+       } 
+        
+    }
 }
 
 // Get messages for specific chat
@@ -105,7 +124,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             <textarea name="message" class="form-control" placeholder="Type your message here..."></textarea>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
-                <input type="submit" value="Be My Buddy" class="btn btn-success"></input>
+                <input type="submit" value="Be My Buddy" name="buddy" class="btn btn-success"></input>
             </div>
         </form>
     </div>
