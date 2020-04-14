@@ -5,6 +5,8 @@ include_once(__DIR__ . "/classes/UserManager.php");
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    $number_of_users = UserManager::numberOfUsersInDatabase();
+
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
@@ -35,7 +37,16 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <?php echo(json_encode($_SESSION)); ?>
+    <div class="card-text">
+        <p>
+            Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd.
+        </p>
+        <p>
+            Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden.
+        </p>
+    </div>
+
+    <!--<?php echo(json_encode($_SESSION)); ?>-->
 
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
