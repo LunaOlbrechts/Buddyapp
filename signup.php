@@ -11,16 +11,13 @@
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]) );
             //echo $user->getPassword();
             UserManager::save($user);
-
             $success = "user saved!";
-            header("Location: complete.profile.php");
+            //header("Location: complete.profile.php");
         } catch (\Throwable $th) {
             //throw error
             $error = $th->getMessage();
         }
     }
-
-
 
 ?>
 <!DOCTYPE html>

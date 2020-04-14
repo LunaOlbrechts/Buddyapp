@@ -338,7 +338,6 @@ class UserManager
         $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $users;
-
     }
     
     

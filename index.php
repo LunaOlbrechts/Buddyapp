@@ -4,12 +4,16 @@ include_once(__DIR__ . "/classes/UserManager.php");
 
 session_start();
 
+$_SESSION["logged_in"] = true;
+$_SESSION["user_id"] = 2;
+
+
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
 
-    if ($_POST['chat']) {
+    if (!empty($_POST['chat'])) {
         try {
             $_SESSION['reciever'] = $_POST['reciever'];
             header("Location: chat.php");

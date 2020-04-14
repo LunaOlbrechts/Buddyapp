@@ -1,9 +1,12 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
 session_start();
+
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/Chat.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/Mail.php");
 
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
@@ -14,6 +17,15 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $message->setSender($_SESSION['firstName']);
             $message->setReciever($_SESSION['reciever']);
             Chat::sendMessage($message);
+
+        } catch (\Throwable $th) {
+            $profileInformationError = $th->getMessage();
+        }
+    }
+    if ($_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
+        try {
+            Mail::sendEmail();
+            
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
@@ -105,7 +117,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             <textarea name="message" class="form-control" placeholder="Type your message here..."></textarea>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
-                <input type="submit" value="Be My Buddy" class="btn btn-success"></input>
+                <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
             </div>
         </form>
     </div>
