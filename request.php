@@ -16,17 +16,21 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_POST['accept']) {
         try {
             $_SESSION['requested'] = $_POST['requested'];
-           // header("Location: index.php");
+           
         } catch (\Throwable $th) {
             
         }
     }
 
-    if (isset($_POST['accept'])) {
+    if (isset($_POST['accept']) && ($_POST['accept'])) {
         $buddy = new Buddies();
         Buddies::makeBuddy($buddy);
+        header("Location: index.php");
     }
-    
+
+    if (isset($_POST['deny'])) {
+        $buddy = new Buddies();
+    }    
     
     
 }
@@ -68,7 +72,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                         
             <div class="btn-group" role="group" >        
                 <input type="submit" value="Accept" name="accept" class="btn btn-success mr-3"></input>
-                <input type="submit" value="Deny" name="denyBuddy" class="btn btn-danger mr-3"></input>
+                <input type="submit" value="Deny" name="deny" class="btn btn-danger mr-3"></input>
             </div>
                         
             </form>

@@ -1,6 +1,7 @@
 <?php
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/Buddies.php");
 
 session_start();
 
@@ -8,8 +9,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
+    $request = Buddies::checkRequest();
 
-    if ($_POST['chat']) {
+    if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
             $_SESSION['reciever'] = $_POST['reciever'];
             header("Location: chat.php");
@@ -17,17 +19,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $profileInformationError = $th->getMessage();
         }
     }
-
-    /*
-    if ($_POST['buddyrequest']) {
-        try {
-            $_SESSION['requested'] = $_POST['requested'];
-            header("Location: request.php");
-        } catch (\Throwable $th) {
-            $profileInformationError = $th->getMessage();
-        }
+    
+    if (isset($_POST['request']) && ($_POST['request'])) {
+        header("location: request.php");
     }
-    */
+
 } else {
     header("Location: login.php");
 }
@@ -46,7 +42,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <?php echo(json_encode($_SESSION)); ?>
+
+    <?php if($request == true) : ?>
+    <form method="POST">   
+        <input type="submit" value="You got a buddy request!" name="request" class="btn btn-primary">
+    </form>     
+    <?php endif ?>
+
+    <?php // echo(json_encode($_SESSION)); ?>
 
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
@@ -74,15 +77,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         </div>
     </div>
 
-<!--
-        <form method="POST" enctype="multipart/form-data">
-
-            <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="requested">
-            <input type="submit" value="Buddy request" name="buddyrequest">
-
-        </form>
          
-                                    -->
+                                    
     <script src="script.js"></script>
 </body>
 

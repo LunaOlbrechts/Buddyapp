@@ -33,33 +33,41 @@ class Buddies
         if($statement->rowCount() > 0)
         {
             return $buddies;
-
         }
         else { 
           header("Location: index.php");
         }
     }
 
-    
+    // BUTTON WHEN YOU HAVE A REQUEST
+    public static function checkRequest() 
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * from buddie_request WHERE reciever= '" . $_SESSION['user_id'] . "'");
+        $statement->execute();
+        if($statement->rowCount() > 0)
+        {
+            return true;
 
+        }
+        else { 
+          return false;
+        }
+    }
+
+    
     // MAKE THE BUDDY
-    public function makeBuddy(Buddies $buddy)
+    public function makeBuddy()
     {
         $conn = Db::getConnection();
         $deleteStatement = $conn->prepare("DELETE FROM buddie_request WHERE reciever= '" . $_SESSION['user_id'] . "'");
         $deleteStatement->execute();
 
-
-        echo "okee";
-
-
         if($deleteStatement->execute()){
             $sender = $_SESSION['user_id'];
             $reciever = $_SESSION['requested'];
-            var_dump($_SESSION);
             $statement = $conn->prepare("INSERT INTO tl_buddies (user_one, user_two) VALUES ($sender, $reciever)");
             $statement->execute();
-            echo " succes"; 
          } 
     }
 
