@@ -30,7 +30,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_POST['buddy']) {
        try {
         $buddy = new Buddies();
-        $buddy->setSender($_SESSION['firstName']);
+        $buddy->setSender($_SESSION['user_id']);
         $buddy->setReciever($_SESSION['reciever']);
         Buddies::sendRequest($buddy);
         // Buddies::makeBuddy($buddy);        

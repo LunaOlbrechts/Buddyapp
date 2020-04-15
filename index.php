@@ -52,7 +52,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 </ul>
                             <?php endforeach ?>
                             <form method="POST" enctype="multipart/form-data">
-                                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="reciever"></input>
+                                <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="reciever"></input>
                                 <div class="btn-group" role="group" >        
                                     <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input>
                                     <input type="submit" value="Be My Buddy" name="buddy" class="btn btn-success"></input>
