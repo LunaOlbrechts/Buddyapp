@@ -26,7 +26,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_POST['buddy']) {
        try {
         $buddy = new Buddies();
@@ -39,7 +38,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
        } 
         
     }
-}
+
 
 // Get messages for specific chat
 $conn = Db::getConnection();

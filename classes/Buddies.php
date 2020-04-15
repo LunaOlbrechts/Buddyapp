@@ -35,9 +35,8 @@ class Buddies
             return $buddies;
 
         }
-        else {
-            
-           header("Location: index.php");
+        else { 
+          header("Location: index.php");
         }
     }
 
@@ -54,11 +53,14 @@ class Buddies
         echo "okee";
 
 
-        // if($deleteStatement->execute()){
-            $statement = $conn->prepare("INSERT INTO tl_buddies(user_one, user_two) VALUES ( 1 , 2 )");
+        if($deleteStatement->execute()){
+            $sender = $_SESSION['user_id'];
+            $reciever = $_SESSION['requested'];
+            var_dump($_SESSION);
+            $statement = $conn->prepare("INSERT INTO tl_buddies (user_one, user_two) VALUES ($sender, $reciever)");
             $statement->execute();
             echo " succes"; 
-        // } 
+         } 
     }
 
     

@@ -17,6 +17,17 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $profileInformationError = $th->getMessage();
         }
     }
+
+    /*
+    if ($_POST['buddyrequest']) {
+        try {
+            $_SESSION['requested'] = $_POST['requested'];
+            header("Location: request.php");
+        } catch (\Throwable $th) {
+            $profileInformationError = $th->getMessage();
+        }
+    }
+    */
 } else {
     header("Location: login.php");
 }
@@ -54,9 +65,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                             <form method="POST" enctype="multipart/form-data">
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="reciever"></input>
                                 <div class="btn-group" role="group" >        
-                                    <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input>
-                                    <input type="submit" value="Be My Buddy" name="buddy" class="btn btn-success"></input>
-                                </div>            
+                                    <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input>                                </div>            
                             </form>
                         </div>
                     </div>
@@ -64,6 +73,16 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <?php endforeach ?>
         </div>
     </div>
+
+<!--
+        <form method="POST" enctype="multipart/form-data">
+
+            <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="requested">
+            <input type="submit" value="Buddy request" name="buddyrequest">
+
+        </form>
+         
+                                    -->
     <script src="script.js"></script>
 </body>
 

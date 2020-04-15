@@ -13,7 +13,17 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
     $buddies = Buddies::findRequest($buddy);
 
+    if ($_POST['accept']) {
+        try {
+            $_SESSION['requested'] = $_POST['requested'];
+           // header("Location: index.php");
+        } catch (\Throwable $th) {
+            
+        }
+    }
+
     if (isset($_POST['accept'])) {
+        $buddy = new Buddies();
         Buddies::makeBuddy($buddy);
     }
     
@@ -43,28 +53,29 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <div class="card-group container mt-5">
 
         <div class="card">
-            <h2>
-            <?php foreach ($buddies as $buddy) {
-               echo $buddy["sender"] . " wants to be your buddy!";
-            }
-            ?>
-            </h2>
+            <?php foreach ($buddies as $buddy) :  ?>
+              <?php echo $buddy["sender"] . " wants to be your buddy!"; ?>
+              <form method="POST" class="mx-auto"> 
 
-            <form method="POST" class="mx-auto"> 
-
-                <div class="btn-group" role="group" > 
-                    <input type="submit" value="View profile" name="profile" class="btn btn-info mt-5"></input>
-                </div>
-            
-                </form>
-            <form method="POST" class="mx-auto">    
-
-                <div class="btn-group" role="group" >        
-                    <input type="submit" value="Accept" name="accept" class="btn btn-success mr-3"></input>
-                    <input type="submit" value="Deny" name="denyBuddy" class="btn btn-danger mr-3"></input>
-                </div>
-            
+            <div class="btn-group" role="group" > 
+                <input type="submit" value="View profile" name="profile" class="btn btn-info mt-5"></input>
+            </div>
+                        
             </form>
+            <form method="POST" class="mx-auto">
+            <input type="hidden" value="<?php echo htmlspecialchars($buddy['sender']) ?>" name="requested">
+                        
+                        
+            <div class="btn-group" role="group" >        
+                <input type="submit" value="Accept" name="accept" class="btn btn-success mr-3"></input>
+                <input type="submit" value="Deny" name="denyBuddy" class="btn btn-danger mr-3"></input>
+            </div>
+                        
+            </form>
+            
+              <?php endforeach ?>
+            
+            
         </div> 
 
     </div>
