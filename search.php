@@ -7,24 +7,28 @@ session_start();
 $succes1 = '';
 $succes2 = '';
 
-if ($_POST['searchField']) {
-    $searchName = UserManager::searchName();
-    if (!empty($_POST['searchField'])) {
-        if (isset($_POST['searchName'])) {
-            foreach ($searchName as $name) {
-                $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if ($_POST['searchField']) {
+        $searchName = UserManager::searchName();
+        if (!empty($_POST['searchField'])) {
+            if (isset($_POST['searchName'])) {
+                foreach ($searchName as $name) {
+                    $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+                }
             }
-        }
-    } else {
+        } else {
         $error1 = 'Typ a name';
+        }
     }
-}
 
-if ($_POST['searchBuddy']) {
-    $searchBuddy = UserManager::searchBuddyByFilter();
-    foreach ($searchBuddy as $name) {
-        $succes2 = '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+    if ($_POST['searchBuddy']) {
+        $searchBuddy = UserManager::searchBuddyByFilter();
+        foreach ($searchBuddy as $name) {
+            $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+        }
     }
+} else {
+    header("Location: login.php");
 }
 
 ?>
@@ -152,17 +156,11 @@ if ($_POST['searchBuddy']) {
                 <?php echo $error2; ?>
             </p>
         <?php endif; ?>
-
             <p>
                 <?php echo $succes2; ?>
             </p>
-
-    </div>
-    </div>
-    </table>
     </div>
 
-    </form>
 </body>
 
 </html>

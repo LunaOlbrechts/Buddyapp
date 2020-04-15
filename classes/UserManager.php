@@ -351,23 +351,62 @@ class UserManager
         $sportType = $_POST['sportType'];
         $goingOutType = $_POST['goingOutType'];
         
-        $statement = ("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest AND  schoolYear = :schoolYear 
-        AND sportType = :sportType AND goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
+        /*$statement = $conn->prepare ("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
+        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");*/
 
-        $query = $conn->prepare($statement);
+        $extra = "";
 
-        $query->bindValue(':mainCourseInterest', $mainCourseInterest);
-        $query->bindValue(':schoolYear', $schoolYear);
-        $query->bindValue(':sportType', $sportType);
-        $query->bindValue(':goingOutType', $goingOutType);
+        if(!empty($_POST['mainCourseInterest'])){
+            $extra .= "AND mainCourseInterest = :mainCourseInterest";
+        }  elseif (!empty($_POST['schoolYear'])){
+            $extra .= " AND schoolYear = :schoolYear";
+        } elseif (!empty($_POST['sportType'])){
+            $extra .= "AND sportType = :sportType";
+        } elseif (!empty($_POST['goingOutType'])){
+            $extra .= "AND goingOutType = :goingOutType";
+        }
+        
+        $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";
 
-        $query->execute();
+        $extra = $conn->prepare($statement);
 
-        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        $extra->bindValue(':mainCourseInterest', $mainCourseInterest);
+        $extra->bindValue(':schoolYear', $schoolYear);
+        $extra->bindValue(':sportType', $sportType);
+        $extra->bindValue(':goingOutType', $goingOutType);
+
+       $extra->execute(); 
+
+        $count = $extra->fetchAll(PDO::FETCH_ASSOC);
         //var_dump($_POST);
         //var_dump($count);
         return $count;
     }
+
+        /*if(isset($_POST['mainCourseInterest'])){
+            $mainCourseInterest = $_POST['mainCourseInterest'];
+        } elseif (isset($_POST['schoolYear'])){
+            $schoolYear = $_POST['schoolYear'];
+        } elseif (isset($_POST['sportType'])){
+            $sportType = $_POST['sportType'];
+        } elseif (isset($_POST['goingOutType'])){
+            $goingOutType = $_POST['goingOutType'];
+        }*/
+    
+        /*if(isset($_POST['mainCourseInterest'])){
+            if($_POST['mainCourseInterest']){
+                $statement = "SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest) AND buddyType = 'wantToBeABuddy'";
+            } 
+        } elseif (isset($_POST['schoolYear'])){
+            if($_POST['schoolYear']){
+                $statement = "SELECT * FROM tl_user WHERE (schoolYear = :schoolYear) AND buddyType = 'wantToBeABuddy'";
+            }
+        } elseif (isset($_POST['sportType'])){
+            if($_POST['sportType']){
+                $statement = "SELECT * FROM tl_user WHERE (sportType = :sportType) AND buddyType = 'wantToBeABuddy'";
+            }
+        }*/
+
         /*
         $conn = Db::getConnection();
 
@@ -409,34 +448,35 @@ class UserManager
         //var_dump($count);
         //var_dump($_POST);
         return $count;
+     }
 
-        /*$conn = Db::getConnection();
+     public static function numberOfUsersInDatabase()
+     {
+        $conn = Db::getConnection();
 
-        $searchField = $_POST['searchField'];
+        $statement = "SELECT count(*) FROM tl_user";
+        $result = $conn->prepare($statement);
 
-        $statement = "SELECT COUNT(*) FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)";
-        
-        //$query = $conn->prepare($statement);
+        $result->execute();
+        $number_of_users = $result->fetchColumn();
 
-        if($result = $conn->query($statement)){
-            if($result->fetchColumn() > 0);
+        return $number_of_users;
+        //var_dump($number_of_users);
+        //echo $number_of_users;
+     }
 
-            $query = "SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)";
-            foreach($conn->query($statement) as $name => $name){
-                print '<div>' . $name['firstName'] . " ". $name['lastName'] . '</div>';
-            }
-        }
-        
-        $query->bindValue(':name', '%'.$searchField.'%');
-        //var_dump($searchField);
+     public static function numberOfBuddyMatches()
+     {
+        $conn = Db::getConnection();
 
-        $query->execute();
-        //"SELECT * from tl_user WHERE firstName LIKE '%$searchName% OR lastName LIKE '%$searchName%"
-        
-        $count = $query->fetchAll(PDO::FETCH_ASSOC);
-        //var_dump($count);
-        //var_dump($_POST);
-        return $count;*/
+        $statement = "SELECT count(*) FROM tl_buddies";
+        $result = $conn->prepare($statement);
+
+        $result->execute();
+        $number_of_buddy_matches = $result->fetchColumn();
+
+        return $number_of_buddy_matches;
+        //echo $number_of_buddy_matches;
      }
 
 

@@ -6,6 +6,10 @@ include_once(__DIR__ . "/classes/Buddies.php");
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    $number_of_users = UserManager::numberOfUsersInDatabase();
+    $number_of_buddy_matches = UserManager::numberOfBuddyMatches();
+    var_dump($number_of_users);
+
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
@@ -50,6 +54,16 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <?php endif ?>
 
     <?php // echo(json_encode($_SESSION)); ?>
+    <div class="card-text">
+        <p>
+            Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd.
+        </p>
+        <p>
+            Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden.
+        </p>
+    </div>
+
+    <!--<?php echo(json_encode($_SESSION)); ?>-->
 
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
