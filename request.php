@@ -13,7 +13,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
     $buddies = Buddies::findRequest($buddy);
 
-    if ($_POST['accept']) {
+    if (isset($_POST['accept']) && ($_POST['accept'])) {
         try {
             $_SESSION['requested'] = $_POST['requested'];
            
@@ -24,12 +24,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     if (isset($_POST['accept']) && ($_POST['accept'])) {
         $buddy = new Buddies();
-        Buddies::makeBuddy($buddy);
+        Buddies::makeBuddy();
         header("Location: index.php");
     }
 
-    if (isset($_POST['deny'])) {
+    if (isset($_POST['deny']) && ($_POST['deny'])) {
         $buddy = new Buddies();
+        Buddies::denyBuddy();
+        header("Location: index.php");
     }    
     
     

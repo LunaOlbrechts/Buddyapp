@@ -29,6 +29,7 @@ class Buddies
         $statement = $conn->prepare("SELECT * from buddie_request WHERE reciever= '" . $_SESSION['user_id'] . "'");
         $statement->execute();
         $buddies = $statement->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($buddies);
 
         if($statement->rowCount() > 0)
         {
@@ -57,7 +58,7 @@ class Buddies
 
     
     // MAKE THE BUDDY
-    public function makeBuddy()
+    public static function makeBuddy()
     {
         $conn = Db::getConnection();
         $deleteStatement = $conn->prepare("DELETE FROM buddie_request WHERE reciever= '" . $_SESSION['user_id'] . "'");
@@ -71,6 +72,12 @@ class Buddies
          } 
     }
 
+
+    // REFUSE BUDDY
+    public static function denyBuddy()
+    {
+
+    }
     
 
     
