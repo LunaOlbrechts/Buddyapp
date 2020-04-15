@@ -461,8 +461,22 @@ class UserManager
         $number_of_users = $result->fetchColumn();
 
         return $number_of_users;
-        echo $number_of_users;
+        //var_dump($number_of_users);
+        //echo $number_of_users;
+     }
 
+     public static function numberOfBuddyMatches()
+     {
+        $conn = Db::getConnection();
+
+        $statement = "SELECT count(*) FROM tl_buddies";
+        $result = $conn->prepare($statement);
+
+        $result->execute();
+        $number_of_buddy_matches = $result->fetchColumn();
+
+        return $number_of_buddy_matches;
+        //echo $number_of_buddy_matches;
      }
 
 }

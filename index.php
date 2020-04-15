@@ -6,6 +6,8 @@ session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $number_of_users = UserManager::numberOfUsersInDatabase();
+    $number_of_buddy_matches = UserManager::numberOfBuddyMatches();
+    var_dump($number_of_users);
 
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
