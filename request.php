@@ -71,7 +71,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="card">
             <?php foreach ($buddies as $buddy) :  ?>
                 <?php if($deny == 0) : ?>
-                    <?php echo $buddy["sender"] . " wants to be your buddy!"; ?>
+                    <?php echo $buddy["firstName"] . " wants to be your buddy!"; ?>
                     <form method="POST" class="mx-auto"> 
 
                     <div class="btn-group" role="group" > 

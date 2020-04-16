@@ -26,7 +26,7 @@ class Buddies
     {
         $conn = Db::getConnection();
         // SENDER -> RECEIVER ( EVEN VOOR TESTEN)
-        $statement = $conn->prepare("SELECT * from buddie_request WHERE reciever= '" . $_SESSION['user_id'] . "'");
+        $statement = $conn->prepare("SELECT * from tl_user INNER JOIN buddie_request ON tl_user.id = buddie_request.sender");
         $statement->execute();
         $buddies = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -54,6 +54,8 @@ class Buddies
           return false;
         }
     }
+
+  
 
     
     // MAKE THE BUDDY
