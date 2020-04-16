@@ -28,8 +28,11 @@ class Mail{
     }
 
     public static function sendEmail(){
-       $result = UserManager::getUserFromDatabase();
-    
+
+       // Need to be replaced by the id of the reciever from the chat function  
+       $idReciever = $_SESSION['reciever_id']; 
+       $result = UserManager::getUserFromDatabaseById($idReciever);
+
        $email = $result[0]['email'];
 
        if($result){
@@ -47,6 +50,7 @@ class Mail{
             $result = $mail->send();
 
             return $result;
+
         }
        return false;
     }

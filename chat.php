@@ -8,14 +8,15 @@ include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
 include_once(__DIR__ . "/classes/Mail.php");
 
-
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
-            $message->setSender($_SESSION['firstName']);
-            $message->setReciever($_SESSION['reciever']);
+            $message->setSender($_SESSION['first_name']);
+            $message->setRecieverName( $_SESSION['reciever_name']);
+            $message->setRecieverId($_SESSION['reciever_id']);
+            
             Chat::sendMessage($message);
 
         } catch (\Throwable $th) {
@@ -36,9 +37,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 // Get messages for specific chat
 $conn = Db::getConnection();
-$sender = $_SESSION['firstName'];
-$reciever = $_SESSION['reciever'];
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (sender = '" . $sender . "' AND reciever = '" . $reciever . "') OR (sender = '" . $reciever . "' AND reciever = '" . $sender . "') ORDER BY created_on ASC");
+$sender = $_SESSION['first_name'];
+$recieverName = $_SESSION['reciever_name'];
+$recieverId = $_SESSION['reciever_id'];
+
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (sender = '" . $sender . "' AND recieverId = '" . $recieverId . "') OR (sender = '" . $recieverId . "' AND recieverId = '" . $sender . "') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 

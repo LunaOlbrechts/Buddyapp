@@ -6,19 +6,23 @@ class Chat
 {
     private $message;
     private $sender;
-    private $reciever;
+    private $recieverName;
+    private $recieverId;
+
 
     public static function sendMessage(Chat $message)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("INSERT INTO tl_chat (sender, reciever, message) VALUES (:sender, :reciever, :message)");
+        $statement = $conn->prepare("INSERT INTO tl_chat (sender, recieverName, recieverId, message) VALUES (:sender, :recieverName, :recieverId, :message)");
         $sender = $message->getSender();
-        $reciever = $message->getReciever();
+        $recieverName = $message->getRecieverName();
+        $recieverId = $message->getRecieverId();
         $message = $message->getMessage();
         
 
         $statement->bindValue(":sender", $sender);
-        $statement->bindValue(":reciever", $reciever);
+        $statement->bindValue(":recieverName", $recieverName);
+        $statement->bindValue(":recieverId", $recieverId);
         $statement->bindValue(":message", $message);
 
         $result = $statement->execute();
@@ -68,9 +72,9 @@ class Chat
     /**
      * Get the value of reciever
      */ 
-    public function getReciever()
+    public function getRecieverName()
     {
-        return $this->reciever;
+        return $this->recieverName;
     }
 
     /**
@@ -78,9 +82,29 @@ class Chat
      *
      * @return  self
      */ 
-    public function setReciever($reciever)
+    public function setRecieverName($recieverName)
     {
-        $this->reciever = $reciever;
+        $this->recieverName = $recieverName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of recieverId
+     */ 
+    public function getRecieverId()
+    {
+        return $this->recieverId;
+    }
+
+    /**
+     * Set the value of recieverId
+     *
+     * @return  self
+     */ 
+    public function setRecieverId($recieverId)
+    {
+        $this->recieverId = $recieverId;
 
         return $this;
     }
