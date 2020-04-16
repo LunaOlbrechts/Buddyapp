@@ -13,9 +13,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
-            $message->setSender($_SESSION['first_name']);
-            $message->setRecieverName( $_SESSION['reciever_name']);
+            $message->setSenderId($_SESSION['user_id']);
+            $message->setSenderName($_SESSION['first_name']);
             $message->setRecieverId($_SESSION['reciever_id']);
+            $message->setRecieverName( $_SESSION['reciever_name']);
             
             Chat::sendMessage($message);
 
@@ -37,11 +38,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 // Get messages for specific chat
 $conn = Db::getConnection();
-$sender = $_SESSION['first_name'];
-$recieverName = $_SESSION['reciever_name'];
+$senderId = $_SESSION['first_name'];
 $recieverId = $_SESSION['reciever_id'];
 
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (sender = '" . $sender . "' AND recieverId = '" . $recieverId . "') OR (sender = '" . $recieverId . "' AND recieverId = '" . $sender . "') ORDER BY created_on ASC");
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND recieverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND recieverId = '" . $senderId . "') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 

@@ -5,23 +5,21 @@ include_once(__DIR__ . "/Db.php");
 class Chat
 {
     private $message;
-    private $sender;
-    private $recieverName;
+    private $senderId;
+    private $senderName;
     private $recieverId;
+    private $recieverName;
 
 
     public static function sendMessage(Chat $message)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("INSERT INTO tl_chat (sender, recieverName, recieverId, message) VALUES (:sender, :recieverName, :recieverId, :message)");
-        $sender = $message->getSender();
-        $recieverName = $message->getRecieverName();
+        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, recieverId, message) VALUES (:senderId, :recieverId, :message)");
+        $senderId = $message->getSenderId();
         $recieverId = $message->getRecieverId();
         $message = $message->getMessage();
         
-
-        $statement->bindValue(":sender", $sender);
-        $statement->bindValue(":recieverName", $recieverName);
+        $statement->bindValue(":senderId", $senderId);
         $statement->bindValue(":recieverId", $recieverId);
         $statement->bindValue(":message", $message);
 
@@ -52,9 +50,9 @@ class Chat
     /**
      * Get the value of sender
      */ 
-    public function getSender()
+    public function getSenderName()
     {
-        return $this->sender;
+        return $this->senderName;
     }
 
     /**
@@ -62,9 +60,9 @@ class Chat
      *
      * @return  self
      */ 
-    public function setSender($sender)
+    public function setSenderName($senderName)
     {
-        $this->sender = $sender;
+        $this->senderName = $senderName;
 
         return $this;
     }
@@ -105,6 +103,26 @@ class Chat
     public function setRecieverId($recieverId)
     {
         $this->recieverId = $recieverId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of senderId
+     */ 
+    public function getSenderId()
+    {
+        return $this->senderId;
+    }
+
+    /**
+     * Set the value of senderId
+     *
+     * @return  self
+     */ 
+    public function setSenderId($senderId)
+    {
+        $this->senderId = $senderId;
 
         return $this;
     }
