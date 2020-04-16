@@ -56,7 +56,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 // Get messages for specific chat
 $conn = Db::getConnection();
-$senderId = $_SESSION['first_name'];
+$senderId = $_SESSION['user_id'];
 $recieverId = $_SESSION['reciever_id'];
 
 $statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND recieverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND recieverId = '" . $senderId . "') ORDER BY created_on ASC");
