@@ -3,6 +3,7 @@ session_start();
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
 include_once(__DIR__ . "/classes/Buddies.php");
+include_once(__DIR__ . "/classes/Chat.php");
 
 
 $id =  $_SESSION["user_id"];
@@ -12,6 +13,7 @@ $id =  $_SESSION["user_id"];
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
     $buddies = Buddies::findRequest($buddy);
+    $deny = 0;
 
     if (isset($_POST['accept']) && ($_POST['accept'])) {
         try {
@@ -29,11 +31,19 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     }
 
     if (isset($_POST['deny']) && ($_POST['deny'])) {
-        $buddy = new Buddies();
-        Buddies::denyBuddy();
-        header("Location: index.php");
+        $deny = Buddies::denyBuddy();
+        // header("Location: index.php");
     }    
     
+
+    // NOG AANVULLEN !!!
+    if (isset($_POST['goReason']) && !empty($_POST['messageDeny'])) {
+        $message = new Chat();
+        $message->setMessage($_POST['messageDeny']);
+        $message->setSender($_SESSION['firstName']);
+        $message->setReciever($_SESSION['reciever']); // is nog niet de juiste reciever
+        Chat::sendMessage($message);
+    }    
     
 }
 
@@ -60,26 +70,39 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
         <div class="card">
             <?php foreach ($buddies as $buddy) :  ?>
-              <?php echo $buddy["sender"] . " wants to be your buddy!"; ?>
-              <form method="POST" class="mx-auto"> 
+                <?php if($deny == 0) : ?>
+                    <?php echo $buddy["sender"] . " wants to be your buddy!"; ?>
+                    <form method="POST" class="mx-auto"> 
 
-            <div class="btn-group" role="group" > 
-                <input type="submit" value="View profile" name="profile" class="btn btn-info mt-5"></input>
-            </div>
-                        
-            </form>
-            <form method="POST" class="mx-auto">
-            <input type="hidden" value="<?php echo htmlspecialchars($buddy['sender']) ?>" name="requested">
-                        
-                        
-            <div class="btn-group" role="group" >        
-                <input type="submit" value="Accept" name="accept" class="btn btn-success mr-3"></input>
-                <input type="submit" value="Deny" name="deny" class="btn btn-danger mr-3"></input>
-            </div>
-                        
-            </form>
-            
-              <?php endforeach ?>
+                    <div class="btn-group" role="group" > 
+                        <input type="submit" value="View profile" name="profile" class="btn btn-info mt-5"></input>
+                    </div>
+
+                    </form>
+
+                    <form method="POST" class="mx-auto">
+                        <input type="hidden" value="<?php echo htmlspecialchars($buddy['sender']) ?>" name="requested">
+
+
+                        <div class="btn-group" role="group" >        
+                            <input type="submit" value="Accept" name="accept" class="btn btn-success mr-3"></input>
+                            <input type="submit" value="Deny" name="deny" class="btn btn-danger mr-3"></input>
+                        </div>
+                    
+                    </form>
+                <?php endif ?> 
+
+                <?php if($deny == true) : ?>
+                    <form method="POST">
+                        <textarea name="messageDeny" class="form-control" placeholder="Give a reason why you denied this buddy request."></textarea>
+
+                        <div class="btn-group" role="group" >        
+                                <input type="submit" value="Continue" name="goReason" class="btn btn-info mr-3"></input>
+                                <input type="submit" value="Continue without giving reason" name="goNoReason" class="btn btn-info mr-3"></input>
+                        </div>
+                    </form>
+                <?php endif ?>
+            <?php endforeach ?>
             
             
         </div> 

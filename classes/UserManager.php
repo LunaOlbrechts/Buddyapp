@@ -330,14 +330,28 @@ class UserManager
         }
         return $matchedScores;
     }
-    public static function matches()
+
+
+    public static function matches1()
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("SELECT a.* FROM tl_user a JOIN (SELECT email, matchId, COUNT(*) FROM tl_user GROUP BY matchId HAVING count(*) > 1) b ON  a.matchId = b.matchId ORDER BY a.matchId");
-        $statement->execute();
-        $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $nameStatement1 = $conn->prepare("SELECT * FROM tl_user INNER JOIN tl_buddies ON tl_user.id = tl_buddies.user_one");
+        $nameStatement1->execute();
+        $user1 = $nameStatement1->fetchAll(PDO::FETCH_ASSOC);
 
-        return $users;
+        return $user1;
+
+    }
+
+    public static function matches2()
+    {
+        $conn = Db::getConnection();
+        $nameStatement2 = $conn->prepare("SELECT * FROM tl_user INNER JOIN tl_buddies ON tl_user.id = tl_buddies.user_two");
+        $nameStatement2->execute();
+        $user2 = $nameStatement2->fetchAll(PDO::FETCH_ASSOC);
+
+
+        return $user2;
 
     }
     
