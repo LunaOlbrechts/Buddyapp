@@ -1,5 +1,7 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
 session_start();
+
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/Chat.php");
 include_once(__DIR__ . "/classes/User.php");
@@ -9,15 +11,28 @@ include_once(__DIR__ . "/classes/Buddies.php");
 
 $id =  $_SESSION["user_id"];
 
+include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
-            $message->setSender($_SESSION['firstName']);
-            $message->setReciever($_SESSION['reciever']);
+            $message->setSenderId($_SESSION['user_id']);
+            $message->setSenderName($_SESSION['first_name']);
+            $message->setRecieverId($_SESSION['reciever_id']);
+            $message->setRecieverName( $_SESSION['reciever_name']);
+            
             Chat::sendMessage($message);
+
+        } catch (\Throwable $th) {
+            $profileInformationError = $th->getMessage();
+        }
+    }
+    if ($_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
+        try {
+            Mail::sendEmail();
+            
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
@@ -41,9 +56,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 // Get messages for specific chat
 $conn = Db::getConnection();
-$sender = $_SESSION['firstName'];
-$reciever = $_SESSION['reciever'];
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (sender = '" . $sender . "' AND reciever = '" . $reciever . "') OR (sender = '" . $reciever . "' AND reciever = '" . $sender . "') ORDER BY created_on ASC");
+$senderId = $_SESSION['first_name'];
+$recieverId = $_SESSION['reciever_id'];
+
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND recieverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND recieverId = '" . $senderId . "') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -122,7 +138,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             <textarea name="message" class="form-control" placeholder="Type your message here..."></textarea>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
-                <input type="submit" value="Be My Buddy" name="buddy" class="btn btn-success"></input>
+                <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
             </div>
         </form>
     </div>

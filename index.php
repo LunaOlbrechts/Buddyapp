@@ -17,8 +17,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
-            $_SESSION['reciever'] = $_POST['reciever'];
+            $_SESSION['reciever_name'] = $_POST['recieverName'];
+            $_SESSION['reciever_id'] = $_POST['recieverId'];
             header("Location: chat.php");
+
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
@@ -85,11 +87,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 </ul>
                             <?php endforeach ?>
                             <form method="POST" enctype="multipart/form-data">
-                                <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="reciever"></input>
-                                <div class="btn-group" role="group" >        
-                                    <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input> 
-                                    <input type="submit" value="View profile" name="profile" class="btn btn-info mr-3"></input>
-                                </div>            
+                                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
+                                <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
+                                <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
                             </form>
                         </div>
                     </div>

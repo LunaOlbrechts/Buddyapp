@@ -4,41 +4,34 @@
 
     session_start();
 
-    /*
-        TODO: replace hardcoded values from the session id value 
-        that is given by the login and signup feature 
-    */
-        $id =  $_SESSION["user_id"];
-
     $showError = false;
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+        $id =  $_SESSION["user_id"];
         // check !empty post
         if (!empty($_POST)) {
-                //try catch set properties and connect to database 
-                try {
-                    $user = new User();
-                    
-                    $user->setId($id);
-                    $user->setLocation($_POST['inputLocation']);
-                    $user->setMainCourseInterest($_POST['mainCourseInterest']);
-                    $user->setSchoolYear($_POST['schoolYear']);
-                    $user->setSportType($_POST['sportType']);
-                    $user->setGoingOutType($_POST['goingOutType']);
-                    $user->setBuddyType($_POST['buddyType']);
+            // set properties and connect to save filter in the database 
+            try {
+                $user = new User();
+                $user->setId($id);
+                $user->setLocation($_POST['inputLocation']);
+                $user->setMainCourseInterest($_POST['mainCourseInterest']);
+                $user->setSchoolYear($_POST['schoolYear']);
+                $user->setSportType($_POST['sportType']);
+                $user->setGoingOutType($_POST['goingOutType']);
+                $user->setBuddyType($_POST['buddyType']);
 
-                    UserManager::saveCompletedProfile($user);
-
-                    $successMessage = "Your profile is complete";
-
-                    header("Location: index.php");
-                }
-                catch (\Throwable $th) {
-                    $error = $th->getMessage();
-                }
+                UserManager::saveCompletedProfile($user);
+                // locate to the index page
+                header("Location: index.php");
+            }
+            catch (\Throwable $th) {
+                $error = $th->getMessage();
+            }
         }
     }
     else {
+        // When there is no valid session the user will be redirected to the login page
         header("Location: login.php");
     }
 ?>

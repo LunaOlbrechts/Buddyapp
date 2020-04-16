@@ -2,25 +2,29 @@
     include_once(__DIR__ . "/classes/User.php");
     include_once(__DIR__ . "/classes/UserManager.php");
 
+    session_start();
+
     if(!empty($_POST)) {
         try {
             $user = new User();
             $user->setEmail(htmlspecialchars($_POST['email']) );
-            $user->setFirstName(htmlspecialchars($_POST['firstname']) );
-            $user->setLastName(htmlspecialchars($_POST['lastname']) );
+            $user->setFirstName(htmlspecialchars($_POST['firstName']) );
+            $user->setLastName(htmlspecialchars($_POST['lastName']) );
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]) );
             //echo $user->getPassword();
-            UserManager::save($user);
+            $id = UserManager::save($user);
 
-            $success = "user saved!";
-            header("Location: complete.profile.php");
+            if ($id) {
+                $_SESSION['user_id'] = $id;
+                $_SESSION['first_name'] = $user->getFirstName();
+                $success = "user saved!";
+                header("Location: complete.profile.php");
+            }
         } catch (\Throwable $th) {
             //throw error
             $error = $th->getMessage();
         }
     }
-
-
 
 ?>
 <!DOCTYPE html>
@@ -57,12 +61,12 @@
 
         <div class="form-group">
             <label for="firstname">First name:</label>
-            <input class="form-control" type="text" name="firstname" id="firstname" placeholder="Enter your first name">
+            <input class="form-control" type="text" name="firstName" id="firstname" placeholder="Enter your first name">
         </div>
 
         <div class="form-group">
             <label for="lastname">Last name:</label>
-            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Enter your last name">
+            <input class="form-control" type="text" name="lastName" id="lastname" placeholder="Enter your last name">
         </div>
 
         <div class="form-group">

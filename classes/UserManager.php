@@ -9,9 +9,10 @@ class UserManager
         // check if nothing is empty
 
         if (isset($_POST['signup-btn'])) {
-
+            
             // CHECK IF EMAIL IS TAKEN
             if (isset($_POST['email'])) {
+                
                 $email = $user->getEmail();
                 $conn = Db::getConnection();
                 $sql = "SELECT * FROM tl_user WHERE email='$email'";
@@ -47,11 +48,13 @@ class UserManager
             $statement->bindValue(":email", $email);
             $statement->bindValue(":password", $password);
 
-            $result = $statement->execute();
+            $statement->execute();
+            $id = $conn->lastInsertId();
+            
             echo "saved to database";
 
             // return result
-            return $result;
+            return $id;
         }
     }
 
@@ -61,7 +64,7 @@ class UserManager
         $statement = $conn->prepare("UPDATE tl_user SET city = :location, mainCourseInterest = :mainCourseInterest, schoolYear = :schoolYear, 
         sportType = :sportType, goingOutType = :goingOutType, buddyType = :buddyType WHERE id = :id");
 
-        $id = $user->getId();
+        $id = $_SESSION['user_id'];
         $location = $user->getLocation();
         $mainCourseInterest = $user->getMainCourseInterest();
         $schoolYear = $user->getSchoolYear();
@@ -89,6 +92,34 @@ class UserManager
         $statement = $conn->prepare("select * from tl_user where id= :id");
 
         $statement->bindValue(":id", $_SESSION["user_id"]);
+
+        $statement->execute();
+        $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $userData;
+    }
+
+    public static function getUserFromDatabaseByEmail($email)
+    {
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select * from tl_user where email= :email");
+
+        $statement->bindValue(":email", $email);
+
+        $statement->execute();
+        $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $userData;
+    }
+
+    public static function getUserFromDatabaseById($id)
+    {
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select * from tl_user where id= :id");
+
+        $statement->bindValue(":id", $id);
 
         $statement->execute();
         $userData = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -213,15 +244,15 @@ class UserManager
         //print_r($result);
         $password = $result["password"];
         $userId = $result["id"];
-        $firstName = $result["firstName"];
+        $firstName = $result[0]["firstName"];
         $lastName = $result["lastName"];
-
+    
         //echo $password;
         if (password_verify($passwordEntered, $password)) {
             session_start();
             $_SESSION['user_id'] = $userId;
             $_SESSION['logged_in'] = true;
-            $_SESSION['firstName'] = $firstName;
+            $_SESSION['first_name'] = $firstName;
             $_SESSION['lastName'] = $lastName;
             header("Location:complete.profile.php");  //redirect moet in de frontend
         } else {
@@ -259,14 +290,16 @@ class UserManager
     public static function matchUsersByFiltersChat()
     {
         $conn = Db::getConnection();
-
         //Select users that have minimum one match with the current user filters 
 
-        $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName = :firstName");
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName = :firstName AND id = :id");
 
-        $reciever = $_SESSION['reciever'];
+        $nameReciever = $_SESSION['reciever_name'];
+        $idReciever = $_SESSION['reciever_id'];
 
-        $statement->bindValue(":firstName", $reciever);
+        $statement->bindValue(":firstName", $nameReciever);
+        $statement->bindValue(":id", $idReciever);
+
 
         $statement->execute();
         $matchedUsers = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -352,7 +385,6 @@ class UserManager
 
 
         return $user2;
-
     }
     
     
