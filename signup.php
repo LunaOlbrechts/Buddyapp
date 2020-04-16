@@ -18,7 +18,7 @@
                 $_SESSION['user_id'] = $id;
                 $_SESSION['first_name'] = $user->getFirstName();
                 $success = "user saved!";
-                header("Location: complete.profile.php");
+                header("Location: signup.mail.php");
             }
         } catch (\Throwable $th) {
             //throw error

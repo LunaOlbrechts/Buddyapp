@@ -27,7 +27,7 @@ class Mail{
         return $mail;
     }
 
-    public static function sendEmail(){
+    public static function sendEmailBuddyRequest(){
 
        $idReciever = $_SESSION['reciever_id'];
        $result = UserManager::getUserFromDatabaseById($idReciever);
@@ -54,4 +54,33 @@ class Mail{
        return false;
 
     }
+
+    public static function sendEmailSignup(){
+
+        $id = $_SESSION['user_id'];
+        $result = UserManager::getUserFromDatabaseById($id);
+ 
+        $emailReciever = $result[0]['email'];
+ 
+        if($result){
+             $subject = "Hallo! Welkom bij Buddy.";
+             $msg = "Bevestig jouw email door op deze link te klikken <a href=\"http://localhost:8888/Buddyapp/profile.php" . "\"></a> ";
+             $msg = wordwrap($msg, 70);
+     
+             $mail = self::settings();
+     
+             $mail->addAddress($emailReciever); 
+             $mail->Subject = $subject;
+             $mail->Body = $msg;
+             $mail->isHTML(true);
+ 
+             $result = $mail->send();
+ 
+             return $result;
+         }
+ 
+        return false;
+ 
+     }
+
 }

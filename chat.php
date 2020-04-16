@@ -35,7 +35,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $buddy->setSender($_SESSION['user_id']);
             $buddy->setReciever($_SESSION['reciever_id']);
             Buddies::sendRequest($buddy);
-            Mail::sendEmail();
+            Mail::sendEmailBuddyRequest();
             
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
