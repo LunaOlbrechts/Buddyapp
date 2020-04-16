@@ -24,16 +24,19 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         }
     }
 
+    // VIEW PROFILE
     if (isset($_POST['profile']) && ($_POST['profile'])) {
         header("Location: view.profile.php");
     }
 
+    // ACCEPT BUDDY REQUEST
     if (isset($_POST['accept']) && ($_POST['accept'])) {
         $buddy = new Buddies();
         Buddies::makeBuddy();
         header("Location: index.php");
     }
 
+    // DENY BUDDY REQUEST
     if (isset($_POST['deny']) && ($_POST['deny'])) {
         $deny = Buddies::denyBuddy();
         // header("Location: index.php");

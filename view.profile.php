@@ -9,9 +9,10 @@ include_once(__DIR__ . "/classes/Buddies.php");
         $user = Buddies::findRequest();
         var_dump($user);
 
+
         if (isset($_POST['chat']) && ($_POST['chat'])) {
             try {
-                $_SESSION['reciever'] = $_POST['reciever'];
+                $_SESSION['sender'] = $_POST['request'];
                 header("Location: chat.php");
             } catch (\Throwable $th) {
                 $profileInformationError = $th->getMessage();
@@ -42,7 +43,7 @@ include_once(__DIR__ . "/classes/Buddies.php");
                 <p class="card-text">Buddy: <?php echo ($users['buddyType']) ?></p>
             </div>
             <form method="POST" enctype="multipart/form-data">
-            <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="reciever"></input>
+            <input type="hidden" value="<?php echo htmlspecialchars($user['sender']) ?>" name="sender"></input>
             <div class="btn-group" role="group" >        
                 <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input> 
             </div> 
