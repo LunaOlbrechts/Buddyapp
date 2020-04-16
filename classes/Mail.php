@@ -63,8 +63,10 @@ class Mail{
         $emailReciever = $result[0]['email'];
  
         if($result){
+            $token = bin2hex(random_bytes(50));
+
              $subject = "Hallo! Welkom bij Buddy.";
-             $msg = "Bevestig jouw email door op deze link te klikken <a href=\"http://localhost:8888/Buddyapp/profile.php" . "\"></a> ";
+             $msg = "Bevestig jouw email door op deze link te klikken <a href=\"http://localhost:8888/Buddyapp/complete.profile.php?token=" . $token . "\" ></a> ";
              $msg = wordwrap($msg, 70);
      
              $mail = self::settings();
