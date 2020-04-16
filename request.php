@@ -12,7 +12,7 @@ $id =  $_SESSION["user_id"];
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
-    $buddies = Buddies::findRequest($buddy);
+    $buddies = Buddies::findRequest();
     $deny = 0;
 
     if (isset($_POST['accept']) && ($_POST['accept'])) {
@@ -22,6 +22,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         } catch (\Throwable $th) {
             
         }
+    }
+
+    if (isset($_POST['profile']) && ($_POST['profile'])) {
+        header("Location: view.profile.php");
     }
 
     if (isset($_POST['accept']) && ($_POST['accept'])) {
