@@ -26,6 +26,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     // VIEW PROFILE
     if (isset($_POST['profile']) && ($_POST['profile'])) {
+        $_SESSION['reciever_name'] = $_POST['recieverName'];
+        $_SESSION['reciever_id'] = $_POST['recieverId'];
         header("Location: view.profile.php");
     }
 
@@ -47,8 +49,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_POST['goReason']) && !empty($_POST['messageDeny'])) {
         $message = new Chat();
         $message->setMessage($_POST['messageDeny']);
-        $message->setSender($_SESSION['firstName']);
-        $message->setReciever($_SESSION['reciever']); // is nog niet de juiste reciever
+        $message->setSenderId($_SESSION['user_id']);
+        $_SESSION['reciever_name'] = $_POST['recieverName'];
+        $_SESSION['reciever_id'] = $_POST['recieverId'];
+
         Chat::sendMessage($message);
     }    
     
@@ -89,7 +93,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
                     <form method="POST" class="mx-auto">
                         <input type="hidden" value="<?php echo htmlspecialchars($buddy['sender']) ?>" name="requested">
-
+                    
 
                         <div class="btn-group" role="group" >        
                             <input type="submit" value="Accept" name="accept" class="btn btn-success mr-3"></input>
@@ -102,7 +106,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                 <?php if($deny == true) : ?>
                     <form method="POST">
                         <textarea name="messageDeny" class="form-control" placeholder="Give a reason why you denied this buddy request."></textarea>
-
+                    
                         <div class="btn-group" role="group" >        
                                 <input type="submit" value="Continue" name="goReason" class="btn btn-info mr-3"></input>
                                 <input type="submit" value="Continue without giving reason" name="goNoReason" class="btn btn-info mr-3"></input>

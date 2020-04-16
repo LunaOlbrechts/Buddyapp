@@ -5,11 +5,14 @@ include_once(__DIR__ . "/classes/UserManager.php");
 include_once(__DIR__ . "/classes/Buddies.php");
 
 
-    if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-        $user = Buddies::findRequest();
-        var_dump($user);
-
-
+    if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {       
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+          } else {
+            die("An ID is missing. 🙄");
+          }
+        
+        
         if (isset($_POST['chat']) && ($_POST['chat'])) {
             try {
                 $_SESSION['sender'] = $_POST['request'];

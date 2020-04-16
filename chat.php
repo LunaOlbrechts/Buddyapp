@@ -31,27 +31,32 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     }
     if ($_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
+            $buddy = new Buddies();
+            $buddy->setSender($_SESSION['user_id']);
+            $buddy->setReciever($_SESSION['reciever_id']);
+            Buddies::sendRequest($buddy);
             Mail::sendEmail();
             
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
     }
+
+    if (isset($_POST['profile']) && ($_POST['profile'])) {
+        try {
+            $_SESSION['reciever_name'] = $_POST['recieverName'];
+            $_SESSION['reciever_id'] = $_POST['recieverId'];
+            header("Location: view.profile.php");
+        } catch (\Throwable $th) {
+            $profileInformationError = $th->getMessage();
+        }
+    }
+
 } else {
     header("Location: login.php");
 }
 
-    if ($_POST['buddy']) {
-       try {
-        $buddy = new Buddies();
-        $buddy->setSender($_SESSION['user_id']);
-        $buddy->setReciever($_SESSION['reciever']);
-        Buddies::sendRequest($buddy);  
-       } catch (\Throwable $th) {
-           
-       } 
-        
-    }
+ 
 
 
 // Get messages for specific chat
@@ -137,8 +142,11 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         <form method="POST" enctype="multipart/form-data">
             <textarea name="message" class="form-control" placeholder="Type your message here..."></textarea>
             <div class="btn-group" role="group" aria-label="Basic example">
+            <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
+            <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
                 <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
                 <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
+                <input type="submit" value="View profile" name="profile" class="btn btn-info mt-5"></input>  
             </div>
         </form>
     </div>

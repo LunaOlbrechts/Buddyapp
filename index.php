@@ -8,8 +8,6 @@ session_start();
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $number_of_users = UserManager::numberOfUsersInDatabase();
     $number_of_buddy_matches = UserManager::numberOfBuddyMatches();
-    var_dump($number_of_users);
-
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
@@ -20,7 +18,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $_SESSION['reciever_name'] = $_POST['recieverName'];
             $_SESSION['reciever_id'] = $_POST['recieverId'];
             header("Location: chat.php");
-
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
@@ -32,7 +29,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     // VIEW PROFILE
     if (isset($_POST['profile']) && ($_POST['profile'])) {
-        header("Location: view.profile.php");
+        try {
+            $_SESSION['reciever_name'] = $_POST['recieverName'];
+            $_SESSION['reciever_id'] = $_POST['recieverId'];
+            header("Location: view.profile.php");
+        } catch (\Throwable $th) {
+            $profileInformationError = $th->getMessage();
+        }
     }
 
 } else {
@@ -90,6 +93,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
                                 <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
+                                <a href="view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
+                                <button>Profile</button>
+                                </a>      
                             </form>
                         </div>
                     </div>

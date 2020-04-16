@@ -26,7 +26,7 @@ class Buddies
     {
         $conn = Db::getConnection();
         // SENDER -> RECEIVER ( EVEN VOOR TESTEN)
-        $statement = $conn->prepare("SELECT * from tl_user INNER JOIN buddie_request ON tl_user.id = buddie_request.sender");
+        $statement = $conn->prepare("SELECT * from tl_user INNER JOIN buddie_request ON tl_user.id = buddie_request.sender WHERE reciever= '" . $_SESSION['user_id'] . "'");
         $statement->execute();
         $buddies = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -37,6 +37,23 @@ class Buddies
         else { 
           header("Location: index.php");
         }
+    }
+
+    public static function findProfile()
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * from tl_user WHERE id= '" . $_SESSION['reciever_id'] . "'");
+        $statement->execute();
+        $buddies = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if($statement->rowCount() > 0)
+        {
+            return $buddies;
+        }
+        else { 
+          header("Location: index.php");
+        }
+
     }
 
     // BUTTON WHEN YOU HAVE A REQUEST
@@ -54,9 +71,6 @@ class Buddies
           return false;
         }
     }
-
-  
-
     
     // MAKE THE BUDDY
     public static function makeBuddy()
@@ -89,13 +103,6 @@ class Buddies
         else { 
           return false;
         }
-    }
-
-    
-    // MESSAGE WHY DENIED BUDDY
-    public static function reasonBuddy()
-    {
-        
     }
 
     
