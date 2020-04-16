@@ -6,13 +6,15 @@
 
     session_start();
     $id =  $_SESSION["user_id"];
+    $user1;
+    $user2;
 
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $user = new User();
         $user->setId($id);
-        $users = Usermanager::matches($user);
-       // var_dump($users);            
+        $user1 = Usermanager::matches1($user);
+        $user2 = Usermanager::matches2($user);       
     } else {
         header("Location: login.php");
     }
@@ -34,35 +36,35 @@
         <h1 class="col-md-4">Buddy list!</h1>
 
 
+
+        
         <?php
-        $i = 0;
-        foreach($users as $user): 
+       // $i = 0;
+       // foreach($user1 as $users1): 
+        for($i=0, $count = count($user1);$i<$count;$i++):
+            $users1 = $user1[$i];
+            $users2 = $user2[$i];
         ?>
         
             <?php 
-            ++$i;
-            if($i==1)
             {
                 
                  ?>
                 <table class="table table-striped table-bordered table-hover">
                 <th scope="col">
-                    <?php echo $user['firstName'] . " " . $user['lastName'];
-                          echo  " is buddies with"; 
+                    <?php echo $users1['firstName'] . " " . $users1['lastName'];
+                          echo  " is buddies with "; 
                     
            } 
-            if($i==2) {
-
-                         echo  $user['firstName'] . " " . $user['lastName']; ?>
+     {
+                         echo  $users2['firstName'] . " " . $users2['lastName']; ?>
                 </th>
                 </table>
-                <?php $i=0;          
-            }
-           // echo $user['email']; 
+                <?php           
+            } 
            ?>
-        
-        
-        <?php endforeach; ?>
+    
+        <?php endfor; ?>
     </div>
 </body>
 </html>
