@@ -4,12 +4,12 @@
 
     session_start();
 
-    $id =  $_SESSION["user_id"];
     $showError = false;
 
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    // check !empty post
-    if (!empty($_POST)) {
+        $id =  $_SESSION["user_id"];
+        // check !empty post
+        if (!empty($_POST)) {
             // set properties and connect to save filter in the database 
             try {
                 $user = new User();
@@ -22,9 +22,7 @@
                 $user->setBuddyType($_POST['buddyType']);
 
                 UserManager::saveCompletedProfile($user);
-
-                $successMessage = "Your profile is complete";
-
+                // locate to the index page
                 header("Location: index.php");
             }
             catch (\Throwable $th) {
@@ -33,6 +31,7 @@
         }
     }
     else {
+        // When there is no valid session the user will be redirected to the login page
         header("Location: login.php");
     }
 ?>
