@@ -28,6 +28,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         header("location: request.php");
     }
 
+    // VIEW PROFILE
+    if (isset($_POST['profile']) && ($_POST['profile'])) {
+        header("Location: view.profile.php");
+    }
+
 } else {
     header("Location: login.php");
 }
@@ -82,7 +87,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                             <form method="POST" enctype="multipart/form-data">
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="reciever"></input>
                                 <div class="btn-group" role="group" >        
-                                    <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input>                                </div>            
+                                    <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input> 
+                                    <input type="submit" value="View profile" name="profile" class="btn btn-info mr-3"></input>
+                                </div>            
                             </form>
                         </div>
                     </div>

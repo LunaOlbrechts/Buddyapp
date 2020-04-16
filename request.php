@@ -12,7 +12,7 @@ $id =  $_SESSION["user_id"];
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
-    $buddies = Buddies::findRequest($buddy);
+    $buddies = Buddies::findRequest();
     $deny = 0;
 
     if (isset($_POST['accept']) && ($_POST['accept'])) {
@@ -24,12 +24,19 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         }
     }
 
+    // VIEW PROFILE
+    if (isset($_POST['profile']) && ($_POST['profile'])) {
+        header("Location: view.profile.php");
+    }
+
+    // ACCEPT BUDDY REQUEST
     if (isset($_POST['accept']) && ($_POST['accept'])) {
         $buddy = new Buddies();
         Buddies::makeBuddy();
         header("Location: index.php");
     }
 
+    // DENY BUDDY REQUEST
     if (isset($_POST['deny']) && ($_POST['deny'])) {
         $deny = Buddies::denyBuddy();
         // header("Location: index.php");
@@ -71,7 +78,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="card">
             <?php foreach ($buddies as $buddy) :  ?>
                 <?php if($deny == 0) : ?>
-                    <?php echo $buddy["sender"] . " wants to be your buddy!"; ?>
+                    <?php echo $buddy["firstName"] . " wants to be your buddy!"; ?>
                     <form method="POST" class="mx-auto"> 
 
                     <div class="btn-group" role="group" > 
