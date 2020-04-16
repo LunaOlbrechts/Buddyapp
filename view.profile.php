@@ -8,6 +8,7 @@ include_once(__DIR__ . "/classes/Buddies.php");
     if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {       
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
+            $user = UserManager::getUserFromDatabaseById($id);
           } else {
             die("An ID is missing. 🙄");
           }

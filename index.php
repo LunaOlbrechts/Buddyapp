@@ -27,16 +27,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         header("location: request.php");
     }
 
-    // VIEW PROFILE
-    if (isset($_POST['profile']) && ($_POST['profile'])) {
-        try {
-            $_SESSION['reciever_name'] = $_POST['recieverName'];
-            $_SESSION['reciever_id'] = $_POST['recieverId'];
-            header("Location: view.profile.php");
-        } catch (\Throwable $th) {
-            $profileInformationError = $th->getMessage();
-        }
-    }
+
+    
 
 } else {
     header("Location: login.php");
@@ -93,8 +85,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
                                 <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
-                                <a href="view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
-                                <button>Profile</button>
+                                <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">CLICK me
                                 </a>      
                             </form>
                         </div>

@@ -24,13 +24,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         }
     }
 
-    // VIEW PROFILE
-    if (isset($_POST['profile']) && ($_POST['profile'])) {
-        $_SESSION['reciever_name'] = $_POST['recieverName'];
-        $_SESSION['reciever_id'] = $_POST['recieverId'];
-        header("Location: view.profile.php");
-    }
-
     // ACCEPT BUDDY REQUEST
     if (isset($_POST['accept']) && ($_POST['accept'])) {
         $buddy = new Buddies();
@@ -83,10 +76,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <?php foreach ($buddies as $buddy) :  ?>
                 <?php if($deny == 0) : ?>
                     <?php echo $buddy["firstName"] . " wants to be your buddy!"; ?>
-                    <form method="POST" class="mx-auto"> 
+                    <form method="GET" class="mx-auto"> 
+
 
                     <div class="btn-group" role="group" > 
-                        <input type="submit" value="View profile" name="profile" class="btn btn-info mt-5"></input>
+                        <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Profile</a>
                     </div>
 
                     </form>

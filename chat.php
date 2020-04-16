@@ -131,7 +131,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     <div class="container">
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
-                <span><?php echo $message['sender']; ?></span>
+                <span><?php echo $message['reciever_name']; ?></span>
                 <div class="message">
                     <p>
                         <?php echo $message['message']; ?>
