@@ -5,6 +5,8 @@ include_once(__DIR__ . "/../PHPMailer/PHPMailer.php");
 include_once(__DIR__ . "/../PHPMailer/SMTP.php");
 include_once(__DIR__ . "/../PHPMailer/Exception.php");
 include_once(__DIR__ . "/SettingsEmail.php");
+include_once(__DIR__ . "/Db.php");
+
 
 
 class Mail{
@@ -58,20 +60,30 @@ class Mail{
     public static function sendEmailSignup(){
 
         $id = $_SESSION['user_id'];
-        $result = UserManager::getUserFromDatabaseById($id);
- 
-        $emailReciever = $result[0]['email'];
- 
-        if($result){
-            $token = bin2hex(random_bytes(50));
 
+        $user = UserManager::getUserFromDatabaseById($id);
+ 
+        $email = $user[0]['email'];
+        $token = bin2hex(random_bytes(50));
+        
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("INSERT INTO tl_signup_email (email, token) VALUES (:email, :token)");
+
+        $token = bin2hex(random_bytes(50));
+
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':token', $token);
+ 
+        $result = $statement->execute();
+        
+        if($result){
              $subject = "Hallo! Welkom bij Buddy.";
              $msg = "Bevestig jouw email door op deze link te klikken <a href=\"http://localhost:8888/Buddyapp/complete.profile.php?token=" . $token . "\" ></a> ";
              $msg = wordwrap($msg, 70);
      
              $mail = self::settings();
      
-             $mail->addAddress($emailReciever); 
+             $mail->addAddress($email); 
              $mail->Subject = $subject;
              $mail->Body = $msg;
              $mail->isHTML(true);
