@@ -29,7 +29,8 @@ class Mail{
         return $mail;
     }
 
-    public static function sendEmailBuddyRequest(){
+    public static function sendEmailBuddyRequest()
+    {
 
        $idReciever = $_SESSION['reciever_id'];
        $result = UserManager::getUserFromDatabaseById($idReciever);
@@ -57,28 +58,29 @@ class Mail{
 
     }
 
-    public static function sendEmailSignup(){
-
+    public static function sendEmailSignup()
+    {
         $id = $_SESSION['user_id'];
 
         $user = UserManager::getUserFromDatabaseById($id);
- 
+        
         $email = $user[0]['email'];
         $token = bin2hex(random_bytes(50));
-        
+
+        var_dump($email);
+        var_dump($token);
+
         $conn = Db::getConnection();
         $statement = $conn->prepare("INSERT INTO tl_signup_email (email, token) VALUES (:email, :token)");
-
-        $token = bin2hex(random_bytes(50));
 
         $statement->bindValue(':email', $email);
         $statement->bindValue(':token', $token);
  
         $result = $statement->execute();
-        
+
         if($result){
              $subject = "Hallo! Welkom bij Buddy.";
-             $msg = "Bevestig jouw email door op deze link te klikken <a href=\"http://localhost:8888/Buddyapp/complete.profile.php?token=" . $token . "\" ></a> ";
+             $msg = "Bevestig jouw email door op deze link te klikken <a href=\"http://localhost:8888/Buddyapp/complete.profile.php?token=" . $token . "&email=" . $email ."\" >link</a> ";
              $msg = wordwrap($msg, 70);
      
              $mail = self::settings();
@@ -95,6 +97,20 @@ class Mail{
  
         return false;
  
+     }
+
+     public static function matchToken($token, $email)
+     {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * FROM tl_signup_email WHERE token = :token AND email = :email");
+
+        $statement->bindValue(":token", $token);
+        $statement->bindValue(":token", $email);
+
+        $result = $statement->execute();
+        var_dump($result);
+        return $result;
+
      }
 
 }

@@ -1,6 +1,8 @@
 <?php
     include_once(__DIR__ . "/classes/User.php");
     include_once(__DIR__ . "/classes/UserManager.php");
+    include_once(__DIR__ . "/classes/Mail.php");
+
 
     session_start();
 
@@ -18,6 +20,7 @@
                 $_SESSION['user_id'] = $id;
                 $_SESSION['first_name'] = $user->getFirstName();
                 $success = "user saved!";
+                Mail::sendEmailSignup();
                 header("Location: signup.mail.php");
             }
         } catch (\Throwable $th) {

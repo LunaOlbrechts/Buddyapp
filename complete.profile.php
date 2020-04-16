@@ -1,12 +1,17 @@
 <?php
     include_once(__DIR__ . "/classes/User.php");
     include_once(__DIR__ . "/classes/UserManager.php");
+    include_once(__DIR__ . "/classes/Mail.php");
 
     session_start();
 
     $showError = false;
+    $token = $_GET['token'];
+    $email = $_GET['email'];
 
-    if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    $result = Mail::matchToken($token, $email);
+
+    if ($result) {
         $id =  $_SESSION["user_id"];
         // check !empty post
         if (!empty($_POST)) {
@@ -31,8 +36,8 @@
         }
     }
     else {
-        // When there is no valid session the user will be redirected to the login page
-        header("Location: login.php");
+        // When there is no valid email the user will be redirected to the login page
+        //header("Location: signup.php");
     }
 ?>
 
