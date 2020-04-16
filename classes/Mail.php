@@ -67,9 +67,6 @@ class Mail{
         $email = $user[0]['email'];
         $token = bin2hex(random_bytes(50));
 
-        var_dump($email);
-        var_dump($token);
-
         $conn = Db::getConnection();
         $statement = $conn->prepare("INSERT INTO tl_signup_email (email, token) VALUES (:email, :token)");
 
@@ -105,10 +102,10 @@ class Mail{
         $statement = $conn->prepare("SELECT * FROM tl_signup_email WHERE token = :token AND email = :email");
 
         $statement->bindValue(":token", $token);
-        $statement->bindValue(":token", $email);
+        $statement->bindValue(":email", $email);
 
         $result = $statement->execute();
-        var_dump($result);
+
         return $result;
 
      }

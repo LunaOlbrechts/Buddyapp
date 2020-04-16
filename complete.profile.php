@@ -37,7 +37,7 @@
     }
     else {
         // When there is no valid email the user will be redirected to the login page
-        //header("Location: signup.php");
+        header("Location: signup.php");
     }
 ?>
 
