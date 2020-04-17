@@ -80,7 +80,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 
                     <div class="btn-group" role="group" > 
-                        <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Profile</a>
+                        <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Profile</a></button>
                     </div>
 
                     </form>

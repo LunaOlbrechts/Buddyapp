@@ -85,8 +85,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
                                 <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
-                                <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">CLICK me
-                                </a>      
+                                <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile
+                                </a></button>      
                             </form>
                         </div>
                     </div>

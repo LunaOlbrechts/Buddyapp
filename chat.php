@@ -36,21 +36,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $buddy->setReciever($_SESSION['reciever_id']);
             Buddies::sendRequest($buddy);
             Mail::sendEmail();
+            echo $result;
             
         } catch (\Throwable $th) {
-            $profileInformationError = $th->getMessage();
+            $error = $th->getMessage();
         }
     }
 
-    if (isset($_POST['profile']) && ($_POST['profile'])) {
-        try {
-            $_SESSION['reciever_name'] = $_POST['recieverName'];
-            $_SESSION['reciever_id'] = $_POST['recieverId'];
-            header("Location: view.profile.php");
-        } catch (\Throwable $th) {
-            $profileInformationError = $th->getMessage();
-        }
-    }
 
 } else {
     header("Location: login.php");
@@ -114,7 +106,19 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
 </head>
 
 <body>
+    
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
+
+    <div class="container mt-5">
+    <?php if(isset($error)): ?>
+                <div class="error mr-5"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+
+            <?php if(isset($success)): ?>
+                    <div class="success mr-5"><?php echo $success ?></div>
+    <?php endif; ?> 
+    </div>
+    
     <div class="container">
         <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
             <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
@@ -131,7 +135,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     <div class="container">
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
-                <span><?php echo $message['reciever_name']; ?></span>
+                <span><?php echo $message['senderId']; ?></span>
                 <div class="message">
                     <p>
                         <?php echo $message['message']; ?>
@@ -146,7 +150,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
                 <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
                 <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
-                <input type="submit" value="View profile" name="profile" class="btn btn-info mt-5"></input>  
+                <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile</a></button>
             </div>
         </form>
     </div>
