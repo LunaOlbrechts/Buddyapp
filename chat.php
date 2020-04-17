@@ -57,13 +57,35 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         border-bottom: 1px solid #007bff;
     }
 
-    .message {
+    .message p {
         background-color: #007bff;
         color: white;
         border-radius: 5px;
         padding: 5px;
-        margin-bottom: 3%;
         width: auto;
+        margin-bottom: 0;
+    }
+
+    .emojis {
+        background-color: red;
+        padding: 0;
+        width: 320px;
+        visibility: hidden;
+        display: inline-block;
+        margin-top: 0px;
+    }
+
+    .emojis li {
+        list-style: none;
+        display: inline;
+    }
+
+    .reaction {
+        background-color: green;
+        width: 50px;
+        margin-top: -30px;
+        display: inline-block;
+        margin-top: 0px;
     }
 </style>
 <!DOCTYPE html>
@@ -80,7 +102,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     <div class="container">
         <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
             <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
-                <p class="card-text">Je hebt deze kenmerken gemeen met <?php echo $user['firstName']?>:</p>
+                <p class="card-text">Je hebt deze kenmerken gemeen met <?php echo $user['firstName'] ?>:</p>
                 <?php foreach ($user['matches'] as $match) : ?>
                     <ul>
                         <?php if (trim($match) !== '') : ?><li><?php echo $match . ", " ?></li><?php endif ?>
@@ -94,10 +116,47 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
                 <span><?php echo $message['sender']; ?></span>
-                <div class="message">
+                <div class="message" id="test" onmouseover="showEmojis(this)" data-messageid="<?php echo $message['id'] ?>">
                     <p>
                         <?php echo $message['message']; ?>
                     </p>
+                    <div class="reaction"><?php $emoji = $message['emoji'];
+                                            switch ($emoji) {
+                                                case 0:
+                                                    echo "";
+                                                    break;
+                                                case 1:
+                                                    echo "Hearth";
+                                                    break;
+                                                case 2:
+                                                    echo "Laugh";
+                                                    break;
+                                                case 3:
+                                                    echo "Mouth";
+                                                    break;
+                                                case 4:
+                                                    echo "Sad";
+                                                    break;
+                                                case 5:
+                                                    echo "Angry";
+                                                    break;
+                                                case 6:
+                                                    echo "Like";
+                                                    break;
+                                                case 7:
+                                                    echo "Dislike";
+                                                    break;
+                                            }
+                                            ?></div>
+                    <ul class="emojis">
+                        <li onclick="addEmoji(this)">Hearth</li>
+                        <li onclick="addEmoji(this)">Laugh</li>
+                        <li onclick="addEmoji(this)">Mouth</li>
+                        <li onclick="addEmoji(this)">Sad</li>
+                        <li onclick="addEmoji(this)">Angry</li>
+                        <li onclick="addEmoji(this)">Like</li>
+                        <li onclick="addEmoji(this)">Dislike</li>
+                    </ul>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -109,6 +168,42 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             </div>
         </form>
     </div>
+
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    function addEmoji(el) {
+        let clickedEmoji = el.innerHTML;
+        let reaction = $(el).parent().parent().find(".reaction");
+        $(reaction).text(clickedEmoji);
+        let message = $(el).parent().parent();
+        let id = message.data("messageid");
+
+        let formData = new FormData();
+
+        formData.append("emoji", clickedEmoji);
+        formData.append("id", id);
+
+        fetch('/ajax/saveemoji.php', {
+                method: 'PUT',
+                body: formData
+            })
+            .then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+    function showEmojis(el) {
+        $(el).find("ul").css("visibility", "visible");
+    }
+
+    $(".message").mouseleave(function() {
+        $(".emojis").css("visibility", "hidden");
+    });
+</script>
 
 </html>
