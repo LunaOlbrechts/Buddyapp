@@ -14,7 +14,7 @@ $id =  $_SESSION["user_id"];
 include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_POST['sendMessage'] && !empty($_POST['message'])) {
+    if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
@@ -22,6 +22,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $message->setSenderName($_SESSION['first_name']);
             $message->setRecieverId($_SESSION['reciever_id']);
             $message->setRecieverName( $_SESSION['reciever_name']);
+            var_dump($_SESSION);
             
             Chat::sendMessage($message);
 
@@ -29,7 +30,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $profileInformationError = $th->getMessage();
         }
     }
-    if ($_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
+    if (isset($_POST["buddyReques"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
             $buddy = new Buddies();
             $buddy->setSender($_SESSION['user_id']);
@@ -42,8 +43,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $error = $th->getMessage();
         }
     }
-
-
 } else {
     header("Location: login.php");
 }
@@ -135,7 +134,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     <div class="container">
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
-                <span><?php echo $message['senderId']; ?></span>
+                <span><?php echo $message['senderName']; ?></span>
                 <div class="message">
                     <p>
                         <?php echo $message['message']; ?>

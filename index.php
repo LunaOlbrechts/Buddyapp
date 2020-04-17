@@ -12,11 +12,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
     $request = Buddies::checkRequest();
+    var_dump($currentUser);
 
     if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
             $_SESSION['reciever_name'] = $_POST['recieverName'];
             $_SESSION['reciever_id'] = $_POST['recieverId'];
+            $_SESSION['first_name'] = $_POST['senderName'];
             header("Location: chat.php");
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
@@ -84,6 +86,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                             <form method="POST" enctype="multipart/form-data">
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
                                 <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
+                                <?php foreach ($currentUser as $userName) : ?> 
+                                    <input type="hidden" value="<?php echo htmlspecialchars($userName['firstName']) ?>" name="senderName"></input>
+                                <?php endforeach ?>
                                 <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
                                 <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile
                                 </a></button>      
@@ -94,8 +99,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <?php endforeach ?>
         </div>
     </div>
-
-         
+      
                                     
     <script src="script.js"></script>
 </body>

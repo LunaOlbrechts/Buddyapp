@@ -32,7 +32,6 @@ $id =  $_SESSION["user_id"];
 
         if ($haveBuddy == 1){
             $currentuser = Buddies::displayBuddy($id);
-            var_dump($currentuser);
         }
 
     }

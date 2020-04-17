@@ -19,7 +19,7 @@ class Buddies
         $statement->bindValue(":reciever", $reciever);
         $result = $statement->execute();
 
-        if ($statement->rowCount() > 0) {
+        if ($statement->execute()) {
             throw new Exception("Buddy Request send!");
         }
 

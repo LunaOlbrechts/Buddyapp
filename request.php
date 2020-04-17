@@ -43,8 +43,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $message = new Chat();
         $message->setMessage($_POST['messageDeny']);
         $message->setSenderId($_SESSION['user_id']);
-        $_SESSION['reciever_name'] = $_POST['recieverName'];
-        $_SESSION['reciever_id'] = $_POST['recieverId'];
+        $message->setSenderName($_SESSION['first_name']);
+        $message->setRecieverId($_SESSION['reciever_id']);
+        $message->setRecieverName( $_SESSION['reciever_name']);
 
         Chat::sendMessage($message);
     }    
@@ -80,7 +81,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 
                     <div class="btn-group" role="group" > 
-                        <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Profile</a></button>
+                        <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Profile</a>
                     </div>
 
                     </form>
