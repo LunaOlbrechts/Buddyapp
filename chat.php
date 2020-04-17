@@ -1,32 +1,61 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
 session_start();
+
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/Chat.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/Buddies.php");
 
+
+$id =  $_SESSION["user_id"];
+
+include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_POST['sendMessage'] && !empty($_POST['message'])) {
+    if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
-            $message->setSender($_SESSION['firstName']);
-            $message->setReciever($_SESSION['reciever']);
+            $message->setSenderId($_SESSION['user_id']);
+            $message->setSenderName($_SESSION['first_name']);
+            $message->setRecieverId($_SESSION['reciever_id']);
+            $message->setRecieverName( $_SESSION['reciever_name']);
+            var_dump($_SESSION);
+            
             Chat::sendMessage($message);
+
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
+        }
+    }
+    if (isset($_POST["buddyReques"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
+        try {
+            $buddy = new Buddies();
+            $buddy->setSender($_SESSION['user_id']);
+            $buddy->setReciever($_SESSION['reciever_id']);
+            Buddies::sendRequest($buddy);
+            Mail::sendEmail();
+            echo $result;
+            
+        } catch (\Throwable $th) {
+            $error = $th->getMessage();
         }
     }
 } else {
     header("Location: login.php");
 }
 
+ 
+
+
 // Get messages for specific chat
 $conn = Db::getConnection();
-$sender = $_SESSION['firstName'];
-$reciever = $_SESSION['reciever'];
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (sender = '" . $sender . "' AND reciever = '" . $reciever . "') OR (sender = '" . $reciever . "' AND reciever = '" . $sender . "') ORDER BY created_on ASC");
+$senderId = $_SESSION['user_id'];
+$recieverId = $_SESSION['reciever_id'];
+
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND recieverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND recieverId = '" . $senderId . "') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -98,7 +127,19 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
 </head>
 
 <body>
+    
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
+
+    <div class="container mt-5">
+    <?php if(isset($error)): ?>
+                <div class="error mr-5"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+
+            <?php if(isset($success)): ?>
+                    <div class="success mr-5"><?php echo $success ?></div>
+    <?php endif; ?> 
+    </div>
+    
     <div class="container">
         <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
             <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
@@ -115,8 +156,8 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     <div class="container">
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
-                <span><?php echo $message['sender']; ?></span>
-                <div class="message" id="test" onmouseover="showEmojis(this)" data-messageid="<?php echo $message['id'] ?>">
+                <span><?php echo $message['senderName']; ?></span>
+                <div class="message" onmouseover="showEmojis(this)" data-messageid="<?php echo $message['id'] ?>">
                     <p>
                         <?php echo $message['message']; ?>
                     </p>
@@ -163,8 +204,11 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         <form method="POST" enctype="multipart/form-data">
             <textarea name="message" class="form-control" placeholder="Type your message here..."></textarea>
             <div class="btn-group" role="group" aria-label="Basic example">
+            <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
+            <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
                 <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
-                <input type="submit" value="Be My Buddy" class="btn btn-success"></input>
+                <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
+                <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile</a></button>
             </div>
         </form>
     </div>

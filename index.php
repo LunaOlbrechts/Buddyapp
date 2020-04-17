@@ -1,22 +1,37 @@
 <?php
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/Buddies.php");
 
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    $number_of_users = UserManager::numberOfUsersInDatabase();
+    $number_of_buddy_matches = UserManager::numberOfBuddyMatches();
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
+    $request = Buddies::checkRequest();
+    var_dump($currentUser);
 
-    if ($_POST['chat']) {
+    if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
-            $_SESSION['reciever'] = $_POST['reciever'];
+            $_SESSION['reciever_name'] = $_POST['recieverName'];
+            $_SESSION['reciever_id'] = $_POST['recieverId'];
+            $_SESSION['first_name'] = $_POST['senderName'];
             header("Location: chat.php");
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
     }
+    
+    if (isset($_POST['request']) && ($_POST['request'])) {
+        header("location: request.php");
+    }
+
+
+    
+
 } else {
     header("Location: login.php");
 }
@@ -35,7 +50,24 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <?php echo(json_encode($_SESSION)); ?>
+
+    <?php if($request == true) : ?>
+    <form method="POST">   
+        <input type="submit" value="You got a buddy request!" name="request" class="btn btn-primary">
+    </form>     
+    <?php endif ?>
+
+    <?php // echo(json_encode($_SESSION)); ?>
+    <div class="card-text">
+        <p>
+            Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd.
+        </p>
+        <p>
+            Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden.
+        </p>
+    </div>
+
+    <!--<?php echo(json_encode($_SESSION)); ?>-->
 
     <div class="profileMatchesByFilters d-flex justify-content-center">
         <div class="card-group">
@@ -52,8 +84,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 </ul>
                             <?php endforeach ?>
                             <form method="POST" enctype="multipart/form-data">
-                                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="reciever"></input>
+                                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
+                                <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
+                                <?php foreach ($currentUser as $userName) : ?> 
+                                    <input type="hidden" value="<?php echo htmlspecialchars($userName['firstName']) ?>" name="senderName"></input>
+                                <?php endforeach ?>
                                 <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
+                                <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile
+                                </a></button>      
                             </form>
                         </div>
                     </div>
@@ -61,6 +99,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <?php endforeach ?>
         </div>
     </div>
+      
+                                    
     <script src="script.js"></script>
 </body>
 

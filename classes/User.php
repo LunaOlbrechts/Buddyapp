@@ -21,6 +21,7 @@ class User
     private $repeatedNewPassword;
     private $buddyType;
     private $matchId;
+    private $status;
 
 
     /**
@@ -58,7 +59,7 @@ class User
      */
     public function setFirstName($firstName)
     {
-        if (empty($_POST['firstname'])) {
+        if (empty($_POST['firstName'])) {
             throw new Exception("Firstname cannot be empty");
         }
 
@@ -82,7 +83,7 @@ class User
      */
     public function setLastName($lastName)
     {
-        if (empty($_POST['lastname'])) {
+        if (empty($_POST['lastName'])) {
             throw new Exception("Lastname cannot be empty");
         }
 
@@ -403,6 +404,26 @@ class User
     public function setMatchId($matchId)
     {
         $this->matchId = $matchId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */ 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @return  self
+     */ 
+    public function setStatus($status)
+    {
+        $this->status = $status;
 
         return $this;
     }
