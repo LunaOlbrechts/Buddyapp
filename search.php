@@ -32,7 +32,7 @@ $succes2 = '';
 }*/
 
 if ($_POST['searchName']) {
-    $searchName = UserManager::searchName($name);
+    $searchName = UserManager::searchName();
     if (!empty($_POST['searchField'])) {
         if (isset($_POST['searchField'])) {
             foreach ($searchName as $name) {
@@ -45,6 +45,8 @@ if ($_POST['searchName']) {
         $error1 = 'Typ a name';
         }
 }
+
+var_dump($searchName);
 
 /*if($_POST['searchName']){
     $searchName = UserManager::searchName();
