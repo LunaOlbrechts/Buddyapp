@@ -421,7 +421,7 @@ class UserManager
         $extra->bindValue(':sportType', $sportType);
         $extra->bindValue(':goingOutType', $goingOutType);
 
-       $extra->execute(); 
+        $extra->execute(); 
 
         $count = $extra->fetchAll(PDO::FETCH_ASSOC);
         //var_dump($_POST);
@@ -478,7 +478,7 @@ class UserManager
      {
         $conn = Db::getConnection();
 
-        $searchField = $_POST['searchField'];
+        $searchField = $_SESSION['searchField'];
 
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
         
