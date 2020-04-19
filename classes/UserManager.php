@@ -383,7 +383,6 @@ class UserManager
         $nameStatement2->execute();
         $user2 = $nameStatement2->fetchAll(PDO::FETCH_ASSOC);
 
-
         return $user2;
     }
     
@@ -424,8 +423,6 @@ class UserManager
         $extra->execute(); 
 
         $count = $extra->fetchAll(PDO::FETCH_ASSOC);
-        //var_dump($_POST);
-        //var_dump($count);
         return $count;
     }
 
@@ -485,14 +482,10 @@ class UserManager
         $query = $conn->prepare($statement);
         
         $query->bindValue(':name', '%'.$searchField.'%');
-        //var_dump($searchField);
 
         $query->execute();
-        //"SELECT * from tl_user WHERE firstName LIKE '%$searchName% OR lastName LIKE '%$searchName%"
         
         $count = $query->fetchAll(PDO::FETCH_ASSOC);
-        //var_dump($count);
-        //var_dump($_POST);
         return $count;
      }
 
@@ -507,8 +500,6 @@ class UserManager
         $number_of_users = $result->fetchColumn();
 
         return $number_of_users;
-        //var_dump($number_of_users);
-        //echo $number_of_users;
      }
 
      public static function numberOfBuddyMatches()
@@ -522,7 +513,6 @@ class UserManager
         $number_of_buddy_matches = $result->fetchColumn();
 
         return $number_of_buddy_matches;
-        //echo $number_of_buddy_matches;
      }
 
 

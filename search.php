@@ -33,6 +33,8 @@ $succes2 = '';
 
 if ($_POST['searchName']) {
     $searchName = UserManager::searchName();
+    $_SESSION['searchField'] = $_POST['searchField'];
+
     if (!empty($_POST['searchField'])) {
         if (isset($_POST['searchField'])) {
             foreach ($searchName as $name) {
@@ -61,6 +63,11 @@ var_dump($searchName);
 
 if ($_POST['searchBuddy']) {
     $searchBuddy = UserManager::searchBuddyByFilter();
+    /*$_SESSION['mainCourseInterest'] = $_POST['mainCourseInterest'];
+    $_SESSION['schoolYear'] = $_POST['schoolYear'];
+    $_SESSION['sportType'] = $_POST['sportType'];
+    $_SESSION['goingOutType'] = $_POST['goingOutType'];*/
+
     foreach ($searchBuddy as $name) {
         $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
     }
