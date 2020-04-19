@@ -17,8 +17,12 @@ class Buddies
         $reciever = $buddy->getReciever();        
         $statement->bindValue(":sender", $sender);
         $statement->bindValue(":reciever", $reciever);
-        
         $result = $statement->execute();
+
+        if ($statement->execute()) {
+            throw new Exception("Buddy Request send!");
+        }
+
         return $result;        
     }
 
@@ -39,22 +43,6 @@ class Buddies
         }
     }
 
-    public static function findProfile()
-    {
-        $conn = Db::getConnection();
-        $statement = $conn->prepare("SELECT * from tl_user WHERE id= '" . $_SESSION['reciever_id'] . "'");
-        $statement->execute();
-        $buddies = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        if($statement->rowCount() > 0)
-        {
-            return $buddies;
-        }
-        else { 
-          header("Location: index.php");
-        }
-
-    }
 
     // BUTTON WHEN YOU HAVE A REQUEST
     public static function checkRequest() 
@@ -72,6 +60,7 @@ class Buddies
         }
     }
     
+
     // MAKE THE BUDDY
     public static function makeBuddy()
     {
@@ -92,10 +81,11 @@ class Buddies
     public static function denyBuddy()
     {
         $conn = Db::getConnection();
-        $deleteStatement = $conn->prepare("DELETE FROM buddie_request WHERE reciever= '" . $_SESSION['user_id'] . "'");
-        $deleteStatement->execute();
+        $statement = $conn->prepare("DELETE FROM buddie_request WHERE reciever= '" . $_SESSION['user_id'] . "'");
+        $statement->execute();
+        
 
-        if($deleteStatement->rowCount() > 0)
+        if($statement->rowCount() > 0)
         {
             return true;
 
@@ -103,6 +93,46 @@ class Buddies
         else { 
           return false;
         }
+    }
+
+    // DISPLAY BUDDY
+    public static function haveBuddy($id)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * from tl_buddies WHERE user_one = $id OR user_two = $id");
+        $statement->execute();
+
+        
+        if($statement->rowCount() == 0)
+        {
+            return 0;
+
+        }
+        else { 
+          return 1;
+        }
+    }
+
+    public static function displayBuddy($id)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * from tl_buddies WHERE user_one = $id");
+        $statement->execute();
+
+        if($statement->rowcount() == 0) 
+        {
+            $user2Statement = $conn->prepare("SELECT * FROM tl_user INNER JOIN tl_buddies ON tl_user.id =  tl_buddies.user_one WHERE user_two = $id");
+            $user2Statement->execute();
+            $currentuser = $user2Statement->fetchAll(PDO::FETCH_ASSOC);
+            return $currentuser;
+        } else 
+        {
+            $user1Statement = $conn->prepare("SELECT * FROM tl_user INNER JOIN tl_buddies ON tl_user.id =  tl_buddies.user_two WHERE user_one = $id");
+            $user1Statement->execute();
+            $currentuser = $user1Statement->fetchAll(PDO::FETCH_ASSOC);
+            return $currentuser;
+        }
+
     }
 
     

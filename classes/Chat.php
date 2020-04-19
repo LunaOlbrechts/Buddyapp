@@ -15,13 +15,17 @@ class Chat
     public static function sendMessage(Chat $message)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, recieverId, message) VALUES (:senderId, :recieverId, :message)");
+        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, recieverId, senderName, recieverName, message) VALUES (:senderId, :recieverId, :senderName, :recieverName, :message)");
         $senderId = $message->getSenderId();
         $recieverId = $message->getRecieverId();
+        $senderName = $message->getSenderName();
+        $recieverName = $message->getRecieverName();
         $message = $message->getMessage();
         
         $statement->bindValue(":senderId", $senderId);
         $statement->bindValue(":recieverId", $recieverId);
+        $statement->bindValue(":senderName", $senderName);
+        $statement->bindValue(":recieverName", $recieverName);
         $statement->bindValue(":message", $message);
 
         $result = $statement->execute();
