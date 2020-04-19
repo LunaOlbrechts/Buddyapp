@@ -33,8 +33,7 @@ $succes2 = '';
 
 if ($_POST['searchName']) {
     $searchName = UserManager::searchName();
-    $_SESSION['searchField'] = $_POST['searchField'];
-
+    //$_SESSION['searchField'] = $_POST['searchField'];
     if (!empty($_POST['searchField'])) {
         if (isset($_POST['searchField'])) {
             foreach ($searchName as $name) {
@@ -45,10 +44,10 @@ if ($_POST['searchName']) {
         } 
     } else{
         $error1 = 'Typ a name';
-        }
+    }
 }
 
-var_dump($searchName);
+//var_dump($searchName);
 
 /*if($_POST['searchName']){
     $searchName = UserManager::searchName();
@@ -68,8 +67,12 @@ if ($_POST['searchBuddy']) {
     $_SESSION['sportType'] = $_POST['sportType'];
     $_SESSION['goingOutType'] = $_POST['goingOutType'];*/
 
-    foreach ($searchBuddy as $name) {
-        $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+    if (!empty($_POST['mainCourseInterest']) || !empty($_POST['schoolYear']) || !empty($_POST['sportType']) || !empty($_POST['goingOutType'])) {
+        foreach ($searchBuddy as $name) {
+            $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+        }
+    } else{
+        $error3 = 'Check a filter';
     }
 }
 
@@ -200,7 +203,13 @@ if ($_POST['searchBuddy']) {
     </form>
 
     <div class="form-group">
-    <?php if (isset($succes2)) : ?>
+        <?php if (isset($error3)) : ?>
+            <p>
+                <?php echo $error3; ?>
+            </p>
+        <?php endif; ?>
+
+        <?php if (isset($succes2)) : ?>
             <p>
                 <?php echo $succes2; ?>
             </p>

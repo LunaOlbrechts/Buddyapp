@@ -387,7 +387,7 @@ class UserManager
     }
     
     
-    public static function searchBuddyByFilter()
+    public function searchBuddyByFilter()
     {
         $conn = Db::getConnection();
 
@@ -475,7 +475,7 @@ class UserManager
      {
         $conn = Db::getConnection();
 
-        $searchField = $_SESSION['searchField'];
+        $searchField = $_POST['searchField'];
 
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
         
