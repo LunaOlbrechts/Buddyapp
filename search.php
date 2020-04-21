@@ -31,11 +31,13 @@ $succes2 = '';
     header("Location: login.php");
 }*/
 
+$searchField = $_POST['searchField'];
+
 if ($_POST['searchName']) {
-    $searchName = UserManager::searchName();
+    $searchName = UserManager::searchName(); 
     //$_SESSION['searchField'] = $_POST['searchField'];
-    if (!empty($_POST['searchField'])) {
-        if (isset($_POST['searchField'])) {
+    if (!empty($searchField)) {
+        if (isset($searchField)) {
             foreach ($searchName as $name) {
                 $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
