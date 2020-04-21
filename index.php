@@ -27,9 +27,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         header("location: request.php");
     }
 
-
-    
-
 } else {
     header("Location: login.php");
 }
