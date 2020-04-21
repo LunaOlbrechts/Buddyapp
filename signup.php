@@ -3,15 +3,14 @@
     include_once(__DIR__ . "/classes/UserManager.php");
     include_once(__DIR__ . "/classes/Mail.php");
 
-
     session_start();
 
     if(!empty($_POST)) {
         try {
             $user = new User();
-            $user->setEmail(htmlspecialchars($_POST['email']) );
-            $user->setFirstName(htmlspecialchars($_POST['firstName']) );
-            $user->setLastName(htmlspecialchars($_POST['lastName']) );
+            $user->setEmail($_POST['email']);
+            $user->setFirstName($_POST['firstName']);
+            $user->setLastName($_POST['lastName']);
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]) );
             //echo $user->getPassword();
             $id = UserManager::save($user);
@@ -50,7 +49,7 @@
     <?php endif; ?>
 
         <?php if(isset($success)): ?>
-                <div class="success mr-5"><?php echo $success ?></div>
+                <div class="success mr-5"><?php echo htmlspecialchars($success) ?></div>
         <?php endif; ?>        
 
  
