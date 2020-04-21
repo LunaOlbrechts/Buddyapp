@@ -22,6 +22,7 @@ class User
     private $buddyType;
     private $matchId;
     private $status;
+    private $searchField;
 
 
     /**
@@ -424,6 +425,26 @@ class User
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of searchField
+     */ 
+    public function getSearchField()
+    {
+        return $this->searchField;
+    }
+
+    /**
+     * Set the value of searchField
+     *
+     * @return  self
+     */ 
+    public function setSearchField($searchField)
+    {
+        $this->searchField = $searchField;
 
         return $this;
     }
