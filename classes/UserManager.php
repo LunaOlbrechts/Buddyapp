@@ -515,5 +515,23 @@ class UserManager
         return $number_of_buddy_matches;
      }
 
+     public function findClass()
+     {
+        $conn = Db::getConnection();
+
+        $class = $_GET['searchField'];
+        //$class = $user->getClass();
+
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(class) LIKE LOWER(:class)");
+        $query = $conn->prepare($statement);
+
+        $query->bindValue(':class',$class);
+
+        $query->execute();
+        
+        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $count;
+     }
+
 
 }

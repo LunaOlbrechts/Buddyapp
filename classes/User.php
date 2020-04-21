@@ -23,7 +23,7 @@ class User
     private $matchId;
     private $status;
     private $searchField;
-
+    private $class;
 
     /**
      * Get the value of id
@@ -445,6 +445,26 @@ class User
     public function setSearchField($searchField)
     {
         $this->searchField = $searchField;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of class
+     */ 
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * Set the value of class
+     *
+     * @return  self
+     */ 
+    public function setClass($class)
+    {
+        $this->class = $class;
 
         return $this;
     }

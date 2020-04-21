@@ -4,17 +4,40 @@
 
      session_start();
 
+    $searchField = $_GET['searchField'];
+
+     if ($_GET['searchClass']){
+        $searchClass = UserManager::findClass();
+        if (empty($searchField)){
+            $error1 = 'Vul een klaslokaal in';
+        } elseif (strlen($searchField) < 3){
+            $error2 = 'Voer minstens 3 karakters in';
+        }
+        
+        if (strlen($searchField) > 2){
+            if (count($searchClass) > 0){
+                foreach ($searchClass as $class){
+                    $succes = '<div class="font-weight-bold">' . 'Lokaal: ' . $class['class'] . '</div>' . '<div>' . $class['description'] . '</div>';
+                }
+            } else{
+                $error3 = 'Geen lokaal gevonden';
+            }
+        }
+     }
+
+     //var_dump($searchClass);
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lokaal vinder</title>
 </head>
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <form method="POST" action="">
+    <form method="GET" action="">
         <div class="container mt-5">
             <h1 class="col-md-5">Lokaal vinder</h1>
             <p>Geef hieronder een lokaal in om te zoeken naar een beschrijving</p>
@@ -28,6 +51,28 @@
             </div>
         </div>
     </form>
+
+    <div class="container mt-5">
+        <?php if(isset($succes)): ?>
+            <p><?php echo $succes; ?></p>
+        <?php endif; ?>
+
+        <?php if(isset($error1)): ?>
+            <p><?php echo $error1; ?></p>
+        <?php endif; ?>
+
+        <?php if(isset($error2)): ?>
+            <p><?php echo $error2; ?></p>
+        <?php endif; ?>
+
+        <?php if(isset($error3)): ?>
+            <p><?php echo $error3; ?></p>
+        <?php endif; ?>
+
+
+
+    </div>
+
 
 </body>
 </html>
