@@ -38,13 +38,16 @@ class UserManager
 
             $firstName = $user->getFirstName();
             $lastName = $user->getLastName();
+            $userName = $user->getUserName();
             $email = $user->getEmail();
             $password = $user->getPassword();
+            
 
-            $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
+            $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, userName, email, password) VALUES (:firstName, :lastName, :userName, :email, :password) ");
 
             $statement->bindValue(":firstName", $firstName);
             $statement->bindValue(":lastName", $lastName);
+            $statement->bindValue(":userName", $userName);
             $statement->bindValue(":email", $email);
             $statement->bindValue(":password", $password);
 
