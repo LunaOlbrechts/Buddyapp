@@ -4,7 +4,8 @@
 
      session_start();
 
-    $searchField = $_GET['searchField'];
+    $searchField = trim($_GET['searchField'], " t.");
+    $string_replace = str_replace(".","",$searchField);
 
      if ($_GET['searchClass']){
         $searchClass = UserManager::findClass();
@@ -13,11 +14,13 @@
         } elseif (strlen($searchField) < 3){
             $error2 = 'Voer minstens 3 karakters in';
         }
+
+    //$searchField = 
         
         if (strlen($searchField) > 2){
             if (count($searchClass) > 0){
                 foreach ($searchClass as $class){
-                    $succes = '<div class="font-weight-bold">' . 'Lokaal: ' . $class['class'] . '</div>' . '<div>' . $class['description'] . '</div>';
+                    $succes = '<div class="font-weight-bold">' . 'Lokaal: ' . $class['classRoom'] . '</div>' . '<div>' . $class['description'] . '</div>';
                 }
             } else{
                 $error3 = 'Geen lokaal gevonden';

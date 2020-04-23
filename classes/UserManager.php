@@ -522,10 +522,10 @@ class UserManager
         $class = $_GET['searchField'];
         //$class = $user->getClass();
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(class) LIKE LOWER(:class)");
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(classFind) LIKE LOWER(:classFind)");
         $query = $conn->prepare($statement);
 
-        $query->bindValue(':class',$class);
+        $query->bindValue(':classFind',$class);
 
         $query->execute();
         
