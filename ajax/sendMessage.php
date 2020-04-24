@@ -10,8 +10,8 @@ if(!empty($_POST)){
     $message->setMessage($_POST['chat_message']);
     $message->setSenderId($_SESSION['user_id']);
     $message->setSenderName($_SESSION['first_name']);
-    $message->setRecieverId($_SESSION['reciever_id']);
-    $message->setRecieverName($_SESSION['reciever_name']);
+    $message->setReceiverId($_SESSION['reciever_id']);
+    $message->setReceiverName($_SESSION['reciever_name']);
 
     Chat::sendMessage($message);
 
