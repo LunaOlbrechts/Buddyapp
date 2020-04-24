@@ -71,7 +71,6 @@
             <input class="form-control" type="text" name="lastName" id="lastname" placeholder="Enter your last name">
         </div>
 
-
         <div class="form-group">
             <label for="username">Username:</label>
             <input class="form-control" type="text" name="userName" id="username" placeholder="Enter your username">
