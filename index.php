@@ -13,7 +13,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
     $request = Buddies::checkRequest();
-    var_dump($currentUser);
+    //var_dump($currentUser);
 
     if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
@@ -59,7 +59,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <?php endif ?>
 
     <?php // echo(json_encode($_SESSION)); ?>
-    <div class="card-text">
+    <div class="container-fluid">
         <p>
             Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd.
         </p>
