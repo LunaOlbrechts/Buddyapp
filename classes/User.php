@@ -7,6 +7,7 @@ class User
     private $id;
     private $firstName;
     private $lastName;
+    private $userName;
     private $email;
     private $password;
     private $location;
@@ -89,6 +90,32 @@ class User
         }
 
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    
+    /**
+     * Get the value of userName
+     */ 
+    public function getUserName()
+    {
+        return $this->userName;
+    }
+
+    /**
+     * Set the value of userName
+     *
+     * @return  self
+     */ 
+    public function setUserName($userName)
+    {
+
+        if (empty($_POST['userName'])) {
+            throw new Exception("Username cannot be empty");
+        }
+
+        $this->userName = $userName;
 
         return $this;
     }

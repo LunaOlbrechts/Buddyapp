@@ -38,13 +38,16 @@ class UserManager
 
             $firstName = $user->getFirstName();
             $lastName = $user->getLastName();
+            $userName = $user->getUserName();
             $email = $user->getEmail();
             $password = $user->getPassword();
+            
 
-            $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
+            $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, userName, email, password) VALUES (:firstName, :lastName, :userName, :email, :password) ");
 
             $statement->bindValue(":firstName", $firstName);
             $statement->bindValue(":lastName", $lastName);
+            $statement->bindValue(":userName", $userName);
             $statement->bindValue(":email", $email);
             $statement->bindValue(":password", $password);
 
@@ -522,10 +525,10 @@ class UserManager
         $class = $_GET['searchField'];
         //$class = $user->getClass();
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(classFind) LIKE LOWER(:classFind)");
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
         $query = $conn->prepare($statement);
 
-        $query->bindValue(':classFind',$class);
+        $query->bindValue(':classRoom',$class);
 
         $query->execute();
         

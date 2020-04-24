@@ -8,9 +8,10 @@
         try {
             $user = new User();
             $user->setEmail(htmlspecialchars($_POST['email']) );
-            $user->setFirstName(htmlspecialchars($_POST['firstName']) );
+            $user->setFirstName(htmlspecialchars($_POST['firstName']));
             $user->setLastName(htmlspecialchars($_POST['lastName']) );
-            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]) );
+            $user->setUserName(htmlspecialchars($_POST['userName']));
+            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
             //echo $user->getPassword();
             $id = UserManager::save($user);
 
@@ -57,6 +58,7 @@
         <div class="form-group">
             <label for="email">E-mail:</label>
             <input class="form-control" type="text" name="email" id="email" placeholder="Enter your e-mail">
+            <div id="email_response" ></div>
         </div>
 
         <div class="form-group">
@@ -67,6 +69,13 @@
         <div class="form-group">
             <label for="lastname">Last name:</label>
             <input class="form-control" type="text" name="lastName" id="lastname" placeholder="Enter your last name">
+        </div>
+
+
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input class="form-control" type="text" name="userName" id="username" placeholder="Enter your username">
+            <div id="username_response" ></div>
         </div>
 
         <div class="form-group">
@@ -84,7 +93,7 @@
         </div>
 
         <div class="form-group">
-            <input class="btn border" name="signup-btn" type="submit" value="Sign me up">
+            <input class="btn border" name="signup-btn" id="btnSignUp" type="submit" value="Sign me up">
         </div>    
     
         <div>
@@ -93,6 +102,10 @@
     </form>
 
     </div>
+    </body>
+
+    <script src="jquery-3.5.0.js"></script>        
+    <script src="script.js"></script>
 
 </body>
 
