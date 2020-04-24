@@ -3,6 +3,8 @@
 include_once(__DIR__ . "../../classes/Db.php");
 include_once(__DIR__ . "/Db.php");
 
+session_start();
+
 class Chat
 {
     private $message;
@@ -27,6 +29,19 @@ class Chat
         $statement->bindValue(":senderName", $senderName);
         $statement->bindValue(":receiverName", $receiverName);
         $statement->bindValue(":message", $message);
+
+        $result = $statement->execute();
+        return $result;
+    }
+
+    public static function updateMessages($senderId, $recieverId)
+    {
+        $conn = Db::getConnection();
+        
+        $statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
+
+        $statement->bindValue(":senderId", $senderId);
+        $statement->bindValue(":recieverId", $recieverId);
 
         $result = $statement->execute();
         return $result;
