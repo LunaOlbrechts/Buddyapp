@@ -1,9 +1,11 @@
 <?php
     include_once(__DIR__ . "/classes/User.php");
     include_once(__DIR__ . "/classes/UserManager.php");
+    include_once(__DIR__ . "/ajax/checkpassword.php");
 
     session_start();
 
+   
     if(!empty($_POST)) {
         try {
             $user = new User();
@@ -19,7 +21,7 @@
                 $_SESSION['user_id'] = $id;
                 $_SESSION['first_name'] = $user->getFirstName();
                 $success = "user saved!";
-                header("Location: complete.profile.php");
+             //   header("Location: complete.profile.php");
             }
         } catch (\Throwable $th) {
             //throw error
@@ -80,6 +82,7 @@
         <div class="form-group">
             <label for="password">Password:</label>
             <input class="form-control" type="password" name="password" id="password">
+            <div id="password_response" ></div>
         </div>
 
         <div class="progress form-group" style="height: 10px">
@@ -98,6 +101,8 @@
         <div>
             <a href="login.php">Already have an account? Log in here</a>
         </div>
+
+
     </form>
 
     </div>
@@ -106,7 +111,6 @@
     <script src="jquery-3.5.0.js"></script>        
     <script src="script.js"></script>
 
-</body>
 
 <script>
         // add variabele to stock in the id password
@@ -114,6 +118,7 @@
         password.addEventListener('keyup', function() {
             checkPassword(password.value)
         })
+
 
         function checkPassword(password) {
             var strengthBar = document.getElementById('strength')
@@ -153,7 +158,31 @@
                         var signUp = true;
                         break
             }
+      
+    if(password != ''){
+
+    $("#password_response").show();     
+        
+    console.log(signUp);    
+        
+     $.ajax({
+        url: '../Buddyapp/ajax/checkpassword.php',
+        type: 'post',
+        data: {signUpCheck : signUp},
+        success: function(response){
+        
+           // Show response
+            $("#password_response").html(response);
+           
         }
+     });
+    }else{
+     $("#password_response").hide();
+    }    
+           
+}
+
+        
 
 </script>
 

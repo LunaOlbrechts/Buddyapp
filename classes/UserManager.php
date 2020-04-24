@@ -5,7 +5,6 @@ class UserManager
     public static function save(User $user)
     {
         $conn = Db::getConnection();
-
         // check if nothing is empty
 
         if (isset($_POST['signup-btn'])) {

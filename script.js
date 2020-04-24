@@ -13,10 +13,9 @@ class app{
 }
 
 
-
-
 document.querySelector("#username").addEventListener("blur", function(){
     let userName = document.querySelector("#username").value;
+     // console.log(userName);
 
     if(userName != ''){
 
@@ -41,7 +40,7 @@ document.querySelector("#username").addEventListener("blur", function(){
 
 document.querySelector("#email").addEventListener("blur", function(){
   let email = document.querySelector("#email").value;
-  console.log(email);
+  // console.log(email);
 
   if(email != ''){
 
