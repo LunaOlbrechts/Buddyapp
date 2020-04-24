@@ -74,6 +74,10 @@
             <input class="form-control" type="password" name="password" id="password">
         </div>
 
+        <div class="progress form-group" style="height: 10px">
+            <progress class="progress-bar" max="100" min="0" id="strength" style="width: 700px"></progress>
+        </div>
+
         <div class="form-group">
             <label for="passwordconf">Password Confirm:</label>
             <input class="form-control" type="password" name="passwordconf" id="passwordconf">
@@ -90,6 +94,55 @@
 
     </div>
 
-  
 </body>
+
+<script>
+        // add variabele to stock in the id password
+        var password = document.getElementById("password")
+        password.addEventListener('keyup', function() {
+            checkPassword(password.value)
+        })
+
+        function checkPassword(password) {
+            var strengthBar = document.getElementById('strength')
+            var strength = 0
+            if (password.match(/[a-zA-Z0-9][a-zA-Z0-9]+/)) {
+                strength += 1
+            }
+            if (password.match(/[~<>?]+/)) {
+                strength += 1
+            }
+            if (password.match(/[!@£$^&*()]+/)) {
+                strength += 1
+            }
+            if (password.length > 5) {
+                strength += 1
+            }
+
+            switch (strength) {
+                case 0:
+                        strengthBar.value = 0;
+                        var signUp = false;
+                        break
+                case 1:
+                        strengthBar.value = 40;
+                        var signUp = false;
+                        break
+                case 2:
+                        strengthBar.value = 60;
+                        var signUp = false;
+                        break
+                case 3:
+                        strengthBar.value = 80;
+                        var signUp = true;
+                        break
+                case 4:
+                        strengthBar.value = 100;
+                        var signUp = true;
+                        break
+            }
+        }
+
+</script>
+
 </html>
