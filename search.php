@@ -29,7 +29,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-//if(!empty($_POST[..]))
 
 if ($_POST['searchBuddy']) {
     $searchBuddy = UserManager::searchBuddyByFilter();
@@ -47,7 +46,6 @@ if ($_POST['searchBuddy']) {
     }
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +61,8 @@ if ($_POST['searchBuddy']) {
 
     <form method="post" action="">
         <div class="container mt-5">
-
+            <h1 class="col-md">Zoek hier naar een buddy</h1>
+            <p>Zoek naar een buddy via de zoekbalk of via de filter</p>
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
                 <input class="form-control" type="text" name="searchField" placeholder="Name">
