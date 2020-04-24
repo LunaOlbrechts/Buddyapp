@@ -68,7 +68,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="card-group">
             <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
                 <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
-                    <div class="card" style="width: 300px;">
+                    <div class="card person-card" style="width: 300px;">
                         <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); width: 300px; height: 250px; background-size: cover; background-position: center" ;></div>
                         <div class="card-body">
                             <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
@@ -90,10 +90,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                 <?php endif ?>
             <?php endforeach ?>
         </div>
-    </div>
-
-         
-                                    
+    </div>          
     <script src="script.js"></script>
 </body>
 

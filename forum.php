@@ -9,21 +9,29 @@ include_once(__DIR__ . "/classes/Buddies.php");
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-
+    $user = UserManager::getUserFromDatabase();
     $questions = Forum::getQuestions();
-
     $comments = Forum::getComments();
+    $pinned = Forum::getPinnedQuestion();
+
+    $username = $user[0]['userName'];
 
     if ($questions) {
-
         if (!empty($_POST['comment'])) {
             $comment = $_POST['comment'];
-            $user = UserManager::getUserFromDatabase();
-
-            $username = $user[0]['userName'];
-
+            
             Forum::saveComment($comment, $username);
         }
+
+        if ($_POST['pin'] == "on") {
+            $result = Forum::savePinnedQuestion();
+        } else {
+            $notPinned = Forum::deletePinnedQuestion();
+        }
+    }
+
+    if (!empty($_POST['postedQuestion'])){
+        Forum::saveQuestion($_POST['postedQuestion'], $username);
     }
 } else {
     header("Location: login.php");
@@ -59,64 +67,111 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
-    <div class="container d-flex justify-content-center">
+    <div class="container">
+        <div>
+        <form method="POST">
+            <div class="form-group">
+                <label for="question" aria-placeholder="Question"><?php echo htmlspecialchars($user[0]['userName']); ?></label>
+                <textarea class="form-control" id="postedQuestion" rows="3" name="postedQuestion"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Plaats jouw vraag</button>
+        </form>
+        </div>
+        
         <div class="faq">
-            <nav id="navbar-example2" class="navbar navbar-light bg-light">
-                <a class="navbar-brand" href="#"></a>
-                <ul class="nav nav-pills">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="FAQ" href="#" role="button" aria-haspopup="true" aria-expanded="false">FAQ</a>
-                        <div class="dropdown-menu">
-                            <!-- php for each faq as question-->
-                            <a class="dropdown-item" href="#one">one</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#mdo">Forum</a>
-                    </li>
-                </ul>
-            </nav>
-            <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+            <div>
                 <!-- php for each faq as question-->
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
-                </div>
+                <h3>FAQ</h3>
+                <?php foreach ($pinned as $pinnedQuestion) : ?>
+                    <!-- FAQ cards-->
+                    <form method="POST">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo htmlspecialchars($pinnedQuestion["userName"]) ?></h5>
+                                <p class="card-text"><?php echo htmlspecialchars($pinnedQuestion["question"]) ?></p>
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo $pinnedQuestion["id"] ?>" aria-expanded="false" aria-controls="collapse<?php echo $pinnedQuestion["id"] ?>">
+                                    Opmerkingen
+                                </button>
 
-                <!-- php for each questions as question-->
-                <?php foreach ($questions as $question) : ?>
-                    <?php $_SESSION['questionId'] = $question["id"] ?>
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $question["userName"] ?></h5>
-                            <p class="card-text"><?php echo $question["question"] ?></p>
-                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo $question["id"] ?>" aria-expanded="false" aria-controls="collapse<?php echo $question["id"] ?>">
-                                Opmerkingen
-                            </button>
-                            <!-- php for each comments as comment-->
-                            <?php foreach ($comments as $comment) : ?>
-                                <?php if ($comment['forum_question_id'] == $question["id"]) : ?>
-                                    <div class="collapse" id="collapse<?php echo $question["id"] ?>">
-                                        <div class="card card-body">
-                                            <?php echo  $comment["userName"] . ": " . $comment["comment"] ?>
+                                <?php if ($user[0]['admin'] == 1) : ?>
+                                    <form method="POST">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="pin" <?php if ($pinnedQuestion['pinned'] == 1) : echo "checked";
+                                                                                                        endif ?>>
+                                            <label class="form-check-label" for="pin">
+                                                Pin
+                                            </label>
+                                            <input type="hidden" value="<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>" name="questionId"></input>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 <?php endif ?>
-                            <?php endforeach ?>
 
-                            <form method="POST">
+                                <!-- php for each comments as comment-->
+                                <?php foreach ($comments as $comment) : ?>
+                                    <?php if ($comment['forum_question_id'] == $pinnedQuestion["id"]) : ?>
+                                        <div class="collapse" id="collapse<?php echo $pinnedQuestion["id"] ?>">
+                                            <div class="card card-body">
+                                                <?php echo  $comment["userName"] . ": " . $comment["comment"] ?>
+                                            </div>
+                                        </div>
+                                    <?php endif ?>
+                                <?php endforeach ?>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="" name="comment" placeholder="comment">
-                                    <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
+                                    <input type="hidden" value="<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>" name="questionId"></input>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                    </form>
+                <?php endforeach ?>
+
+                <h3>Questions</h3>
+                <!-- php for each questions as question-->
+                <?php foreach ($questions as $question) : ?>
+                    <!-- Questions cards-->
+                    <?php if ($question['pinned'] == 0) : ?>
+                        <form method="POST">
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $question["userName"] ?></h5>
+                                    <p class="card-text"><?php echo $question["question"] ?></p>
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo $question["id"] ?>" aria-expanded="false" aria-controls="collapse<?php echo $question["id"] ?>">
+                                        Opmerkingen
+                                    </button>
+
+                                    <?php if ($user[0]['admin'] == 1) : ?>
+                                        <form method="POST">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="pin" <?php if ($question['pinned'] == 1) : echo "checked";
+                                                                                                            endif ?>>
+                                                <label class="form-check-label" for="pin">
+                                                    Pin
+                                                </label>
+                                                <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    <?php endif ?>
+
+                                    <!-- php for each comments as comment-->
+                                    <?php foreach ($comments as $comment) : ?>
+                                        <?php if ($comment['forum_question_id'] == $question["id"]) : ?>
+                                            <div class="collapse" id="collapse<?php echo $question["id"] ?>">
+                                                <div class="card card-body">
+                                                    <?php echo  $comment["userName"] . ": " . $comment["comment"] ?>
+                                                </div>
+                                            </div>
+                                        <?php endif ?>
+                                    <?php endforeach ?>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="" name="comment" placeholder="comment">
+                                        <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    <?php endif ?>
                 <?php endforeach ?>
             </div>
         </div>

@@ -49,9 +49,8 @@
   display: flex;
   justify-content: center;
 }
-
-.card{
-
+.person-card{
+  margin-left: 10px !important;
 }
 
 @media (min-width: 576px) {

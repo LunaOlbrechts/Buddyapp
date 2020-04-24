@@ -89,7 +89,7 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("select * from tl_user where id= :id");
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE id= :id");
 
         $statement->bindValue(":id", $_SESSION["user_id"]);
 

@@ -15,6 +15,27 @@ class Forum
         if ($result) {
             return $questions;
         }
+
+        return false;
+    }
+
+    public static function saveQuestion($question, $username)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("INSERT INTO tl_forum_questions (user_id, question, userName, pinned, date) VALUES (:user_id, :question, :userName, :pinned, :date)");
+        $today = strval(date("y-m-d"));     
+        
+        $statement->bindValue(":user_id", $_SESSION['user_id']);
+        $statement->bindValue(":userName", $username);
+        $statement->bindValue(":question", $question);
+        $statement->bindValue(":pinned", 0);
+        $statement->bindValue(":date", $today);
+
+        $result = $statement->execute();
+        if ($result) {
+            return true;
+        }
+
         return false;
     }
 
@@ -29,6 +50,7 @@ class Forum
         if ($result) {
             return $comments;
         }
+
         return false;
     }
 
@@ -51,4 +73,58 @@ class Forum
 
         return false;
     }
+
+    public static function savePinnedQuestion()
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("UPDATE tl_forum_questions SET pinned = :pinned WHERE id = :id");
+
+        $questionId = $_POST['questionId'];
+        $statement->bindValue(":id", $questionId);
+        $statement->bindValue(":pinned", 1);
+
+        $result = $statement->execute();
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function getPinnedQuestion()
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT *  FROM tl_forum_questions WHERE pinned = :pinned");
+
+        $statement->bindValue(":pinned", 1);
+
+        $result = $statement->execute();
+        $questions = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $questions;
+        }
+
+        return false;
+    }
+
+    public static function deletePinnedQuestion()
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("UPDATE tl_forum_questions SET pinned = :pinned WHERE id = :id");
+
+        $questionId = $_POST['questionId'];
+        $statement->bindValue(":id", $questionId);
+        $statement->bindValue(":pinned", 0);
+
+        $result = $statement->execute();
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
+    
 }
