@@ -8,10 +8,10 @@
         try {
             $user = new User();
             $user->setEmail(htmlspecialchars($_POST['email']) );
-            $user->setFirstName(htmlspecialchars($_POST['firstName']) );
+            $user->setFirstName(htmlspecialchars($_POST['firstName']));
             $user->setLastName(htmlspecialchars($_POST['lastName']) );
             $user->setUserName(htmlspecialchars($_POST['userName']));
-            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]) );
+            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
             //echo $user->getPassword();
             $id = UserManager::save($user);
 

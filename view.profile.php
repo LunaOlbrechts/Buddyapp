@@ -10,12 +10,12 @@ $id =  $_SESSION["user_id"];
 
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            $user = UserManager::getUserFromDatabaseById($id);
+            $userdata = UserManager::getUserFromDatabaseById($id);
           } else {
             die("An ID is missing. 🙄");
           }
                  
-        
+
         if (isset($_POST['chat']) && ($_POST['chat'])) {
             try {
                 $_SESSION['sender'] = $_POST['request'];
@@ -47,22 +47,22 @@ $id =  $_SESSION["user_id"];
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <div class="d-flex justify-content-center">
-        <?php foreach($user as $users) : ?>
+        <?php foreach($userdata as $users) : ?>
             <div class="card">
-                <h2 class="card-title">Profile of <?php echo ($users['firstName']) . " " . ($users['lastName']) ?></h2>
-                <p class="card-text">Woonplaats: <?php echo ($users['city']) ?></p>
-                <p class="card-text">opleidingsjaar: <?php echo ($users['schoolYear']) ?></p>
-                <p class="card-text">opleidingsintresse: <?php echo ($users['mainCourseInterest']) ?></p>
-                <p class="card-text">Sport type: <?php echo ($users['sportType']) ?></p>
-                <p class="card-text">Uitgaanstype: <?php echo ($users['goingOutType']) ?></p>
+                <h2 class="card-title">Profile of <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
+                <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
+                <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
+                <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
+                <p class="card-text">Sport type: <?php echo htmlspecialchars($users['sportType']) ?></p>
+                <p class="card-text">Uitgaanstype: <?php echo htmlspecialchars($users['goingOutType']) ?></p>
                 <?php if($haveBuddy == false): ?>
-                    <p class="card-text">Buddy: <?php echo ($users['buddyType']) ?></p>   
+                    <p class="card-text">Buddy: <?php echo htmlspecialchars($users['buddyType']) ?></p>   
                 <?php endif ?>
 
                 
                 <?php if($haveBuddy == true): ?>
                 <?php foreach($currentuser as $currentusers) : ?>
-                    <p class="card-text">My buddy is: <?php echo ($currentusers['firstName']) . " " . ($currentusers['lastName']) ?></p>
+                    <p class="card-text">My buddy is: <?php echo htmlspecialchars($currentusers['firstName']) . " " . htmlspecialchars($currentusers['lastName']) ?></p>
                 <?php endforeach ?>
                 <?php endif ?>
                 
