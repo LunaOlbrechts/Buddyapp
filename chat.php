@@ -55,7 +55,7 @@ $conn = Db::getConnection();
 $senderId = $_SESSION['user_id'];
 $recieverId = $_SESSION['reciever_id'];
 
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND recieverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND recieverId = '" . $senderId . "') ORDER BY created_on ASC");
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
