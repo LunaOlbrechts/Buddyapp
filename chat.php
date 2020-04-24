@@ -33,7 +33,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         }
     }
     */
-    if (isset($_POST["buddyReques"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
+    if (isset($_POST["buddyRequest"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
             $buddy = new Buddies();
             $buddy->setSender($_SESSION['user_id']);
