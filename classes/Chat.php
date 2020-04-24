@@ -15,7 +15,7 @@ class Chat
     public static function sendMessage(Chat $message)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, recieverId, senderName, recieverName, message) VALUES (:senderId, :recieverId, :senderName, :recieverName, :message)");
+        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, receiverId, senderName, receiverName, message) VALUES (:senderId, :recieverId, :senderName, :recieverName, :message)");
         $senderId = $message->getSenderId();
         $recieverId = $message->getRecieverId();
         $senderName = $message->getSenderName();
