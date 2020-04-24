@@ -7,58 +7,27 @@ session_start();
 $succes1 = '';
 $succes2 = '';
 
-/*if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_POST['searchField']) {
-        $searchName = UserManager::searchName();
-        if (!empty($_POST['searchField'])) {
-            if (isset($_POST['searchName'])) {
-                foreach ($searchName as $name) {
-                    $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
-                }
-            }
-        } elseif (empty($_POST['searchField'])) {
-        $error1 = 'Typ a name';
-        }
-    }
+$searchField = $_POST['searchField'];
 
-    if ($_POST['searchBuddy']) {
-        $searchBuddy = UserManager::searchBuddyByFilter();
-        foreach ($searchBuddy as $name) {
-            $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+// Search for name in db 
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if($_POST['searchName']){
+        $searchName = UserManager::searchName();
+        if (empty($_POST['searchField'])){
+            $error1 = "Vul een naam in";
+        }
+
+        elseif (count($searchName) > 0) {
+            foreach ($searchName as $name) {
+                $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+            }
+        } else{
+            $error2 = "Geen resultaten";
         }
     }
 } else {
     header("Location: login.php");
-}*/
-
-$searchField = $_POST['searchField'];
-
-if ($_POST['searchName']) {
-    $searchName = UserManager::searchName(); 
-    //$_SESSION['searchField'] = $_POST['searchField'];
-    if (!empty($searchField)) {
-        if (isset($searchField)) {
-            foreach ($searchName as $name) {
-                $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
-            }
-        } if (trim($searchName) == ""){
-            $error2 = 'No result';
-        } 
-    } else{
-        $error1 = 'Typ a name';
-    }
 }
-
-//var_dump($searchName);
-
-/*if($_POST['searchName']){
-    $searchName = UserManager::searchName();
-    if (!empty ($_POST['searchField'])){
-
-    } else{
-        echo 'Typ a name';
-    }
-}*/
 
 //if(!empty($_POST[..]))
 
