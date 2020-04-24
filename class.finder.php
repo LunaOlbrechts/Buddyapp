@@ -4,8 +4,10 @@
 
      session_start();
 
-    $searchField = trim($_GET['searchField'], " t.");
-    $string_replace = str_replace(".","",$searchField);
+    //$searchField = trim($_GET['searchField'], " t.");
+    $searchField = $_GET['searchField'];
+    $replace_string = str_replace('.','',$searchField);
+    echo $replace_string;
 
      if ($_GET['searchClass']){
         $searchClass = UserManager::findClass();
@@ -17,10 +19,13 @@
 
     //$searchField = 
         
+    //$pattern = preg_split('//', );
+
         if (strlen($searchField) > 2){
             if (count($searchClass) > 0){
                 foreach ($searchClass as $class){
-                    $succes = '<div class="font-weight-bold">' . 'Lokaal: ' . $class['classRoom'] . '</div>' . '<div>' . $class['description'] . '</div>';
+                    $succes = '<div class="font-weight-bold">' . 'Lokaal: ' . $class['classRoom'] . '</div>' . '<div>' . 
+                    $class['description'] . '</div>';
                 }
             } else{
                 $error3 = 'Geen lokaal gevonden';
@@ -28,7 +33,7 @@
         }
      }
 
-     //var_dump($searchClass);
+     var_dump($searchClass);
 
 ?><!DOCTYPE html>
 <html lang="en">

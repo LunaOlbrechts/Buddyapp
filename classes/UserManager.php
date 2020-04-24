@@ -524,15 +524,16 @@ class UserManager
         $class = $_GET['searchField'];
         //$class = $user->getClass();
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(searchForClass) LIKE LOWER(:searchForClass)");
         $query = $conn->prepare($statement);
 
-        $query->bindValue(':classRoom',$class);
+        $query->bindValue(':searchForClass',$class);
 
         $query->execute();
         
         $count = $query->fetchAll(PDO::FETCH_ASSOC);
         return $count;
+        
      }
 
 
