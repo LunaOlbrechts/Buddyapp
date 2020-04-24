@@ -474,11 +474,13 @@ class UserManager
 
         return $searchBuddy;*/
 
-     public static function searchName()
+     public static function searchName($user)
      {
         $conn = Db::getConnection();
 
-        $searchField = $_POST['searchField'];
+        //$searchField = $_POST['searchField'];
+        $searchField = $user->getSearchField();
+        //$email = $user->getEmail();
 
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
         

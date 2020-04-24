@@ -12,7 +12,7 @@ $searchField = $_POST['searchField'];
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if($_POST['searchName']){
-        $searchName = UserManager::searchName();
+        $searchName = UserManager::searchName($user);
         if (empty($_POST['searchField'])){
             $error1 = "Vul een naam in";
         }
@@ -65,7 +65,7 @@ if ($_POST['searchBuddy']) {
             <p>Zoek naar een buddy via de zoekbalk of via de filter</p>
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Name">
+                <input class="form-control" type="text" name="searchField" placeholder="Name" id="name">
             </div>
 
             <div class="form-group">
