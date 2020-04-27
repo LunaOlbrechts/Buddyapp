@@ -15,7 +15,6 @@
             } else {
                 $response = "<span style='color: green;'>Available.</span>";
             }
-            
             echo $response;
             exit();                          
 

@@ -1,5 +1,7 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
+
 session_start();
 
 include_once(__DIR__ . "/classes/Db.php");
@@ -14,7 +16,7 @@ $id =  $_SESSION["user_id"];
 include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
+    /*if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
@@ -30,7 +32,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $profileInformationError = $th->getMessage();
         }
     }
-    if (isset($_POST["buddyReques"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
+    */
+    if (isset($_POST["buddyRequest"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
             $buddy = new Buddies();
             $buddy->setSender($_SESSION['user_id']);
@@ -38,7 +41,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             Buddies::sendRequest($buddy);
             Mail::sendEmail();
             echo $result;
-            
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
@@ -47,7 +49,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
- 
+
 
 
 // Get messages for specific chat
@@ -55,7 +57,7 @@ $conn = Db::getConnection();
 $senderId = $_SESSION['user_id'];
 $recieverId = $_SESSION['reciever_id'];
 
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND recieverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND recieverId = '" . $senderId . "') ORDER BY created_on ASC");
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -127,19 +129,19 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
 </head>
 
 <body>
-    
+
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <div class="container mt-5">
-    <?php if(isset($error)): ?>
-                <div class="error mr-5"><?php echo htmlspecialchars($error); ?></div>
+        <?php if (isset($error)) : ?>
+            <div class="error mr-5"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
-            <?php if(isset($success)): ?>
-                    <div class="success mr-5"><?php echo $success ?></div>
-    <?php endif; ?> 
+        <?php if (isset($success)) : ?>
+            <div class="success mr-5"><?php echo $success ?></div>
+        <?php endif; ?>
     </div>
-    
+
     <div class="container">
         <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
             <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
@@ -161,34 +163,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
                     <p>
                         <?php echo $message['message']; ?>
                     </p>
-                    <div class="reaction"><?php $emoji = $message['emoji'];
-                                            switch ($emoji) {
-                                                case 0:
-                                                    echo "";
-                                                    break;
-                                                case 1:
-                                                    echo "Hearth";
-                                                    break;
-                                                case 2:
-                                                    echo "Laugh";
-                                                    break;
-                                                case 3:
-                                                    echo "Mouth";
-                                                    break;
-                                                case 4:
-                                                    echo "Sad";
-                                                    break;
-                                                case 5:
-                                                    echo "Angry";
-                                                    break;
-                                                case 6:
-                                                    echo "Like";
-                                                    break;
-                                                case 7:
-                                                    echo "Dislike";
-                                                    break;
-                                            }
-                                            ?></div>
+                    <div class="reaction"><?php echo($message['emoji'])?></div>
                     <ul class="emojis">
                         <li onclick="addEmoji(this)">Hearth</li>
                         <li onclick="addEmoji(this)">Laugh</li>
@@ -202,16 +177,18 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             <?php endforeach; ?>
         </div>
         <form method="POST" enctype="multipart/form-data">
-            <textarea name="message" class="form-control" placeholder="Type your message here..."></textarea>
+            <textarea id="message" name="message" class="form-control" placeholder="Type your message here..."></textarea>
             <div class="btn-group" role="group" aria-label="Basic example">
-            <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
-            <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
-                <input type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
+                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
+                <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
+                <input id="sendMessage" type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
                 <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
                 <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile</a></button>
             </div>
         </form>
     </div>
+
+    <?php echo (json_encode($_SESSION)) ?>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -223,22 +200,17 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         let message = $(el).parent().parent();
         let id = message.data("messageid");
 
-        let formData = new FormData();
-
-        formData.append("emoji", clickedEmoji);
-        formData.append("id", id);
-
-        fetch('/ajax/saveemoji.php', {
-                method: 'PUT',
-                body: formData
-            })
-            .then((response) => response.json())
-            .then((result) => {
-                console.log('Success:', result);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        $.ajax({
+            url: 'ajax/saveemoji.php',
+            type: 'POST',
+            data: {
+                emoji: clickedEmoji,
+                id: id
+            },
+            success: function(response) {
+                console.log(response);
+            }
+        });
     }
 
     function showEmojis(el) {
@@ -247,6 +219,25 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
 
     $(".message").mouseleave(function() {
         $(".emojis").css("visibility", "hidden");
+    });
+
+    $("#sendMessage").on("click", function(e) {
+        let chat_message = $('#message').val();
+
+        $.ajax({
+            url: 'ajax/sendMessage.php',
+            type: 'POST',
+            data: {
+                chat_message: chat_message
+            },
+            success: function(response) {
+                console.log(response);
+                $(".display-chat").append($("<span><?php echo $message['senderName']; ?></span><div class='message' onmouseover='showEmojis(this)'><p>"+chat_message+"</p><div class='reaction'></div><ul class='emojis'><li onclick='addEmoji(this)'>Hearth</li><li onclick='addEmoji(this)'>Laugh</li><li onclick='addEmoji(this)'>Mouth</li><li onclick='addEmoji(this)'>Sad</li><li onclick='addEmoji(this)'>Angry</li><li onclick='addEmoji(this)'>Like</li><li onclick='addEmoji(this)'>Dislike</li></ul></div>"));
+                $('#message').val("");
+            }
+        });
+
+        e.preventDefault();
     });
 </script>
 
