@@ -12,7 +12,8 @@ $searchField = $_POST['searchField'];
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if($_POST['searchName']){
-        $searchName = UserManager::searchName($user);
+        $searchName = UserManager::searchName();
+        
         if (empty($_POST['searchField'])){
             $error1 = "Vul een naam in";
         }
