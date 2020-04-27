@@ -8,20 +8,20 @@ class Chat
     private $message;
     private $senderId;
     private $senderName;
-    private $recieverId;
-    private $recieverName;
+    private $receiverId;
+    private $receiverName;
 
 
     public static function sendMessage(Chat $message)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, recieverId, message) VALUES (:senderId, :recieverId, :message)");
+        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, receiverId, message) VALUES (:senderId, :receiverId, :message)");
         $senderId = $message->getSenderId();
-        $recieverId = $message->getRecieverId();
+        $receiverId = $message->getRecieverId();
         $message = $message->getMessage();
-        
+
         $statement->bindValue(":senderId", $senderId);
-        $statement->bindValue(":recieverId", $recieverId);
+        $statement->bindValue(":receiverId", $receiverId);
         $statement->bindValue(":message", $message);
 
         $result = $statement->execute();
@@ -50,7 +50,7 @@ class Chat
 
     /**
      * Get the value of sender
-     */ 
+     */
     public function getSenderName()
     {
         return $this->senderName;
@@ -60,7 +60,7 @@ class Chat
      * Set the value of sender
      *
      * @return  self
-     */ 
+     */
     public function setSenderName($senderName)
     {
         $this->senderName = $senderName;
@@ -69,48 +69,48 @@ class Chat
     }
 
     /**
-     * Get the value of reciever
-     */ 
+     * Get the value of receiver
+     */
     public function getRecieverName()
     {
-        return $this->recieverName;
+        return $this->receiverName;
     }
 
     /**
-     * Set the value of reciever
+     * Set the value of receiver
      *
      * @return  self
-     */ 
-    public function setRecieverName($recieverName)
+     */
+    public function setRecieverName($receiverName)
     {
-        $this->recieverName = $recieverName;
+        $this->receiverName = $receiverName;
 
         return $this;
     }
 
     /**
-     * Get the value of recieverId
-     */ 
+     * Get the value of receiverId
+     */
     public function getRecieverId()
     {
-        return $this->recieverId;
+        return $this->receiverId;
     }
 
     /**
-     * Set the value of recieverId
+     * Set the value of receiverId
      *
      * @return  self
-     */ 
-    public function setRecieverId($recieverId)
+     */
+    public function setRecieverId($receiverId)
     {
-        $this->recieverId = $recieverId;
+        $this->receiverId = $receiverId;
 
         return $this;
     }
 
     /**
      * Get the value of senderId
-     */ 
+     */
     public function getSenderId()
     {
         return $this->senderId;
@@ -120,7 +120,7 @@ class Chat
      * Set the value of senderId
      *
      * @return  self
-     */ 
+     */
     public function setSenderId($senderId)
     {
         $this->senderId = $senderId;

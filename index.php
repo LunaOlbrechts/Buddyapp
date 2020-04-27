@@ -15,8 +15,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
-            $_SESSION['reciever_name'] = $_POST['recieverName'];
-            $_SESSION['reciever_id'] = $_POST['recieverId'];
+            $_SESSION['receiver_name'] = $_POST['receiverName'];
+            $_SESSION['receiver_id'] = $_POST['receiverId'];
             header("Location: chat.php");
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
@@ -79,8 +79,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 </ul>
                             <?php endforeach ?>
                             <form method="POST" enctype="multipart/form-data">
-                                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
-                                <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
+                                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
+                                <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
                                 <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
                                 <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">CLICK me
                                 </a>      

@@ -9,10 +9,10 @@ class UserManager
         // check if nothing is empty
 
         if (isset($_POST['signup-btn'])) {
-            
+
             // CHECK IF EMAIL IS TAKEN
             if (isset($_POST['email'])) {
-                
+
                 $email = $user->getEmail();
                 $conn = Db::getConnection();
                 $sql = "SELECT * FROM tl_user WHERE email='$email'";
@@ -50,7 +50,7 @@ class UserManager
 
             $statement->execute();
             $id = $conn->lastInsertId();
-            
+
             echo "saved to database";
 
             // return result
@@ -246,7 +246,7 @@ class UserManager
         $userId = $result["id"];
         $firstName = $result[0]["firstName"];
         $lastName = $result["lastName"];
-    
+
         //echo $password;
         if (password_verify($passwordEntered, $password)) {
             session_start();
@@ -294,8 +294,8 @@ class UserManager
 
         $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName = :firstName AND id = :id");
 
-        $nameReciever = $_SESSION['reciever_name'];
-        $idReciever = $_SESSION['reciever_id'];
+        $nameReciever = $_SESSION['receiver_name'];
+        $idReciever = $_SESSION['receiver_id'];
 
         $statement->bindValue(":firstName", $nameReciever);
         $statement->bindValue(":id", $idReciever);
@@ -325,7 +325,7 @@ class UserManager
                     'goingOutType' => $matchedUser['goingOutType'],
                 ],
                 'score' => 0,
-                'matches'=>[
+                'matches' => [
                     "city" => "",
                     "mainCourseInterest" => "",
                     "schoolYear" => "",
@@ -373,7 +373,6 @@ class UserManager
         $user1 = $nameStatement1->fetchAll(PDO::FETCH_ASSOC);
 
         return $user1;
-
     }
 
     public static function matches2()
@@ -386,8 +385,8 @@ class UserManager
 
         return $user2;
     }
-    
-    
+
+
     public static function searchBuddyByFilter()
     {
         $conn = Db::getConnection();
@@ -396,22 +395,22 @@ class UserManager
         $schoolYear = $_POST['schoolYear'];
         $sportType = $_POST['sportType'];
         $goingOutType = $_POST['goingOutType'];
-        
+
         /*$statement = $conn->prepare ("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
         OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");*/
 
         $extra = "";
 
-        if(!empty($_POST['mainCourseInterest'])){
+        if (!empty($_POST['mainCourseInterest'])) {
             $extra .= "AND mainCourseInterest = :mainCourseInterest";
-        }  elseif (!empty($_POST['schoolYear'])){
+        } elseif (!empty($_POST['schoolYear'])) {
             $extra .= " AND schoolYear = :schoolYear";
-        } elseif (!empty($_POST['sportType'])){
+        } elseif (!empty($_POST['sportType'])) {
             $extra .= "AND sportType = :sportType";
-        } elseif (!empty($_POST['goingOutType'])){
+        } elseif (!empty($_POST['goingOutType'])) {
             $extra .= "AND goingOutType = :goingOutType";
         }
-        
+
         $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";
 
         $extra = $conn->prepare($statement);
@@ -421,7 +420,7 @@ class UserManager
         $extra->bindValue(':sportType', $sportType);
         $extra->bindValue(':goingOutType', $goingOutType);
 
-       $extra->execute(); 
+        $extra->execute();
 
         $count = $extra->fetchAll(PDO::FETCH_ASSOC);
         //var_dump($_POST);
@@ -429,7 +428,7 @@ class UserManager
         return $count;
     }
 
-        /*if(isset($_POST['mainCourseInterest'])){
+    /*if(isset($_POST['mainCourseInterest'])){
             $mainCourseInterest = $_POST['mainCourseInterest'];
         } elseif (isset($_POST['schoolYear'])){
             $schoolYear = $_POST['schoolYear'];
@@ -438,8 +437,8 @@ class UserManager
         } elseif (isset($_POST['goingOutType'])){
             $goingOutType = $_POST['goingOutType'];
         }*/
-    
-        /*if(isset($_POST['mainCourseInterest'])){
+
+    /*if(isset($_POST['mainCourseInterest'])){
             if($_POST['mainCourseInterest']){
                 $statement = "SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest) AND buddyType = 'wantToBeABuddy'";
             } 
@@ -453,7 +452,7 @@ class UserManager
             }
         }*/
 
-        /*
+    /*
         $conn = Db::getConnection();
 
         //Select users that have minimum one match with the current user filters 
@@ -474,30 +473,30 @@ class UserManager
 
         return $searchBuddy;*/
 
-     public static function searchName()
-     {
+    public static function searchName()
+    {
         $conn = Db::getConnection();
 
         $searchField = $_POST['searchField'];
 
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
-        
+
         $query = $conn->prepare($statement);
-        
-        $query->bindValue(':name', '%'.$searchField.'%');
+
+        $query->bindValue(':name', '%' . $searchField . '%');
         //var_dump($searchField);
 
         $query->execute();
         //"SELECT * from tl_user WHERE firstName LIKE '%$searchName% OR lastName LIKE '%$searchName%"
-        
+
         $count = $query->fetchAll(PDO::FETCH_ASSOC);
         //var_dump($count);
         //var_dump($_POST);
         return $count;
-     }
+    }
 
-     public static function numberOfUsersInDatabase()
-     {
+    public static function numberOfUsersInDatabase()
+    {
         $conn = Db::getConnection();
 
         $statement = "SELECT count(*) FROM tl_user";
@@ -509,10 +508,10 @@ class UserManager
         return $number_of_users;
         //var_dump($number_of_users);
         //echo $number_of_users;
-     }
+    }
 
-     public static function numberOfBuddyMatches()
-     {
+    public static function numberOfBuddyMatches()
+    {
         $conn = Db::getConnection();
 
         $statement = "SELECT count(*) FROM tl_buddies";
@@ -523,7 +522,5 @@ class UserManager
 
         return $number_of_buddy_matches;
         //echo $number_of_buddy_matches;
-     }
-
-
+    }
 }
