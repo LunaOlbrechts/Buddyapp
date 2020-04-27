@@ -524,13 +524,15 @@ class UserManager
      {
         $conn = Db::getConnection();
 
+        //['searchField'] = $searchField;
+
         $class = $_GET['searchField'];
         //$class = $user->getClass();
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(searchClassRoom) LIKE LOWER(:searchClassRoom)");
         $query = $conn->prepare($statement);
 
-        $query->bindValue(':classRoom',$class);
+        $query->bindValue(':searchClassRoom',$class);
 
         $query->execute();
         
