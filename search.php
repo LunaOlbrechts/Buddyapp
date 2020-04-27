@@ -15,7 +15,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $searchName = UserManager::searchName();
         
         if (empty($_POST['searchField'])){
-            $error1 = "Vul een naam in";
+            $error = "Vul een naam in";
         }
 
         elseif (count($searchName) > 0) {
@@ -23,7 +23,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                 $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
         } else{
-            $error2 = "Geen resultaten";
+            $error = "Geen resultaten";
         }
     }
 } else {
@@ -31,20 +31,24 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 }
 
 
-if ($_POST['searchBuddy']) {
-    $searchBuddy = UserManager::searchBuddyByFilter();
-    /*$_SESSION['mainCourseInterest'] = $_POST['mainCourseInterest'];
-    $_SESSION['schoolYear'] = $_POST['schoolYear'];
-    $_SESSION['sportType'] = $_POST['sportType'];
-    $_SESSION['goingOutType'] = $_POST['goingOutType'];*/
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if($_POST['searchBuddy']){
+        $searchBuddy = UserManager::searchBuddyByFilter();
 
-    if (!empty($_POST['mainCourseInterest']) || !empty($_POST['schoolYear']) || !empty($_POST['sportType']) || !empty($_POST['goingOutType'])) {
-        foreach ($searchBuddy as $name) {
-            $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+        if (empty($_POST['mainCourseInterest']) && empty($_POST['schoolYear']) && empty($_POST['sportType']) && empty($_POST['goingOutType'])) {
+            $error2 = "Check a filter";
         }
-    } else{
-        $error3 = 'Check a filter';
+
+        elseif (count($searchBuddy) > 0) {
+            foreach ($searchBuddy as $name) {
+                $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+            }
+        } else{
+            $error2 = "Geen resultaten";
+        }
     }
+} else {
+    header("Location: login.php");
 }
 
 ?>
@@ -76,17 +80,17 @@ if ($_POST['searchBuddy']) {
     </form>
 
     <div class="form-group">
-        <?php if (isset($error1)) : ?>
+        <?php if (isset($error)) : ?>
             <p>
-                <?php echo $error1; ?>
+                <?php echo $error; ?>
             </p>
         <?php endif; ?>
 
-        <?php if (isset($error2)) : ?>
+        <!--<?php if (isset($error2)) : ?>
             <p>
                 <?php echo $error2; ?>
             </p>
-        <?php endif; ?>
+        <?php endif; ?>-->
 
         <?php if (isset($succes1)) : ?>
             <p>
@@ -176,9 +180,9 @@ if ($_POST['searchBuddy']) {
     </form>
 
     <div class="form-group">
-        <?php if (isset($error3)) : ?>
+        <?php if (isset($error2)) : ?>
             <p>
-                <?php echo $error3; ?>
+                <?php echo $error2; ?>
             </p>
         <?php endif; ?>
 
