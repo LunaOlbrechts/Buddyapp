@@ -9,20 +9,20 @@ class Buddies
 
 
     // DO THE REQUEST   
-    public static function sendRequest(Buddies $buddy) 
+    public static function sendRequest(Buddies $buddy)
     {
         $conn = Db::getConnection();
         $statement = $conn->prepare("INSERT INTO buddie_request (sender, receiver) VALUES (:sender, :receiver)");
         $sender = $buddy->getSender();
-        $receiver = $buddy->getReciever();        
+        $receiver = $buddy->getReceiver();
         $statement->bindValue(":sender", $sender);
         $statement->bindValue(":receiver", $receiver);
-        
+
         $result = $statement->execute();
-        return $result;        
+        return $result;
     }
 
-    public static function findRequest() 
+    public static function findRequest()
     {
         $conn = Db::getConnection();
         // SENDER -> RECEIVER ( EVEN VOOR TESTEN)
@@ -30,12 +30,10 @@ class Buddies
         $statement->execute();
         $buddies = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        if($statement->rowCount() > 0)
-        {
+        if ($statement->rowCount() > 0) {
             return $buddies;
-        }
-        else { 
-          header("Location: index.php");
+        } else {
+            header("Location: index.php");
         }
     }
 
@@ -46,32 +44,26 @@ class Buddies
         $statement->execute();
         $buddies = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        if($statement->rowCount() > 0)
-        {
+        if ($statement->rowCount() > 0) {
             return $buddies;
+        } else {
+            header("Location: index.php");
         }
-        else { 
-          header("Location: index.php");
-        }
-
     }
 
     // BUTTON WHEN YOU HAVE A REQUEST
-    public static function checkRequest() 
+    public static function checkRequest()
     {
         $conn = Db::getConnection();
         $statement = $conn->prepare("SELECT * from buddie_request WHERE receiver= '" . $_SESSION['user_id'] . "'");
         $statement->execute();
-        if($statement->rowCount() > 0)
-        {
+        if ($statement->rowCount() > 0) {
             return true;
-
-        }
-        else { 
-          return false;
+        } else {
+            return false;
         }
     }
-    
+
     // MAKE THE BUDDY
     public static function makeBuddy()
     {
@@ -79,12 +71,12 @@ class Buddies
         $deleteStatement = $conn->prepare("DELETE FROM buddie_request WHERE receiver= '" . $_SESSION['user_id'] . "'");
         $deleteStatement->execute();
 
-        if($deleteStatement->execute()){
+        if ($deleteStatement->execute()) {
             $sender = $_SESSION['user_id'];
             $receiver = $_SESSION['requested'];
             $statement = $conn->prepare("INSERT INTO tl_buddies (user_one, user_two) VALUES ($sender, $receiver)");
             $statement->execute();
-         } 
+        }
     }
 
 
@@ -95,21 +87,18 @@ class Buddies
         $deleteStatement = $conn->prepare("DELETE FROM buddie_request WHERE receiver= '" . $_SESSION['user_id'] . "'");
         $deleteStatement->execute();
 
-        if($deleteStatement->rowCount() > 0)
-        {
+        if ($deleteStatement->rowCount() > 0) {
             return true;
-
-        }
-        else { 
-          return false;
+        } else {
+            return false;
         }
     }
 
-    
+
 
     /**
      * Get the value of sender
-     */ 
+     */
     public function getSender()
     {
         return $this->sender;
@@ -119,7 +108,7 @@ class Buddies
      * Set the value of sender
      *
      * @return  self
-     */ 
+     */
     public function setSender($sender)
     {
         $this->sender = $sender;
@@ -129,8 +118,8 @@ class Buddies
 
     /**
      * Get the value of receiver
-     */ 
-    public function getReciever()
+     */
+    public function getReceiver()
     {
         return $this->receiver;
     }
@@ -139,8 +128,8 @@ class Buddies
      * Set the value of receiver
      *
      * @return  self
-     */ 
-    public function setReciever($receiver)
+     */
+    public function setReceiver($receiver)
     {
         $this->receiver = $receiver;
 

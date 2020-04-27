@@ -17,7 +17,7 @@ class Chat
         $conn = Db::getConnection();
         $statement = $conn->prepare("INSERT INTO tl_chat (senderId, receiverId, message) VALUES (:senderId, :receiverId, :message)");
         $senderId = $message->getSenderId();
-        $receiverId = $message->getRecieverId();
+        $receiverId = $message->getReceiverId();
         $message = $message->getMessage();
 
         $statement->bindValue(":senderId", $senderId);
@@ -71,7 +71,7 @@ class Chat
     /**
      * Get the value of receiver
      */
-    public function getRecieverName()
+    public function getReceiverName()
     {
         return $this->receiverName;
     }
@@ -81,7 +81,7 @@ class Chat
      *
      * @return  self
      */
-    public function setRecieverName($receiverName)
+    public function setReceiverName($receiverName)
     {
         $this->receiverName = $receiverName;
 
@@ -91,7 +91,7 @@ class Chat
     /**
      * Get the value of receiverId
      */
-    public function getRecieverId()
+    public function getReceiverId()
     {
         return $this->receiverId;
     }
@@ -101,7 +101,7 @@ class Chat
      *
      * @return  self
      */
-    public function setRecieverId($receiverId)
+    public function setReceiverId($receiverId)
     {
         $this->receiverId = $receiverId;
 

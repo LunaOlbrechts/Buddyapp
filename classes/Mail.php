@@ -34,10 +34,10 @@ class Mail
     public static function sendEmailBuddyRequest()
     {
 
-        $idReciever = $_SESSION['receiver_id'];
-        $result = UserManager::getUserFromDatabaseById($idReciever);
+        $idReceiver = $_SESSION['receiver_id'];
+        $result = UserManager::getUserFromDatabaseById($idReceiver);
 
-        $emailReciever = $result[0]['email'];
+        $emailReceiver = $result[0]['email'];
 
         if ($result) {
             $subject = "Hallo! Iemand heeft jou een buddyverzoek verstuurd";
@@ -46,7 +46,7 @@ class Mail
 
             $mail = self::settings();
 
-            $mail->addAddress($emailReciever);
+            $mail->addAddress($emailReceiver);
             $mail->Subject = $subject;
             $mail->Body = $msg;
             $mail->isHTML(true);

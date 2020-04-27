@@ -294,11 +294,11 @@ class UserManager
 
         $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName = :firstName AND id = :id");
 
-        $nameReciever = $_SESSION['receiver_name'];
-        $idReciever = $_SESSION['receiver_id'];
+        $nameReceiver = $_SESSION['receiver_name'];
+        $idReceiver = $_SESSION['receiver_id'];
 
-        $statement->bindValue(":firstName", $nameReciever);
-        $statement->bindValue(":id", $idReciever);
+        $statement->bindValue(":firstName", $nameReceiver);
+        $statement->bindValue(":id", $idReceiver);
 
 
         $statement->execute();
