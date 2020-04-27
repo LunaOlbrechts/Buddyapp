@@ -13,6 +13,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
     $request = Buddies::checkRequest();
+    $denyMessage = Buddies::checkDenyMessage();
+    $denied = Buddies::printDenyMessage();
     //var_dump($currentUser);
 
     if (isset($_POST['chat']) && ($_POST['chat'])) {
@@ -30,12 +32,15 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         header("location: request.php");
     }
 
-
-    
+    if (isset($_POST['DeniedOK']) && ($_POST['DeniedOK'])) {
+        Buddies::deleteMessage();
+    }
 
 } else {
     header("Location: login.php");
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,6 +61,19 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <form method="POST">   
         <input type="submit" value="You got a buddy request!" name="request" class="btn btn-primary">
     </form>     
+    <?php endif ?>
+
+    <?php if($denyMessage == true) : ?>
+        <?php foreach ($denied as $deny) : ?>
+        <div class="alert alert-danger" role="alert">
+            <p name="denyMessage">Your buddy request has been denied</p>
+            <p>Reason:</p>
+            <?php echo htmlspecialchars($deny["message"]) ?>
+            <form method="POST">
+                <input type="submit" value="Ok" name="DeniedOK" class="btn-danger">
+            </form>     
+        </div> 
+        <?php endforeach ?>    
     <?php endif ?>
 
     <?php // echo(json_encode($_SESSION)); ?>

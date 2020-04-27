@@ -14,6 +14,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
     $buddies = Buddies::findRequest();
     $deny = 0;
+    
 
     if (isset($_POST['accept']) && ($_POST['accept'])) {
         try {
@@ -31,28 +32,29 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         header("Location: index.php");
     }
 
-    // DENY BUDDY REQUEST
+    // DENY BUDDY REQUEST -> Give reason field
     if (isset($_POST['deny']) && ($_POST['deny'])) {
-        $deny = Buddies::denyBuddy();
-        // header("Location: index.php");
+        $deny = true;
+        $_SESSION['requested'] = $_POST['requested'];
     }    
     
 
-    // NOG AANVULLEN !!!
+    // DENY BUDDY REQUEST WITH REASON
     if (isset($_POST['goReason']) && !empty($_POST['messageDeny'])) {
-        $message = new Chat();
-        $message->setMessage($_POST['messageDeny']);
-        $message->setSenderId($_SESSION['user_id']);
-        $message->setSenderName($_SESSION['first_name']);
-        $message->setRecieverId($_SESSION['reciever_id']);
-        $message->setRecieverName( $_SESSION['reciever_name']);
+        $messageForDeny = new Buddies();
+        $messageForDeny->setDenyMessage(htmlspecialchars($_POST['messageDeny']));
+        Buddies::denyMessage($messageForDeny);
+        header("Location: index.php");
+    }
 
-        Chat::sendMessage($message);
-    }    
-    
+    // DENY BUDDY REQUEST WITH NO REASON
+    if (isset($_POST['goNoReason']) && $_POST['goNoReason']) {
+        Buddies::denyNoMessage();
+        header("Location: index.php");
+    }   
+
 }
-
-        
+  
 
 ?>
 
@@ -76,7 +78,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="card">
             <?php foreach ($buddies as $buddy) :  ?>
                 <?php if($deny == 0) : ?>
-                    <?php echo $buddy["firstName"] . " wants to be your buddy!"; ?>
+                    <?php echo htmlspecialchars($buddy["firstName"]) . " wants to be your buddy!"; ?>
                     <form method="GET" class="mx-auto"> 
 
 
@@ -103,8 +105,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                         <textarea name="messageDeny" class="form-control" placeholder="Give a reason why you denied this buddy request."></textarea>
                     
                         <div class="btn-group" role="group" >        
-                                <input type="submit" value="Continue" name="goReason" class="btn btn-info mr-3"></input>
-                                <input type="submit" value="Continue without giving reason" name="goNoReason" class="btn btn-info mr-3"></input>
+                                <input type="submit" value="Send reason" name="goReason" class="btn btn-info mr-3"></input>
+                                <input type="submit" value="No reason" name="goNoReason" class="btn btn-info mr-3"></input>
                         </div>
                     </form>
                 <?php endif ?>

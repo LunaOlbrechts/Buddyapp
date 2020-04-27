@@ -16,6 +16,10 @@ $id =  $_SESSION["user_id"];
 include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    $buddy = new Buddies();
+    $otherId = $_SESSION["reciever_id"];
+    $haveRequestOrBuddy = Buddies::haveRequestOrBuddy($id, $otherId); 
+
     /*if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
@@ -40,7 +44,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $buddy->setReciever($_SESSION['reciever_id']);
             Buddies::sendRequest($buddy);
             Mail::sendEmail();
-            echo $result;
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
@@ -50,7 +53,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 }
 
 
-
+var_dump($_SESSION);
 
 // Get messages for specific chat
 $conn = Db::getConnection();
@@ -182,7 +185,9 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
                 <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
                 <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
                 <input id="sendMessage" type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
-                <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
+                <?php if($haveRequestOrBuddy == 0): ?>
+                    <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
+                <?php endif ?>
                 <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile</a></button>
             </div>
         </form>
