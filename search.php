@@ -63,6 +63,7 @@ if ($_POST['searchBuddy']) {
         <div class="container mt-5">
             <h1 class="col-md">Zoek hier naar een buddy</h1>
             <p>Zoek naar een buddy via de zoekbalk of via de filter</p>
+            <h3>Buddy zoeken via zoekbalk</h3>
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
                 <input class="form-control" type="text" name="searchField" placeholder="Name" id="name">
@@ -96,6 +97,7 @@ if ($_POST['searchBuddy']) {
 
     <form method="post" action="">
         <div class="form-group">
+            <h3>Buddy zoeken via filter</h3>
             <label><b>Opleidingsinteresses</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="mainCourseInterest" id="Frontend development" value="Frontend development">
