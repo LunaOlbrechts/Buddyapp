@@ -45,51 +45,50 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-
     <?php if($request == true) : ?>
-    <form method="POST">   
-        <input type="submit" value="You got a buddy request!" name="request" class="btn btn-primary">
-    </form>     
+        <form method="POST">   
+            <input type="submit" value="You got a buddy request!" name="request" class="btn btn-primary">
+        </form>     
     <?php endif ?>
 
     <?php // echo(json_encode($_SESSION)); ?>
-    <div class="card-text">
-        <p>
-            Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd.
-        </p>
-        <p>
-            Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden.
-        </p>
-    </div>
+        <div class="card-text">
+            <p>
+                Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd.
+            </p>
+            <p>
+                Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden.
+            </p>
+        </div>
 
     <!--<?php echo(json_encode($_SESSION)); ?>-->
 
     <div class="profileMatchesByFilters d-flex justify-content-center">
-        <div class="card-group">
-            <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
-                <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
-                    <div class="card person-card" style="width: 300px;">
-                        <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); width: 300px; height: 250px; background-size: cover; background-position: center" ;></div>
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
-                            <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
-                            <?php foreach ($user['matches'] as $match) : ?>
-                                <ul>
-                                    <?php if (trim($match) !== '') : ?><li><?php echo $match . ", " ?></li><?php endif ?>
-                                </ul>
-                            <?php endforeach ?>
-                            <form method="POST" enctype="multipart/form-data">
-                                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
-                                <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
-                                <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
-                                <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">CLICK me
-                                </a>      
-                            </form>
-                        </div>
+        <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
+            <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
+                <div class="card person-card">
+                    <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); width: 300px; height: 250px; background-size: cover; background-position: center" ;></div>
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
+                        <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
+                        <?php foreach ($user['matches'] as $match) : ?>
+                            <ul>
+                                <?php if (trim($match) !== '') : ?><li><?php echo $match . ", " ?></li><?php endif ?>
+                            </ul>
+                        <?php endforeach ?>
+
+                        <form method="POST" enctype="multipart/form-data">
+                            <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
+                            <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
+                            <input type="submit" value="Chat" name="chat" class="btn btn-primary"></input>
+                            <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">CLICK me
+                            </a>      
+                        </form>
+
                     </div>
-                <?php endif ?>
-            <?php endforeach ?>
-        </div>
+                </div>
+            <?php endif ?>
+        <?php endforeach ?>
     </div>          
     <script src="script.js"></script>
 </body>

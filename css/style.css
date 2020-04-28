@@ -44,18 +44,25 @@
   justify-content: center !important;
   width: 30%;
 }
+
 .btn-submit{
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.person-card{
-  margin-left: 10px !important;
+
+.card.person-card{
+  margin-right: 20px !important;
+  height: 100% !important;
+  color: red;
 }
 
-@media (min-width: 576px) {
- 
-}
+/* ======================
+        Index
+   ======================
+*/
+
+
 
 @media (min-width: 992px) {
   .container{
