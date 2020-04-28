@@ -8,12 +8,24 @@ include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
 include_once(__DIR__ . "/classes/Buddies.php");
 
-
 $id =  $_SESSION["user_id"];
 
 include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+        // Get messages for specific chat
+        $conn = Db::getConnection();
+        $senderId = $_SESSION['user_id'];
+        $receiverId = $_SESSION['receiver_id'];
+
+        $statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $receiverId . "') OR (senderId = '" . $receiverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
+        $statement->execute();
+        $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $currentUser = UserManager::getUserFromDatabase();
+        $matchedUsers = UserManager::matchUsersByFiltersChat();
+        $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
+
     if ($_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
@@ -50,61 +62,17 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
+
     }
 
 } else {
     header("Location: login.php");
 }
 
-
-// Get messages for specific chat
-$conn = Db::getConnection();
-$senderId = $_SESSION['user_id'];
-$receiverId = $_SESSION['receiver_id'];
-
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $receiverId . "') OR (senderId = '" . $receiverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
-$statement->execute();
-$messages = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-$currentUser = UserManager::getUserFromDatabase();
-$matchedUsers = UserManager::matchUsersByFiltersChat();
-$scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
-
 ?>
-<style>
-    span {
-        color: #007bff;
-        font-weight: bold;
-    }
-
-    .container {
-        margin-top: 3%;
-        width: 60%;
-        background-color: #F2F2F2;
-        padding-right: 10%;
-        padding-left: 10%;
-    }
-
-    .display-chat {
-        height: 50vh;
-        margin-bottom: 4%;
-        overflow: auto;
-        padding: 15px;
-        border-bottom: 1px solid #007bff;
-    }
-
-    .message {
-        background-color: #007bff;
-        color: white;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 3%;
-        width: auto;
-    }
-</style>
 <!DOCTYPE html>
 <html lang="en">
-
+<link rel="stylesheet" href="./css/style.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -113,7 +81,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
 
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
-    <div class="container">
+    <div class="container-matches">
         <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
             <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
                 <p class="card-text">Je hebt deze kenmerken gemeen met <?php echo $user['firstName']?>:</p>

@@ -70,7 +70,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <!--<?php echo(json_encode($_SESSION)); ?>-->
 
     <div class="profileMatchesByFilters">
-        <div class="row">
+        <div class="row-test">
         <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
             <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
                 <div class="col-sm-6">
