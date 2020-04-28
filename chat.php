@@ -180,11 +180,11 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             <div class="btn-group" role="group" aria-label="Basic example">
                 <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
                 <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
-                <input id="sendMessage" type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
+                <input id="sendMessage" type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3 send-message-btn"></input>
                 <?php if ($haveRequestOrBuddy == 0) : ?>
-                    <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
+                    <input type="submit" value="Be My Buddy" class="btn btn-success btn-buddy" name="buddyRequest"></input>
                 <?php endif ?>
-                <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile</a></button>
+                <button class="profile-btn btn"><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile</a></button>
             </div>
         </form>
     </div>

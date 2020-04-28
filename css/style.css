@@ -72,21 +72,21 @@
   border-radius: 3px;
 }
 .amount-students{
-  background-color: #D75358;
+  background-color: #A9D7CC;
   border-radius: 3px;
 }
 .amount-students > p{
   padding: 10px;
 }
 .amount-buddies{
-  background-color: #D75358;
+  background-color: #A9D7CC;
   border-radius: 3px;
 }
 .amount-buddies > p{
   padding: 10px;
 }
 .profileMatchesByFilters{
-  background-color: #E5F2FC !important;
+  background-color: #DEEDE5 !important;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -108,7 +108,7 @@
 }
 .person-card{
   height: 100% !important;
-  border: 3px solid #7AD3BB !important;
+  border: 3px solid #A9D7CC !important;
   max-width: 300px;
 }
 .card-body > a{
@@ -128,7 +128,7 @@
   display: inline !important;
 }
 .chat{
-  background-color: #7AD3BB !important;
+  background-color: #327374 !important;
   border: none !important;
 }
 
@@ -139,15 +139,21 @@
 */
 
 span {
-  color: #007bff;
+  color: #7AD3BB;
   font-weight: bold;
 }
 
+.container{
+  background-color: white !important;
+  border: 1px solid #DEEDE5;
+  border-radius: 4px;
+}
 .container-matches{
   margin-top: 3%;
-  margin-left: 15px;
-  margin-right: 15px;
-  background-color: #BCDEF8;
+  margin-left: 68px;
+  margin-right: 68px;
+  background-color: #DEEDE5;
+  border-radius: 3px;
   padding-right: 10%;
   padding-left: 10%;
 }
@@ -157,14 +163,65 @@ span {
   margin-bottom: 4%;
   overflow: auto;
   padding: 15px;
-  border-bottom: 1px solid #007bff;
+  border-bottom: 1px solid #25474E;
 }
 
 .message{
-  background-color: #007bff;
-  color: rgb(242, 242, 242);;
+  background-color: #DEEDE5;
+  color: rgb(255, 255, 255);;
   border-radius: 5px;
   padding: 5px;
   margin-bottom: 3%;
   width: auto;
+}
+
+.message > p{
+  background-color: #DEEDE5;
+}
+
+.profile-btn{
+  background-color: #7AD3BB;
+  border: unset !important;
+  color: white;
+  height: 50px;
+}
+
+.btn-buddy{
+  background-color: #7AD3BB !important;
+  border: unset !important;
+  border-radius: 3px !important;
+}
+
+.send-message-btn{
+  background-color: #327374 !important;
+  border: unset !important;
+  border-radius: 3px !important;
+}
+
+/* ======================
+          Search
+   ======================
+*/
+
+.search{
+  border: 3px solid #7AD3BB !important;
+}
+
+.title{
+  color: #25474E;
+  margin-top: 20px;
+}
+
+.search-btn{
+  background-color: #7AD3BB !important;
+  color: white !important;
+}
+
+.search-name-btn{
+  background-color: #7AD3BB !important;
+  color: white !important;
+}
+
+.search-name-input{
+  border: 1px solid #7AD3BB !important ;
 }

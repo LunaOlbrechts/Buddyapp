@@ -34,17 +34,18 @@ $succes2 = '';
 $searchField = $_POST['searchField'];
 
 if ($_POST['searchName']) {
-    $searchName = UserManager::searchName(); 
+    $searchName = UserManager::searchName();
     //$_SESSION['searchField'] = $_POST['searchField'];
     if (!empty($searchField)) {
         if (isset($searchField)) {
             foreach ($searchName as $name) {
                 $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
-        } if (trim($searchName) == ""){
+        }
+        if (trim($searchName) == "") {
             $error2 = 'No result';
-        } 
-    } else{
+        }
+    } else {
         $error1 = 'Typ a name';
     }
 }
@@ -71,7 +72,7 @@ if ($_POST['searchBuddy']) {
         foreach ($searchBuddy as $name) {
             $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
         }
-    } else{
+    } else {
         $error3 = 'Check a filter';
     }
 }
@@ -91,15 +92,15 @@ if ($_POST['searchBuddy']) {
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <form method="post" action="">
-        <div class="container mt-5">
+    <div class="container mt-5 search">
 
             <div class="form-group">
-                <label for="name"><b>Name</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Name">
+                <label class="title" for="name"><b>Name</b></label>
+                <input class="form-control search-name-input" type="text" name="searchField" placeholder="Name">
             </div>
 
             <div class="form-group">
-                <input class="btn border" type="submit" value="Search for a name" name='searchName'>
+                <input class="btn border search-name-btn" type="submit" value="Search for a name" name='searchName'>
             </div>
     </form>
 
@@ -125,8 +126,8 @@ if ($_POST['searchBuddy']) {
 
 
     <form method="post" action="">
-        <div class="form-group">
-            <label><b>Opleidingsinteresses</b></label>
+        <div class="form-group course-interests">
+            <label class="title"><b>Opleidingsinteresses</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="mainCourseInterest" id="Frontend development" value="Frontend development">
                 <label class="form-check-label" for="exampleRadios1">Frontend development</label>
@@ -142,7 +143,7 @@ if ($_POST['searchBuddy']) {
         </div>
 
         <div class="form-group">
-            <label><b>Opleidingsjaar</b></label>
+            <label class="title"><b>Opleidingsjaar</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="schoolYear" id="1 IMD" value="1 IMD">
                 <label class="form-check-label" for="exampleRadios1">1 IMD</label>
@@ -158,7 +159,7 @@ if ($_POST['searchBuddy']) {
         </div>
 
         <div class="form-group">
-            <label><b>Type sporter</b></label>
+            <label class="title"><b>Type sporter</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="sportType" id="Waterrat" value="Waterrat">
                 <label class="form-check-label" for="exampleRadios1">Waterrat</label>
@@ -182,7 +183,7 @@ if ($_POST['searchBuddy']) {
         </div>
 
         <div class="form-group">
-            <label><b>Uitgaanstype</b></label>
+            <label class="title"><b>Uitgaanstype</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="goingOutType" id="Party animal" value="Party animal">
                 <label class="form-check-label" for="exampleRadios1">Party animal</label>
@@ -198,7 +199,7 @@ if ($_POST['searchBuddy']) {
         </div>
 
         <div>
-            <input class="btn border" type="submit" value="Search for a buddy" name='searchBuddy'>
+            <input class="btn border search-btn" type="submit" value="Search for a buddy" name='searchBuddy'>
         </div>
     </form>
 
