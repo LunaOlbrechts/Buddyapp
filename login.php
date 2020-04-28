@@ -47,14 +47,14 @@ if (!empty($_POST)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <title>Buddy app | Login</title>
 </head>
 
 <body>
     <form action="" method="post">
-        <div class="container mt-5">
+        <div class="container mt-5 login-form">
             <h2 form__title>Sign In</h2>
 
             <?php if (isset($error)) : ?>
@@ -66,20 +66,20 @@ if (!empty($_POST)) {
             <?php endif; ?>
 
             <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input class="form-control" type="text" id='email' name='email' placeholder="Enter e-mail">
+                <label class="title" for="email">E-mail:</label>
+                <input class="form-control email-input" type="text" id='email' name='email' placeholder="Enter e-mail">
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input class="form-control" type="password" id='password' name='password' placeholder="Enter password">
+                <label class="title" for="password">Password:</label>
+                <input class="form-control password-input" type="password" id='password' name='password' placeholder="Enter password">
             </div>
 
             <div class="form-group">
-                <input class="btn border" type="submit" value="Log in" name='submit'>
+                <input class="btn border login-btn" type="submit" value="Log in" name='submit'>
             </div>
 
             <div>
-                <a href="signup.php">Don't have an account yet? Sign up here</a>
+                <a href="signup.php" class="signup-btn">Don't have an account yet? Sign up here</a>
             </div>
         </div>
     </form>

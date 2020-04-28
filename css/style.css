@@ -8,6 +8,29 @@
   color: black;
 }
 
+/* ======================
+        Login
+   ======================
+*/
+
+.login-form{
+
+}
+.email-input{
+  border: 1px solid #7AD3BB !important ;
+
+}
+.password-input{
+  border: 1px solid #7AD3BB !important ;
+
+}
+.login-btn{
+  background-color: #7AD3BB !important;
+  color: white !important;
+}
+.signup-btn{
+  color: #327374 !important;
+}
 
 /* ======================
       Complete profile
