@@ -11,7 +11,6 @@ include_once(__DIR__ . "/classes/UserManager.php");
 include_once(__DIR__ . "/classes/Buddies.php");
 
 $id =  $_SESSION["user_id"];
-
 include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
@@ -19,7 +18,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $otherId = $_SESSION["receiver_id"];
     $haveRequestOrBuddy = Buddies::haveRequestOrBuddy($id, $otherId);
 
-    /*if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
+    if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
@@ -28,13 +27,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $message->setReceiverId($_SESSION['receiver_id']);
             $message->setReceiverName( $_SESSION['receiver_name']);
             
-            Chat::sendMessage($message);
+            $result = Chat::sendMessage($message);
+            var_dump($message);
 
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
     }
-    */
+    
     if (isset($_POST["buddyRequest"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
             $buddy = new Buddies();

@@ -246,7 +246,7 @@ class UserManager
         //print_r($result);
         $password = $result["password"];
         $userId = $result["id"];
-        $firstName = $result[0]["firstName"];
+        $firstName = $result["firstName"];
         $lastName = $result["lastName"];
 
         //echo $password;
@@ -256,7 +256,7 @@ class UserManager
             $_SESSION['logged_in'] = true;
             $_SESSION['first_name'] = $firstName;
             $_SESSION['lastName'] = $lastName;
-            header("Location:complete.profile.php");  //redirect moet in de frontend
+            header("Location:index.php");  //redirect moet in de frontend
         } else {
             throw new Exception("Email & password don't match");
         }

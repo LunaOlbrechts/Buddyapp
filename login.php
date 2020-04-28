@@ -2,7 +2,6 @@
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
 
-session_start();
 // make form log in user
 // check ih 
 // if user doesn't exist in db => message: "can't login user" of "mag niet leeg zijn" "geen geldig email"
@@ -22,12 +21,10 @@ if (!empty($_POST)) {
         try {
             $user = new User();
             $user->setPasswordForVerification($_POST['password']);
-            $user->setEmail(htmlspecialchars($_POST['email']));
+            $user->setEmail($_POST['email']);
             
-            UserManager::logIn($user);
-
-            header("Location: index.php");
-
+            $result = UserManager::logIn($user);
+        
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }

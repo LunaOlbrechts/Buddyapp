@@ -20,6 +20,7 @@ $currentUser = UserManager::getUserFromDatabase();
         <a href="index.php">Home</a>
         <a href="buddielist.php">All Buddies</a>
         <a href="class.finder.php">Lokaal vinder</a>
+        <a href="forum.php">Forum</a>
         <!--<a href="mylist.php"></a>-->
         <!--<a href="mylist.php"></a>-->
         <a href="search.php">Search for a buddy</a>

@@ -29,7 +29,7 @@ class Chat
         $statement->bindValue(":senderName", $senderName);
         $statement->bindValue(":receiverName", $receiverName);
         $statement->bindValue(":message", $message);
-
+        var_dump($receiverId, $senderId, $senderName, $receiverName );
         $result = $statement->execute();
         return $result;
     }

@@ -4,7 +4,6 @@ include_once(__DIR__ . "/classes/UserManager.php");
 include_once(__DIR__ . "/classes/Buddies.php");
 
 session_start();
-
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $number_of_users = UserManager::numberOfUsersInDatabase();
     $number_of_buddy_matches = UserManager::numberOfBuddyMatches();
@@ -21,7 +20,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         try {
             $_SESSION['receiver_name'] = $_POST['receiverName'];
             $_SESSION['receiver_id'] = $_POST['receiverId'];
-            $_SESSION['first_name'] = $_POST['senderName'];
             header("Location: chat.php");
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
