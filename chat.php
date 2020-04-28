@@ -28,7 +28,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $message->setReceiverName( $_SESSION['receiver_name']);
             
             $result = Chat::sendMessage($message);
-            var_dump($message);
 
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
