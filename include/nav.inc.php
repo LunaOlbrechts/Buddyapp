@@ -17,7 +17,6 @@ $currentUser = UserManager::getUserFromDatabase();
 
 <body>
     <nav class="navbar nav bg-light">
-        <a href="index.php" class="logo">Buddy app</a>
         <a href="index.php">Home</a>
         <a href="buddielist.php">All Buddies</a>
         <a href="class.finder.php">Lokaal vinder</a>

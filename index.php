@@ -15,6 +15,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $request = Buddies::checkRequest();
     $denyMessage = Buddies::checkDenyMessage();
     $denied = Buddies::printDenyMessage();
+    //var_dump($currentUser);
 
     if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
@@ -90,14 +91,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         </div>
     </div>
 
-    <!--<?php echo (json_encode($_SESSION)); ?>-->
-
     <div class="profileMatchesByFilters">
         <div class="row-test">
             <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
                 <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
                     <div class="col-sm-6">
-                        <div class="card person-card">
+                        <div class="card mb-3 person-card">
                             <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); height: 250px; background-size: cover; background-position: center" ;></div>
                             <div class="card-body">
                                 <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
