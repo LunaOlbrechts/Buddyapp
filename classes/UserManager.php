@@ -398,10 +398,10 @@ class UserManager
         $sportType = $_POST['sportType'];
         $goingOutType = $_POST['goingOutType'];
         
-        /*$statement = $conn->prepare ("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
-        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");*/
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
+        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
 
-        $extra = "";
+        /*$extra = "";
 
         if(!empty($_POST['mainCourseInterest'])){
             $extra .= "AND mainCourseInterest = :mainCourseInterest";
@@ -413,18 +413,18 @@ class UserManager
             $extra .= "AND goingOutType = :goingOutType";
         }
         
-        $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";
+        $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";*/
 
-        $extra = $conn->prepare($statement);
+        //$query = $conn->prepare($statement);
 
-        $extra->bindValue(':mainCourseInterest', $mainCourseInterest);
-        $extra->bindValue(':schoolYear', $schoolYear);
-        $extra->bindValue(':sportType', $sportType);
-        $extra->bindValue(':goingOutType', $goingOutType);
+        $statement->bindValue(':mainCourseInterest', $mainCourseInterest);
+        $statement->bindValue(':schoolYear', $schoolYear);
+        $statement->bindValue(':sportType', $sportType);
+        $statement->bindValue(':goingOutType', $goingOutType);
 
-        $extra->execute(); 
+        $statement->execute(); 
 
-        $count = $extra->fetchAll(PDO::FETCH_ASSOC);
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
     }
 
@@ -478,6 +478,9 @@ class UserManager
         $conn = Db::getConnection();
 
         $searchField = $_POST['searchField'];
+        //$searchField = $user->getSearchField();
+        //$email = $user->getEmail();
+
 
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
         
@@ -521,13 +524,15 @@ class UserManager
      {
         $conn = Db::getConnection();
 
+        //['searchField'] = $searchField;
+
         $class = $_GET['searchField'];
         //$class = $user->getClass();
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(searchClassRoom) LIKE LOWER(:searchClassRoom)");
         $query = $conn->prepare($statement);
 
-        $query->bindValue(':classRoom',$class);
+        $query->bindValue(':searchClassRoom',$class);
 
         $query->execute();
         
