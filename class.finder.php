@@ -4,15 +4,19 @@
 
      session_start();
 
+    $class = $_GET['searchField'];
+
     $searchField = trim($_GET['searchField'], " t.");
     $string_replace = str_replace(".","",$searchField);
+
+    var_dump($string_replace);
 
      if ($_GET['searchClass']){
         $searchClass = UserManager::findClass();
         if (empty($searchField)){
-            $error1 = 'Vul een klaslokaal in';
+            $error = 'Vul een klaslokaal in';
         } elseif (strlen($searchField) < 3){
-            $error2 = 'Voer minstens 3 karakters in';
+            $error = "Voer minstens 3 karakters in ('Gebouw','verdieping','lokaal')";
         }
 
     //$searchField = 
@@ -23,7 +27,7 @@
                     $succes = '<div class="font-weight-bold">' . 'Lokaal: ' . $class['classRoom'] . '</div>' . '<div>' . $class['description'] . '</div>';
                 }
             } else{
-                $error3 = 'Geen lokaal gevonden';
+                $error = 'Geen lokaal gevonden';
             }
         }
      }
@@ -58,19 +62,9 @@
             <p><?php echo $succes; ?></p>
         <?php endif; ?>
 
-        <?php if(isset($error1)): ?>
-            <p><?php echo $error1; ?></p>
+        <?php if(isset($error)): ?>
+            <p><?php echo $error; ?></p>
         <?php endif; ?>
-
-        <?php if(isset($error2)): ?>
-            <p><?php echo $error2; ?></p>
-        <?php endif; ?>
-
-        <?php if(isset($error3)): ?>
-            <p><?php echo $error3; ?></p>
-        <?php endif; ?>
-
-
 
     </div>
 
