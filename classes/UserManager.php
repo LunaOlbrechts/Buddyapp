@@ -5,7 +5,6 @@ class UserManager
     public static function save(User $user)
     {
         $conn = Db::getConnection();
-
         // check if nothing is empty
 
         if (isset($_POST['signup-btn'])) {
@@ -38,13 +37,16 @@ class UserManager
 
             $firstName = $user->getFirstName();
             $lastName = $user->getLastName();
+            $userName = $user->getUserName();
             $email = $user->getEmail();
             $password = $user->getPassword();
+            
 
-            $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password) ");
+            $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, userName, email, password) VALUES (:firstName, :lastName, :userName, :email, :password) ");
 
             $statement->bindValue(":firstName", $firstName);
             $statement->bindValue(":lastName", $lastName);
+            $statement->bindValue(":userName", $userName);
             $statement->bindValue(":email", $email);
             $statement->bindValue(":password", $password);
 
@@ -382,12 +384,11 @@ class UserManager
         $nameStatement2->execute();
         $user2 = $nameStatement2->fetchAll(PDO::FETCH_ASSOC);
 
-
         return $user2;
     }
-
-
-    public static function searchBuddyByFilter()
+    
+    
+    public function searchBuddyByFilter()
     {
         $conn = Db::getConnection();
 
@@ -420,11 +421,9 @@ class UserManager
         $extra->bindValue(':sportType', $sportType);
         $extra->bindValue(':goingOutType', $goingOutType);
 
-        $extra->execute();
+        $extra->execute(); 
 
         $count = $extra->fetchAll(PDO::FETCH_ASSOC);
-        //var_dump($_POST);
-        //var_dump($count);
         return $count;
     }
 
@@ -482,16 +481,12 @@ class UserManager
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
 
         $query = $conn->prepare($statement);
-
-        $query->bindValue(':name', '%' . $searchField . '%');
-        //var_dump($searchField);
+        
+        $query->bindValue(':name', '%'.$searchField.'%');
 
         $query->execute();
-        //"SELECT * from tl_user WHERE firstName LIKE '%$searchName% OR lastName LIKE '%$searchName%"
-
+        
         $count = $query->fetchAll(PDO::FETCH_ASSOC);
-        //var_dump($count);
-        //var_dump($_POST);
         return $count;
     }
 
@@ -506,9 +501,7 @@ class UserManager
         $number_of_users = $result->fetchColumn();
 
         return $number_of_users;
-        //var_dump($number_of_users);
-        //echo $number_of_users;
-    }
+     }
 
     public static function numberOfBuddyMatches()
     {
@@ -521,6 +514,25 @@ class UserManager
         $number_of_buddy_matches = $result->fetchColumn();
 
         return $number_of_buddy_matches;
-        //echo $number_of_buddy_matches;
-    }
+     }
+
+     public function findClass()
+     {
+        $conn = Db::getConnection();
+
+        $class = $_GET['searchField'];
+        //$class = $user->getClass();
+
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
+        $query = $conn->prepare($statement);
+
+        $query->bindValue(':classRoom',$class);
+
+        $query->execute();
+        
+        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $count;
+     }
+
+
 }

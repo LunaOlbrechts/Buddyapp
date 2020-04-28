@@ -7,6 +7,7 @@ class User
     private $id;
     private $firstName;
     private $lastName;
+    private $userName;
     private $email;
     private $password;
     private $location;
@@ -22,7 +23,8 @@ class User
     private $buddyType;
     private $matchId;
     private $status;
-
+    private $searchField;
+    private $class;
 
     /**
      * Get the value of id
@@ -88,6 +90,32 @@ class User
         }
 
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    
+    /**
+     * Get the value of userName
+     */ 
+    public function getUserName()
+    {
+        return $this->userName;
+    }
+
+    /**
+     * Set the value of userName
+     *
+     * @return  self
+     */ 
+    public function setUserName($userName)
+    {
+
+        if (empty($_POST['userName'])) {
+            throw new Exception("Username cannot be empty");
+        }
+
+        $this->userName = $userName;
 
         return $this;
     }
@@ -424,6 +452,46 @@ class User
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of searchField
+     */ 
+    public function getSearchField()
+    {
+        return $this->searchField;
+    }
+
+    /**
+     * Set the value of searchField
+     *
+     * @return  self
+     */ 
+    public function setSearchField($searchField)
+    {
+        $this->searchField = $searchField;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of class
+     */ 
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * Set the value of class
+     *
+     * @return  self
+     */ 
+    public function setClass($class)
+    {
+        $this->class = $class;
 
         return $this;
     }

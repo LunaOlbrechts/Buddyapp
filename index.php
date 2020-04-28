@@ -8,28 +8,37 @@ session_start();
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $number_of_users = UserManager::numberOfUsersInDatabase();
     $number_of_buddy_matches = UserManager::numberOfBuddyMatches();
+
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
     $request = Buddies::checkRequest();
+    $denyMessage = Buddies::checkDenyMessage();
+    $denied = Buddies::printDenyMessage();
 
     if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
             $_SESSION['receiver_name'] = $_POST['receiverName'];
             $_SESSION['receiver_id'] = $_POST['receiverId'];
+            $_SESSION['first_name'] = $_POST['senderName'];
             header("Location: chat.php");
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
     }
-    
+
     if (isset($_POST['request']) && ($_POST['request'])) {
         header("location: request.php");
     }
 
+    if (isset($_POST['DeniedOK']) && ($_POST['DeniedOK'])) {
+        Buddies::deleteMessage();
+    }
 } else {
     header("Location: login.php");
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,60 +54,74 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <?php if($request == true) : ?>
-        <form method="POST">   
+    <?php if ($request == true) : ?>
+        <form method="POST">
             <input type="submit" value="You got a buddy request!" name="request" class="btn btn-primary">
-        </form>     
+        </form>
     <?php endif ?>
 
-    <?php // echo(json_encode($_SESSION)); ?>
-        <div class="card-text amount">
-            <div class="flex-amount">
-                <div class="amount-students">
-                    <p>
-                        Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd
-                    </p>
-                </div>
-                <div class="amount-buddies">
-                    <p>
-                        Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden
-                    </p>
-                </div>
+    <?php if ($denyMessage == true) : ?>
+        <?php foreach ($denied as $deny) : ?>
+            <div class="alert alert-danger" role="alert">
+                <p name="denyMessage">Your buddy request has been denied</p>
+                <p>Reason:</p>
+                <?php echo htmlspecialchars($deny["message"]) ?>
+                <form method="POST">
+                    <input type="submit" value="Ok" name="DeniedOK" class="btn-danger">
+                </form>
+            </div>
+        <?php endforeach ?>
+    <?php endif ?>
+
+    <?php // echo(json_encode($_SESSION)); 
+    ?>
+    <div class="card-text amount">
+        <div class="flex-amount">
+            <div class="amount-students">
+                <p>
+                    Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd
+                </p>
+            </div>
+            <div class="amount-buddies">
+                <p>
+                    Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden
+                </p>
             </div>
         </div>
+    </div>
 
-    <!--<?php echo(json_encode($_SESSION)); ?>-->
+    <!--<?php echo (json_encode($_SESSION)); ?>-->
 
     <div class="profileMatchesByFilters">
         <div class="row-test">
-        <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
-            <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
-                <div class="col-sm-6">
-                <div class="card person-card">
-                    <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); height: 250px; background-size: cover; background-position: center" ;></div>
-                    <div class="card-body">
-                        <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
-                            <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
-                        </a>
-                        <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
-                        <ul>
-                            <?php foreach ($user['matches'] as $match) : ?>
-                                    <?php if (trim($match) !== '') : ?><li><?php echo $match . ", " ?></li><?php endif ?>
-                            <?php endforeach ?>
-                        </ul>
+            <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
+                <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
+                    <div class="col-sm-6">
+                        <div class="card person-card">
+                            <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); height: 250px; background-size: cover; background-position: center" ;></div>
+                            <div class="card-body">
+                                <a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
+                                </a>
+                                <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
+                                <ul>
+                                    <?php foreach ($user['matches'] as $match) : ?>
+                                        <?php if (trim($match) !== '') : ?><li><?php echo $match . ", " ?></li><?php endif ?>
+                                    <?php endforeach ?>
+                                </ul>
 
-                        <form method="POST" enctype="multipart/form-data" class="form-person">
-                            <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
-                            <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
-                            <input type="submit" value="Chat" name="chat" class="btn btn-primary chat"></input>
-                        </form>
+                                <form method="POST" enctype="multipart/form-data" class="form-person">
+                                    <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
+                                    <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
+                                    <input type="submit" value="Chat" name="chat" class="btn btn-primary chat"></input>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                </div>
-            <?php endif ?>
-        <?php endforeach ?>
+                <?php endif ?>
+            <?php endforeach ?>
         </div>
-    </div>          
+    </div>
     <script src="script.js"></script>
 </body>
 

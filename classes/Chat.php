@@ -3,6 +3,8 @@
 include_once(__DIR__ . "../../classes/Db.php");
 include_once(__DIR__ . "/Db.php");
 
+// session_start();
+
 class Chat
 {
     private $message;
@@ -15,14 +17,31 @@ class Chat
     public static function sendMessage(Chat $message)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, receiverId, message) VALUES (:senderId, :receiverId, :message)");
+        $statement = $conn->prepare("INSERT INTO tl_chat (senderId, receiverId, senderName, receiverName, message) VALUES (:senderId, :receiverId, :senderName, :receiverName, :message)");
         $senderId = $message->getSenderId();
         $receiverId = $message->getReceiverId();
+        $senderName = $message->getSenderName();
+        $receiverName = $message->getReceiverName();
         $message = $message->getMessage();
 
         $statement->bindValue(":senderId", $senderId);
         $statement->bindValue(":receiverId", $receiverId);
+        $statement->bindValue(":senderName", $senderName);
+        $statement->bindValue(":receiverName", $receiverName);
         $statement->bindValue(":message", $message);
+
+        $result = $statement->execute();
+        return $result;
+    }
+
+    public static function updateMessages($senderId, $receiverId)
+    {
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $receiverId . "') OR (senderId = '" . $receiverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
+
+        $statement->bindValue(":senderId", $senderId);
+        $statement->bindValue(":receiverId", $receiverId);
 
         $result = $statement->execute();
         return $result;
@@ -48,19 +67,13 @@ class Chat
         return $this;
     }
 
-    /**
-     * Get the value of sender
-     */
+
     public function getSenderName()
     {
         return $this->senderName;
     }
 
-    /**
-     * Set the value of sender
-     *
-     * @return  self
-     */
+
     public function setSenderName($senderName)
     {
         $this->senderName = $senderName;
@@ -68,19 +81,13 @@ class Chat
         return $this;
     }
 
-    /**
-     * Get the value of receiver
-     */
+
     public function getReceiverName()
     {
         return $this->receiverName;
     }
 
-    /**
-     * Set the value of receiver
-     *
-     * @return  self
-     */
+
     public function setReceiverName($receiverName)
     {
         $this->receiverName = $receiverName;
@@ -88,19 +95,12 @@ class Chat
         return $this;
     }
 
-    /**
-     * Get the value of receiverId
-     */
     public function getReceiverId()
     {
         return $this->receiverId;
     }
 
-    /**
-     * Set the value of receiverId
-     *
-     * @return  self
-     */
+
     public function setReceiverId($receiverId)
     {
         $this->receiverId = $receiverId;
