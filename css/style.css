@@ -4,6 +4,10 @@
    ======================
 */
 
+.navbar > a{
+  color: black;
+}
+
 
 /* ======================
       Complete profile
@@ -44,25 +48,86 @@
   justify-content: center !important;
   width: 30%;
 }
-
 .btn-submit{
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.card.person-card{
-  margin-right: 20px !important;
-  height: 100% !important;
-  color: red;
-}
 
 /* ======================
         Index
    ======================
 */
 
+.card-text.amount{
+  margin-top: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+.card-text.amount > div{
+  width: 350px;
+  text-align: center;
+  border-radius: 3px;
+}
+.amount-students{
+  background-color: #D75358;
+  border-radius: 3px;
+}
+.amount-students > p{
+  padding: 10px;
+}
+.amount-buddies{
+  background-color: #D75358;
+  border-radius: 3px;
+}
+.amount-buddies > p{
+  padding: 10px;
+}
 
+.profileMatchesByFilters{
+  background-color: #E5F2FC !important;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.row{
+  display: flex !important;
+  justify-content: center !important;
+  padding-bottom: 20px !important;
+  padding-top: 20px;
+}
+.col-sm-6{
+  height: 100% !important;
+}
+.person-card{
+  height: 100% !important;
+  border: 3px solid #7AD3BB !important;
+  max-width: 300px;
+}
+.card-body > a{
+  text-decoration: none;
+  color: black;
+}
+.card-title{
+  font-weight: bold !important;
+}
+.card-body > ul{
+  text-decoration: none;
+  list-style: none;
+  display: inline !important;
+  padding: 0;
+}
+.card-body > ul > li{
+  display: inline !important;
+}
+.chat{
+  background-color: #7AD3BB !important;
+  border: none !important;
+}
 
 @media (min-width: 992px) {
   .container{
