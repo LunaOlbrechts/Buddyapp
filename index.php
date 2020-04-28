@@ -76,12 +76,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     ?>
     <div class="card-text amount">
         <div class="flex-amount">
-            <div class="amount-students">
+            <div class="amount-students ml-5 mt-2">
                 <p>
                     Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd
                 </p>
             </div>
-            <div class="amount-buddies">
+            <div class="amount-buddies ml-5">
                 <p>
                     Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden
                 </p>

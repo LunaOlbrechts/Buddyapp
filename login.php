@@ -37,8 +37,8 @@ if (!empty($_POST)) {
         $error = "Password is required";
     }
 }
-?>
-<!DOCTYPE html>
+
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>

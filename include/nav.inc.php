@@ -25,7 +25,7 @@ $currentUser = UserManager::getUserFromDatabase();
         <!--<a href="mylist.php"></a>-->
         <a href="search.php">Search for a buddy</a>
 
-        <a href="logout.php" class="navbar__logout">Hi <?php echo $currentUser[0]['firstName'] ?></a>
+        <a href="logout.php" class="navbar__logout">Hi <?php echo $currentUser[0]['firstName'] ?>, log out?</a>
         <a class="navbar-brand" href="profile.php">
             <img src="<?php echo $currentUser[0]['profilePicture'] ?>" width="50" height="50" alt="profile picture">
         </a>

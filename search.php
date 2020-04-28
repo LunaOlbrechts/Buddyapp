@@ -11,10 +11,10 @@ $searchField = $_POST['searchField'];
 
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if($_POST['searchName']){
+    if ($_POST['searchName']) {
         $searchName = UserManager::searchName();
         
-        if (empty($_POST['searchField'])){
+        if (empty($_POST['searchField'])) {
             $error = "Vul een naam in";
         }
 
@@ -22,7 +22,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             foreach ($searchName as $name) {
                 $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
-        } else{
+        } else {
             $error = "Geen resultaten";
         }
     }
@@ -32,10 +32,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if($_POST['searchBuddy']){
+    if ($_POST['searchBuddy']) {
         $searchBuddy = UserManager::searchBuddyByFilter();
 
-        if (empty($_POST['mainCourseInterest']) && empty($_POST['schoolYear']) && empty($_POST['sportType']) && empty($_POST['goingOutType'])) {
+        if (empty($_POST['mainCourseInterest']) && empty($_POST['schoolYear']) 
+            && empty($_POST['sportType']) && empty($_POST['goingOutType'])) {
             $error2 = "Check a filter";
         }
 
@@ -43,7 +44,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             foreach ($searchBuddy as $name) {
                 $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
-        } else{
+        } else {
             $error2 = "Geen resultaten";
         }
     }
@@ -51,8 +52,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
