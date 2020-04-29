@@ -37,6 +37,15 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
+include_once(__DIR__ . "/classes/Chat.php");
+
+$conn = Db::getConnection();
+$receiverId = $_SESSION['user_id'];
+
+$statement = $conn->prepare("SELECT senderId FROM tl_chat WHERE (receiverid = '" . $receiverId . "' AND readed = 0) GROUP BY senderName");
+$statement->execute();
+$unreadMessages = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 
 ?>
 <!DOCTYPE html>
@@ -120,6 +129,17 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         </div>
     </div>
     <script src="script.js"></script>
+
+    <?php foreach ($unreadMessages as $unreadMessage){
+        $userId = $unreadMessage['senderId'];
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE (id = '" . $userId . "')");
+        $statement->execute();
+        $userdata = $statement->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($userdata as $data){
+            echo $data['firstName'];
+            echo (" " . $data['lastName']);
+        }
+    }?>
 </body>
 
 </html>

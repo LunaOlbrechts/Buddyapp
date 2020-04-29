@@ -58,6 +58,9 @@ $statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $sende
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+$statement = $conn->prepare("UPDATE tl_chat SET readed = 1 WHERE senderId = $receiverId AND receiverId = $senderId");
+$statement->execute();
+
 $currentUser = UserManager::getUserFromDatabase();
 $matchedUsers = UserManager::matchUsersByFiltersChat();
 $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
