@@ -161,7 +161,7 @@ class User
             throw new Exception("Password cannot be empty");
         }
         if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordconf']) {
-            throw new Exception("The two passwords do not match");
+            throw new Exception("Can't register you, the two passwords do not match");
         }
 
         $this->password = $password;
