@@ -8,32 +8,34 @@
     $searchField = $_GET['searchField'];
     $replace_string = str_replace('.','',$searchField);
     echo $replace_string;
+    //$class = $_GET['searchField'];
 
-     if ($_GET['searchClass']){
+    $searchField = trim($_GET['searchField'], " t.");
+    $string_replace = str_replace(".","",$searchField);
+
+    //var_dump($string_replace);
+
+     if ($_GET['searchClass']) {
         $searchClass = UserManager::findClass();
-        if (empty($searchField)){
-            $error1 = 'Vul een klaslokaal in';
-        } elseif (strlen($searchField) < 3){
-            $error2 = 'Voer minstens 3 karakters in';
+        if (empty($searchField)) {
+            $error = 'Vul een klaslokaal in';
+        } elseif (strlen($searchField) < 3) {
+            $error = "Voer minstens 3 karakters in ('Gebouw','verdieping','lokaal')";
         }
 
     //$searchField = 
         
-    //$pattern = preg_split('//', );
-
-        if (strlen($searchField) > 2){
-            if (count($searchClass) > 0){
-                foreach ($searchClass as $class){
-                    $succes = '<div class="font-weight-bold">' . 'Lokaal: ' . $class['classRoom'] . '</div>' . '<div>' . 
-                    $class['description'] . '</div>';
+        if (strlen($searchField) > 2) {
+            if (count($searchClass) > 0) {
+                foreach ($searchClass as $class) {
+                    $succes = '<div class="font-weight-bold">' . 'Lokaal: ' 
+                    . $class['classRoom'] . '</div>' . '<div>' . $class['description'] . '</div>';
                 }
-            } else{
-                $error3 = 'Geen lokaal gevonden';
+            } else {
+                $error = 'Geen lokaal gevonden';
             }
         }
      }
-
-     var_dump($searchClass);
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -65,19 +67,9 @@
             <p><?php echo $succes; ?></p>
         <?php endif; ?>
 
-        <?php if(isset($error1)): ?>
-            <p><?php echo $error1; ?></p>
+        <?php if(isset($error)): ?>
+            <p><?php echo $error; ?></p>
         <?php endif; ?>
-
-        <?php if(isset($error2)): ?>
-            <p><?php echo $error2; ?></p>
-        <?php endif; ?>
-
-        <?php if(isset($error3)): ?>
-            <p><?php echo $error3; ?></p>
-        <?php endif; ?>
-
-
 
     </div>
 

@@ -37,7 +37,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Buddy app |Signup</title>
+    <title>Buddy app | Signup</title>
 </head>
 <body>
 
@@ -50,7 +50,7 @@
     <?php endif; ?>
 
         <?php if(isset($success)): ?>
-                <div class="success mr-5"><?php echo $success ?></div>
+                <div class="success mr-5"><?php echo htmlspecialchars($success) ?></div>
         <?php endif; ?>        
 
  
@@ -81,7 +81,7 @@
 
         <div class="form-group">
             <label for="password">Password:</label>
-            <input class="form-control" type="password" name="password" id="password">
+            <input class="form-control" type="password" name="password" id="password" onkeyup='checkIfPasswordMatch();'>
             <div id="password_response" ></div>
         </div>
 
@@ -91,7 +91,8 @@
 
         <div class="form-group">
             <label for="passwordconf">Password Confirm:</label>
-            <input class="form-control" type="password" name="passwordconf" id="passwordconf">
+            <input class="form-control" type="password" name="passwordconf" id="passwordconf" onkeyup='checkIfPasswordMatch();'>
+            <div id="message" ></div>
         </div>
 
         <div class="form-group">
@@ -178,11 +179,20 @@
      });
     }else{
      $("#password_response").hide();
-    }    
-           
+    }       
 }
 
-        
+    var checkIfPasswordMatch = function() {
+    if (document.getElementById('password').value ==
+        document.getElementById('passwordconf').value) {
+        document.getElementById('message').style.color = 'green';
+        document.getElementById('message').innerHTML = 'The passwords are matching';
+    } else {
+        document.getElementById('message').style.color = 'red';
+        document.getElementById('message').innerHTML = 'The passwords are not matching';
+    }
+    }
+
 
 </script>
 

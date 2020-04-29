@@ -7,80 +7,52 @@ session_start();
 $succes1 = '';
 $succes2 = '';
 
-/*if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_POST['searchField']) {
-        $searchName = UserManager::searchName();
-        if (!empty($_POST['searchField'])) {
-            if (isset($_POST['searchName'])) {
-                foreach ($searchName as $name) {
-                    $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
-                }
-            }
-        } elseif (empty($_POST['searchField'])) {
-        $error1 = 'Typ a name';
-        }
-    }
+$searchField = $_POST['searchField'];
 
-    if ($_POST['searchBuddy']) {
-        $searchBuddy = UserManager::searchBuddyByFilter();
-        foreach ($searchBuddy as $name) {
-            $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+// Search for name in db 
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if ($_POST['searchName']) {
+        $searchName = UserManager::searchName();
+        
+        if (empty($_POST['searchField'])) {
+            $error = "Vul een naam in";
+        }
+
+        elseif (count($searchName) > 0) {
+            foreach ($searchName as $name) {
+                $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+            }
+        } else {
+            $error = "Geen resultaten";
         }
     }
 } else {
     header("Location: login.php");
-}*/
-
-$searchField = $_POST['searchField'];
-
-if ($_POST['searchName']) {
-    $searchName = UserManager::searchName(); 
-    //$_SESSION['searchField'] = $_POST['searchField'];
-    if (!empty($searchField)) {
-        if (isset($searchField)) {
-            foreach ($searchName as $name) {
-                $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
-            }
-        } if (trim($searchName) == ""){
-            $error2 = 'No result';
-        } 
-    } else{
-        $error1 = 'Typ a name';
-    }
 }
 
-//var_dump($searchName);
 
-/*if($_POST['searchName']){
-    $searchName = UserManager::searchName();
-    if (!empty ($_POST['searchField'])){
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if ($_POST['searchBuddy']) {
+        $searchBuddy = UserManager::searchBuddyByFilter();
 
-    } else{
-        echo 'Typ a name';
-    }
-}*/
-
-//if(!empty($_POST[..]))
-
-if ($_POST['searchBuddy']) {
-    $searchBuddy = UserManager::searchBuddyByFilter();
-    /*$_SESSION['mainCourseInterest'] = $_POST['mainCourseInterest'];
-    $_SESSION['schoolYear'] = $_POST['schoolYear'];
-    $_SESSION['sportType'] = $_POST['sportType'];
-    $_SESSION['goingOutType'] = $_POST['goingOutType'];*/
-
-    if (!empty($_POST['mainCourseInterest']) || !empty($_POST['schoolYear']) || !empty($_POST['sportType']) || !empty($_POST['goingOutType'])) {
-        foreach ($searchBuddy as $name) {
-            $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+        if (empty($_POST['mainCourseInterest']) && empty($_POST['schoolYear']) 
+            && empty($_POST['sportType']) && empty($_POST['goingOutType'])) {
+            $error2 = "Check a filter";
         }
-    } else{
-        $error3 = 'Check a filter';
+
+        elseif (count($searchBuddy) > 0) {
+            foreach ($searchBuddy as $name) {
+                $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+            }
+        } else {
+            $error2 = "Geen resultaten";
+        }
     }
+} else {
+    header("Location: login.php");
 }
 
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -94,29 +66,31 @@ if ($_POST['searchBuddy']) {
 
     <form method="post" action="">
         <div class="container mt-5">
-
+            <h1 class="col-md">Zoek hier naar een buddy</h1>
+            <p>Zoek naar een buddy via de zoekbalk of via de filter</p>
+            <h3>Buddy zoeken via zoekbalk</h3>
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Name">
+                <input class="form-control" type="text" name="searchField" placeholder="Name" id="name">
             </div>
 
             <div class="form-group">
-                <input class="btn border" type="submit" value="Search for a name" name='searchName'>
+                <input class="btn border search-name-btn" type="submit" value="Search for a name" name='searchName'>
             </div>
     </form>
 
     <div class="form-group">
-        <?php if (isset($error1)) : ?>
+        <?php if (isset($error)) : ?>
             <p>
-                <?php echo $error1; ?>
+                <?php echo $error; ?>
             </p>
         <?php endif; ?>
 
-        <?php if (isset($error2)) : ?>
+        <!--<?php if (isset($error2)) : ?>
             <p>
                 <?php echo $error2; ?>
             </p>
-        <?php endif; ?>
+        <?php endif; ?>-->
 
         <?php if (isset($succes1)) : ?>
             <p>
@@ -127,7 +101,8 @@ if ($_POST['searchBuddy']) {
 
 
     <form method="post" action="">
-        <div class="form-group">
+        <div class="form-group course-interests">
+            <h3>Buddy zoeken via filter</h3>
             <label><b>Opleidingsinteresses</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="mainCourseInterest" id="Frontend development" value="Frontend development">
@@ -144,7 +119,7 @@ if ($_POST['searchBuddy']) {
         </div>
 
         <div class="form-group">
-            <label><b>Opleidingsjaar</b></label>
+            <label class="title"><b>Opleidingsjaar</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="schoolYear" id="1 IMD" value="1 IMD">
                 <label class="form-check-label" for="exampleRadios1">1 IMD</label>
@@ -160,7 +135,7 @@ if ($_POST['searchBuddy']) {
         </div>
 
         <div class="form-group">
-            <label><b>Type sporter</b></label>
+            <label class="title"><b>Type sporter</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="sportType" id="Waterrat" value="Waterrat">
                 <label class="form-check-label" for="exampleRadios1">Waterrat</label>
@@ -184,7 +159,7 @@ if ($_POST['searchBuddy']) {
         </div>
 
         <div class="form-group">
-            <label><b>Uitgaanstype</b></label>
+            <label class="title"><b>Uitgaanstype</b></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="goingOutType" id="Party animal" value="Party animal">
                 <label class="form-check-label" for="exampleRadios1">Party animal</label>
@@ -200,14 +175,14 @@ if ($_POST['searchBuddy']) {
         </div>
 
         <div>
-            <input class="btn border" type="submit" value="Search for a buddy" name='searchBuddy'>
+            <input class="btn border search-btn" type="submit" value="Search for a buddy" name='searchBuddy'>
         </div>
     </form>
 
     <div class="form-group">
-        <?php if (isset($error3)) : ?>
+        <?php if (isset($error2)) : ?>
             <p>
-                <?php echo $error3; ?>
+                <?php echo $error2; ?>
             </p>
         <?php endif; ?>
 
