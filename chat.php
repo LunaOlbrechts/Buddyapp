@@ -10,37 +10,37 @@ include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
 include_once(__DIR__ . "/classes/Buddies.php");
 
-
 $id =  $_SESSION["user_id"];
-
 include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    /*if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
+    $buddy = new Buddies();
+    $otherId = $_SESSION["receiver_id"];
+    $haveRequestOrBuddy = Buddies::haveRequestOrBuddy($id, $otherId);
+
+    if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
             $message = new Chat();
             $message->setMessage($_POST['message']);
             $message->setSenderId($_SESSION['user_id']);
             $message->setSenderName($_SESSION['first_name']);
-            $message->setRecieverId($_SESSION['reciever_id']);
-            $message->setRecieverName( $_SESSION['reciever_name']);
-            var_dump($_SESSION);
+            $message->setReceiverId($_SESSION['receiver_id']);
+            $message->setReceiverName( $_SESSION['receiver_name']);
             
-            Chat::sendMessage($message);
+            $result = Chat::sendMessage($message);
 
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
     }
-    */
-    if (isset($_POST["buddyReques"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
+    
+    if (isset($_POST["buddyRequest"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
             $buddy = new Buddies();
             $buddy->setSender($_SESSION['user_id']);
-            $buddy->setReciever($_SESSION['reciever_id']);
+            $buddy->setReceiver($_SESSION['receiver_id']);
             Buddies::sendRequest($buddy);
-            Mail::sendEmail();
-            echo $result;
+            //Mail::sendEmail();
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
@@ -49,15 +49,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-
-
-
 // Get messages for specific chat
 $conn = Db::getConnection();
 $senderId = $_SESSION['user_id'];
-$recieverId = $_SESSION['reciever_id'];
+$receiverId = $_SESSION['receiver_id'];
 
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $recieverId . "') OR (senderId = '" . $recieverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
+$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $receiverId . "') OR (senderId = '" . $receiverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
 $statement->execute();
 $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -121,6 +118,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
 </style>
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="./css/style.css">
 
 <head>
     <meta charset="UTF-8">
@@ -142,7 +140,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         <?php endif; ?>
     </div>
 
-    <div class="container">
+    <div class="container-matches">
         <?php foreach ($scoresOfMatchedUsers as $matchedUser => $user) : ?>
             <?php if ($user['user_id'] != $_SESSION['user_id']) : ?>
                 <p class="card-text">Je hebt deze kenmerken gemeen met <?php echo $user['firstName'] ?>:</p>
@@ -163,7 +161,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
                     <p>
                         <?php echo $message['message']; ?>
                     </p>
-                    <div class="reaction"><?php echo($message['emoji'])?></div>
+                    <div class="reaction"><?php echo ($message['emoji']) ?></div>
                     <ul class="emojis">
                         <li onclick="addEmoji(this)">Hearth</li>
                         <li onclick="addEmoji(this)">Laugh</li>
@@ -179,16 +177,16 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         <form method="POST" enctype="multipart/form-data">
             <textarea id="message" name="message" class="form-control" placeholder="Type your message here..."></textarea>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="recieverName"></input>
-                <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="recieverId"></input>
-                <input id="sendMessage" type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3"></input>
-                <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
-                <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile</a></button>
+                <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
+                <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
+                <input id="sendMessage" type="submit" value="Send Message" name="sendMessage" class="btn btn-primary mr-3 send-message-btn"></input>
+                <?php if ($haveRequestOrBuddy == 0) : ?>
+                    <input type="submit" value="Be My Buddy" class="btn btn-success btn-buddy" name="buddyRequest"></input>
+                <?php endif ?>
+                <button class="profile-btn btn"><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Profile</a></button>
             </div>
         </form>
     </div>
-
-    <?php //echo (json_encode($_SESSION)) ?>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

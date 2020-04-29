@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `buddie_request` (
   `id` int(11) NOT NULL,
   `sender` varchar(255) NOT NULL,
-  `reciever` varchar(255) NOT NULL
+  `receiver` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -63,9 +63,9 @@ INSERT INTO `tl_buddies` (`id`, `user_one`, `user_two`) VALUES
 CREATE TABLE `tl_chat` (
   `id` int(11) NOT NULL,
   `senderId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `recieverId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `receiverId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `senderName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `recieverName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `receiverName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -74,7 +74,7 @@ CREATE TABLE `tl_chat` (
 -- Dumping data for table `tl_chat`
 --
 
-INSERT INTO `tl_chat` (`id`, `senderId`, `recieverId`, `senderName`, `recieverName`, `message`, `created_on`) VALUES
+INSERT INTO `tl_chat` (`id`, `senderId`, `receiverId`, `senderName`, `receiverName`, `message`, `created_on`) VALUES
 (89, '26', '21', 'Lowieee', 'Lotte', 'YOYO\r\n', '2020-04-17 14:10:39'),
 (90, '26', '21', 'Lowieee', 'Lotte', 'YOYO\r\n', '2020-04-17 14:12:09'),
 (91, '26', '25', 'Lowieee', 'Lowie', 'Ello', '2020-04-17 14:12:21'),

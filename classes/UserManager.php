@@ -8,10 +8,10 @@ class UserManager
         // check if nothing is empty
 
         if (isset($_POST['signup-btn'])) {
-            
+
             // CHECK IF EMAIL IS TAKEN
             if (isset($_POST['email'])) {
-                
+
                 $email = $user->getEmail();
                 $conn = Db::getConnection();
                 $sql = "SELECT * FROM tl_user WHERE email='$email'";
@@ -52,7 +52,7 @@ class UserManager
 
             $statement->execute();
             $id = $conn->lastInsertId();
-            
+
             echo "saved to database";
 
             // return result
@@ -91,7 +91,7 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("select * from tl_user where id= :id");
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE id= :id");
 
         $statement->bindValue(":id", $_SESSION["user_id"]);
 
@@ -246,9 +246,9 @@ class UserManager
         //print_r($result);
         $password = $result["password"];
         $userId = $result["id"];
-        $firstName = $result[0]["firstName"];
+        $firstName = $result["firstName"];
         $lastName = $result["lastName"];
-    
+
         //echo $password;
         if (password_verify($passwordEntered, $password)) {
             session_start();
@@ -256,7 +256,7 @@ class UserManager
             $_SESSION['logged_in'] = true;
             $_SESSION['first_name'] = $firstName;
             $_SESSION['lastName'] = $lastName;
-            header("Location:complete.profile.php");  //redirect moet in de frontend
+            header("Location:index.php");  //redirect moet in de frontend
         } else {
             throw new Exception("Email & password don't match");
         }
@@ -296,11 +296,11 @@ class UserManager
 
         $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName = :firstName AND id = :id");
 
-        $nameReciever = $_SESSION['reciever_name'];
-        $idReciever = $_SESSION['reciever_id'];
+        $nameReceiver = $_SESSION['receiver_name'];
+        $idReceiver = $_SESSION['receiver_id'];
 
-        $statement->bindValue(":firstName", $nameReciever);
-        $statement->bindValue(":id", $idReciever);
+        $statement->bindValue(":firstName", $nameReceiver);
+        $statement->bindValue(":id", $idReceiver);
 
 
         $statement->execute();
@@ -327,7 +327,7 @@ class UserManager
                     'goingOutType' => $matchedUser['goingOutType'],
                 ],
                 'score' => 0,
-                'matches'=>[
+                'matches' => [
                     "city" => "",
                     "mainCourseInterest" => "",
                     "schoolYear" => "",
@@ -375,7 +375,6 @@ class UserManager
         $user1 = $nameStatement1->fetchAll(PDO::FETCH_ASSOC);
 
         return $user1;
-
     }
 
     public static function matches2()
@@ -398,37 +397,37 @@ class UserManager
         $sportType = $_POST['sportType'];
         $goingOutType = $_POST['goingOutType'];
         
-        /*$statement = $conn->prepare ("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
-        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");*/
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
+        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
 
-        $extra = "";
+        /*$extra = "";
 
-        if(!empty($_POST['mainCourseInterest'])){
+        if (!empty($_POST['mainCourseInterest'])) {
             $extra .= "AND mainCourseInterest = :mainCourseInterest";
-        }  elseif (!empty($_POST['schoolYear'])){
+        } elseif (!empty($_POST['schoolYear'])) {
             $extra .= " AND schoolYear = :schoolYear";
-        } elseif (!empty($_POST['sportType'])){
+        } elseif (!empty($_POST['sportType'])) {
             $extra .= "AND sportType = :sportType";
-        } elseif (!empty($_POST['goingOutType'])){
+        } elseif (!empty($_POST['goingOutType'])) {
             $extra .= "AND goingOutType = :goingOutType";
         }
         
-        $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";
+        $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";*/
 
-        $extra = $conn->prepare($statement);
+        //$query = $conn->prepare($statement);
 
-        $extra->bindValue(':mainCourseInterest', $mainCourseInterest);
-        $extra->bindValue(':schoolYear', $schoolYear);
-        $extra->bindValue(':sportType', $sportType);
-        $extra->bindValue(':goingOutType', $goingOutType);
+        $statement->bindValue(':mainCourseInterest', $mainCourseInterest);
+        $statement->bindValue(':schoolYear', $schoolYear);
+        $statement->bindValue(':sportType', $sportType);
+        $statement->bindValue(':goingOutType', $goingOutType);
 
-        $extra->execute(); 
+        $statement->execute(); 
 
-        $count = $extra->fetchAll(PDO::FETCH_ASSOC);
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
     }
 
-        /*if(isset($_POST['mainCourseInterest'])){
+    /*if(isset($_POST['mainCourseInterest'])){
             $mainCourseInterest = $_POST['mainCourseInterest'];
         } elseif (isset($_POST['schoolYear'])){
             $schoolYear = $_POST['schoolYear'];
@@ -437,8 +436,8 @@ class UserManager
         } elseif (isset($_POST['goingOutType'])){
             $goingOutType = $_POST['goingOutType'];
         }*/
-    
-        /*if(isset($_POST['mainCourseInterest'])){
+
+    /*if(isset($_POST['mainCourseInterest'])){
             if($_POST['mainCourseInterest']){
                 $statement = "SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest) AND buddyType = 'wantToBeABuddy'";
             } 
@@ -452,7 +451,7 @@ class UserManager
             }
         }*/
 
-        /*
+    /*
         $conn = Db::getConnection();
 
         //Select users that have minimum one match with the current user filters 
@@ -473,14 +472,17 @@ class UserManager
 
         return $searchBuddy;*/
 
-     public static function searchName()
-     {
+    public static function searchName()
+    {
         $conn = Db::getConnection();
 
         $searchField = $_POST['searchField'];
+        //$searchField = $user->getSearchField();
+        //$email = $user->getEmail();
+
 
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
-        
+
         $query = $conn->prepare($statement);
         
         $query->bindValue(':name', '%'.$searchField.'%');
@@ -489,10 +491,10 @@ class UserManager
         
         $count = $query->fetchAll(PDO::FETCH_ASSOC);
         return $count;
-     }
+    }
 
-     public static function numberOfUsersInDatabase()
-     {
+    public static function numberOfUsersInDatabase()
+    {
         $conn = Db::getConnection();
 
         $statement = "SELECT count(*) FROM tl_user";
@@ -504,8 +506,8 @@ class UserManager
         return $number_of_users;
      }
 
-     public static function numberOfBuddyMatches()
-     {
+    public static function numberOfBuddyMatches()
+    {
         $conn = Db::getConnection();
 
         $statement = "SELECT count(*) FROM tl_buddies";
@@ -521,13 +523,15 @@ class UserManager
      {
         $conn = Db::getConnection();
 
+        //['searchField'] = $searchField;
+
         $class = $_GET['searchField'];
         //$class = $user->getClass();
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(searchClassRoom) LIKE LOWER(:searchClassRoom)");
         $query = $conn->prepare($statement);
 
-        $query->bindValue(':classRoom',$class);
+        $query->bindValue(':searchClassRoom',$class);
 
         $query->execute();
         

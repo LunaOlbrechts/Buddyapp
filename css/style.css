@@ -4,6 +4,33 @@
    ======================
 */
 
+.navbar > a{
+  color: black;
+}
+
+/* ======================
+        Login
+   ======================
+*/
+
+.login-form{
+
+}
+.email-input{
+  border: 1px solid #7AD3BB !important ;
+
+}
+.password-input{
+  border: 1px solid #7AD3BB !important ;
+
+}
+.login-btn{
+  background-color: #7AD3BB !important;
+  color: white !important;
+}
+.signup-btn{
+  color: #327374 !important;
+}
 
 /* ======================
       Complete profile
@@ -50,16 +77,176 @@
   justify-content: center;
 }
 
-.card{
 
+/* ======================
+        Index
+   ======================
+*/
+
+.card-text.amount{
+  margin-top: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+.card-text.amount > div{
+  width: 350px;
+  text-align: center;
+  border-radius: 3px;
+}
+.amount-students{
+  background-color: #A9D7CC;
+  border-radius: 3px;
+}
+.amount-students > p{
+  padding: 10px;
+}
+.amount-buddies{
+  background-color: #A9D7CC;
+  border-radius: 3px;
+}
+.amount-buddies > p{
+  padding: 10px;
+}
+.profileMatchesByFilters{
+  background-color: #DEEDE5 !important;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.row-test{
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  padding-bottom: 20px !important;
+  padding-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.col-sm-6{
+  display: flex;
+  justify-content: center;
+  height: 100% !important;
+  width: unset !important;
+  flex: unset !important;
+}
+.person-card{
+  height: 100% !important;
+  border: 3px solid #A9D7CC !important;
+  max-width: 300px;
+  float: right;
+}
+.card-body > a{
+  text-decoration: none;
+  color: black;
+}
+.card-title{
+  font-weight: bold !important;
+}
+.card-body > ul{
+  text-decoration: none;
+  list-style: none;
+  display: inline !important;
+  padding: 0;
+}
+.card-body > ul > li{
+  display: inline !important;
+}
+.chat{
+  background-color: #327374 !important;
+  border: none !important;
 }
 
-@media (min-width: 576px) {
- 
+
+/* ======================
+            Chat
+   ======================
+*/
+
+span {
+  color: #7AD3BB;
+  font-weight: bold;
 }
 
-@media (min-width: 992px) {
-  .container{
-    width: 700px !important;
-  }
+.container{
+  background-color: white !important;
+  border: 1px solid #DEEDE5;
+  border-radius: 4px;
+}
+.container-matches{
+  margin-top: 3%;
+  margin-left: 68px;
+  margin-right: 68px;
+  background-color: #DEEDE5;
+  border-radius: 3px;
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+.display-chat{
+  height: 50vh;
+  margin-bottom: 4%;
+  overflow: auto;
+  padding: 15px;
+  border-bottom: 1px solid #25474E;
+}
+
+.message{
+  background-color: #DEEDE5;
+  color: rgb(255, 255, 255);;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 3%;
+  width: auto;
+}
+
+.message > p{
+  background-color: #DEEDE5;
+}
+
+.profile-btn{
+  background-color: #7AD3BB;
+  border: unset !important;
+  color: white;
+  height: 50px;
+}
+
+.btn-buddy{
+  background-color: #7AD3BB !important;
+  border: unset !important;
+  border-radius: 3px !important;
+}
+
+.send-message-btn{
+  background-color: #327374 !important;
+  border: unset !important;
+  border-radius: 3px !important;
+}
+
+/* ======================
+          Search
+   ======================
+*/
+
+.search{
+  border: 3px solid #7AD3BB !important;
+}
+
+.title{
+  color: #25474E;
+  margin-top: 20px;
+}
+
+.search-btn{
+  background-color: #7AD3BB !important;
+  color: white !important;
+}
+
+.search-name-btn{
+  background-color: #7AD3BB !important;
+  color: white !important;
+}
+
+.search-name-input{
+  border: 1px solid #7AD3BB !important ;
 }

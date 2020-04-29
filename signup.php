@@ -50,7 +50,7 @@
     <?php endif; ?>
 
         <?php if(isset($success)): ?>
-                <div class="success mr-5"><?php echo $success ?></div>
+                <div class="success mr-5"><?php echo htmlspecialchars($success) ?></div>
         <?php endif; ?>        
 
  

@@ -10,8 +10,8 @@ if(!empty($_POST)){
     $message->setMessage($_POST['chat_message']);
     $message->setSenderId($_SESSION['user_id']);
     $message->setSenderName($_SESSION['first_name']);
-    $message->setReceiverId($_SESSION['reciever_id']);
-    $message->setReceiverName($_SESSION['reciever_name']);
+    $message->setReceiverId($_SESSION['receiver_id']);
+    $message->setReceiverName($_SESSION['receiver_name']);
 
     Chat::sendMessage($message);
 
@@ -24,5 +24,3 @@ if(!empty($_POST)){
     header('Content-Type: application/json');
     echo json_encode($response);
 }
-
-?>
