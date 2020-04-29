@@ -4,16 +4,9 @@
 
      session_start();
 
-    //$searchField = trim($_GET['searchField'], " t.");
-    $searchField = $_GET['searchField'];
-    $replace_string = str_replace('.','',$searchField);
-    echo $replace_string;
-    //$class = $_GET['searchField'];
-
     $searchField = trim($_GET['searchField'], " t.");
-    $string_replace = str_replace(".","",$searchField);
-
-    //var_dump($string_replace);
+    //$searchField = $_GET['searchField'];
+    //$replace_string = str_replace('.','',$searchField);
 
      if ($_GET['searchClass']) {
         $searchClass = UserManager::findClass();
@@ -23,8 +16,6 @@
             $error = "Voer minstens 3 karakters in ('Gebouw','verdieping','lokaal')";
         }
 
-    //$searchField = 
-        
         if (strlen($searchField) > 2) {
             if (count($searchClass) > 0) {
                 foreach ($searchClass as $class) {
@@ -52,7 +43,7 @@
             <h1 class="col-md-5">Lokaal vinder</h1>
             <p>Geef hieronder een lokaal in om te zoeken naar een beschrijving</p>
             <div class="form-group">
-                <label for="class"><b>Geef een lokaal in</b></label>
+                <label for="class"><b>Geef een lokaal in (vb: Z3.04)</b></label>
                 <input class="form-control" type="text" name="searchField" placeholder="Lokaal">
             </div>
 
@@ -72,7 +63,6 @@
         <?php endif; ?>
 
     </div>
-
 
 </body>
 </html>

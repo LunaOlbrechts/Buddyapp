@@ -480,7 +480,6 @@ class UserManager
         //$searchField = $user->getSearchField();
         //$email = $user->getEmail();
 
-
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
 
         $query = $conn->prepare($statement);
@@ -528,10 +527,10 @@ class UserManager
         $class = $_GET['searchField'];
         //$class = $user->getClass();
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(searchClassRoom) LIKE LOWER(:searchClassRoom)");
+        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(ClassRoom) LIKE LOWER(:ClassRoom)");
         $query = $conn->prepare($statement);
 
-        $query->bindValue(':searchClassRoom',$class);
+        $query->bindValue(':ClassRoom',$class);
 
         $query->execute();
         
