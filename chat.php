@@ -87,11 +87,11 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
 
     .message p {
         background-color: #007bff;
-        color: white;
         border-radius: 5px;
         padding: 5px;
         width: auto;
         margin-bottom: 0;
+        color: black;
     }
 
     .emojis {
@@ -163,13 +163,13 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
                     </p>
                     <div class="reaction"><?php echo ($message['emoji']) ?></div>
                     <ul class="emojis">
-                        <li onclick="addEmoji(this)">Hearth</li>
-                        <li onclick="addEmoji(this)">Laugh</li>
-                        <li onclick="addEmoji(this)">Mouth</li>
-                        <li onclick="addEmoji(this)">Sad</li>
-                        <li onclick="addEmoji(this)">Angry</li>
-                        <li onclick="addEmoji(this)">Like</li>
-                        <li onclick="addEmoji(this)">Dislike</li>
+                        <li onclick="addEmoji(this)">👍</li>
+                        <li onclick="addEmoji(this)">😂</li>
+                        <li onclick="addEmoji(this)">😯</li>
+                        <li onclick="addEmoji(this)">😢</li>
+                        <li onclick="addEmoji(this)">😡</li>
+                        <li onclick="addEmoji(this)">👍</li>
+                        <li onclick="addEmoji(this)">👎</li>
                     </ul>
                 </div>
             <?php endforeach; ?>
@@ -191,6 +191,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+
     function addEmoji(el) {
         let clickedEmoji = el.innerHTML;
         let reaction = $(el).parent().parent().find(".reaction");
