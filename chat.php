@@ -188,7 +188,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         </form>
     </div>
 
-    <?php echo (json_encode($_SESSION)) ?>
+    <?php //echo (json_encode($_SESSION)) ?>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -232,7 +232,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             },
             success: function(response) {
                 console.log(response);
-                $(".display-chat").append($("<span><?php echo $message['senderName']; ?></span><div class='message' onmouseover='showEmojis(this)'><p>"+chat_message+"</p><div class='reaction'></div><ul class='emojis'><li onclick='addEmoji(this)'>Hearth</li><li onclick='addEmoji(this)'>Laugh</li><li onclick='addEmoji(this)'>Mouth</li><li onclick='addEmoji(this)'>Sad</li><li onclick='addEmoji(this)'>Angry</li><li onclick='addEmoji(this)'>Like</li><li onclick='addEmoji(this)'>Dislike</li></ul></div>"));
+                $(".display-chat").append($("<span><?php echo $_SESSION["first_name"]; ?></span><div class='message' onmouseover='showEmojis(this)'><p>"+chat_message+"</p><div class='reaction'></div><ul class='emojis'><li onclick='addEmoji(this)'>Hearth</li><li onclick='addEmoji(this)'>Laugh</li><li onclick='addEmoji(this)'>Mouth</li><li onclick='addEmoji(this)'>Sad</li><li onclick='addEmoji(this)'>Angry</li><li onclick='addEmoji(this)'>Like</li><li onclick='addEmoji(this)'>Dislike</li></ul></div>"));
                 $('#message').val("");
             }
         });
