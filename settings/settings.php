@@ -3,9 +3,9 @@
     const SETTINGS = [
         "db" => [
             "user"      => "root",
-            "password"  => "root",
+            "password"  => "",
             "host"      => "localhost",
-            "port"      => 888,
+            "port"      => 80,
             "db"        => "buddy_app"
         ]
     ];
