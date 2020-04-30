@@ -23,7 +23,7 @@ class User
     private $buddyType;
     private $matchId;
     private $status;
-    private $searchField;
+    private $searchForBuddy;
     private $class;
 
     /**
@@ -456,42 +456,23 @@ class User
         return $this;
     }
 
+
     /**
-     * Get the value of searchField
+     * Get the value of searchForBuddy
      */ 
-    public function getSearchField()
+    public function getSearchForBuddy()
     {
-        return $this->searchField;
+        return $this->searchForBuddy;
     }
 
     /**
-     * Set the value of searchField
+     * Set the value of searchForBuddy
      *
      * @return  self
      */ 
-    public function setSearchField($searchField)
+    public function setSearchForBuddy($searchForBuddy)
     {
-        $this->searchField = $searchField;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of class
-     */ 
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Set the value of class
-     *
-     * @return  self
-     */ 
-    public function setClass($class)
-    {
-        $this->class = $class;
+        $this->searchForBuddy = $searchForBuddy;
 
         return $this;
     }
