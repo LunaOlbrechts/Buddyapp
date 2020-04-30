@@ -15,17 +15,16 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         //$searchField = $_GET['searchField'];
         $searchName = UserManager::searchName($searchField);
         
-        if (empty($_GET['searchField'])) {
+    if(empty($_GET['searchField'])){
             $error = "Vul een naam in";
         }
-
-        elseif (count($searchName) > 0) {
+    elseif (count($searchName) > 0) {
             foreach ($searchName as $name) {
                 $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
-        } else {
+    } else {
             $error = "Geen resultaten";
-        }
+    }
     }
 } else {
     header("Location: login.php");

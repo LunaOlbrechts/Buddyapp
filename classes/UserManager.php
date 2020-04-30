@@ -473,19 +473,11 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        //$searchField = $_GET['searchField'];
-        //$searchField = $user->getSearchField();
-        //$email = $user->getEmail();
-        //$searchField->getSearchField();
-        //$searchField = $user->getSearchForBuddy();
-
         $statement = $conn->prepare("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
-
-        //$query = $conn->prepare($statement);
         
         $statement->bindValue(':name', '%'.$searchField.'%');
 
-        //$statement->execute();
+        $statement->execute();
         
         $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
