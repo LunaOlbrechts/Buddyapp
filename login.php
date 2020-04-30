@@ -60,7 +60,7 @@ if (!empty($_POST)) {
             <?php if (isset($error)) : ?>
                 <div class="mr-5">
                     <p>
-                        <?php echo $error; ?>
+                        <?php echo htmlspecialchars($error); ?>
                     </p>
                 </div>
             <?php endif; ?>

@@ -87,13 +87,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <div class="form-group">
         <?php if (isset($error)) : ?>
             <p>
-                <?php echo $error; ?>
+                <?php echo htmlspecialchars($error); ?>
             </p>
         <?php endif; ?>
 
         <?php if (isset($succes1)) : ?>
             <p>
-                <?php echo $succes1; ?>
+                <?php echo htmlspecialchars($succes1); ?>
             </p>
         <?php endif; ?>
     </div>
@@ -181,13 +181,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <div class="form-group">
         <?php if (isset($error2)) : ?>
             <p>
-                <?php echo $error2; ?>
+                <?php echo htmlspecialchars($error2); ?>
             </p>
         <?php endif; ?>
 
         <?php if (isset($succes2)) : ?>
             <p>
-                <?php echo $succes2; ?>
+                <?php echo htmlspecialchars($succes2); ?>
             </p>
         <?php endif; ?>
     </div>

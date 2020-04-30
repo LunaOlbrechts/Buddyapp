@@ -59,11 +59,11 @@ if ($_GET['searchClass']) {
 
     <div class="container mt-5">
         <?php if (isset($succes)) : ?>
-            <p><?php echo $succes; ?></p>
+            <p><?php echo htmlspecialchars($succes); ?></p>
         <?php endif; ?>
 
         <?php if (isset($error)) : ?>
-            <p><?php echo $error; ?></p>
+            <p><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
 
     </div>
