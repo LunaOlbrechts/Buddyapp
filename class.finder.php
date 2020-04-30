@@ -63,6 +63,6 @@
         <?php endif; ?>
 
     </div>
-
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 </html>

@@ -202,7 +202,7 @@ $userData = UserManager::getUserFromDatabase($user);
             </div>
         <?php endforeach; ?>
     </div>
-
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 
 </html>
