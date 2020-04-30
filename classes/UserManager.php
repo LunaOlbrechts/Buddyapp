@@ -19,8 +19,6 @@ class UserManager
 
                 if ($results->rowCount() > 0) {
                     throw new Exception("Email is already used");
-
-                    echo "taken";
                 }
             }
 
@@ -52,9 +50,7 @@ class UserManager
 
             $statement->execute();
             $id = $conn->lastInsertId();
-
-            echo "saved to database";
-
+            
             // return result
             return $id;
         }
@@ -132,6 +128,7 @@ class UserManager
     public function updateUserDetails(User $user)
     {
         $conn = Db::getConnection();
+        //$conn = new PDO('mysql:host=localhost;dbname=buddy_app;charset=utf8', "root", "root");
         $sql = "UPDATE tl_user SET description = :description WHERE id = :id";
         $statement = $conn->prepare($sql);
 

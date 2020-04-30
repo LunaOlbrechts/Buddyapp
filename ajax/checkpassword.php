@@ -4,14 +4,12 @@
 
     if(isset($_POST['signUpCheck'])){
        if(json_decode($_POST['signUpCheck']) == true) {
-            $response = "<span style='color: green;'>Password is strong enough</span>";
-            $result = "not so hello";
+            $result = "<input class='btn border' name='signup-btn' id='btnSignUp' type='submit' value='Sign me up'>";    
         } else {
-            $response = "<span style='color: red;'>Password is not strong enough</span>";
-            $result = "hello";
+            $result = "<span style='color: red;'>Password is not strong enough, button will apear when password is strong enough.</span>";
         }
-        echo $response;
         echo $result;
+        
        exit();
     } 
             
