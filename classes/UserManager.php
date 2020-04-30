@@ -132,6 +132,7 @@ class UserManager
     public function updateUserDetails(User $user)
     {
         $conn = Db::getConnection();
+        //$conn = new PDO('mysql:host=localhost;dbname=buddy_app;charset=utf8', "root", "root");
         $sql = "UPDATE tl_user SET description = :description WHERE id = :id";
         $statement = $conn->prepare($sql);
 
