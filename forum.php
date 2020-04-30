@@ -19,7 +19,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($questions) {
         if (!empty($_POST['comment'])) {
             $comment = $_POST['comment'];
-            
+
             Forum::saveComment($comment, $username);
         }
 
@@ -30,7 +30,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         }
     }
 
-    if (!empty($_POST['postedQuestion'])){
+    if (!empty($_POST['postedQuestion'])) {
         Forum::saveQuestion($_POST['postedQuestion'], $username);
     }
 } else {
@@ -62,6 +62,24 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         .card {
             margin-bottom: 10px;
         }
+
+        .vote {
+            display: inline-block;
+            overflow: hidden;
+            width: 40px;
+            height: 19px;
+            cursor: pointer;
+            background: url('http://i.stack.imgur.com/iqN2k.png');
+            background-position: 0 -25px;
+        }
+
+        .vote.on {
+            background-position: 0 2px;
+        }
+
+        .voteNumber {
+            display: inline;
+        }
     </style>
 </head>
 
@@ -69,15 +87,15 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
     <div class="container">
         <div>
-        <form method="POST">
-            <div class="form-group">
-                <label for="question" aria-placeholder="Question"><?php echo htmlspecialchars($user[0]['userName']); ?></label>
-                <textarea class="form-control" id="postedQuestion" rows="3" name="postedQuestion"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mb-2">Plaats jouw vraag</button>
-        </form>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="question" aria-placeholder="Question"><?php echo htmlspecialchars($user[0]['userName']); ?></label>
+                    <textarea class="form-control" id="postedQuestion" rows="3" name="postedQuestion"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Plaats jouw vraag</button>
+            </form>
         </div>
-        
+
         <div class="faq">
             <div>
                 <!-- php for each faq as question-->
@@ -159,7 +177,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                         <?php if ($comment['forum_question_id'] == $question["id"]) : ?>
                                             <div class="collapse" id="collapse<?php echo $question["id"] ?>">
                                                 <div class="card card-body">
-                                                    <?php echo  $comment["userName"] . ": " . $comment["comment"] ?>
+                                                    <p><?php echo  $comment["userName"] . ": " . $comment["comment"] ?></p>
+                                                    <p class="voteNumber"><?php echo $comment["votes"] ?><span class="vote" data-id="<?php echo $comment["id"] ?>"></span></p>
                                                 </div>
                                             </div>
                                         <?php endif ?>
@@ -180,5 +199,39 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
 </body>
+
+<script>
+    $("#sendMessage").on("click", function(e) {
+        let chat_message = $('#message').val();
+
+        $.ajax({
+            url: 'ajax/sendMessage.php',
+            type: 'POST',
+            data: {
+                chat_message: chat_message
+            },
+            success: function(response) {
+                console.log(response);
+            }
+        });
+
+        e.preventDefault();
+    });
+
+    $(".vote").on("click", function(e) {
+        let id = $(this).data("id");
+
+        $.ajax({
+            url: 'ajax/upvote.php',
+            type: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response);
+            }
+        });
+    });
+</script>
 
 </html>
