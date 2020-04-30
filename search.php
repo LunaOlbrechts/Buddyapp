@@ -91,12 +91,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             </p>
         <?php endif; ?>
 
-        <!--<?php if (isset($error2)) : ?>
-            <p>
-                <?php echo $error2; ?>
-            </p>
-        <?php endif; ?>-->
-
         <?php if (isset($succes1)) : ?>
             <p>
                 <?php echo $succes1; ?>
