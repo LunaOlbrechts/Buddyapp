@@ -7,18 +7,16 @@ session_start();
 $succes1 = '';
 $succes2 = '';
 
-$searchField = $_POST['searchField'];
+$searchField = $_GET['searchField'];
 
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_POST['searchName']) {
-        $searchName = UserManager::searchName();
-        
-        if (empty($_POST['searchField'])) {
-            $error = "Vul een naam in";
-        }
+    if ($_GET['searchName']) {
+        $searchName = UserManager::searchName($searchField);
 
-        elseif (count($searchName) > 0) {
+        if (empty($_GET['searchField'])) {
+            $error = "Vul een naam in";
+        } elseif (count($searchName) > 0) {
             foreach ($searchName as $name) {
                 $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
@@ -32,15 +30,15 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_POST['searchBuddy']) {
+    if ($_GET['searchBuddy']) {
         $searchBuddy = UserManager::searchBuddyByFilter();
 
-        if (empty($_POST['mainCourseInterest']) && empty($_POST['schoolYear']) 
-            && empty($_POST['sportType']) && empty($_POST['goingOutType'])) {
+        if (
+            empty($_GET['mainCourseInterest']) && empty($_GET['schoolYear'])
+            && empty($_GET['sportType']) && empty($_GET['goingOutType'])
+        ) {
             $error2 = "Check a filter";
-        }
-
-        elseif (count($searchBuddy) > 0) {
+        } elseif (count($searchBuddy) > 0) {
             foreach ($searchBuddy as $name) {
                 $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
@@ -52,7 +50,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -64,7 +63,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <form method="post" action="">
+    <form method="GET" action="">
         <div class="container mt-5">
             <h1 class="col-md">Zoek hier naar een buddy</h1>
             <p>Zoek naar een buddy via de zoekbalk of via de filter</p>
@@ -100,7 +99,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     </div>
 
 
-    <form method="post" action="">
+    <form method="GET" action="">
         <div class="form-group course-interests">
             <h3>Buddy zoeken via filter</h3>
             <label><b>Opleidingsinteresses</b></label>

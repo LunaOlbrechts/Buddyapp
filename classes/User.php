@@ -23,7 +23,7 @@ class User
     private $buddyType;
     private $matchId;
     private $status;
-    private $searchField;
+    private $searchForBuddy;
     private $class;
 
     /**
@@ -452,46 +452,6 @@ class User
     public function setStatus($status)
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of searchField
-     */ 
-    public function getSearchField()
-    {
-        return $this->searchField;
-    }
-
-    /**
-     * Set the value of searchField
-     *
-     * @return  self
-     */ 
-    public function setSearchField($searchField)
-    {
-        $this->searchField = $searchField;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of class
-     */ 
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Set the value of class
-     *
-     * @return  self
-     */ 
-    public function setClass($class)
-    {
-        $this->class = $class;
 
         return $this;
     }

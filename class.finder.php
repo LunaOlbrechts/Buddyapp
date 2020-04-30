@@ -1,40 +1,44 @@
 <?php
-     include_once(__CLASS__ ."classes/User.php");
-     include_once(__CLASS__ ."classes/UserManager.php");
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/UserManager.php");
 
-     session_start();
+session_start();
 
-    $searchField = trim($_GET['searchField'], " t.");
-    //$searchField = $_GET['searchField'];
-    //$replace_string = str_replace('.','',$searchField);
+$searchField = trim($_GET['searchField'], " t.");
+//$searchField = $_GET['searchField'];
+//$replace_string = str_replace('.','',$searchField);
 
-     if ($_GET['searchClass']) {
-        $searchClass = UserManager::findClass();
-        if (empty($searchField)) {
-            $error = 'Vul een klaslokaal in';
-        } elseif (strlen($searchField) < 3) {
-            $error = "Voer minstens 3 karakters in ('Gebouw','verdieping','lokaal')";
-        }
+if ($_GET['searchClass']) {
+    $searchClass = UserManager::findClass($searchField);
 
-        if (strlen($searchField) > 2) {
-            if (count($searchClass) > 0) {
-                foreach ($searchClass as $class) {
-                    $succes = '<div class="font-weight-bold">' . 'Lokaal: ' 
+    if (empty($searchField)) {
+        $error = 'Vul een klaslokaal in';
+    } elseif (strlen($searchField) < 3) {
+        $error = "Voer minstens 3 karakters in ('Gebouw','verdieping','lokaal')";
+    }
+
+    if (strlen($searchField) > 2) {
+        if (count($searchClass) > 0) {
+            foreach ($searchClass as $class) {
+                $succes = '<div class="font-weight-bold">' . 'Lokaal: '
                     . $class['classRoom'] . '</div>' . '<div>' . $class['description'] . '</div>';
-                }
-            } else {
-                $error = 'Geen lokaal gevonden';
             }
+        } else {
+            $error = 'Geen lokaal gevonden';
         }
-     }
+    }
+}
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lokaal vinder</title>
 </head>
+
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
@@ -54,15 +58,16 @@
     </form>
 
     <div class="container mt-5">
-        <?php if(isset($succes)): ?>
+        <?php if (isset($succes)) : ?>
             <p><?php echo $succes; ?></p>
         <?php endif; ?>
 
-        <?php if(isset($error)): ?>
+        <?php if (isset($error)) : ?>
             <p><?php echo $error; ?></p>
         <?php endif; ?>
 
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
+
 </html>
