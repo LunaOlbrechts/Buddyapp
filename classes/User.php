@@ -455,25 +455,4 @@ class User
 
         return $this;
     }
-
-
-    /**
-     * Get the value of searchForBuddy
-     */ 
-    public function getSearchForBuddy()
-    {
-        return $this->searchForBuddy;
-    }
-
-    /**
-     * Set the value of searchForBuddy
-     *
-     * @return  self
-     */ 
-    public function setSearchForBuddy($searchForBuddy)
-    {
-        $this->searchForBuddy = $searchForBuddy;
-
-        return $this;
-    }
 }

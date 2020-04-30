@@ -509,23 +509,17 @@ class UserManager
         return $number_of_buddy_matches;
      }
 
-     public function findClass()
+     public function findClass($searchField)
      {
         $conn = Db::getConnection();
 
-        //['searchField'] = $searchField;
+        $statement = $conn->prepare("SELECT * FROM tl_classfinder WHERE LOWER(ClassRoom) LIKE LOWER(:ClassRoom)");
 
-        $class = $_GET['searchField'];
-        //$class = $user->getClass();
+        $statement->bindValue(':ClassRoom',$searchField);
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(ClassRoom) LIKE LOWER(:ClassRoom)");
-        $query = $conn->prepare($statement);
-
-        $query->bindValue(':ClassRoom',$class);
-
-        $query->execute();
+        $statement->execute();
         
-        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
         
      }

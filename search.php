@@ -12,19 +12,17 @@ $searchField = $_GET['searchField'];
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_GET['searchName']) {
-        //$searchField = $_GET['searchField'];
         $searchName = UserManager::searchName($searchField);
-        
-    if(empty($_GET['searchField'])){
+
+        if (empty($_GET['searchField'])) {
             $error = "Vul een naam in";
-        }
-    elseif (count($searchName) > 0) {
+        } elseif (count($searchName) > 0) {
             foreach ($searchName as $name) {
                 $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
-    } else {
+        } else {
             $error = "Geen resultaten";
-    }
+        }
     }
 } else {
     header("Location: login.php");
@@ -35,12 +33,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_GET['searchBuddy']) {
         $searchBuddy = UserManager::searchBuddyByFilter();
 
-        if (empty($_GET['mainCourseInterest']) && empty($_GET['schoolYear']) 
-            && empty($_GET['sportType']) && empty($_GET['goingOutType'])) {
+        if (
+            empty($_GET['mainCourseInterest']) && empty($_GET['schoolYear'])
+            && empty($_GET['sportType']) && empty($_GET['goingOutType'])
+        ) {
             $error2 = "Check a filter";
-        }
-
-        elseif (count($searchBuddy) > 0) {
+        } elseif (count($searchBuddy) > 0) {
             foreach ($searchBuddy as $name) {
                 $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
             }
@@ -52,7 +50,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
