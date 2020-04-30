@@ -233,8 +233,7 @@ class UserManager
         $email = $user->getEmail();
 
         $conn = Db::getConnection();
-        $sql = "SELECT password, id, firstName, lastName FROM tl_user WHERE email = :email";
-        $statement = $conn->prepare($sql);
+        $statement = $conn->prepare("SELECT password, id, firstName, lastName FROM tl_user WHERE email = :email");
 
         $statement->bindValue(":email", $email);
         $statement->execute();
@@ -488,11 +487,10 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $statement = "SELECT count(*) FROM tl_user";
-        $result = $conn->prepare($statement);
+        $statement = $conn->prepare("SELECT count(*) FROM tl_user");
 
-        $result->execute();
-        $number_of_users = $result->fetchColumn();
+        $statement->execute();
+        $number_of_users = $statement->fetchColumn();
 
         return $number_of_users;
     }
@@ -501,11 +499,10 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $statement = "SELECT count(*) FROM tl_buddies";
-        $result = $conn->prepare($statement);
+        $statement = $conn->prepare("SELECT count(*) FROM tl_buddies");
 
-        $result->execute();
-        $number_of_buddy_matches = $result->fetchColumn();
+        $statement->execute();
+        $number_of_buddy_matches = $statement->fetchColumn();
 
         return $number_of_buddy_matches;
     }
@@ -514,9 +511,9 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("SELECT * FROM tl_classfinder WHERE LOWER(ClassRoom) LIKE LOWER(:ClassRoom)");
+        $statement = $conn->prepare("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
 
-        $statement->bindValue(':ClassRoom', $searchField);
+        $statement->bindValue(':classRoom', $searchField);
 
         $statement->execute();
 
