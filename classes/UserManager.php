@@ -476,7 +476,7 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $searchField = $_POST['searchField'];
+        $searchField = $_GET['searchField'];
         //$searchField = $user->getSearchField();
         //$email = $user->getEmail();
 

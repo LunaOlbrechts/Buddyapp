@@ -1,6 +1,6 @@
 <?php
-     include_once(__CLASS__ ."classes/User.php");
-     include_once(__CLASS__ ."classes/UserManager.php");
+     include_once(__DIR__ ."/classes/User.php");
+     include_once(__DIR__ ."/classes/UserManager.php");
 
      session_start();
 
