@@ -25,15 +25,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $message->setSenderId($_SESSION['user_id']);
             $message->setSenderName($_SESSION['first_name']);
             $message->setReceiverId($_SESSION['receiver_id']);
-            $message->setReceiverName( $_SESSION['receiver_name']);
-            
-            $result = Chat::sendMessage($message);
+            $message->setReceiverName($_SESSION['receiver_name']);
 
+            $result = Chat::sendMessage($message);
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
     }
-    
+
     if (isset($_POST["buddyRequest"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
             $buddy = new Buddies();
@@ -98,12 +97,12 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     }
 
     .emojis {
-        background-color: red;
+        font-size: 30px;
         padding: 0;
         width: 320px;
         visibility: hidden;
-        display: inline-block;
         margin-top: 0px;
+        float: right;
     }
 
     .emojis li {
@@ -112,11 +111,11 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     }
 
     .reaction {
-        background-color: green;
         width: 50px;
-        margin-top: -30px;
-        display: inline-block;
         margin-top: 0px;
+        display: inline-block;
+        font-size: 30px;
+        color: black;
     }
 </style>
 <!DOCTYPE html>
@@ -190,11 +189,10 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             </div>
         </form>
     </div>
-
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-
     function addEmoji(el) {
         let clickedEmoji = el.innerHTML;
         let reaction = $(el).parent().parent().find(".reaction");
@@ -234,7 +232,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             },
             success: function(response) {
                 console.log(response);
-                $(".display-chat").append($("<span><?php echo $_SESSION["first_name"]; ?></span><div class='message' onmouseover='showEmojis(this)'><p>"+chat_message+"</p><div class='reaction'></div><ul class='emojis'><li onclick='addEmoji(this)'>Hearth</li><li onclick='addEmoji(this)'>Laugh</li><li onclick='addEmoji(this)'>Mouth</li><li onclick='addEmoji(this)'>Sad</li><li onclick='addEmoji(this)'>Angry</li><li onclick='addEmoji(this)'>Like</li><li onclick='addEmoji(this)'>Dislike</li></ul></div>"));
+                $(".display-chat").append($("<span><?php echo $_SESSION["first_name"]; ?></span><div class='message' onmouseover='showEmojis(this)'><p>" + chat_message + "</p><div class='reaction'></div><ul class='emojis'><li onclick='addEmoji(this)'>❤️</li><li onclick='addEmoji(this)'>😂</li><li onclick='addEmoji(this)'>😯</li><li onclick='addEmoji(this)'>😢</li><li onclick='addEmoji(this)'>😡</li><li onclick='addEmoji(this)'>👍</li><li onclick='addEmoji(this)'>👎</li></ul></div>"));
                 $('#message').val("");
             }
         });

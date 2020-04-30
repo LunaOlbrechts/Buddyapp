@@ -176,6 +176,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             </div>
         </div>
     </div>
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
 </body>

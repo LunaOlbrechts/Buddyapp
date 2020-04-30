@@ -138,7 +138,7 @@ $userData = UserManager::getUserFromDatabase($user);
                         <?php echo htmlspecialchars($profileInformationError) ?>
                     </div>
                 <?php endif; ?>
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" accept-charset="UTF-8">
                     <div class="form-group">
                         <label>Description</label>
                         <textarea name="description" class="form-control" rows="3"><?php echo htmlspecialchars($data['description']) ?></textarea>
@@ -202,7 +202,7 @@ $userData = UserManager::getUserFromDatabase($user);
             </div>
         <?php endforeach; ?>
     </div>
-
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 
 </html>

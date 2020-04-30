@@ -114,7 +114,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         </div>
 
     </div>
-
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 
 </html>
