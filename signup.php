@@ -29,6 +29,7 @@
         }
     }
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,11 +83,10 @@
         <div class="form-group">
             <label for="password">Password:</label>
             <input class="form-control" type="password" name="password" id="password" onkeyup='checkIfPasswordMatch();'>
-            <div id="password_response" ></div>
         </div>
 
         <div class="progress form-group" style="height: 10px">
-            <progress class="progress-bar" max="100" min="0" id="strength" style="width: 700px"></progress>
+            <progress class="progress-bar" max="100" min="0" id="strength" style="width: 1200px"></progress>
         </div>
 
         <div class="form-group">
@@ -96,7 +96,7 @@
         </div>
 
         <div class="form-group">
-            <input class="btn border" name="signup-btn" id="btnSignUp" type="submit" value="Sign me up">
+            <div id="allowed"></div>
         </div>    
     
         <div>
@@ -161,8 +161,8 @@
             }
       
     if(password != ''){
+    $("#allowed").show(); 
 
-    $("#password_response").show();     
         
     console.log(signUp);    
         
@@ -170,28 +170,18 @@
         url: '../Buddyapp/ajax/checkpassword.php',
         type: 'post',
         data: {signUpCheck : signUp},
-        success: function(response){
+        success: function(result){
         
            // Show response
-            $("#password_response").html(response);
+            $("#allowed").html(result);               
            
         }
      });
     }else{
-     $("#password_response").hide();
+     $("#allowed").hide();
     }       
 }
 
-    var checkIfPasswordMatch = function() {
-    if (document.getElementById('password').value ==
-        document.getElementById('passwordconf').value) {
-        document.getElementById('message').style.color = 'green';
-        document.getElementById('message').innerHTML = 'The passwords are matching';
-    } else {
-        document.getElementById('message').style.color = 'red';
-        document.getElementById('message').innerHTML = 'The passwords are not matching';
-    }
-    }
 
 
 </script>

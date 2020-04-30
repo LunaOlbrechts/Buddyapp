@@ -19,8 +19,6 @@ class UserManager
 
                 if ($results->rowCount() > 0) {
                     throw new Exception("Email is already used");
-
-                    echo "taken";
                 }
             }
 
@@ -52,9 +50,7 @@ class UserManager
 
             $statement->execute();
             $id = $conn->lastInsertId();
-
-            echo "saved to database";
-
+            
             // return result
             return $id;
         }
