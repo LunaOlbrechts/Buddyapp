@@ -38,7 +38,7 @@ class UserManager
             $userName = $user->getUserName();
             $email = $user->getEmail();
             $password = $user->getPassword();
-            
+
 
             $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, userName, email, password) VALUES (:firstName, :lastName, :userName, :email, :password) ");
 
@@ -50,7 +50,7 @@ class UserManager
 
             $statement->execute();
             $id = $conn->lastInsertId();
-            
+
             // return result
             return $id;
         }
@@ -383,21 +383,32 @@ class UserManager
 
         return $user2;
     }
-    
-    
-    public function searchBuddyByFilter()
+
+
+    public static function searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType)
     {
         $conn = Db::getConnection();
 
-        $mainCourseInterest = $_POST['mainCourseInterest'];
-        $schoolYear = $_POST['schoolYear'];
-        $sportType = $_POST['sportType'];
-        $goingOutType = $_POST['goingOutType'];
-        
+        /*$mainCourseInterest = $searchBuddy->getMainCourseInterest();
+        $schoolYear = $searchBuddy->getSchoolYear();
+        $sportType = $searchBuddy->getSportType();
+        $goingOutType = $searchBuddy->getGoingOutType();*/
+
         $statement = $conn->prepare("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
         OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
 
-        /*$extra = "";
+        $statement->bindValue(':mainCourseInterest', $mainCourseInterest);
+        $statement->bindValue(':schoolYear', $schoolYear);
+        $statement->bindValue(':sportType', $sportType);
+        $statement->bindValue(':goingOutType', $goingOutType);
+
+        $statement->execute();
+
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $count;
+    }
+
+    /*$extra = "";
 
         if (!empty($_POST['mainCourseInterest'])) {
             $extra .= "AND mainCourseInterest = :mainCourseInterest";
@@ -411,18 +422,8 @@ class UserManager
         
         $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";*/
 
-        //$query = $conn->prepare($statement);
+    //$query = $conn->prepare($statement);
 
-        $statement->bindValue(':mainCourseInterest', $mainCourseInterest);
-        $statement->bindValue(':schoolYear', $schoolYear);
-        $statement->bindValue(':sportType', $sportType);
-        $statement->bindValue(':goingOutType', $goingOutType);
-
-        $statement->execute(); 
-
-        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $count;
-    }
 
     /*if(isset($_POST['mainCourseInterest'])){
             $mainCourseInterest = $_POST['mainCourseInterest'];
@@ -469,16 +470,16 @@ class UserManager
 
         return $searchBuddy;*/
 
-    public function searchName($searchField)
+    public static function searchName($searchField)
     {
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
-        
-        $statement->bindValue(':name', '%'.$searchField.'%');
+
+        $statement->bindValue(':name', '%' . $searchField . '%');
 
         $statement->execute();
-        
+
         $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
     }
@@ -494,7 +495,7 @@ class UserManager
         $number_of_users = $result->fetchColumn();
 
         return $number_of_users;
-     }
+    }
 
     public static function numberOfBuddyMatches()
     {
@@ -507,22 +508,19 @@ class UserManager
         $number_of_buddy_matches = $result->fetchColumn();
 
         return $number_of_buddy_matches;
-     }
+    }
 
-     public function findClass($searchField)
-     {
+    public static function findClass($searchField)
+    {
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("SELECT * FROM tl_classfinder WHERE LOWER(ClassRoom) LIKE LOWER(:ClassRoom)");
 
-        $statement->bindValue(':ClassRoom',$searchField);
+        $statement->bindValue(':ClassRoom', $searchField);
 
         $statement->execute();
-        
+
         $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
-        
-     }
-
-
+    }
 }

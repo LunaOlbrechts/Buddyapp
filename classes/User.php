@@ -23,8 +23,6 @@ class User
     private $buddyType;
     private $matchId;
     private $status;
-    private $searchForBuddy;
-    private $class;
 
     /**
      * Get the value of id

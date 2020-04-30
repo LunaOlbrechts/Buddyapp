@@ -31,7 +31,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_GET['searchBuddy']) {
-        $searchBuddy = UserManager::searchBuddyByFilter();
+        //$searchBuddy = new searchBuddy();
+        $mainCourseInterest = $_GET['mainCourseInterest'];
+        $schoolYear = $_GET['schoolYear'];
+        $sportType = $_GET['sportType'];
+        $goingOutType = $_GET['goingOutType'];
+
+        $searchBuddy = UserManager::searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType);
 
         if (
             empty($_GET['mainCourseInterest']) && empty($_GET['schoolYear'])

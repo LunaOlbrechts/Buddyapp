@@ -19,8 +19,11 @@ if (!empty($_POST)) {
     // check if required fields are not empty
     if (!empty($email) && !empty($password)) {
         try {
+            // nieuwe instantie klasse User
             $user = new User();
+            // stellen pw gelijk aan ingevulde veldje 'password'
             $user->setPasswordForVerification($_POST['password']);
+            // stellen email gelijk aan ingevulde veldje 'email'
             $user->setEmail($_POST['email']);
             
             $result = UserManager::logIn($user);
@@ -46,7 +49,7 @@ if (!empty($_POST)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Buddy app | Login</title>
+    <title>Buddy app | Sign In</title>
 </head>
 
 <body>
@@ -71,7 +74,7 @@ if (!empty($_POST)) {
                 <input class="form-control password-input" type="password" id='password' name='password' placeholder="Enter password">
             </div>
 
-            <div class="form-group">
+            <!--<div class="form-group">
             <div class="form-group">
                 <label>Code</label>
                 <div class="input-group">
@@ -82,7 +85,7 @@ if (!empty($_POST)) {
                     </span>
                 </div>
             </div>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <input class="btn border login-btn" name="login" type="submit" value="Log in" name='submit' id="login">
@@ -97,7 +100,7 @@ if (!empty($_POST)) {
 </body>
 
 </html>
-
+<!--
 <script src="jquery-3.5.0.js"></script> 
 
 <script>
@@ -151,3 +154,4 @@ if (!empty($_POST)) {
 
  });
 </script>
+-->
