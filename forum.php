@@ -62,24 +62,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         .card {
             margin-bottom: 10px;
         }
-
-        .vote {
-            display: inline-block;
-            overflow: hidden;
-            width: 40px;
-            height: 19px;
-            cursor: pointer;
-            background: url('http://i.stack.imgur.com/iqN2k.png');
-            background-position: 0 -25px;
-        }
-
-        .vote.on {
-            background-position: 0 2px;
-        }
-
-        .voteNumber {
-            display: inline;
-        }
     </style>
 </head>
 
@@ -178,7 +160,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                             <div class="collapse" id="collapse<?php echo $question["id"] ?>">
                                                 <div class="card card-body">
                                                     <p><?php echo  $comment["userName"] . ": " . $comment["comment"] ?></p>
-                                                    <p class="voteNumber"><?php echo $comment["votes"] ?><span class="vote" data-id="<?php echo $comment["id"] ?>"></span></p>
+                                                    <p class="voteNumber"><span class="number"><?php echo $comment["votes"] ?></span><span class="vote" data-id="<?php echo $comment["id"] ?>"></span></p>
                                                 </div>
                                             </div>
                                         <?php endif ?>
@@ -200,38 +182,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
 </body>
 
-<script>
-    $("#sendMessage").on("click", function(e) {
-        let chat_message = $('#message').val();
-
-        $.ajax({
-            url: 'ajax/sendMessage.php',
-            type: 'POST',
-            data: {
-                chat_message: chat_message
-            },
-            success: function(response) {
-                console.log(response);
-            }
-        });
-
-        e.preventDefault();
-    });
-
-    $(".vote").on("click", function(e) {
-        let id = $(this).data("id");
-
-        $.ajax({
-            url: 'ajax/upvote.php',
-            type: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response);
-            }
-        });
-    });
-</script>
+<script src="/js/vote.js"></script>
 
 </html>
