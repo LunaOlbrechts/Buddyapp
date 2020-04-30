@@ -96,8 +96,8 @@
         </div>
 
         <div class="form-group">
-            <div id="allowed"></div>
-        </div>    
+        <input class='btn border' name='signup-btn' id='btnSignUp' type='submit' value='Sign me up'>
+            </div>  
     
         <div>
             <a href="login.php">Already have an account? Log in here</a>
@@ -114,6 +114,8 @@
 
 
 <script>
+
+    $('#btnSignUp').attr('disabled', 'disabled'); 
         // add variabele to stock in the id password
         var password = document.getElementById("password")
         password.addEventListener('keyup', function() {
@@ -160,9 +162,8 @@
                         break
             }
       
-    if(password != ''){
-    $("#allowed").show(); 
-
+     
+    if(password != ''){       
         
     console.log(signUp);    
         
@@ -171,13 +172,16 @@
         type: 'post',
         data: {signUpCheck : signUp},
         success: function(result){
-        
-           // Show response
-            $("#allowed").html(result);               
-           
+
+            if (result == "success") {
+                $('#btnSignUp').attr('disabled', false); 
+            } else {
+                $('#btnSignUp').attr('disabled', 'disabled');
+            }          
+            
         }
      });
-    }else{
+    }else{ 
      $("#allowed").hide();
     }       
 }

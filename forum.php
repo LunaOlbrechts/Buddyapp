@@ -45,7 +45,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Document</title>
+    <title>Buddy app | forum</title>
     <style>
         .card-body {
             min-width: 300px;

@@ -469,23 +469,17 @@ class UserManager
 
         return $searchBuddy;*/
 
-    public static function searchName()
+    public function searchName($searchField)
     {
         $conn = Db::getConnection();
 
-        $searchField = $_POST['searchField'];
-        //$searchField = $user->getSearchField();
-        //$email = $user->getEmail();
-
-        $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
-
-        $query = $conn->prepare($statement);
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
         
-        $query->bindValue(':name', '%'.$searchField.'%');
+        $statement->bindValue(':name', '%'.$searchField.'%');
 
-        $query->execute();
+        $statement->execute();
         
-        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
     }
 
@@ -515,23 +509,17 @@ class UserManager
         return $number_of_buddy_matches;
      }
 
-     public function findClass()
+     public function findClass($searchField)
      {
         $conn = Db::getConnection();
 
-        //['searchField'] = $searchField;
+        $statement = $conn->prepare("SELECT * FROM tl_classfinder WHERE LOWER(ClassRoom) LIKE LOWER(:ClassRoom)");
 
-        $class = $_GET['searchField'];
-        //$class = $user->getClass();
+        $statement->bindValue(':ClassRoom',$searchField);
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(ClassRoom) LIKE LOWER(:ClassRoom)");
-        $query = $conn->prepare($statement);
-
-        $query->bindValue(':ClassRoom',$class);
-
-        $query->execute();
+        $statement->execute();
         
-        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
         
      }
