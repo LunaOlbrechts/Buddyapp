@@ -193,6 +193,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <?php endif; ?>
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
+
+    <script src="autocomplete.js"></script>
 </body>
 
 </html>

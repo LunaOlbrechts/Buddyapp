@@ -5,7 +5,7 @@ sugesstionBox.style.display = "none";
 
 document.querySelector("#searchName").addEventListener("keyup", event => {
     let input = document.querySelector("#searchName").value;
-
+    console.log("haha");
     let formData = new FormData();
     formData.append("text", input);
 
