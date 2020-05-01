@@ -1,26 +1,24 @@
 <?php
+    include_once(__DIR__ . "/../classes/User.php");
 
-include_once(__DIR__ . "/../classes/Chat.php");
 
-session_start();
+    if(isset($_POST['email'])){
 
-if (!empty($_POST)) {
+        $email = $_POST['email'];
+        $conn = Db::getConnection();
+        $sql = "SELECT * FROM tl_user WHERE email='$email'";
+        $results = $conn->query($sql);
 
-    $message = new Chat();
-    $message->setMessage($_POST['chat_message']);
-    $message->setSenderId($_SESSION['user_id']);
-    $message->setSenderName($_SESSION['first_name']);
-    $message->setReceiverId($_SESSION['receiver_id']);
-    $message->setReceiverName($_SESSION['receiver_name']);
 
-    Chat::sendMessage($message);
+            if ($results->rowCount() > 0) {
+                $response = "<span style='color: red;'>This email is already taken</span>";
+            } else {
+                $response = "<span style='color: green;'>Available.</span>";
+            }
 
-    $response = [
-        'status' => 'success',
-        'body' => htmlspecialchars($_POST['chat_message']),
-        'message' => 'Saved message to database'
-    ];
+            echo $response;
+            exit();                          
 
-    header('Content-Type: application/json');
-    echo json_encode($response);
-}
+        }
+
+?> 

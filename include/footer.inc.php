@@ -40,7 +40,7 @@ $unreadMessages = $statement->fetchAll(PDO::FETCH_ASSOC);
             $userdata = $statement->fetchAll(PDO::FETCH_ASSOC); ?>
             <?php foreach ($userdata as $data): ?>
                 <p>Nieuwe berichten van:</p>
-                <p><?php echo $data['firstName'] . " " . $data['lastName']?></p>
+                <p><?php echo htmlspecialchars($data['firstName']) . " " . htmlspecialchars($data['lastName'])?></p>
             <?php endforeach ?>
         <?php } ?>
     </div>

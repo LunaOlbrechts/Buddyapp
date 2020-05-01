@@ -103,12 +103,12 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     <div class="container">
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
-                <span><?php echo $message['senderName']; ?></span>
+                <span><?php echo htmlspecialchars($message['senderName']); ?></span>
                 <div class="message" data-messageid="<?php echo $message['id'] ?>">
                     <p>
-                        <?php echo $message['message']; ?>
+                        <?php echo htmlspecialchars($message['message']); ?>
                     </p>
-                    <div class="reaction"><?php echo ($message['emoji']) ?></div>
+                    <div class="reaction"><?php echo htmlspecialchars($message['emoji']) ?></div>
                     <ul class="emojis">
                         <li class="emoji">❤️</li>
                         <li class="emoji">😂</li>
