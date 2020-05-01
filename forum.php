@@ -69,7 +69,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo htmlspecialchars($pinnedQuestion["userName"]) ?></h5>
                                 <p class="card-text"><?php echo htmlspecialchars($pinnedQuestion["question"]) ?></p>
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo $pinnedQuestion["id"] ?>" aria-expanded="false" aria-controls="collapse<?php echo $pinnedQuestion["id"] ?>">
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>" aria-expanded="false" aria-controls="collapse<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>">
                                     Opmerkingen
                                 </button>
 
@@ -156,7 +156,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             </div>
         </div>
     </div>
-    
+
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
