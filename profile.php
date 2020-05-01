@@ -102,7 +102,7 @@ $userData = UserManager::getUserFromDatabase($user);
     <?php include_once("include/nav.inc.php"); ?>
     <div class="container mt-5">
         <h1>Profiel</h1>
-
+        <a href="/userFeed.php" class="btn btn-primary">Mijn posts</a>
         <?php foreach ($userData as $data) : ?>
             <div class="container mt-5 p-0">
                 <h2>Profielfoto</h2>
