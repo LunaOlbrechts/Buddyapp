@@ -1,5 +1,4 @@
 
-
 class app{
     constructor(){
         this.btnMatch = document.querySelector("#match");
@@ -63,31 +62,6 @@ document.querySelector("#email").addEventListener("blur", function(){
 
 });
      
-
-    /*
-    let formData = new FormData();
-
-    formData.append('username', userName);
-
-    fetch('../Buddyapp/ajax/checkusername.php', {
-        method: 'POST',
-        body: formData
-    })
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.blob();
-  })
- 
-  .then((myBlob) => {
-    userName.src = URL.createObjectURL(myBlob);
-  })
-  
-  .catch((error) => {
-    console.error('There has been a problem with your fetch operation:', error);
-  });
-   */  
 
 
 

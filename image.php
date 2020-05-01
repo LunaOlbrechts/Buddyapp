@@ -14,7 +14,7 @@ header('Content-Type: image/png');
 
 $image = imagecreatetruecolor(200, 38);
 
-$background_color = imagecolorallocate($image, 231, 100, 18);
+$background_color = imagecolorallocate($image, 122, 211, 187);
 
 $text_color = imagecolorallocate($image, 255, 255, 255);
 

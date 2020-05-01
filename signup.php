@@ -97,11 +97,11 @@ if (!empty($_POST)) {
             </div>
 
             <div class="form-group">
-                <input class='btn border' name='signup-btn' id='btnSignUp' type='submit' value='Sign me up'>
+                <input class='btn border login-btn' name='signup-btn' id='btnSignUp' type='submit' value='Sign me up'>
             </div>
 
             <div>
-                <a href="login.php">Already have an account? Log in here</a>
+                <a href="login.php" class="signup-btn">Already have an account? Log in here</a>
             </div>
 
         </form>
@@ -125,10 +125,10 @@ if (!empty($_POST)) {
     function checkPassword(password) {
         var strengthBar = document.getElementById('strength')
         var strength = 0
-        if (password.match(/[a-zA-Z0-9][a-zA-Z0-9]+/)) {
+        if (password.match(/[a-z][A-Z]+/)) {
             strength += 1
         }
-        if (password.match(/[~<>?]+/)) {
+        if (password.match(/[0-9]+/)) {
             strength += 1
         }
         if (password.match(/[!@£$^&*()]+/)) {
