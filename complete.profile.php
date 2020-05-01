@@ -130,7 +130,7 @@ if ($result) {
                         </select>
                     </div>
                     <div class="btn-submit">
-                        <button class="btn btn-primary" id="submit" type="submit">Submit form</button>
+                        <button class="btn btn-primary" id="submit" type="submit">Ga verder</button>
                     </div>
 
                 <?php endif ?>
