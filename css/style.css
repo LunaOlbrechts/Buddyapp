@@ -302,3 +302,19 @@ span {
 .voteNumber {
   display: inline;
 }
+
+.card-body {
+  min-width: 300px;
+}
+
+.btn {
+  font-size: 0.7em !important;
+  min-width: 150px !important;
+  margin-bottom: 10px;
+  background-color: none;
+  color: blue;
+}
+
+.card {
+  margin-bottom: 10px;
+}
