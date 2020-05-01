@@ -127,5 +127,21 @@ class Forum
 
         return false;
     }
+
+    public static function upvote($id)
+    {
+        $conn = Db::getConnection();
+        
+        $statement = $conn->prepare("UPDATE tl_forum_comment set votes = votes + 1 WHERE id = :id");
+        $statement->bindValue(":id", $id);
+
+        $result = $statement->execute();
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
     
 }
