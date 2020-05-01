@@ -71,7 +71,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <h3>Buddy zoeken via zoekbalk</h3>
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Name" id="name">
+                <input class="form-control" type="text" name="searchField" placeholder="Name" id="searchName">
+                <div id="suggesstionBox"></div>
             </div>
 
             <div class="form-group">
@@ -193,6 +194,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <?php endif; ?>
     </div>
 
+    <script src="autocomplete.js"></script>
 </body>
 
 </html>

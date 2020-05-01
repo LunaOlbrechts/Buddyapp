@@ -480,7 +480,6 @@ class UserManager
         //$searchField = $user->getSearchField();
         //$email = $user->getEmail();
 
-
         $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
 
         $query = $conn->prepare($statement);
@@ -492,6 +491,22 @@ class UserManager
         $count = $query->fetchAll(PDO::FETCH_ASSOC);
         return $count;
     }
+
+    public static function autocompleteSearchName($input)
+    {
+        $conn = Db::getConnection();
+        $statement = ("SELECT Firstname, lastName FROM tl_user WHERE firstName LIKE :name OR lastName LIKE :name LIMIT 1");
+        $query = $conn->prepare($statement);
+        
+        $query->bindValue(':name', $input.'%');
+
+        $query->execute();
+        
+        $suggestion = $query->fetch(PDO::FETCH_ASSOC);
+
+        return $suggestion;
+    }
+    
 
     public static function numberOfUsersInDatabase()
     {

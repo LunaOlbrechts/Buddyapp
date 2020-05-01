@@ -19,8 +19,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($questions) {
         if (!empty($_POST['comment'])) {
             $comment = $_POST['comment'];
-            
+
             Forum::saveComment($comment, $username);
+
         }
 
         if ($_POST['pin'] == "on") {
@@ -157,7 +158,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                     <!-- php for each comments as comment-->
                                     <?php foreach ($comments as $comment) : ?>
                                         <?php if ($comment['forum_question_id'] == $question["id"]) : ?>
-                                            <div class="collapse" id="collapse<?php echo $question["id"] ?>">
+                                            <div class="collapse" id="collapse<?php echo htmlspecialchars($question["id"]) ?>">
                                                 <div class="card card-body">
                                                     <?php echo  $comment["userName"] . ": " . $comment["comment"] ?>
                                                 </div>
