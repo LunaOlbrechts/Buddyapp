@@ -57,7 +57,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buddy app | Profile</title>
+    <title>Buddy app | Profiel</title>
 </head>
 
 <body>
@@ -68,7 +68,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <div class="d-flex justify-content-center">
         <?php foreach ($userdata as $users) : ?>
             <div class="card">
-                <h2 class="card-title">Profile of <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
+                <h2 class="card-title">Profiel van <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
                 <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
                 <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
                 <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
