@@ -19,7 +19,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $error = "Vul een naam in";
         } elseif (count($searchName) > 0) {
                 foreach ($searchName as $name) {
-                    $succes1 .= '<a href="view.profile.php?id=' . $name['id'] . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
+                    $succes1 .= '<a href="view.profile.php?id=' . htmlspecialchars($name['id']) . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
                 }
         } else {
             $error = "Geen resultaten";
@@ -47,7 +47,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $error2 = "Check a filter";
         } elseif (count($searchBuddy) > 0) {
             foreach ($searchBuddy as $name) {
-                $succes2 .= '<a href="view.profile.php?id=' . $name['id'] . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
+                $succes2 .= '<a href="view.profile.php?id=' . htmlspecialchars($name['id']) . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
             }
         } else {
             $error2 = "Geen resultaten";
