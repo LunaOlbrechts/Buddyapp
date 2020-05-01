@@ -1,12 +1,10 @@
 <?php
+include_once(__DIR__ . "/../classes/Chat.php");
+include_once(__DIR__ . "/../classes/UserManager.php");
 
-$conn = Db::getConnection();
+//Check if there needs to be displayed an unread message
 $receiverId = $_SESSION['user_id'];
-
-$statement = $conn->prepare("SELECT senderId FROM tl_chat WHERE (receiverid = '" . $receiverId . "' AND readed = 0) GROUP BY senderName");
-$statement->execute();
-$unreadMessages = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+$unreadMessages = Chat::checkForNotification($receiverId);
 ?>
 <style>
     .newMessages{
@@ -33,11 +31,12 @@ $unreadMessages = $statement->fetchAll(PDO::FETCH_ASSOC);
 </style>
 <footer>
     <div class="newMessages">
+        <!-- For each user that you have unread messages from !-->
         <?php foreach ($unreadMessages as $unreadMessage) {
-            $userId = $unreadMessage['senderId'];
-            $statement = $conn->prepare("SELECT * FROM tl_user WHERE (id = '" . $userId . "')");
-            $statement->execute();
-            $userdata = $statement->fetchAll(PDO::FETCH_ASSOC); ?>
+            //Get user data en show name
+            $id = $unreadMessage['senderId'];
+            $userdata = UserManager::getUserFromDatabaseById($id)
+            ?>
             <?php foreach ($userdata as $data): ?>
                 <p>Nieuwe berichten van:</p>
                 <p><?php echo htmlspecialchars($data['firstName']) . " " . htmlspecialchars($data['lastName'])?></p>

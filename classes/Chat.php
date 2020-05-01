@@ -57,6 +57,16 @@ class Chat
         $statement->execute();
     }
 
+    public static function checkForNotification($receiverId)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT senderId FROM tl_chat WHERE (receiverid = '" . $receiverId . "' AND readed = 0) GROUP BY senderName");
+        $statement->execute();
+        $unreadMessages = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $unreadMessages;
+    }
+
     /**
      * Get the value of message
      */
