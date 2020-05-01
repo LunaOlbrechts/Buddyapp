@@ -1,4 +1,3 @@
-
 class app{
     constructor(){
         this.btnMatch = document.querySelector("#match");
@@ -10,6 +9,38 @@ class app{
         
     }
 }
+
+$(document).ready(function() {
+   $('#login').attr('disabled', 'disabled');
+  
+  $('#captcha_code').on('keyup', function(){
+   var code = $('#captcha_code').val();
+   
+   if(code == '')
+   {
+    $('#login').attr('disabled', 'disabled');
+   }
+   else
+   {
+    $.ajax({
+     url:'../Buddyapp/ajax/check_code.php',
+     method:"POST",
+     data:{code:code},
+     success:function(data)
+     {
+      if(data == 'success')
+      {
+       $('#login').attr('disabled', false);
+      }
+      else
+      {
+       $('#login').attr('disabled', 'disabled');
+      }
+     }
+    });
+   }
+  });
+});   
 
 
 document.querySelector("#username").addEventListener("blur", function(){
@@ -64,4 +95,78 @@ document.querySelector("#email").addEventListener("blur", function(){
      
 
 
+$(document).ready(function() {
+   $('#btnSignUp').attr('disabled', 'disabled');
+   // add variabele to stock in the id password
+   var password = document.getElementById("password")
+   password.addEventListener('keyup', function() {
+       checkPassword(password.value)
+   })
+
+
+   function checkPassword(password) {
+       var strengthBar = document.getElementById('strength')
+       var strength = 0
+       if (password.match(/[a-z][A-Z]+/)) {
+           strength += 1
+       }
+       if (password.match(/[0-9]+/)) {
+           strength += 1
+       }
+       if (password.match(/[!@£$^&*()]+/)) {
+           strength += 1
+       }
+       if (password.length > 5) {
+           strength += 1
+       }
+
+       switch (strength) {
+           case 0:
+               strengthBar.value = 0;
+               var signUp = false;
+               break
+           case 1:
+               strengthBar.value = 40;
+               var signUp = false;
+               break
+           case 2:
+               strengthBar.value = 60;
+               var signUp = false;
+               break
+           case 3:
+               strengthBar.value = 80;
+               var signUp = true;
+               break
+           case 4:
+               strengthBar.value = 100;
+               var signUp = true;
+               break
+       }
+
+
+       if (password != '') {
+
+          // console.log(signUp);
+
+           $.ajax({
+               url: '../Buddyapp/ajax/checkpassword.php',
+               type: 'post',
+               data: {
+                   signUpCheck: signUp
+               },
+               success: function(result) {
+
+                   if (result == "success") {
+                       $('#btnSignUp').attr('disabled', false);
+                   } else {
+                       $('#btnSignUp').attr('disabled', 'disabled');
+                   }
+
+               }
+           });
+       } else {
+           $("#allowed").hide();
+       }
+   }
+});
 
