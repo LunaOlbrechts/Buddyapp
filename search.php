@@ -15,26 +15,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $searchField = $_GET['searchField'];
         $searchName = UserManager::searchName($searchField);
 
-    if (!empty($buddy['user_id'])){
-        try {
-            $buddy = new Buddies();
-            $buddy->setSender($_SESSION['user_id']);
-            $buddy->setReceiver($_SESSION['receiver_id']);
-            Buddies::sendRequest($buddy);
-        } catch (\Throwable $th) {
-            $error = $th->getMessage();
-        }
-    }
-    
-    //var_dump($buddy['user_id']);
-    var_dump($_GET['user_id']);
-    //var_dump()
-
         if (empty($_GET['searchField'])) {
             $error = "Vul een naam in";
         } elseif (count($searchName) > 0) {
                 foreach ($searchName as $name) {
-                    $succes1 .= '<a href="/view.profile.php?id=' . $name['id'] . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
+                    $succes1 .= '<a href="view.profile.php?id=' . $name['id'] . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
                 }
         } else {
             $error = "Geen resultaten";
@@ -62,7 +47,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $error2 = "Check a filter";
         } elseif (count($searchBuddy) > 0) {
             foreach ($searchBuddy as $name) {
-                $succes2 .= '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>';
+                $succes2 .= '<a href="view.profile.php?id=' . $name['id'] . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
             }
         } else {
             $error2 = "Geen resultaten";
@@ -210,7 +195,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
-    <script src="autocomplete.js"></script>
+    <script src="js/autocomplete.js"></script>
 </body>
 
 </html>
