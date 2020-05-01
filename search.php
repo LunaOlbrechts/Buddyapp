@@ -34,7 +34,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $error = "Vul een naam in";
         } elseif (count($searchName) > 0) {
                 foreach ($searchName as $name) {
-                    $succes1 .= '<a href="' . $buddy['user_id'] . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
+                    $succes1 .= '<a href="/view.profile.php?id=' . $name['id'] . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
                 }
         } else {
             $error = "Geen resultaten";
