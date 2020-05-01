@@ -1,6 +1,7 @@
 <?php
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/Buddies.php");
 
 session_start();
 
@@ -9,6 +10,11 @@ $succes2 = '';
 
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+
+    $buddy = new Buddies();
+    $otherId = $_SESSION["receiver_id"];
+    $haveRequestOrBuddy = Buddies::haveRequestOrBuddy($id, $otherId);
+
     if (isset($_GET['searchName'])) {
         $searchField = $_GET['searchField'];
         $searchName = UserManager::searchName($searchField);
@@ -45,7 +51,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $error2 = "Check a filter";
         } elseif (count($searchBuddy) > 0) {
             foreach ($searchBuddy as $name) {
-                $succes2 .= '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>';
+                $succes2 .= '<div>' . '<a' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</a>' . '</div>';
             }
         } else {
             $error2 = "Geen resultaten";
@@ -91,7 +97,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             </p>
         <?php endif; ?>
 
-        <?php if (isset($succes1)) : ?>
+        <?php if (isset($succes1)) if ($haveRequestOrBuddy == 0) : ?>
             <p>
                 <?php echo $succes1; ?>
             </p>
