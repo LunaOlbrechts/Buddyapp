@@ -3,8 +3,13 @@ session_start();
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
 include_once(__DIR__ . "/classes/Buddies.php");
+include_once(__DIR__ . "/classes/Post.php");
 
 $id =  $_SESSION["user_id"];
+
+$profileId = $_GET['id'];
+
+$posts = Post::getAllPosts($profileId);
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
@@ -111,6 +116,22 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                 <?php endif ?>
             </div>
         <?php endforeach ?>
+    </div>
+
+    <div class="container">
+        <?php foreach ($userdata as $users) : ?>
+            <h2>Posts van <?php echo htmlspecialchars($users['firstName']) ?> :</h2>
+        <?php endforeach ?>
+        <div class="container m-0 p-0">
+            <?php foreach ($posts as $post) : ?>
+                <div class="container mt-3 mb-5 p-0">
+                    <h2><?php echo $post['Title'] ?></h2>
+                    <p><?php echo $post['description'] ?></p>
+                    <p><?php $date = date_create($post['posted_on']);
+                        echo date_format($date, 'd/m/Y') ?></p>
+                </div>
+            <?php endforeach ?>
+        </div>
     </div>
 
 
