@@ -150,7 +150,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                                     Pin
                                                 </label>
                                                 <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <button type="submit" class="btn btn-primary">Bevesting pinn</button>
                                             </div>
                                         </form>
                                     <?php endif ?>
@@ -167,7 +167,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                         <?php endif ?>
                                     <?php endforeach ?>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="" name="comment" placeholder="comment">
+                                        <input type="text" class="form-control" id="" name="comment" placeholder="opmerking">
                                         <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
                                     </div>
                                 </div>
