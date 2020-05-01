@@ -19,14 +19,14 @@ $currentUser = UserManager::getUserFromDatabase();
 <body>
     <nav class="navbar nav bg-light">
         <a href="index.php">Home</a>
-        <a href="buddielist.php">All Buddies</a>
+        <a href="buddielist.php">Alle Buddies</a>
         <a href="class.finder.php">Lokaal vinder</a>
         <a href="forum.php">Forum</a>
         <!--<a href="mylist.php"></a>-->
         <!--<a href="mylist.php"></a>-->
-        <a href="search.php">Search for a buddy</a>
+        <a href="search.php">Zoek een buddy</a>
 
-        <a href="logout.php" class="navbar__logout">Hi <?php echo $currentUser[0]['firstName'] ?>, log out?</a>
+        <a href="logout.php" class="navbar__logout">Hey <?php echo $currentUser[0]['firstName'] ?>, uitloggen?</a>
         <a class="navbar-brand" href="profile.php">
             <img src="<?php echo $currentUser[0]['profilePicture'] ?>" width="50" height="50" alt="profile picture">
         </a>

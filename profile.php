@@ -95,17 +95,17 @@ $userData = UserManager::getUserFromDatabase($user);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Buddy app | Profile</title>
+    <title>Buddy app | Profiel</title>
 </head>
 
 <body>
     <?php include_once("include/nav.inc.php"); ?>
     <div class="container mt-5">
-        <h1>Profile</h1>
+        <h1>Profiel</h1>
 
         <?php foreach ($userData as $data) : ?>
             <div class="container mt-5 p-0">
-                <h2>Profile Picture</h2>
+                <h2>Profielfoto</h2>
                 <?php if (isset($ProfilePictureError)) : ?>
                     <div class="alert alert-danger" role="alert">
                         <?php echo htmlspecialchars($ProfilePictureError) ?>
@@ -119,15 +119,15 @@ $userData = UserManager::getUserFromDatabase($user);
                 <form method="POST" enctype="multipart/form-data">
                     <div style="background-image: url(<?php echo htmlspecialchars($data['profilePicture']) ?>); width: 200px; height: 200px; background-size: cover; background-position: center" ;></div>
                     <div class="form-group mt-3">
-                        <label>Change Profile Picture</label>
+                        <label>Profielfoto aanpassen</label>
                         <input type="file" name="profilePicture" class="form-control" />
                     </div>
-                    <input class="btn btn-primary m-0" type="submit" value="Change Picture" name="updateProfilePicture">
+                    <input class="btn btn-primary m-0" type="submit" value="Update profielfoto" name="updateProfilePicture">
                 </form>
             </div>
 
             <div class="container mt-5 p-0">
-                <h2>Profile Information</h2>
+                <h2>Informatie</h2>
                 <?php if (isset($profileInformationSuccess)) : ?>
                     <div class="alert alert-success" role="alert">
                         <?php echo htmlspecialchars($profileInformationSuccess) ?>
@@ -140,15 +140,15 @@ $userData = UserManager::getUserFromDatabase($user);
                 <?php endif; ?>
                 <form method="POST" accept-charset="UTF-8">
                     <div class="form-group">
-                        <label>Description</label>
+                        <label>Beschrijving</label>
                         <textarea name="description" class="form-control" rows="3"><?php echo htmlspecialchars($data['description']) ?></textarea>
                     </div>
-                    <input class="btn btn-primary m-0" type="submit" value="Update Information" name="updateDetails">
+                    <input class="btn btn-primary m-0" type="submit" value="Update informatie" name="updateDetails">
                 </form>
             </div>
 
             <div class="container mt-5 p-0">
-                <h2>Change Email Address</h2>
+                <h2>Email veranderen</h2>
                 <?php if (isset($emailSuccess)) : ?>
                     <div class="alert alert-success" role="alert">
                         <?php echo htmlspecialchars($emailSuccess) ?>
@@ -161,19 +161,19 @@ $userData = UserManager::getUserFromDatabase($user);
                 <?php endif; ?>
                 <form method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label>Email address</label>
-                        <input name="email" value="<?php echo htmlspecialchars($data['email']) ?>" type="email" class="form-control" placeholder="Enter email">
+                        <label>Nieuw email</label>
+                        <input name="email" value="<?php echo htmlspecialchars($data['email']) ?>" type="email" class="form-control" placeholder="Nieuw email">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Enter password as verification</label>
-                        <input name="passwordForEmailVerification" type="password" class="form-control" placeholder="Password">
+                        <label for="exampleInputPassword1">Vul wachtwoord in als verificatie</label>
+                        <input name="passwordForEmailVerification" type="password" class="form-control" placeholder="Wachtwoord">
                     </div>
-                    <input class="btn btn-primary m-0" type="submit" value="Change Email" name="updateEmail">
+                    <input class="btn btn-primary m-0" type="submit" value="Update Email" name="updateEmail">
                 </form>
             </div>
 
             <div class="container mt-5 p-0 mb-5">
-                <h2>Change Password</h2>
+                <h2>Wachtwoord veranderen</h2>
                 <?php if (isset($passwordSuccess)) : ?>
                     <div class="alert alert-success" role="alert">
                         <?php echo htmlspecialchars($passwordSuccess) ?>
@@ -186,16 +186,16 @@ $userData = UserManager::getUserFromDatabase($user);
                 <?php endif; ?>
                 <form method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Old Password</label>
-                        <input name="oldPassword" type="password" class="form-control" placeholder="Old password">
+                        <label for="exampleInputPassword1">Oud wachtwoord</label>
+                        <input name="oldPassword" type="password" class="form-control" placeholder="Oud wachtwoord">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">New Password</label>
-                        <input name="newPassword" type="password" class="form-control" placeholder="New password">
+                        <label for="exampleInputPassword1">Nieuw wachtwoord</label>
+                        <input name="newPassword" type="password" class="form-control" placeholder="Nieuw wachtwoord">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Repeat new Password</label>
-                        <input name="reapeatNewPassword" type="password" class="form-control" placeholder="Repeat new password">
+                        <label for="exampleInputPassword1">Herhaal nieuw wachtwoord</label>
+                        <input name="reapeatNewPassword" type="password" class="form-control" placeholder="Herhaal nieuw wachtwoord">
                     </div>
                     <input class="btn btn-primary m-0" type="submit" value="Change Password" name="updatePassword">
                 </form>

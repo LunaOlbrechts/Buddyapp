@@ -42,7 +42,7 @@ class Forum
     public static function getComments()
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("SELECT * FROM tl_forum_comment");
+        $statement = $conn->prepare("SELECT * FROM tl_forum_comment ORDER BY votes DESC");
         // LEFT JOIN tl_forum_questions ON tl_forum_questions.id = tl_forum_comment.forum_question_id
 
         $result = $statement->execute();
