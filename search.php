@@ -12,13 +12,14 @@ $searchField = $_GET['searchField'];
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($_GET['searchName']) {
+
         $searchName = UserManager::searchName($searchField);
 
         if (empty($_GET['searchField'])) {
             $error = "Vul een naam in";
         } elseif (count($searchName) > 0) {
             foreach ($searchName as $name) {
-                $succes1 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+                $succes1 .= '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>';
             }
         } else {
             $error = "Geen resultaten";
@@ -46,7 +47,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $error2 = "Check a filter";
         } elseif (count($searchBuddy) > 0) {
             foreach ($searchBuddy as $name) {
-                $succes2 .= '<div>' . $name['firstName'] . " " . $name['lastName'] . '</div>';
+                $succes2 .= '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>';
             }
         } else {
             $error2 = "Geen resultaten";
@@ -87,13 +88,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <div class="form-group">
         <?php if (isset($error)) : ?>
             <p>
-                <?php echo htmlspecialchars($error); ?>
+                <?php echo $error; ?>
             </p>
         <?php endif; ?>
 
         <?php if (isset($succes1)) : ?>
             <p>
-                <?php echo htmlspecialchars($succes1); ?>
+                <?php echo $succes1; ?>
             </p>
         <?php endif; ?>
     </div>
@@ -181,13 +182,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <div class="form-group">
         <?php if (isset($error2)) : ?>
             <p>
-                <?php echo htmlspecialchars($error2); ?>
+                <?php echo $error2; ?>
             </p>
         <?php endif; ?>
 
         <?php if (isset($succes2)) : ?>
             <p>
-                <?php echo htmlspecialchars($succes2); ?>
+                <?php echo $succes2; ?>
             </p>
         <?php endif; ?>
     </div>
