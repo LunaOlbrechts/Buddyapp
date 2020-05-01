@@ -1,8 +1,6 @@
 <?php
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/ajax/checkpassword.php");
-
 session_start();
 
 
@@ -83,7 +81,7 @@ if (!empty($_POST)) {
 
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input class="form-control" type="password" name="password" id="password" onkeyup='checkIfPasswordMatch();'>
+                <input class="form-control" type="password" name="password" id="password">
             </div>
 
             <div class="progress form-group" style="height: 10px">
@@ -92,7 +90,7 @@ if (!empty($_POST)) {
 
             <div class="form-group">
                 <label for="passwordconf">Password Confirm:</label>
-                <input class="form-control" type="password" name="passwordconf" id="passwordconf" onkeyup='checkIfPasswordMatch();'>
+                <input class="form-control" type="password" name="passwordconf" id="passwordconf">
                 <div id="message"></div>
             </div>
 
@@ -111,81 +109,5 @@ if (!empty($_POST)) {
 
 <script src="jquery-3.5.0.js"></script>
 <script src="script.js"></script>
-
-
-<script>
-    $('#btnSignUp').attr('disabled', 'disabled');
-    // add variabele to stock in the id password
-    var password = document.getElementById("password")
-    password.addEventListener('keyup', function() {
-        checkPassword(password.value)
-    })
-
-
-    function checkPassword(password) {
-        var strengthBar = document.getElementById('strength')
-        var strength = 0
-        if (password.match(/[a-z][A-Z]+/)) {
-            strength += 1
-        }
-        if (password.match(/[0-9]+/)) {
-            strength += 1
-        }
-        if (password.match(/[!@£$^&*()]+/)) {
-            strength += 1
-        }
-        if (password.length > 5) {
-            strength += 1
-        }
-
-        switch (strength) {
-            case 0:
-                strengthBar.value = 0;
-                var signUp = false;
-                break
-            case 1:
-                strengthBar.value = 40;
-                var signUp = false;
-                break
-            case 2:
-                strengthBar.value = 60;
-                var signUp = false;
-                break
-            case 3:
-                strengthBar.value = 80;
-                var signUp = true;
-                break
-            case 4:
-                strengthBar.value = 100;
-                var signUp = true;
-                break
-        }
-
-
-        if (password != '') {
-
-            console.log(signUp);
-
-            $.ajax({
-                url: '../Buddyapp/ajax/checkpassword.php',
-                type: 'post',
-                data: {
-                    signUpCheck: signUp
-                },
-                success: function(result) {
-
-                    if (result == "success") {
-                        $('#btnSignUp').attr('disabled', false);
-                    } else {
-                        $('#btnSignUp').attr('disabled', 'disabled');
-                    }
-
-                }
-            });
-        } else {
-            $("#allowed").hide();
-        }
-    }
-</script>
 
 </html>

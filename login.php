@@ -101,41 +101,7 @@ if (!empty($_POST)) {
 
 </body>
 
-</html>
-
-<script src="jquery-3.5.0.js"></script> 
+<script src="jquery-3.5.0.js"></script>
 <script src="script.js"></script>
 
-<script>
-$('#login').attr('disabled', 'disabled');
-  
-  $('#captcha_code').on('blur', function(){
-   var code = $('#captcha_code').val();
-   
-   if(code == '')
-   {
-    $('#login').attr('disabled', 'disabled');
-   }
-   else
-   {
-    $.ajax({
-     url:'../Buddyapp/ajax/check_code.php',
-     method:"POST",
-     data:{code:code},
-     success:function(data)
-     {
-      if(data == 'success')
-      {
-       $('#login').attr('disabled', false);
-      }
-      else
-      {
-       $('#login').attr('disabled', 'disabled');
-      }
-     }
-    });
-   }
-  });
-
-
-</script>
+</html>
