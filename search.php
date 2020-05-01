@@ -7,12 +7,10 @@ session_start();
 $succes1 = '';
 $succes2 = '';
 
-$searchField = $_GET['searchField'];
-
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_GET['searchName']) {
-
+    if (isset($_GET['searchName'])) {
+        $searchField = $_GET['searchField'];
         $searchName = UserManager::searchName($searchField);
 
         if (empty($_GET['searchField'])) {
@@ -31,7 +29,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_GET['searchBuddy']) {
+    if (isset($_GET['searchBuddy'])) {
         //$searchBuddy = new searchBuddy();
         $mainCourseInterest = $_GET['mainCourseInterest'];
         $schoolYear = $_GET['schoolYear'];

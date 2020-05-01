@@ -4,11 +4,11 @@ include_once(__DIR__ . "/classes/UserManager.php");
 
 session_start();
 
-$searchField = trim($_GET['searchField'], " t.");
 //$searchField = $_GET['searchField'];
 //$replace_string = str_replace('.','',$searchField);
 
-if ($_GET['searchClass']) {
+if (isset($_GET['searchClass'])) {
+    $searchField = trim($_GET['searchField'], " t.");
     $searchClass = UserManager::findClass($searchField);
 
     if (empty($searchField)) {
