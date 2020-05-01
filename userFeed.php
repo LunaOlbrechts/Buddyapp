@@ -36,8 +36,9 @@ $posts = Post::getAllPosts($userId);
 <body>
     <?php include_once("include/nav.inc.php"); ?>
     <div class="container mt-5">
-        <h1>Mijn posts</h1>
-        <a id="newPost" class="btn btn-primary">Nieuwe Post</a>
+        <h1>Profiel</h1>
+        <a href="/profile.php" class="btn btn-primary">Profiel aanpassen</a>
+        <a href="" id="newPost" class="btn btn-primary">Nieuwe Post</a>
         <div class="container">
             <div id="newPostContainer" class="container mt-3 p-0">
                 <form method="POST" accept-charset="UTF-8">
@@ -70,7 +71,7 @@ $posts = Post::getAllPosts($userId);
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    $('#newPost').on('click', function() {
+    $('#newPost').on('click', function(e) {
         var click = $(this).data('clicks');
 
         if (click) {
@@ -80,6 +81,6 @@ $posts = Post::getAllPosts($userId);
         };
 
         $(this).data('clicks', !click); // you have to set it
-
+        e.preventDefault();
     });
 </script>
