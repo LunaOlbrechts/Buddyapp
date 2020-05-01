@@ -4,11 +4,11 @@ include_once(__DIR__ . "/classes/UserManager.php");
 
 session_start();
 
-$searchField = trim($_GET['searchField'], " t.");
 //$searchField = $_GET['searchField'];
 //$replace_string = str_replace('.','',$searchField);
 
-if ($_GET['searchClass']) {
+if (isset($_GET['searchClass'])) {
+    $searchField = trim($_GET['searchField'], " t.");
     $searchClass = UserManager::findClass($searchField);
 
     if (empty($searchField)) {
@@ -21,7 +21,7 @@ if ($_GET['searchClass']) {
         if (count($searchClass) > 0) {
             foreach ($searchClass as $class) {
                 $succes = '<div class="font-weight-bold">' . 'Lokaal: '
-                    . $class['classRoom'] . '</div>' . '<div>' . $class['description'] . '</div>';
+                    . htmlspecialchars($class['classRoom']) . '</div>' . '<div>' . htmlspecialchars($class['description']) . '</div>';
             }
         } else {
             $error = 'Geen lokaal gevonden';
@@ -59,11 +59,11 @@ if ($_GET['searchClass']) {
 
     <div class="container mt-5">
         <?php if (isset($succes)) : ?>
-            <p><?php echo htmlspecialchars($succes); ?></p>
+            <p><?php echo $succes; ?></p>
         <?php endif; ?>
 
         <?php if (isset($error)) : ?>
-            <p><?php echo htmlspecialchars($error); ?></p>
+            <p><?php echo $error; ?></p>
         <?php endif; ?>
 
     </div>
