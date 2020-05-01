@@ -19,8 +19,6 @@ class UserManager
 
                 if ($results->rowCount() > 0) {
                     throw new Exception("Email is already used");
-
-                    echo "taken";
                 }
             }
 
@@ -40,7 +38,7 @@ class UserManager
             $userName = $user->getUserName();
             $email = $user->getEmail();
             $password = $user->getPassword();
-            
+
 
             $statement = $conn->prepare("INSERT INTO tl_user (firstName, lastName, userName, email, password) VALUES (:firstName, :lastName, :userName, :email, :password) ");
 
@@ -52,8 +50,6 @@ class UserManager
 
             $statement->execute();
             $id = $conn->lastInsertId();
-
-            echo "saved to database";
 
             // return result
             return $id;
@@ -132,6 +128,7 @@ class UserManager
     public function updateUserDetails(User $user)
     {
         $conn = Db::getConnection();
+        //$conn = new PDO('mysql:host=localhost;dbname=buddy_app;charset=utf8', "root", "root");
         $sql = "UPDATE tl_user SET description = :description WHERE id = :id";
         $statement = $conn->prepare($sql);
 
@@ -236,8 +233,7 @@ class UserManager
         $email = $user->getEmail();
 
         $conn = Db::getConnection();
-        $sql = "SELECT password, id, firstName, lastName FROM tl_user WHERE email = :email";
-        $statement = $conn->prepare($sql);
+        $statement = $conn->prepare("SELECT password, id, firstName, lastName FROM tl_user WHERE email = :email");
 
         $statement->bindValue(":email", $email);
         $statement->execute();
@@ -386,21 +382,32 @@ class UserManager
 
         return $user2;
     }
-    
-    
-    public function searchBuddyByFilter()
+
+
+    public static function searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType)
     {
         $conn = Db::getConnection();
 
-        $mainCourseInterest = $_POST['mainCourseInterest'];
-        $schoolYear = $_POST['schoolYear'];
-        $sportType = $_POST['sportType'];
-        $goingOutType = $_POST['goingOutType'];
-        
+        /*$mainCourseInterest = $searchBuddy->getMainCourseInterest();
+        $schoolYear = $searchBuddy->getSchoolYear();
+        $sportType = $searchBuddy->getSportType();
+        $goingOutType = $searchBuddy->getGoingOutType();*/
+
         $statement = $conn->prepare("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
         OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
 
-        /*$extra = "";
+        $statement->bindValue(':mainCourseInterest', $mainCourseInterest);
+        $statement->bindValue(':schoolYear', $schoolYear);
+        $statement->bindValue(':sportType', $sportType);
+        $statement->bindValue(':goingOutType', $goingOutType);
+
+        $statement->execute();
+
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $count;
+    }
+
+    /*$extra = "";
 
         if (!empty($_POST['mainCourseInterest'])) {
             $extra .= "AND mainCourseInterest = :mainCourseInterest";
@@ -414,18 +421,8 @@ class UserManager
         
         $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";*/
 
-        //$query = $conn->prepare($statement);
+    //$query = $conn->prepare($statement);
 
-        $statement->bindValue(':mainCourseInterest', $mainCourseInterest);
-        $statement->bindValue(':schoolYear', $schoolYear);
-        $statement->bindValue(':sportType', $sportType);
-        $statement->bindValue(':goingOutType', $goingOutType);
-
-        $statement->execute(); 
-
-        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $count;
-    }
 
     /*if(isset($_POST['mainCourseInterest'])){
             $mainCourseInterest = $_POST['mainCourseInterest'];
@@ -472,23 +469,17 @@ class UserManager
 
         return $searchBuddy;*/
 
-    public static function searchName()
+    public static function searchName($searchField)
     {
         $conn = Db::getConnection();
 
-        $searchField = $_POST['searchField'];
-        //$searchField = $user->getSearchField();
-        //$email = $user->getEmail();
+        $statement = $conn->prepare("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
 
-        $statement = ("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
+        $statement->bindValue(':name', '%' . $searchField . '%');
 
-        $query = $conn->prepare($statement);
-        
-        $query->bindValue(':name', '%'.$searchField.'%');
+        $statement->execute();
 
-        $query->execute();
-        
-        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
     }
 
@@ -512,47 +503,37 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $statement = "SELECT count(*) FROM tl_user";
-        $result = $conn->prepare($statement);
+        $statement = $conn->prepare("SELECT count(*) FROM tl_user");
 
-        $result->execute();
-        $number_of_users = $result->fetchColumn();
+        $statement->execute();
+        $number_of_users = $statement->fetchColumn();
 
         return $number_of_users;
-     }
+    }
 
     public static function numberOfBuddyMatches()
     {
         $conn = Db::getConnection();
 
-        $statement = "SELECT count(*) FROM tl_buddies";
-        $result = $conn->prepare($statement);
+        $statement = $conn->prepare("SELECT count(*) FROM tl_buddies");
 
-        $result->execute();
-        $number_of_buddy_matches = $result->fetchColumn();
+        $statement->execute();
+        $number_of_buddy_matches = $statement->fetchColumn();
 
         return $number_of_buddy_matches;
-     }
+    }
 
-     public function findClass()
-     {
+    public static function findClass($searchField)
+    {
         $conn = Db::getConnection();
 
-        //['searchField'] = $searchField;
+        $statement = $conn->prepare("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
 
-        $class = $_GET['searchField'];
-        //$class = $user->getClass();
+        $statement->bindValue(':classRoom', $searchField);
 
-        $statement = ("SELECT * FROM tl_classfinder WHERE LOWER(searchClassRoom) LIKE LOWER(:searchClassRoom)");
-        $query = $conn->prepare($statement);
+        $statement->execute();
 
-        $query->bindValue(':searchClassRoom',$class);
-
-        $query->execute();
-        
-        $count = $query->fetchAll(PDO::FETCH_ASSOC);
+        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
-     }
-
-
+    }
 }

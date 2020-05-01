@@ -37,7 +37,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +46,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Home</title>
+    <title>Buddy app | Home</title>
 </head>
 
 <body>
@@ -76,14 +75,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     ?>
     <div class="card-text amount">
         <div class="flex-amount">
-            <div class="amount-students">
+            <div class="amount-students ml-5 mt-2">
                 <p>
-                    Er zijn al <?php echo $number_of_users; ?> studenten geregistreerd
+                    Er zijn al <?php echo htmlspecialchars($number_of_users); ?> studenten geregistreerd
                 </p>
             </div>
-            <div class="amount-buddies">
+            <div class="amount-buddies ml-5">
                 <p>
-                    Er zijn al <?php echo $number_of_buddy_matches; ?> buddy overeenkomsten gevonden
+                    Er zijn al <?php echo htmlspecialchars($number_of_buddy_matches); ?> buddy overeenkomsten gevonden
                 </p>
             </div>
         </div>
@@ -120,6 +119,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         </div>
     </div>
     <script src="script.js"></script>
+
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 
 </html>

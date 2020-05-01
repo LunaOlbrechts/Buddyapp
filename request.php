@@ -64,7 +64,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Request</title>
+    <title>Buddy app | Request</title>
 </head>
 
 <body>
@@ -114,7 +114,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         </div>
 
     </div>
-
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 
 </html>

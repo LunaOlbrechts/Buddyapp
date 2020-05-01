@@ -42,8 +42,19 @@ class Chat
         $statement->bindValue(":senderId", $senderId);
         $statement->bindValue(":receiverId", $receiverId);
 
-        $result = $statement->execute();
-        return $result;
+        $statement->execute();
+        $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $messages;
+    }
+
+    public static function updateReaded($senderId, $receiverId)
+    {
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("UPDATE tl_chat SET readed = 1 WHERE senderId = $receiverId AND receiverId = $senderId");
+
+        $statement->execute();
     }
 
     /**

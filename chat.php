@@ -25,15 +25,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $message->setSenderId($_SESSION['user_id']);
             $message->setSenderName($_SESSION['first_name']);
             $message->setReceiverId($_SESSION['receiver_id']);
-            $message->setReceiverName( $_SESSION['receiver_name']);
-            
-            $result = Chat::sendMessage($message);
+            $message->setReceiverName($_SESSION['receiver_name']);
 
+            $result = Chat::sendMessage($message);
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
     }
-    
+
     if (isset($_POST["buddyRequest"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
             $buddy = new Buddies();
@@ -49,73 +48,21 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-// Get messages for specific chat
-$conn = Db::getConnection();
+
 $senderId = $_SESSION['user_id'];
 $receiverId = $_SESSION['receiver_id'];
 
-$statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $receiverId . "') OR (senderId = '" . $receiverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
-$statement->execute();
-$messages = $statement->fetchAll(PDO::FETCH_ASSOC);
+//Get all messages for this chat
+$messages = Chat::updateMessages($senderId, $receiverId);
+//Set messages to readed on chat join
+Chat::updateReaded($senderId, $receiverId);
 
 $currentUser = UserManager::getUserFromDatabase();
 $matchedUsers = UserManager::matchUsersByFiltersChat();
 $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
 
 ?>
-<style>
-    span {
-        color: #007bff;
-        font-weight: bold;
-    }
 
-    .container {
-        margin-top: 3%;
-        width: 60%;
-        background-color: #F2F2F2;
-        padding-right: 10%;
-        padding-left: 10%;
-    }
-
-    .display-chat {
-        height: 50vh;
-        margin-bottom: 4%;
-        overflow: auto;
-        padding: 15px;
-        border-bottom: 1px solid #007bff;
-    }
-
-    .message p {
-        background-color: #007bff;
-        color: white;
-        border-radius: 5px;
-        padding: 5px;
-        width: auto;
-        margin-bottom: 0;
-    }
-
-    .emojis {
-        background-color: red;
-        padding: 0;
-        width: 320px;
-        visibility: hidden;
-        display: inline-block;
-        margin-top: 0px;
-    }
-
-    .emojis li {
-        list-style: none;
-        display: inline;
-    }
-
-    .reaction {
-        background-color: green;
-        width: 50px;
-        margin-top: -30px;
-        display: inline-block;
-        margin-top: 0px;
-    }
-</style>
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="./css/style.css">
@@ -156,20 +103,20 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     <div class="container">
         <div class="display-chat">
             <?php foreach ($messages as $message) : ?>
-                <span><?php echo $message['senderName']; ?></span>
-                <div class="message" onmouseover="showEmojis(this)" data-messageid="<?php echo $message['id'] ?>">
+                <span><?php echo htmlspecialchars($message['senderName']); ?></span>
+                <div class="message" data-messageid="<?php echo $message['id'] ?>">
                     <p>
-                        <?php echo $message['message']; ?>
+                        <?php echo htmlspecialchars($message['message']); ?>
                     </p>
-                    <div class="reaction"><?php echo ($message['emoji']) ?></div>
+                    <div class="reaction"><?php echo htmlspecialchars($message['emoji']) ?></div>
                     <ul class="emojis">
-                        <li onclick="addEmoji(this)">Hearth</li>
-                        <li onclick="addEmoji(this)">Laugh</li>
-                        <li onclick="addEmoji(this)">Mouth</li>
-                        <li onclick="addEmoji(this)">Sad</li>
-                        <li onclick="addEmoji(this)">Angry</li>
-                        <li onclick="addEmoji(this)">Like</li>
-                        <li onclick="addEmoji(this)">Dislike</li>
+                        <li class="emoji">❤️</li>
+                        <li class="emoji">😂</li>
+                        <li class="emoji">😯</li>
+                        <li class="emoji">😢</li>
+                        <li class="emoji">😡</li>
+                        <li class="emoji">👍</li>
+                        <li class="emoji">👎</li>
                     </ul>
                 </div>
             <?php endforeach; ?>
@@ -187,38 +134,13 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             </div>
         </form>
     </div>
-
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/emojiChat.js"></script>
+
 <script>
-    function addEmoji(el) {
-        let clickedEmoji = el.innerHTML;
-        let reaction = $(el).parent().parent().find(".reaction");
-        $(reaction).text(clickedEmoji);
-        let message = $(el).parent().parent();
-        let id = message.data("messageid");
-
-        $.ajax({
-            url: 'ajax/saveemoji.php',
-            type: 'POST',
-            data: {
-                emoji: clickedEmoji,
-                id: id
-            },
-            success: function(response) {
-                console.log(response);
-            }
-        });
-    }
-
-    function showEmojis(el) {
-        $(el).find("ul").css("visibility", "visible");
-    }
-
-    $(".message").mouseleave(function() {
-        $(".emojis").css("visibility", "hidden");
-    });
-
+    //Send message with AJAX
     $("#sendMessage").on("click", function(e) {
         let chat_message = $('#message').val();
 
@@ -230,7 +152,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
             },
             success: function(response) {
                 console.log(response);
-                $(".display-chat").append($("<span><?php echo $message['senderName']; ?></span><div class='message' onmouseover='showEmojis(this)'><p>" + chat_message + "</p><div class='reaction'></div><ul class='emojis'><li onclick='addEmoji(this)'>Hearth</li><li onclick='addEmoji(this)'>Laugh</li><li onclick='addEmoji(this)'>Mouth</li><li onclick='addEmoji(this)'>Sad</li><li onclick='addEmoji(this)'>Angry</li><li onclick='addEmoji(this)'>Like</li><li onclick='addEmoji(this)'>Dislike</li></ul></div>"));
+                $(".display-chat").append($("<span><?php echo $_SESSION["first_name"]; ?></span><div class='message'><p>" + chat_message + "</p><div class='reaction'></div><ul class='emojis'><li onclick='addEmoji(this)'>❤️</li><li onclick='addEmoji(this)'>😂</li><li onclick='addEmoji(this)'>😯</li><li onclick='addEmoji(this)'>😢</li><li onclick='addEmoji(this)'>😡</li><li onclick='addEmoji(this)'>👍</li><li onclick='addEmoji(this)'>👎</li></ul></div>"));
                 $('#message').val("");
             }
         });

@@ -19,8 +19,12 @@ if (!empty($_POST)) {
     // check if required fields are not empty
     if (!empty($email) && !empty($password)) {
         try {
+            
+            // nieuwe instantie klasse User
             $user = new User();
+            // stellen pw gelijk aan ingevulde veldje 'password'
             $user->setPasswordForVerification($_POST['password']);
+            // stellen email gelijk aan ingevulde veldje 'email'
             $user->setEmail($_POST['email']);
             
             $result = UserManager::logIn($user);
@@ -37,8 +41,8 @@ if (!empty($_POST)) {
         $error = "Password is required";
     }
 }
-?>
-<!DOCTYPE html>
+
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -46,18 +50,18 @@ if (!empty($_POST)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Buddy app | Login</title>
+    <title>Buddy app | Sign In</title>
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="" method="post" id="captch_form">
         <div class="container mt-5 login-form">
             <h2 form__title>Sign In</h2>
 
             <?php if (isset($error)) : ?>
                 <div class="mr-5">
                     <p>
-                        <?php echo $error; ?>
+                        <?php echo htmlspecialchars($error); ?>
                     </p>
                 </div>
             <?php endif; ?>
@@ -70,9 +74,23 @@ if (!empty($_POST)) {
                 <label class="title" for="password">Password:</label>
                 <input class="form-control password-input" type="password" id='password' name='password' placeholder="Enter password">
             </div>
+            
+            <div class="form-group">
+            <div class="form-group">
+                <label>Fill in the code to prove that you are not a bot!</label>
+                <div class="input-group">
+                    <input class="form-control email-input" type="text" name="captcha_code" id="captcha_code" class="form-control" />
+                    <span class="input-group-addon" style="padding:0">
+                    <img src="image.php" id="captcha_image" />
+                    <div id="captcha_response" ></div>
+                    </span>
+                </div>
+            </div>
+            </div>
+            
 
             <div class="form-group">
-                <input class="btn border login-btn" type="submit" value="Log in" name='submit'>
+                <input class="btn border login-btn" name="login" type="submit" value="Log in" name='submit' id="login">
             </div>
 
             <div>
@@ -82,5 +100,8 @@ if (!empty($_POST)) {
     </form>
 
 </body>
+
+<script src="jquery-3.5.0.js"></script>
+<script src="script.js"></script>
 
 </html>

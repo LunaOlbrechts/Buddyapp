@@ -23,8 +23,6 @@ class User
     private $buddyType;
     private $matchId;
     private $status;
-    private $searchField;
-    private $class;
 
     /**
      * Get the value of id
@@ -161,7 +159,7 @@ class User
             throw new Exception("Password cannot be empty");
         }
         if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordconf']) {
-            throw new Exception("The two passwords do not match");
+            throw new Exception("Can't register you, the two passwords do not match");
         }
 
         $this->password = $password;
@@ -452,46 +450,6 @@ class User
     public function setStatus($status)
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of searchField
-     */ 
-    public function getSearchField()
-    {
-        return $this->searchField;
-    }
-
-    /**
-     * Set the value of searchField
-     *
-     * @return  self
-     */ 
-    public function setSearchField($searchField)
-    {
-        $this->searchField = $searchField;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of class
-     */ 
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Set the value of class
-     *
-     * @return  self
-     */ 
-    public function setClass($class)
-    {
-        $this->class = $class;
 
         return $this;
     }

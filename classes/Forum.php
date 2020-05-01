@@ -42,7 +42,8 @@ class Forum
     public static function getComments()
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("SELECT * FROM tl_forum_comment LEFT JOIN tl_forum_questions ON tl_forum_questions.id = tl_forum_comment.forum_question_id");
+        $statement = $conn->prepare("SELECT * FROM tl_forum_comment");
+        // LEFT JOIN tl_forum_questions ON tl_forum_questions.id = tl_forum_comment.forum_question_id
 
         $result = $statement->execute();
         $comments = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -117,6 +118,22 @@ class Forum
         $questionId = $_POST['questionId'];
         $statement->bindValue(":id", $questionId);
         $statement->bindValue(":pinned", 0);
+
+        $result = $statement->execute();
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function upvote($id)
+    {
+        $conn = Db::getConnection();
+        
+        $statement = $conn->prepare("UPDATE tl_forum_comment set votes = votes + 1 WHERE id = :id");
+        $statement->bindValue(":id", $id);
 
         $result = $statement->execute();
 

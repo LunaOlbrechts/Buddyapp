@@ -31,7 +31,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         }
     }
 
-    if (!empty($_POST['postedQuestion'])){
+    if (!empty($_POST['postedQuestion'])) {
         Forum::saveQuestion($_POST['postedQuestion'], $username);
     }
 } else {
@@ -46,7 +46,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Document</title>
+    <title>Buddy app | forum</title>
     <style>
         .card-body {
             min-width: 300px;
@@ -70,15 +70,15 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
     <div class="container">
         <div>
-        <form method="POST">
-            <div class="form-group">
-                <label for="question" aria-placeholder="Question"><?php echo htmlspecialchars($user[0]['userName']); ?></label>
-                <textarea class="form-control" id="postedQuestion" rows="3" name="postedQuestion"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mb-2">Plaats jouw vraag</button>
-        </form>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="question" aria-placeholder="Question"><?php echo htmlspecialchars($user[0]['userName']); ?></label>
+                    <textarea class="form-control" id="postedQuestion" rows="3" name="postedQuestion"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Plaats jouw vraag</button>
+            </form>
         </div>
-        
+
         <div class="faq">
             <div>
                 <!-- php for each faq as question-->
@@ -160,7 +160,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                         <?php if ($comment['forum_question_id'] == $question["id"]) : ?>
                                             <div class="collapse" id="collapse<?php echo htmlspecialchars($question["id"]) ?>">
                                                 <div class="card card-body">
-                                                    <?php echo  $comment["userName"] . ": " . $comment["comment"] ?>
+                                                    <p><?php echo  $comment["userName"] . ": " . $comment["comment"] ?></p>
+                                                    <p class="voteNumber"><span class="number"><?php echo $comment["votes"] ?></span><span class="vote" data-id="<?php echo $comment["id"] ?>"></span></p>
                                                 </div>
                                             </div>
                                         <?php endif ?>
@@ -177,8 +178,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             </div>
         </div>
     </div>
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
 </body>
+
+<script src="/js/vote.js"></script>
 
 </html>

@@ -1,8 +1,11 @@
-
 /* ======================
       Navigation bar
    ======================
 */
+
+*{
+  font-weight: normal;
+}
 
 .navbar > a{
   color: black;
@@ -163,6 +166,36 @@
    ======================
 */
 
+.message p {
+  border-radius: 5px;
+  padding: 5px;
+  width: auto;
+  margin-bottom: 0;
+  color: black;
+}
+
+.emojis {
+  font-size: 30px;
+  padding: 0;
+  width: 320px;
+  visibility: hidden;
+  margin-top: 0px;
+  float: right;
+}
+
+.emojis li {
+  list-style: none;
+  display: inline;
+}
+
+.reaction {
+  width: 50px;
+  margin-top: 0px;
+  display: inline-block;
+  font-size: 30px;
+  color: black;
+}
+
 span {
   color: #7AD3BB;
   font-weight: bold;
@@ -249,4 +282,23 @@ span {
 
 .search-name-input{
   border: 1px solid #7AD3BB !important ;
+}
+
+/* ======================
+          Forum
+   ======================
+*/
+
+.vote {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 19px;
+  cursor: pointer;
+  background: url('http://i.stack.imgur.com/iqN2k.png');
+  background-position: 0 -25px;
+}
+
+.voteNumber {
+  display: inline;
 }

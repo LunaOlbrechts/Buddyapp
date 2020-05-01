@@ -20,10 +20,7 @@
     }
 
 
-
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -66,5 +63,6 @@
     
         <?php endfor; ?>
     </div>
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 </html>
