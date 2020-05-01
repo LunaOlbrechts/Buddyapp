@@ -48,7 +48,8 @@ if (isset($_GET['searchClass'])) {
             <p>Geef hieronder een lokaal in om te zoeken naar een beschrijving</p>
             <div class="form-group">
                 <label for="class"><b>Geef een lokaal in (vb: Z3.04)</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Lokaal">
+                <input class="form-control" type="text" name="searchField" placeholder="Lokaal" id="searchClassInField">
+                <div id="autocompleteClass"></div>
             </div>
 
             <div class="form-group">
@@ -69,5 +70,7 @@ if (isset($_GET['searchClass'])) {
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
+
+<script src="js/autocompleteclass.js"></script>
 
 </html>

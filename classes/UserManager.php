@@ -536,4 +536,19 @@ class UserManager
         $count = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $count;
     }
+
+    public static function autocompleteClass($searchClass)
+    {
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT classRoom FROM tl_classfinder WHERE classRoom = :classRoom");
+
+        $statement->bindValue(':classRoom', $searchClass);
+
+        $statement->execute();
+
+        $complete = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $complete;
+
+    }
 }
