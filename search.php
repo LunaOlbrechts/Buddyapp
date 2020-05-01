@@ -11,20 +11,31 @@ $succes2 = '';
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
-    $buddy = new Buddies();
-    $otherId = $_SESSION["receiver_id"];
-    $haveRequestOrBuddy = Buddies::haveRequestOrBuddy($id, $otherId);
-
     if (isset($_GET['searchName'])) {
         $searchField = $_GET['searchField'];
         $searchName = UserManager::searchName($searchField);
 
+    if (!empty($buddy['user_id'])){
+        try {
+            $buddy = new Buddies();
+            $buddy->setSender($_SESSION['user_id']);
+            $buddy->setReceiver($_SESSION['receiver_id']);
+            Buddies::sendRequest($buddy);
+        } catch (\Throwable $th) {
+            $error = $th->getMessage();
+        }
+    }
+    
+    //var_dump($buddy['user_id']);
+    var_dump($_GET['user_id']);
+    //var_dump()
+
         if (empty($_GET['searchField'])) {
             $error = "Vul een naam in";
         } elseif (count($searchName) > 0) {
-            foreach ($searchName as $name) {
-                $succes1 .= '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>';
-            }
+                foreach ($searchName as $name) {
+                    $succes1 .= '<a href="' . $buddy['user_id'] . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
+                }
         } else {
             $error = "Geen resultaten";
         }
@@ -51,7 +62,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $error2 = "Check a filter";
         } elseif (count($searchBuddy) > 0) {
             foreach ($searchBuddy as $name) {
-                $succes2 .= '<div>' . '<a' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</a>' . '</div>';
+                $succes2 .= '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>';
             }
         } else {
             $error2 = "Geen resultaten";
@@ -97,7 +108,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             </p>
         <?php endif; ?>
 
-        <?php if (isset($succes1)) if ($haveRequestOrBuddy == 0) : ?>
+        <?php if (isset($succes1)) : ?>
             <p>
                 <?php echo $succes1; ?>
             </p>
