@@ -96,7 +96,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                         <div class="card mb-3 person-card">
                             <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); height: 250px; background-size: cover; background-position: center" ;></div>
                             <div class="card-body">
-                                <a href="/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
+                                <a href="view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
                                     <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
                                 </a>
                                 <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
