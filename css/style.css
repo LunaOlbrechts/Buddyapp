@@ -7,6 +7,17 @@
   font-weight: normal;
 }
 
+
+/* ======================
+        Footer
+   ======================
+*/
+
+.request {
+  background-color: #327374;
+  border: none;
+}
+
 .navbar>a {
   color: black;
 }
@@ -183,6 +194,8 @@
 }
 
 
+
+
 /* ======================
             Chat
    ======================
@@ -264,7 +277,9 @@ span {
 .profile-btn {
   background-color: #7AD3BB;
   border: unset !important;
-  color: white;
+  border-radius: 3px !important;
+  text-decoration: none !important;
+  color: white !important;
   height: 50px;
 }
 

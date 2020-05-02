@@ -39,15 +39,20 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     // DENY BUDDY REQUEST WITH REASON
     if (isset($_POST['goReason']) && !empty($_POST['messageDeny'])) {
-        $messageForDeny = new Buddies();
-        $messageForDeny->setDenyMessage(htmlspecialchars($_POST['messageDeny']));
-        Buddies::denyMessage($messageForDeny);
+        $denied = new Buddies();
+        $denied->setSender($_SESSION['user_id']);
+        $denied->setReceiver($_SESSION['requested']);
+        $denied->setDenyMessage(htmlspecialchars($_POST['messageDeny']));
+        Buddies::denyMessage($denied);
         header("Location: index.php");
     }
 
     // DENY BUDDY REQUEST WITH NO REASON
     if (isset($_POST['goNoReason']) && $_POST['goNoReason']) {
-        Buddies::denyNoMessage();
+        $denied = new Buddies();
+        $denied->setSender($_SESSION['user_id']);
+        $denied->setReceiver($_SESSION['requested']);
+        Buddies::denyNoMessage($denied);
         header("Location: index.php");
     }   
 
@@ -81,7 +86,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 
                     <div class="btn-group" role="group" > 
-                        <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Profile</a>
+                        <button class="profile-btn btn"><a class="profile-btn" href="view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Bekijk profiel</a>
                     </div>
 
                     </form>
@@ -100,7 +105,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
                 <?php if ($deny == true) : ?>
                     <form method="POST">
-                        <textarea name="messageDeny" class="form-control" placeholder="Give a reason why you denied this buddy request."></textarea>
+                        <input type="text" name="messageDeny" class="form-control" placeholder="Give a reason why you denied this buddy request."></input>
                     
                         <div class="btn-group" role="group" >        
                                 <input type="submit" value="Send reason" name="goReason" class="btn btn-info mr-3"></input>

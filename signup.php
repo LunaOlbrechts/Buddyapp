@@ -1,7 +1,6 @@
 <?php
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/UserManager.php");
-session_start();
 
 
 if (!empty($_POST)) {
@@ -14,13 +13,15 @@ if (!empty($_POST)) {
         $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
         //echo $user->getPassword();
         $id = UserManager::save($user);
-
+        
         if ($id) {
+            session_start();
             $_SESSION['user_id'] = $id;
             $_SESSION['first_name'] = $user->getFirstName();
-            $success = "user saved!";
-            //   header("Location: complete.profile.php");
-        }
+            $_SESSION['email'] = $user->getEmail();
+            $success = "Sign up completed!";
+            header("Location: login.php");
+        }             
     } catch (\Throwable $th) {
         //throw error
         $error = $th->getMessage();

@@ -11,7 +11,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
-    $request = Buddies::checkRequest();
     $denyMessage = Buddies::checkDenyMessage();
     $denied = Buddies::printDenyMessage();
     //var_dump($currentUser);
@@ -52,11 +51,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <body>
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <?php if ($request == true) : ?>
-        <form method="POST">
-            <input type="submit" value="You got a buddy request!" name="request" class="btn btn-primary">
-        </form>
-    <?php endif ?>
+    
 
     <?php if ($denyMessage == true) : ?>
         <?php foreach ($denied as $deny) : ?>
@@ -110,6 +105,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                     <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
                                     <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
                                     <input type="submit" value="Chat" name="chat" class="btn btn-primary chat"></input>
+                                    <button class="profile-btn btn"><a  href="view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Bekijk profiel</a></button>
                                 </form>
                             </div>
                         </div>

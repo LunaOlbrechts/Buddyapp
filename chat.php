@@ -130,7 +130,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
                 <?php if ($haveRequestOrBuddy == 0) : ?>
                     <input type="submit" value="Be My Buddy" class="btn btn-success btn-buddy" name="buddyRequest"></input>
                 <?php endif ?>
-                <button class="profile-btn btn"><a href="/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Bekijk profiel</a></button>
+                <button class="profile-btn btn"><a class="profile-btn" href="view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Bekijk profiel</a></button>
             </div>
         </form>
     </div>

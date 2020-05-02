@@ -74,6 +74,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <?php foreach ($userdata as $users) : ?>
             <div class="card">
                 <h2 class="card-title">Profiel van <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
+                <img class="card-img-top mx-auto" src="><?php echo ($users['profilePicture']) ?>" width="200" height="200" alt="profile picture">
+                <p class="card-text">Description: <?php echo htmlspecialchars($users['description']) ?></p>
                 <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
                 <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
                 <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
@@ -88,18 +90,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     <?php foreach ($currentuser as $currentusers) : ?>
                         <p class="card-text">My buddy is: <?php echo htmlspecialchars($currentusers['firstName']) . " " . htmlspecialchars($currentusers['lastName']) ?></p>
                     <?php endforeach ?>
-                <?php endif ?>
-
-                <!--
-                    CHAT BUTTON
-
-                <form method="POST" enctype="multipart/form-data">
-                <input type="hidden" value="<?php echo htmlspecialchars($user['sender']) ?>" name="sender"></input>
-                <div class="btn-group" role="group" >        
-                    <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input> 
-                </div> 
-                </form>
-                -->
+                <?php endif ?>            
+                        
 
                 <?php if (isset($error)) : ?>
                     <p><?php echo htmlspecialchars($error); ?></p>
