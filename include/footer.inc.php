@@ -23,4 +23,3 @@ $unreadMessages = Chat::checkForNotification($receiverId);
         <?php } ?>
     </div>
 </footer>
-</html>
