@@ -25,7 +25,7 @@ $posts = Post::getAllPosts($userId);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BuddyApp | Profiel dashboard</title>
 </head>
 <style>
     #newPostContainer {
@@ -48,7 +48,7 @@ $posts = Post::getAllPosts($userId);
                     </div>
                     <div class="form-group">
                         <label>Post</label>
-                        <textarea name="description" class="form-control" rows="3"><?php echo htmlspecialchars($data['description']) ?></textarea>
+                        <textarea name="description" class="form-control" rows="3"></textarea>
                     </div>
                     <input class="btn btn-primary" type="submit" value="Plaats post" name="addPost">
                 </form>
@@ -57,7 +57,7 @@ $posts = Post::getAllPosts($userId);
         <div class="container m-0 p-0">
             <?php foreach ($posts as $post) : ?>
                 <div class="container mt-3 mb-5 p-0">
-                    <h2><?php echo $post['Title'] ?></h2>
+                    <h2><?php echo $post['title'] ?></h2>
                     <p><?php echo $post['description'] ?></p>
                     <p><?php $date = date_create($post['posted_on']);  echo date_format($date, 'd/m/Y') ?></p>
                 </div>
