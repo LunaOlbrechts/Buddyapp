@@ -58,28 +58,19 @@ if (isset($_GET['searchClass'])) {
         </div>
     </form>
 
-    <div class="container mt-5">
+    <div class="container mt-5 class-description">
         <?php if (isset($succes)) : ?>
-            <p><?php echo $succes; ?></p>
+            <p id="decription" name="decription"><?php echo $succes; ?></p>
         <?php endif; ?>
 
         <?php if (isset($error)) : ?>
-            <p><?php echo $error; ?></p>
+            <p id="description"><?php echo $error; ?></p>
         <?php endif; ?>
 
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
-    <script src="js/autocompleteClass.js">
-        $('#searchClass').autocomplete({
-            serviceUrl: 'class.finder.php?searchField=Z3.04&searchClass=Zoek',
-            dataType: 'json',
-            onSelect: function() {
-                alert("OK");
-            }
-        })
-    
-    </script>
+    <script src="js/autocompleteClass.js"></script>
 </body>
 
 </html>
