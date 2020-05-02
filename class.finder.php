@@ -67,8 +67,6 @@ if (isset($_GET['searchClass'])) {
             <p><?php echo $error; ?></p>
         <?php endif; ?>
 
-        <p><?php echo $class['classRoom']; ?> </p>
-
 
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>

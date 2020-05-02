@@ -541,7 +541,7 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("SELECT classRoom FROM tl_classfinder WHERE classRoom LIKE :classRoom");
+        $statement = $conn->prepare("SELECT classRoom FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
 
         $statement->bindValue(':classRoom', '%' .$searchClass . '%');
 
