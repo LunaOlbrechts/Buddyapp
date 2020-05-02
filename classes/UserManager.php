@@ -541,14 +541,14 @@ class UserManager
     {
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("SELECT classRoom FROM tl_classfinder WHERE classRoom = :classRoom");
+        $statement = $conn->prepare("SELECT classRoom FROM tl_classfinder WHERE classRoom LIKE :classRoom");
 
-        $statement->bindValue(':classRoom', $searchClass);
+        $statement->bindValue(':classRoom', '%' .$searchClass . '%');
 
         $statement->execute();
 
-        $complete = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $complete;
+        $autocomplete = $statement->fetch(PDO::FETCH_ASSOC);
+        return $autocomplete;
 
     }
 }

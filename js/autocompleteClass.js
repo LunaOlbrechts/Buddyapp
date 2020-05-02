@@ -1,32 +1,31 @@
 //auto complete lokaal vinder
+var autocompleteclass = document.querySelector("#autocompleteClass");
 
-var autocompleteClass = document.querySelector("#autocompleteClass");
+//autocompleteclass.style.display = "none";
 
-document.querySelector('#searchClassInField').addEventListener("keyup", event => {
-        let input = document.querySelector('#searchClassInField').value;
-        console.log('gelukt');
-
+document.querySelector('#searchClass').addEventListener("keyup", event => {
+        let input = document.querySelector('#searchClass').value;
+        console.log("gelukt");
         let formData = new FormData();
-        formData.append("searchField",input);
+        formData.append("text",input);
 
-        fetch("ajax/autocompleteclass.php", {
-            method: "GET",
+        fetch('ajax/autocompleteclass.php', {
+            method: "POST",
             body: formData
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log("Succes:", result);
-                autocompleteClass.style.display = "block";
-                result.FormData.forEach(element => {
-                    let autocomplete = document.createElement('div');
-                    autocomplete.innerHTML = element.firstName + "" + element.lastName;
-                    autocompleteClass.appendChild(autocomplete);
-                });
-            })
-            .catch(error => {
-                console.error("Error:", error);
+        }).then(response => response.json())
+        .then(result => {
+            console.log(result.body);
+            autocompleteclass.style.display = "block";
+            autocompleteclass.innerHTML = "";
+            result.body.forEach(element => {
+                let suggestion = document.createElement('div');
+                suggestion.innerHTML = element.classRoom;
+                autocompleteclass.appendChild(suggestion);
             });
-
+        }).catch( error => {
+            console.log("Error:", error);
+        
+        });
 });
 // browser denkt standaard HTML code terug te krijgen
 // hierbij json teruggeven 
