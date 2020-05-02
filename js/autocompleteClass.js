@@ -18,8 +18,9 @@ document.querySelector('#searchClass').addEventListener("keyup", event => {
             autocompleteclass.style.display = "block";
             autocompleteclass.innerHTML = "";
             result.body.forEach(element => {
-                let suggestion = document.createElement('div');
+                let suggestion = document.createElement('a');
                 suggestion.innerHTML = element.classRoom;
+                suggestion.setAttribute("href", "/class.finder.php?searchField="+element.classRoom+"&searchClass=Zoek");
                 autocompleteclass.appendChild(suggestion);
             });
         }).catch( error => {
