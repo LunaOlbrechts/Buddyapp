@@ -1,15 +1,12 @@
 <?php
 include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/SearchClass.php");
 
 session_start();
 
-//$searchField = $_GET['searchField'];
-//$replace_string = str_replace('.','',$searchField);
-
 if (isset($_GET['searchClass'])) {
     $searchField = trim($_GET['searchField'], " t.");
-    $searchClass = UserManager::findClass($searchField);
+    $searchClass = SearchClass::findClass($searchField);
 
     if (empty($searchField)) {
         $error = 'Vul een klaslokaal in';
@@ -49,7 +46,7 @@ if (isset($_GET['searchClass'])) {
             <div class="form-group">
                 <label for="class"><b>Geef een lokaal in (vb: Z3.04)</b></label>
                 <input class="form-control" type="text" name="searchField" placeholder="Lokaal" id='searchClass' autocomplete="off">
-                <div><a href="#" id="autocompleteClass"></a></div>
+                <div><a href="?searchField=<?php echo $class['classRoom'];?>&searchClass=Zoek" id="autocompleteClass"></a></div>
             </div>
 
             <div class="form-group">
@@ -67,13 +64,15 @@ if (isset($_GET['searchClass'])) {
             <p><?php echo $error; ?></p>
         <?php endif; ?>
 
+
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
     <script src="js/autocompleteClass.js">
-    $("#autocompleteClass").on('click', function() {
-        document.querySelector('#description').innerHTML = '<div class="font-weight-bold">' + 'Lokaal: ' + htmlspecialchars($class['classRoom']) + '</div>' + '<div>' + htmlspecialchars($class['description']) + '</div>';
-    });
+    /*$("#autocompleteClass").on('click', function myFunction() {
+        document.querySelector('#description').innerHTML = '<div class="font-weight-bold">' + 'Lokaal: ' 
+        + htmlspecialchars($class['classRoom']) + '</div>' + '<div>' + htmlspecialchars($class['description']) + '</div>';
+    });*/
     
     </script>
 </body>
