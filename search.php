@@ -31,7 +31,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_GET['searchBuddy'])) {
-        //$searchBuddy = new searchBuddy();
         $mainCourseInterest = $_GET['mainCourseInterest'];
         $schoolYear = $_GET['schoolYear'];
         $sportType = $_GET['sportType'];

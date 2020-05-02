@@ -4,9 +4,6 @@ include_once(__DIR__ . "/classes/SearchClass.php");
 
 session_start();
 
-//$searchField = $_GET['searchField'];
-//$replace_string = str_replace('.','',$searchField);
-
 if (isset($_GET['searchClass'])) {
     $searchField = trim($_GET['searchField'], " t.");
     $searchClass = SearchClass::findClass($searchField);
