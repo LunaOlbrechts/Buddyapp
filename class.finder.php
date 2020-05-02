@@ -49,7 +49,7 @@ if (isset($_GET['searchClass'])) {
             <div class="form-group">
                 <label for="class"><b>Geef een lokaal in (vb: Z3.04)</b></label>
                 <input class="form-control" type="text" name="searchField" placeholder="Lokaal" id='searchClass' autocomplete="off">
-                <div><a href="" id="autocompleteClass"></a></div>
+                <div><a href="#" id="autocompleteClass"></a></div>
             </div>
 
             <div class="form-group">
@@ -60,17 +60,22 @@ if (isset($_GET['searchClass'])) {
 
     <div class="container mt-5 class-description">
         <?php if (isset($succes)) : ?>
-            <p id="decription" name="decription"><?php echo $succes; ?></p>
+            <p id="description"><?php echo $succes; ?></p>
         <?php endif; ?>
 
         <?php if (isset($error)) : ?>
-            <p id="description"><?php echo $error; ?></p>
+            <p><?php echo $error; ?></p>
         <?php endif; ?>
 
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
-    <script src="js/autocompleteClass.js"></script>
+    <script src="js/autocompleteClass.js">
+    $("#autocompleteClass").on('click', function() {
+        document.querySelector('#description').innerHTML = '<div class="font-weight-bold">' + 'Lokaal: ' + htmlspecialchars($class['classRoom']) + '</div>' + '<div>' + htmlspecialchars($class['description']) + '</div>';
+    });
+    
+    </script>
 </body>
 
 </html>
