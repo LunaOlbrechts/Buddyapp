@@ -48,12 +48,12 @@ if (isset($_GET['searchClass'])) {
             <p>Geef hieronder een lokaal in om te zoeken naar een beschrijving</p>
             <div class="form-group">
                 <label for="class"><b>Geef een lokaal in (vb: Z3.04)</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Lokaal" id="searchClassInField">
-                <div id="autocompleteClass"></div>
+                <input class="form-control" type="text" name="searchField" placeholder="Lokaal" id='searchClass' autocomplete="off">
+                <div><a href="" id="autocompleteClass"></a></div>
             </div>
 
             <div class="form-group">
-                <input class="btn border" type="submit" value="Zoek" name='searchClass'>
+                <input class="btn border search-name-btn" type="submit" value="Zoek" name='searchClass'>
             </div>
         </div>
     </form>
@@ -69,8 +69,17 @@ if (isset($_GET['searchClass'])) {
 
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
-</body>
 
-<script src="js/autocompleteclass.js"></script>
+    <script src="js/autocompleteClass.js">
+        $('#searchClass').autocomplete({
+            serviceUrl: 'class.finder.php?searchField=Z3.04&searchClass=Zoek',
+            dataType: 'json',
+            onSelect: function() {
+                alert("OK");
+            }
+        })
+    
+    </script>
+</body>
 
 </html>
