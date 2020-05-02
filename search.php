@@ -1,7 +1,6 @@
 <?php
 include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/classes/Buddies.php");
+include_once(__DIR__ . "/classes/SearchBuddy.php");
 
 session_start();
 
@@ -13,7 +12,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     if (isset($_GET['searchName'])) {
         $searchField = $_GET['searchField'];
-        $searchName = UserManager::searchName($searchField);
+        $searchName = SearchBuddy::searchName($searchField);
 
         if (empty($_GET['searchField'])) {
             $error = "Vul een naam in";
@@ -38,7 +37,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $sportType = $_GET['sportType'];
         $goingOutType = $_GET['goingOutType'];
 
-        $searchBuddy = UserManager::searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType);
+        $searchBuddy = SearchBuddy::searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType);
 
         if (
             empty($_GET['mainCourseInterest']) && empty($_GET['schoolYear'])

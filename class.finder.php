@@ -1,6 +1,6 @@
 <?php
 include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/SearchClass.php");
 
 session_start();
 
@@ -9,7 +9,7 @@ session_start();
 
 if (isset($_GET['searchClass'])) {
     $searchField = trim($_GET['searchField'], " t.");
-    $searchClass = UserManager::findClass($searchField);
+    $searchClass = SearchClass::findClass($searchField);
 
     if (empty($searchField)) {
         $error = 'Vul een klaslokaal in';
