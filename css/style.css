@@ -323,12 +323,26 @@ span {
   background-position: 0 -25px;
 }
 
+.on {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 19px;
+  cursor: pointer;
+  background: url('http://i.stack.imgur.com/iqN2k.png');
+  background-position: 0 1px;
+}
+
 .voteNumber {
   display: inline;
 }
 
 .card-body {
   min-width: 300px;
+}
+
+.on{
+  background-position: 0 1px;
 }
 
 .btn {

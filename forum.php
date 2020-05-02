@@ -12,6 +12,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $questions = Forum::getQuestions();
     $comments = Forum::getComments();
     $pinned = Forum::getPinnedQuestion();
+    $votedComments = Forum::getVotedComments($_SESSION["user_id"]);
 
     $username = $user[0]['userName'];
 
@@ -26,7 +27,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $notPinned = Forum::deletePinnedQuestion();
         }
     }
-    if (! empty($_POST['postedQuestion'])) {
+    if (!empty($_POST['postedQuestion'])) {
         Forum::saveQuestion($_POST['postedQuestion'], $username);
     }
 } else {
@@ -36,6 +37,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,6 +45,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <link rel="stylesheet" href="./css/style.css">
     <title>Buddy app | forum</title>
 </head>
+
 <body>
 
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
@@ -123,7 +126,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                     <?php if ($user[0]['admin'] == 1) : ?>
                                         <form method="POST">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="pin" <?php if ($question['pinned'] == 1) : echo "checked"; endif ?>>
+                                                <input class="form-check-input" type="checkbox" name="pin" <?php if ($question['pinned'] == 1) : echo "checked";
+                                                                                                            endif ?>>
                                                 <label class="form-check-label" for="pin">
                                                     Pin
                                                 </label>
@@ -139,7 +143,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                             <div class="collapse" id="collapse<?php echo htmlspecialchars($question["id"]) ?>">
                                                 <div class="card card-body">
                                                     <p><?php echo  $comment["userName"] . ": " . $comment["comment"] ?></p>
-                                                    <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
+                                                    <?php if (in_array($comment["id"], $votedComments)) { ?>
+                                                        <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote on voted" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
+                                                    <?php } else { ?>
+                                                        <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         <?php endif ?>
@@ -156,11 +164,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             </div>
         </div>
     </div>
-
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
-
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="/js/vote.js"></script>
 </body>
+
 </html>
