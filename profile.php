@@ -18,7 +18,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
                 UserManager::updateUserDetails($user);
 
-                $profileInformationSuccess = "Successfully updated your profile information!";
+                $profileInformationSuccess = "Profiel informatie succesvol aangepast!";
             }
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
@@ -40,15 +40,15 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                         $user->setProfilePicture("uploads/" . $image_file);
                         $user->setId($id);
                         UserManager::updateUserProfilePicture($user);
-                        $ProfilePicturesuccess = "Your profile picture has been updated!";
+                        $ProfilePicturesuccess = "Profielfoto succesvol aangepast!";
                     } else {
-                        $ProfilePictureError = "The max upload size is 5MB!"; //error message file extension
+                        $ProfilePictureError = "De maximale bestandsgrootte is 5mb!"; //error message file extension
                     }
                 } else {
-                    $ProfilePictureError = "Only files with the extension JPG , JPEG , PNG are supported!"; //error message file extension
+                    $ProfilePictureError = "Enkel bestanden met extensie JPG , JPEG , PNG zijn toegelaten!"; //error message file extension
                 }
             } else {
-                $ProfilePictureError = "You need to upload a picture first!";
+                $ProfilePictureError = "Geen afbeelding geselecteerd!";
             }
         } catch (\Throwable $th) {
             $ProfilePictureError = $th->getMessage();
@@ -62,7 +62,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
             UserManager::updateEmail($user);
 
-            $emailSuccess = "Your email has been updated";
+            $emailSuccess = "Email succesvol aangepast!";
         } catch (\Throwable $th) {
             $emailerror = $th->getMessage();
         }
@@ -76,7 +76,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
             UserManager::updatePassword($user);
 
-            $passwordSuccess = "Your password has been updated!";
+            $passwordSuccess = "Wachtwoord succesvol aangepast!";
         } catch (\Throwable $th) {
             $passworderror = $th->getMessage();
         }
