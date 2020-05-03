@@ -68,9 +68,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     <form method="GET" action="">
         <div class="container mt-5">
-            <h1 class="col-md">Zoek hier naar een buddy</h1>
-            <p>Zoek naar een buddy via de zoekbalk of via de filter</p>
-            <h3>Buddy zoeken via zoekbalk</h3>
+            <h3>Zoek hier naar een buddy</h3>
+
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
                 <input class="form-control" type="text" name="searchField" placeholder="Name" id="searchName">

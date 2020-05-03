@@ -45,12 +45,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <div class="container">
+    <div class="container forum-question">
         <div>
             <form method="POST">
-                <div class="form-group">
+                <div class="form-group input-form-question">
                     <label for="question" aria-placeholder="Question"><?php echo htmlspecialchars($user[0]['userName']); ?></label>
-                    <textarea class="form-control" id="postedQuestion" rows="3" name="postedQuestion"></textarea>
+                    <textarea class="form-control" id="postedQuestion" rows="2" name="postedQuestion" placeholder="Typ hier je vraag"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Plaats jouw vraag</button>
             </form>

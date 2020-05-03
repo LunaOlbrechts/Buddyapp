@@ -236,6 +236,7 @@ span {
   background-color: white !important;
   border: 1px solid #DEEDE5;
   border-radius: 4px;
+  padding-top: 20px !important;
 }
 
 .container-matches {
@@ -368,6 +369,23 @@ span {
   margin-bottom: 10px;
 }
 
+.btn.btn-primary{
+  background-color: #7AD3BB !important;
+  border: none;
+}
+
+.input-form-question{
+  margin-top: 30px !important;
+}
+
+.forum-question{
+  margin-top: 30px !important;
+}
+
+.faq{
+  margin-top: 50px !important;
+}
+
 /* ======================
       Notification
    ======================
@@ -400,7 +418,4 @@ span {
    ======================
 */
 
-.btn.btn-primary{
-  background-color: #7AD3BB !important;
-  border: none;
-}
+
