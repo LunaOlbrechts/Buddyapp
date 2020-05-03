@@ -1,6 +1,6 @@
 <?php 
 
-include_once(__DIR__ . "../../settings/Settings.php");
+include_once(__DIR__ . "/../../settings/Settings.php");
 
     class Db {
 
