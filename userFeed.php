@@ -58,9 +58,9 @@ $posts = Post::getAllPosts($userId);
         <div class="container m-0 p-0">
             <?php foreach ($posts as $post) : ?>
                 <div class="container mt-3 mb-5 p-0">
-                    <h2><?php echo $post['title'] ?></h2>
-                    <p><?php echo $post['description'] ?></p>
-                    <p><?php $date = date_create($post['posted_on']);  echo date_format($date, 'd/m/Y') ?></p>
+                    <h2><?php echo htmlspecialchars($post['title'])?></h2>
+                    <p><?php echo htmlspecialchars($post['description'])?></p>
+                    <p><?php $date = date_create($post['posted_on']);  echo htmlspecialchars(date_format($date, 'd/m/Y')) ?></p>
                 </div>
             <?php endforeach ?>
         </div>
