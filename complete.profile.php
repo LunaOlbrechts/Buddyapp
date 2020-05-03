@@ -7,18 +7,20 @@ use \src\BeMyBuddy\UserManager;
 spl_autoload_register();
 session_start();
 
-$token = array_key_exists('token', $GET) ? $_GET['token'] : null;
-$email = array_key_exists('email', $GET) ? $_GET['email'] : null;
+if(isset($_GET['token']) && isset($_GET['email'])){
+    $token = $_GET['token'];
+    $email = $_GET['email'];
 
-if (!$token || !$email) {
-    header("Location: signup.php");
+    if (!$token || !$email) {
+        header("Location: signup.php");
+    }
 }
 
 $result = Mail::matchToken($token, $email);
 
 if ($result) {
-    $id =  $_SESSION["user_id"];
     // check !empty post
+    $id = $_SESSION['user_id'];
     if (!empty($_POST)) {
         // set properties and connect to save filter in the database 
         try {
@@ -31,9 +33,14 @@ if ($result) {
             $user->setGoingOutType($_POST['goingOutType']);
             $user->setBuddyType($_POST['buddyType']);
 
-            UserManager::saveCompletedProfile($user);
-            // locate to the index page
-            header("Location: index.php");
+            $result = UserManager::saveCompletedProfile($user);
+
+            if($result){
+                $_SESSION['logged_in'] =true;
+
+                // locate to the index page
+                header("Location: index.php");
+            }
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
