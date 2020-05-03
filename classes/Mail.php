@@ -38,7 +38,7 @@ class Mail
 
         if ($result) {
             $subject = "Hallo! Iemand heeft jou een buddyverzoek verstuurd";
-            $msg = "Ontdek snel wie jou een buddyverzoek gestuurd heeft <a href=\"http://localhost:8888/Buddyapp/profile.php" . "\">link</a> ";
+            $msg = "Ontdek snel wie jou een buddyverzoek gestuurd heeft <a href=\"https://bemybuddy.be/profile.php" . "\">link</a> ";
             $msg = wordwrap($msg, 70);
 
             $mail = self::settings();
@@ -75,7 +75,7 @@ class Mail
 
         if ($result) {
             $subject = "Hallo! Welkom bij Buddy.";
-            $msg = "Bevestig jouw email door op deze link te klikken <a href=\"http://localhost:8888/Buddyapp/complete.profile.php?token=" . $token . "&email=" . $email . "\" >link</a> ";
+            $msg = "Bevestig jouw email door op deze link te klikken <a href=\"https://bemybuddy.be/complete.profile.php?token=" . $token . "&email=" . $email . "\" >link</a> ";
             $msg = wordwrap($msg, 70);
 
             $mail = self::settings();
