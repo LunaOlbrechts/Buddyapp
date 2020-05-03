@@ -10,10 +10,10 @@ session_start();
 if(isset($_GET['token']) && isset($_GET['email'])){
     $token = $_GET['token'];
     $email = $_GET['email'];
+}
 
-    if (!$token || !$email) {
-        header("Location: signup.php");
-    }
+if (!$token || !$email) {
+    header("Location: signup.php");
 }
 
 $result = Mail::matchToken($token, $email);
