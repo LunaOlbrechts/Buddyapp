@@ -22,7 +22,7 @@ class UserManager
                 $results = $conn->query($sql);
 
                 if ($results->rowCount() > 0) {
-                    throw new \Exception("Email is already used");
+                    throw new \Exception("Email is al in gebruik");
                 }
             }
 
@@ -32,7 +32,7 @@ class UserManager
             $domain = array_pop($tmp);
 
             if (!in_array($domain, $domainWhiteList)) {
-                throw new \Exception("Username should end with @student.thomasmore.be");
+                throw new \Exception("Email moet eindigen met @student.thomasmore.be");
             }
 
             // insert query
@@ -129,7 +129,7 @@ class UserManager
         return $userData;
     }
 
-    public function updateUserDetails(User $user)
+    public static function updateUserDetails(User $user)
     {
         $conn = Db::getConnection();
         //$conn = new PDO('mysql:host=localhost;dbname=buddy_app;charset=utf8', "root", "root");
@@ -147,7 +147,7 @@ class UserManager
         return $result;
     }
 
-    public function updateUserProfilePicture(User $user)
+    public static function updateUserProfilePicture(User $user)
     {
         $conn = Db::getConnection();
         $sql = "UPDATE tl_user SET profilePicture = :profilePicture WHERE id = :id";
@@ -164,7 +164,7 @@ class UserManager
         return $result;
     }
 
-    public function updateEmail(User $user)
+    public static function updateEmail(User $user)
     {
         $conn = Db::getConnection();
         $sql = "SELECT password FROM tl_user WHERE id = :id LIMIT 1";
@@ -190,7 +190,7 @@ class UserManager
 
             $result = $statement->execute();
         } else {
-            throw new \Exception("Password is incorrect");
+            throw new \Exception("Incorrect wachtwoord");
         }
 
         return $result;
@@ -224,10 +224,10 @@ class UserManager
 
                 $result = $statement->execute();
             } else {
-                throw new \Exception("Old Password is incorrect");
+                throw new \Exception("Ous wachtwoord is niet correct");
             }
         } else {
-            throw new \Exception("Reapated new password is not the same!");
+            throw new \Exception("Nieuwe wachtwoorden komen niet overeen!");
         }
     }
 
@@ -258,7 +258,7 @@ class UserManager
             $_SESSION['lastName'] = $lastName;
             header("Location:index.php");  //redirect moet in de frontend
         } else {
-            throw new \Exception("Email & password don't match");
+            throw new \Exception("Email en wachtwoord komen niet overeen!");
         }
     }
 

@@ -196,22 +196,6 @@ class Forum
 
         return false;
     }
-    // public static function addVote($commentId, $userId)
-    // {
-    //     $conn = Db::getConnection();
-        
-    //     $statement = $conn->prepare("INSERT INTO tl_votes (commentId, userId) VALUES (:commentId, :userId)");
-    //     $statement->bindValue(":commentId", $commentId);
-    //     $statement->bindValue(":userId", $userId);
-
-    //     $result = $statement->execute();
-
-    //     if ($result) {
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
 
     public static function getVotedComments($userId)
     {

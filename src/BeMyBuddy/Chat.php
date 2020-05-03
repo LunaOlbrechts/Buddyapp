@@ -38,9 +38,6 @@ class Chat
 
         $statement = $conn->prepare("SELECT * FROM tl_chat WHERE (senderId = '" . $senderId . "' AND receiverId = '" . $receiverId . "') OR (senderId = '" . $receiverId . "' AND receiverId = '" . $senderId . "') ORDER BY created_on ASC");
 
-        $statement->bindValue(":senderId", $senderId);
-        $statement->bindValue(":receiverId", $receiverId);
-
         $statement->execute();
         $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
