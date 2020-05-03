@@ -9,7 +9,7 @@ session_start();
 $id =  $_SESSION["user_id"];
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_POST['updateDetails']) {
+    if (isset($_POST['updateDetails']) && $_POST['updateDetails']) {
         try {
             if (!empty($_POST['updateDetails'])) {
                 $user = new User();
@@ -23,7 +23,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
-    } else if ($_POST['updateProfilePicture']) {
+    } else if (isset($_POST['updateProfilePicture']) && $_POST['updateProfilePicture']) {
         try {
             $file = $_FILES["profilePicture"]["name"];
             $image_file = time() . str_replace(' ', '_', $file);
@@ -53,7 +53,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         } catch (\Throwable $th) {
             $ProfilePictureError = $th->getMessage();
         }
-    } else if ($_POST['updateEmail']) {
+    } else if (isset($_POST['updateEmail']) && $_POST['updateEmail']) {
         try {
             $user = new User();
             $user->setPasswordForVerification($_POST['passwordForEmailVerification']);
@@ -66,7 +66,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         } catch (\Throwable $th) {
             $emailerror = $th->getMessage();
         }
-    } else if ($_POST['updatePassword']) {
+    } else if (isset($_POST['updatePassword']) && $_POST['updatePassword']) {
         try {
             $user = new User();
             $user->setPasswordForVerification($_POST['oldPassword']);
@@ -85,7 +85,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-$userData = UserManager::getUserFromDatabase($user);
+$userData = UserManager::getUserFromDatabase($id);
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

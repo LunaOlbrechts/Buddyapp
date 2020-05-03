@@ -8,7 +8,7 @@ session_start();
 $userId = $_SESSION["user_id"];
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    if ($_POST['addPost']) {
+    if (isset($_POST['addPost']) && $_POST['addPost']) {
 
         $post = New Post();
         $post->setUserId($userId);

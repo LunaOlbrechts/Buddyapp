@@ -20,7 +20,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $comment = $_POST['comment'];
             Forum::saveComment($comment, $username);
         }
-        if ($_POST['pin'] == "on") {
+        if (isset($_POST['pin']) && $_POST['pin'] == "on") {
             $result = Forum::savePinnedQuestion();
         } else {
             $notPinned = Forum::deletePinnedQuestion();
