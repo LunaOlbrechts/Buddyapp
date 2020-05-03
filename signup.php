@@ -21,7 +21,7 @@ if (!empty($_POST)) {
             $_SESSION['email'] = $user->getEmail();
             $success = "Sign up completed!";
             Mail::sendEmailSignup();
-            header("Location: complete.profile.php");
+            header("Location: signup.mail.php");
         }             
     } catch (\Throwable $th) {
         //throw error
