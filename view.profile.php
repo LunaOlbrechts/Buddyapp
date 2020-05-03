@@ -70,16 +70,16 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <div class="d-flex justify-content-center">
         <?php foreach ($userdata as $users) : ?>
             <div class="card">
-                <h2 class="card-title">Profiel van <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
+                <h2 class="card-title"><b>Profiel van</b> <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
                 <img class="card-img-top mx-auto" src="><?php echo ($users['profilePicture']) ?>" width="200" height="200" alt="profile picture">
-                <p class="card-text">Description: <?php echo htmlspecialchars($users['description']) ?></p>
-                <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
-                <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
-                <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
-                <p class="card-text">Sport type: <?php echo htmlspecialchars($users['sportType']) ?></p>
-                <p class="card-text">Uitgaanstype: <?php echo htmlspecialchars($users['goingOutType']) ?></p>
+                <p class="card-text"><b>Description:</b> <?php echo htmlspecialchars($users['description']) ?></p>
+                <p class="card-text"><b>Woonplaats:</b> <?php echo htmlspecialchars($users['city']) ?></p>
+                <p class="card-text"><b>opleidingsjaar:</b> <?php echo htmlspecialchars($users['schoolYear']) ?></p>
+                <p class="card-text"><b>opleidingsintresse:</b> <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
+                <p class="card-text"><b>Sport type:</b> <?php echo htmlspecialchars($users['sportType']) ?></p>
+                <p class="card-text"><b>Uitgaanstype:</b> <?php echo htmlspecialchars($users['goingOutType']) ?></p>
                 <?php if ($haveBuddy == false) : ?>
-                    <p class="card-text">Buddy: <?php echo htmlspecialchars($users['buddyType']) ?></p>
+                    <p class="card-text"><b>Buddy:</b> <?php if($users['buddyType'] == "lookingForABuddy"){echo "Opzoek naar een buddy"; } else { echo "Ik wil een buddy zijn";}?></p>
                 <?php endif ?>
 
 
