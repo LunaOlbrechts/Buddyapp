@@ -1,8 +1,5 @@
 <?php
 
-use \src\BeMyBuddy\User;
-use \src\BeMyBuddy\UserManager;
-
 spl_autoload_register();
 session_start();
 
@@ -12,11 +9,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_POST['updateDetails']) && $_POST['updateDetails']) {
         try {
             if (!empty($_POST['updateDetails'])) {
-                $user = new User();
+                $user = new \src\BeMyBuddy\User();
                 $user->setDescription($_POST['description']);
                 $user->setId($id);
 
-                UserManager::updateUserDetails($user);
+                \src\BeMyBuddy\UserManager::updateUserDetails($user);
 
                 $profileInformationSuccess = "Successfully updated your profile information!";
             }
@@ -36,10 +33,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                 {
                     if ($size < 5000000) {
                         move_uploaded_file($temp, "uploads/" . $image_file); //move upload file temperory directory to your upload folder
-                        $user = new User();
+                        $user = new \src\BeMyBuddy\User();
                         $user->setProfilePicture("uploads/" . $image_file);
                         $user->setId($id);
-                        UserManager::updateUserProfilePicture($user);
+                        \src\BeMyBuddy\UserManager::updateUserProfilePicture($user);
                         $ProfilePicturesuccess = "Your profile picture has been updated!";
                     } else {
                         $ProfilePictureError = "The max upload size is 5MB!"; //error message file extension
@@ -55,12 +52,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         }
     } else if (isset($_POST['updateEmail']) && $_POST['updateEmail']) {
         try {
-            $user = new User();
+            $user = new \src\BeMyBuddy\User();
             $user->setPasswordForVerification($_POST['passwordForEmailVerification']);
             $user->setEmail($_POST['email']);
             $user->setId($id);
 
-            UserManager::updateEmail($user);
+            \src\BeMyBuddy\UserManager::updateEmail($user);
 
             $emailSuccess = "Your email has been updated";
         } catch (\Throwable $th) {
@@ -68,13 +65,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         }
     } else if (isset($_POST['updatePassword']) && $_POST['updatePassword']) {
         try {
-            $user = new User();
+            $user = new \src\BeMyBuddy\User();
             $user->setPasswordForVerification($_POST['oldPassword']);
             $user->setnewPassword($_POST['newPassword']);
             $user->setRepeatedNewPassword($_POST['reapeatNewPassword']);
             $user->setId($id);
 
-            UserManager::updatePassword($user);
+            \src\BeMyBuddy\UserManager::updatePassword($user);
 
             $passwordSuccess = "Your password has been updated!";
         } catch (\Throwable $th) {
@@ -85,7 +82,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-$userData = UserManager::getUserFromDatabase($id);
+$userData = \src\BeMyBuddy\UserManager::getUserFromDatabase($id);
 
 ?><!DOCTYPE html>
 <html lang="en">

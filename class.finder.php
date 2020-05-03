@@ -1,14 +1,12 @@
 <?php
 
-use \src\BeMyBuddy\SearchClass;
-
 spl_autoload_register();
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_GET['searchClass'])) {
         $searchField = trim($_GET['searchField'], " t.");
-        $searchClass = SearchClass::findClass($searchField);
+        $searchClass = \src\BeMyBuddy\SearchClass::findClass($searchField);
 
         if (empty($searchField)) {
             $error = 'Vul een klaslokaal in';

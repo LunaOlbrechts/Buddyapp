@@ -1,30 +1,25 @@
 <?php
 
-use \src\BeMyBuddy\Buddies;
-use \src\BeMyBuddy\Chat;
-use \src\BeMyBuddy\UserManager;
-use \src\BeMyBuddy\Mail;
-
 spl_autoload_register();
 session_start();
 
 $id =  $_SESSION["user_id"];
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    $buddy = new Buddies();
+    $buddy = new \src\BeMyBuddy\Buddies();
     $otherId = $_SESSION["receiver_id"];
-    $haveRequestOrBuddy = Buddies::haveRequestOrBuddy($id, $otherId);
+    $haveRequestOrBuddy = \src\BeMyBuddy\Buddies::haveRequestOrBuddy($id, $otherId);
 
     if (isset($_POST['sendMessage']) && $_POST['sendMessage'] && !empty($_POST['message'])) {
         try {
-            $message = new Chat();
+            $message = new \src\BeMyBuddy\Chat();
             $message->setMessage($_POST['message']);
             $message->setSenderId($_SESSION['user_id']);
             $message->setSenderName($_SESSION['first_name']);
             $message->setReceiverId($_SESSION['receiver_id']);
             $message->setReceiverName($_SESSION['receiver_name']);
 
-            $result = Chat::sendMessage($message);
+            $result = \src\BeMyBuddy\Chat::sendMessage($message);
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
         }
@@ -32,11 +27,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     if (isset($_POST["buddyRequest"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
-            $buddy = new Buddies();
+            $buddy = new \src\BeMyBuddy\Buddies();
             $buddy->setSender($_SESSION['user_id']);
             $buddy->setReceiver($_SESSION['receiver_id']);
-            Buddies::sendRequest($buddy);
-            Mail::sendEmailBuddyRequest();
+            \src\BeMyBuddy\Buddies::sendRequest($buddy);
+            \src\BeMyBuddy\Mail::sendEmailBuddyRequest();
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
@@ -45,18 +40,17 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-
 $senderId = $_SESSION['user_id'];
 $receiverId = $_SESSION['receiver_id'];
 
 //Get all messages for this chat
-$messages = Chat::updateMessages($senderId, $receiverId);
+$messages = \src\BeMyBuddy\Chat::updateMessages($senderId, $receiverId);
 //Set messages to readed on chat join
-Chat::updateReaded($senderId, $receiverId);
+\src\BeMyBuddy\Chat::updateReaded($senderId, $receiverId);
 
-$currentUser = UserManager::getUserFromDatabase();
-$matchedUsers = UserManager::matchUsersByFiltersChat();
-$scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
+$currentUser = \src\BeMyBuddy\UserManager::getUserFromDatabase();
+$matchedUsers = \src\BeMyBuddy\UserManager::matchUsersByFiltersChat();
+$scoresOfMatchedUsers = \src\BeMyBuddy\UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
 
 ?><!DOCTYPE html>
 <html lang="en">

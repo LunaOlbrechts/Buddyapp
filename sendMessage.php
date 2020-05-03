@@ -1,20 +1,18 @@
 <?php
 
-use \src\BeMyBuddy\Chat;
-
 spl_autoload_register();
 session_start();
 
 if (!empty($_POST)) {
 
-    $message = new Chat();
+    $message = new \src\BeMyBuddy\Chat();
     $message->setMessage($_POST['chat_message']);
     $message->setSenderId($_SESSION['user_id']);
     $message->setSenderName($_SESSION['first_name']);
     $message->setReceiverId($_SESSION['receiver_id']);
     $message->setReceiverName($_SESSION['receiver_name']);
 
-    Chat::sendMessage($message);
+    \src\BeMyBuddy\Chat::sendMessage($message);
 
     $response = [
         'status' => 'success',
