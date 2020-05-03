@@ -5,34 +5,41 @@ use \src\BeMyBuddy\SearchClass;
 spl_autoload_register();
 session_start();
 
-if (isset($_GET['searchClass'])) {
-    $searchField = trim($_GET['searchField'], " t.");
-    $searchClass = SearchClass::findClass($searchField);
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    if (isset($_GET['searchClass'])) {
+        $searchField = trim($_GET['searchField'], " t.");
+        $searchClass = SearchClass::findClass($searchField);
 
-    if (empty($searchField)) {
-        $error = 'Vul een klaslokaal in';
-    } elseif (strlen($searchField) < 3) {
-        $error = "Voer minstens 3 karakters in ('Gebouw','verdieping','lokaal')";
-    }
+        if (empty($searchField)) {
+            $error = 'Vul een klaslokaal in';
+        } elseif (strlen($searchField) < 3) {
+            $error = "Voer minstens 3 karakters in ('Gebouw','verdieping','lokaal')";
+        }
 
-    if (strlen($searchField) > 2) {
-        if (count($searchClass) > 0) {
-            foreach ($searchClass as $class) {
-                $succes = '<div class="font-weight-bold">' . 'Lokaal: '
-                    . htmlspecialchars($class['classRoom']) . '</div>' . '<div>' . htmlspecialchars($class['description']) . '</div>';
+        if (strlen($searchField) > 2) {
+            if (count($searchClass) > 0) {
+                foreach ($searchClass as $class) {
+                    $succes = '<div class="font-weight-bold">' . 'Lokaal: '
+                        . htmlspecialchars($class['classRoom']) . '</div>' . '<div>' . htmlspecialchars($class['description']) . '</div>';
+                }
+            } else {
+                $error = 'Geen lokaal gevonden';
             }
-        } else {
-            $error = 'Geen lokaal gevonden';
         }
     }
+} else {
+    header("Location: login.php");
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy app | Lokaal vinder</title>
 </head>
+
 <body>
 
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
@@ -62,17 +69,10 @@ if (isset($_GET['searchClass'])) {
             <p><?php echo $error; ?></p>
         <?php endif; ?>
 
-
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
-    <script src="/js/autocompleteClass.js">
-    /*$("#autocompleteClass").on('click', function myFunction() {
-        document.querySelector('#description').innerHTML = '<div class="font-weight-bold">' + 'Lokaal: ' 
-        + htmlspecialchars($class['classRoom']) + '</div>' + '<div>' + htmlspecialchars($class['description']) + '</div>';
-    });*/
-    
-    </script>
+    <script src="/js/autocompleteClass.js"></script>
 </body>
 
 </html>
