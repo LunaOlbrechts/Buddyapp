@@ -1,8 +1,5 @@
 <?php
 
-use \src\BeMyBuddy\User;
-use \src\BeMyBuddy\UserManager;
-
 spl_autoload_register();
 // make form log in user
 // check ih 
@@ -23,13 +20,13 @@ if (!empty($_POST)) {
         try {
             
             // nieuwe instantie klasse User
-            $user = new User();
+            $user = new \src\BeMyBuddy\User();
             // stellen pw gelijk aan ingevulde veldje 'password'
             $user->setPasswordForVerification($_POST['password']);
             // stellen email gelijk aan ingevulde veldje 'email'
             $user->setEmail($_POST['email']);
             
-            $result = UserManager::logIn($user);
+            $result = \src\BeMyBuddy\UserManager::logIn($user);
         
         } catch (\Throwable $th) {
             $error = $th->getMessage();

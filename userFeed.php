@@ -1,7 +1,5 @@
 <?php
 
-use \src\BeMyBuddy\Post;
-
 spl_autoload_register();
 session_start();
 
@@ -10,7 +8,7 @@ $userId = $_SESSION["user_id"];
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_POST['addPost']) && $_POST['addPost']) {
 
-        $post = New Post();
+        $post = New \src\BeMyBuddy\Post();
         $post->setUserId($userId);
         $post->setTitle($_POST['title']);
         $post->setDescription($_POST['description']);
@@ -19,7 +17,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     }
 }
 
-$posts = Post::getAllPosts($userId);
+$posts = \src\BeMyBuddy\Post::getAllPosts($userId);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,11 +1,9 @@
 <?php 
 
-use \src\BeMyBuddy\Emoji;
-
 spl_autoload_register();
 
 if(!empty($_POST)){
-    $e = new Emoji();
+    $e = new \src\BeMyBuddy\Emoji();
     $e->setMessageId($_POST['id']);
     $e->setEmoji($_POST['emoji']);
 

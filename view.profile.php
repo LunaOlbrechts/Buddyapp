@@ -1,11 +1,5 @@
 <?php
 
-use \src\BeMyBuddy\Buddies;
-use \src\BeMyBuddy\UserManager;
-use \src\BeMyBuddy\Post;
-use \src\BeMyBuddy\Mail;
-
-
 spl_autoload_register();
 session_start();
 
@@ -14,15 +8,15 @@ $id =  $_SESSION["user_id"];
 $profileId = $_GET['id'];
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    $posts = Post::getAllPosts($profileId);
-    $buddy = new Buddies();
+    $posts = \src\BeMyBuddy\Post::getAllPosts($profileId);
+    $buddy = new \src\BeMyBuddy\Buddies();
     $id = $_GET['id'];
     $otherId = $_SESSION["user_id"];
-    $haveRequestOrBuddy = Buddies::haveRequestOrBuddy($id, $otherId);
+    $haveRequestOrBuddy = \src\BeMyBuddy\Buddies::haveRequestOrBuddy($id, $otherId);
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $userdata = UserManager::getUserFromDatabaseById($id);
+        $userdata = \src\BeMyBuddy\UserManager::getUserFromDatabaseById($id);
     } else {
         die("An ID is missing. 🙄");
     }
@@ -38,22 +32,22 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     if (isset($_POST["buddyRequest"]) && $_POST['buddyRequest'] && !empty($_POST['buddyRequest'])) {
         try {
-            $buddy = new Buddies();
+            $buddy = new \src\BeMyBuddy\Buddies();
             $buddy->setSender($_SESSION['user_id']);
             $buddy->setReceiver($_GET['id']);
-            Buddies::sendRequest($buddy);
-            Mail::sendEmailBuddyRequest();
+            \src\BeMyBuddy\Buddies::sendRequest($buddy);
+            \src\BeMyBuddy\Mail::sendEmailBuddyRequest();
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
     }
 
     // PRINT BUDDY ON PROFILE
-    $buddy = new Buddies();
-    $haveBuddy = Buddies::haveBuddy($id);
+    $buddy = new \src\BeMyBuddy\Buddies();
+    $haveBuddy = \src\BeMyBuddy\Buddies::haveBuddy($id);
 
     if ($haveBuddy == 1) {
-        $currentuser = Buddies::displayBuddy($id);
+        $currentuser = \src\BeMyBuddy\Buddies::displayBuddy($id);
     }
 } else {
     header("Location: login.php");

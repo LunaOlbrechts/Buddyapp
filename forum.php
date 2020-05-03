@@ -1,33 +1,30 @@
 <?php
 
-use \src\BeMyBuddy\UserManager;
-use \src\BeMyBuddy\Forum;
-
 spl_autoload_register();
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    $user = UserManager::getUserFromDatabase();
-    $questions = Forum::getQuestions();
-    $comments = Forum::getComments();
-    $pinned = Forum::getPinnedQuestion();
-    $votedComments = Forum::getVotedComments($_SESSION["user_id"]);
+    $user = \src\BeMyBuddy\UserManager::getUserFromDatabase();
+    $questions = \src\BeMyBuddy\Forum::getQuestions();
+    $comments = \src\BeMyBuddy\Forum::getComments();
+    $pinned = \src\BeMyBuddy\Forum::getPinnedQuestion();
+    $votedComments = \src\BeMyBuddy\Forum::getVotedComments($_SESSION["user_id"]);
 
     $username = $user[0]['userName'];
 
     if ($questions) {
         if (!empty($_POST['comment'])) {
             $comment = $_POST['comment'];
-            Forum::saveComment($comment, $username);
+            \src\BeMyBuddy\Forum::saveComment($comment, $username);
         }
         if (isset($_POST['pin']) && $_POST['pin'] == "on") {
-            $result = Forum::savePinnedQuestion();
+            $result = \src\BeMyBuddy\Forum::savePinnedQuestion();
         } else {
-            $notPinned = Forum::deletePinnedQuestion();
+            $notPinned = \src\BeMyBuddy\Forum::deletePinnedQuestion();
         }
     }
     if (!empty($_POST['postedQuestion'])) {
-        Forum::saveQuestion($_POST['postedQuestion'], $username);
+        \src\BeMyBuddy\Forum::saveQuestion($_POST['postedQuestion'], $username);
     }
 } else {
     header("Location: login.php");

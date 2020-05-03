@@ -1,13 +1,11 @@
 <?php
 
-use \src\BeMyBuddy\Db;
-
 spl_autoload_register();
 
 if (isset($_POST['userName'])) {
 
     $userName = $_POST['userName'];
-    $conn = Db::getConnection();
+    $conn = \src\BeMyBuddy\Db::getConnection();
     $sql = "SELECT * FROM tl_user WHERE userName='$userName'";
     $results = $conn->query($sql);
 
