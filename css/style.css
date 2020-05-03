@@ -419,3 +419,12 @@ span {
 */
 
 
+.card.profile{
+  margin-top: 40px !important;
+  min-width: 360px !important;
+  padding: 20px !important;
+}
+
+.profile.btn-buddy{
+  background-color: #7AD3BB !important;
+}

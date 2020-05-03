@@ -69,8 +69,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     <div class="d-flex justify-content-center">
         <?php foreach ($userdata as $users) : ?>
-            <div class="card">
-                <h2 class="card-title"><b>Profiel van</b> <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
+            <div class="card profile">
+                <h2 class="card-title"><b> <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></b></h2>
                 <img class="card-img-top mx-auto" src="><?php echo ($users['profilePicture']) ?>" width="200" height="200" alt="profile picture">
                 <p class="card-text"><b>Description:</b> <?php echo htmlspecialchars($users['description']) ?></p>
                 <p class="card-text"><b>Woonplaats:</b> <?php echo htmlspecialchars($users['city']) ?></p>
@@ -82,14 +82,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     <p class="card-text"><b>Buddy:</b> <?php if($users['buddyType'] == "lookingForABuddy"){echo "Opzoek naar een buddy"; } else { echo "Ik wil een buddy zijn";}?></p>
                 <?php endif ?>
 
-
                 <?php if ($haveBuddy == true) : ?>
                     <?php foreach ($currentuser as $currentusers) : ?>
                         <p class="card-text">My buddy is: <?php echo htmlspecialchars($currentusers['firstName']) . " " . htmlspecialchars($currentusers['lastName']) ?></p>
                     <?php endforeach ?>
                 <?php endif ?>            
                         
-
                 <?php if (isset($error)) : ?>
                     <p><?php echo htmlspecialchars($error); ?></p>
                 <?php endif; ?>
@@ -99,7 +97,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
                             <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
-                            <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
+                            <input type="submit" value="Be my buddy" class="btn btn-success btn-buddy" name="buddyRequest"></input>
                         </div>
                     </form>
                 <?php endif ?>

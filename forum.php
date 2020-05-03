@@ -68,7 +68,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 <h5 class="card-title"><?php echo htmlspecialchars($pinnedQuestion["userName"]) ?></h5>
                                 <p class="card-text"><?php echo htmlspecialchars($pinnedQuestion["question"]) ?></p>
                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>" aria-expanded="false" aria-controls="collapse<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>">
-                                    Opmerkingen
+                                    Bekijk opmerkingen
                                 </button>
 
                                 <?php if ($user[0]['admin'] == 1) : ?>
@@ -86,6 +86,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 <?php endif ?>
 
                                 <!-- php for each comments as comment-->
+                                <?php if(!empty($comments)): ?>
                                 <?php foreach ($comments as $comment) : ?>
                                     <?php if ($comment['forum_question_id'] == $pinnedQuestion["id"]) : ?>
                                         <div class="collapse" id="collapse<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>">
@@ -95,8 +96,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                         </div>
                                     <?php endif ?>
                                 <?php endforeach ?>
+                                <?php endif ?>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="" name="comment" placeholder="comment">
+                                    <input type="text" class="form-control" id="" name="comment" placeholder="Opmerking">
                                     <input type="hidden" value="<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>" name="questionId"></input>
                                 </div>
                             </div>
@@ -115,7 +117,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                     <h5 class="card-title"><?php echo htmlspecialchars($question["userName"]) ?></h5>
                                     <p class="card-text"><?php echo htmlspecialchars($question["question"]) ?></p>
                                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo htmlspecialchars($question["id"]) ?>" aria-expanded="false" aria-controls="collapse<?php echo htmlspecialchars($question["id"]) ?>">
-                                        Opmerkingen
+                                        Bekijk opmerkingen
                                     </button>
 
                                     <?php if ($user[0]['admin'] == 1) : ?>
@@ -127,7 +129,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                                     Pin
                                                 </label>
                                                 <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
-                                                <button type="submit" class="btn btn-primary">Bevesting pinn</button>
+                                                <button type="submit" class="btn btn-primary">Bevesting pin</button>
                                             </div>
                                         </form>
                                     <?php endif ?>
