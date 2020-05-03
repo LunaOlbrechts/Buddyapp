@@ -28,4 +28,3 @@ imagepng($image);
 
 imagedestroy($image);
 
-?>

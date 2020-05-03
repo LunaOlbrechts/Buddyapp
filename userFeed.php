@@ -1,6 +1,8 @@
 <?php
 
-include_once(__DIR__ . "/classes/Post.php");
+use \src\BeMyBuddy\Post;
+
+spl_autoload_register();
 session_start();
 
 $userId = $_SESSION["user_id"];
@@ -18,10 +20,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 }
 
 $posts = Post::getAllPosts($userId);
-
 ?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,9 +32,10 @@ $posts = Post::getAllPosts($userId);
         display: none;
     }
 </style>
-
 <body>
+
     <?php include_once("include/nav.inc.php"); ?>
+
     <div class="container mt-5">
         <h1>Profiel</h1>
         <a href="/profile.php" class="btn btn-primary">Profiel aanpassen</a>
@@ -66,21 +67,22 @@ $posts = Post::getAllPosts($userId);
     </div>
     
     <?php include_once("include/footer.inc.php"); ?>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $('#newPost').on('click', function(e) {
+            var click = $(this).data('clicks');
+
+            if (click) {
+                $("#newPostContainer").slideUp();
+            } else {
+                $("#newPostContainer").slideDown();
+            };
+
+            $(this).data('clicks', !click); // you have to set it
+            e.preventDefault();
+        });
+    </script>
+
 </body>
-
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
-    $('#newPost').on('click', function(e) {
-        var click = $(this).data('clicks');
-
-        if (click) {
-            $("#newPostContainer").slideUp();
-        } else {
-            $("#newPostContainer").slideDown();
-        };
-
-        $(this).data('clicks', !click); // you have to set it
-        e.preventDefault();
-    });
-</script>

@@ -1,14 +1,17 @@
 <?php
 
-include_once(__DIR__ . "/Db.php");
+namespace src\BeMyBuddy;
 
-    class Emoji {
+use \PDO;
+
+class Emoji
+{
         private $emoji;
         private $messageId;
 
         /**
          * Get the value of emoji
-         */ 
+         */
         public function getEmoji()
         {
                 return $this->emoji;
@@ -18,7 +21,7 @@ include_once(__DIR__ . "/Db.php");
          * Set the value of emoji
          *
          * @return  self
-         */ 
+         */
         public function setEmoji($emoji)
         {
                 $this->emoji = $emoji;
@@ -28,7 +31,7 @@ include_once(__DIR__ . "/Db.php");
 
         /**
          * Get the value of messageId
-         */ 
+         */
         public function getMessageId()
         {
                 return $this->messageId;
@@ -38,7 +41,7 @@ include_once(__DIR__ . "/Db.php");
          * Set the value of messageId
          *
          * @return  self
-         */ 
+         */
         public function setMessageId($messageId)
         {
                 $this->messageId = $messageId;
@@ -46,17 +49,19 @@ include_once(__DIR__ . "/Db.php");
                 return $this;
         }
 
-        public function save(){
-            $conn = Db::getConnection();
-            $statement = $conn->prepare("UPDATE tl_chat set emoji = :emoji WHERE id = :id");
+        public function save()
+        {
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("UPDATE tl_chat set emoji = :emoji WHERE id = :id");
 
-            $emoji = $this->getEmoji();
-            $id = $this->getMessageId();
+                $emoji = $this->getEmoji();
+                $id = $this->getMessageId();
 
-            $statement->bindValue(":emoji", $emoji);
-            $statement->bindValue(":id", $id);
+                $statement->bindValue(":emoji", $emoji);
+                $statement->bindValue(":id", $id);
 
-            $result = $statement->execute();
-            return $result;
+                $result = $statement->execute();
+
+                return $result;
         }
-    }
+}

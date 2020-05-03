@@ -1,9 +1,11 @@
 <?php
 
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
+use \src\BeMyBuddy\User;
+use \src\BeMyBuddy\UserManager;
 
+spl_autoload_register();
 session_start();
+
 $id =  $_SESSION["user_id"];
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
@@ -83,13 +85,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-
 $userData = UserManager::getUserFromDatabase($user);
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -97,9 +95,10 @@ $userData = UserManager::getUserFromDatabase($user);
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <title>Buddy app | Profiel aanpasssen</title>
 </head>
-
 <body>
+
     <?php include_once("include/nav.inc.php"); ?>
+
     <div class="container mt-5">
         <h1>Profiel</h1>
         <a href="/userFeed.php" class="btn btn-primary">Mijn posts</a>
@@ -202,7 +201,8 @@ $userData = UserManager::getUserFromDatabase($user);
             </div>
         <?php endforeach; ?>
     </div>
-    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
-</body>
 
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
+
+</body>
 </html>

@@ -1,8 +1,10 @@
 <?php
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/classes/Mail.php");
 
+use \src\BeMyBuddy\Mail;
+use \src\BeMyBuddy\User;
+use \src\BeMyBuddy\UserManager;
+
+spl_autoload_register();
 session_start();
 
 $token = array_key_exists('token', $GET) ? $_GET['token'] : null;
@@ -40,8 +42,7 @@ if ($result) {
     // When there is no valid email the user will be redirected to the login page
     header("Location: signup.php");
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -97,11 +98,11 @@ if ($result) {
                     <div class="form-group">
                         <label class="form-title">Buddy</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="lookingForABuddy" name="buddyType" value="lookingForABuddy" checked>
+                            <input class="form-check-input" type="radio" id="lookingForABuddy" name="buddyType" value="Op zoek naar een buddy" checked>
                             <label class="form-check-label" for="lookingForABuddy">Ik ben op zoek naar een buddy</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="wantToBeABuddy" name="buddyType" value="wantToBeABuddy">
+                            <input class="form-check-input" type="radio" id="wantToBeABuddy" name="buddyType" value="Wil een buddy zijn">
                             <label class="form-check-label" for="isABuddy">Ik wil een buddy zijn</label>
                         </div>
                     </div>

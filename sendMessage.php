@@ -1,10 +1,11 @@
 <?php
 
-include_once(__DIR__ . "/../classes/Chat.php");
+use \src\BeMyBuddy\Chat;
 
+spl_autoload_register();
 session_start();
 
-if(!empty($_POST)){
+if (!empty($_POST)) {
 
     $message = new Chat();
     $message->setMessage($_POST['chat_message']);

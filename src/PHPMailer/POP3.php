@@ -18,7 +18,7 @@
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-namespace PHPMailer\PHPMailer;
+namespace src\PHPMailer;
 
 /**
  * PHPMailer POP-Before-SMTP Authentication Class.
@@ -314,7 +314,7 @@ class POP3
         //So ignore errors here
         try {
             @fclose($this->pop_conn);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             //Do nothing
         }
     }

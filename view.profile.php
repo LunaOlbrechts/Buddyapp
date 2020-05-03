@@ -1,9 +1,13 @@
 <?php
+
+use \src\BeMyBuddy\Buddies;
+use \src\BeMyBuddy\UserManager;
+use \src\BeMyBuddy\Post;
+use \src\BeMyBuddy\Mail;
+
+
+spl_autoload_register();
 session_start();
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/classes/Buddies.php");
-include_once(__DIR__ . "/classes/Post.php");
 
 $id =  $_SESSION["user_id"];
 
@@ -24,7 +28,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         die("An ID is missing. 🙄");
     }
 
-
     if (isset($_POST['chat']) && ($_POST['chat'])) {
         try {
             $_SESSION['sender'] = $_POST['request'];
@@ -40,12 +43,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $buddy->setSender($_SESSION['user_id']);
             $buddy->setReceiver($_GET['id']);
             Buddies::sendRequest($buddy);
-            //Mail::sendEmail();
+            Mail::sendEmailBuddyRequest();
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
     }
-
 
     // PRINT BUDDY ON PROFILE
     $buddy = new Buddies();
@@ -55,25 +57,23 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $currentuser = Buddies::displayBuddy($id);
     }
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy app | Profiel</title>
 </head>
-
 <body>
+
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
-
-
 
     <div class="d-flex justify-content-center">
         <?php foreach ($userdata as $users) : ?>
             <div class="card">
                 <h2 class="card-title">Profiel van <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
+                <img class="card-img-top mx-auto" src="><?php echo ($users['profilePicture']) ?>" width="200" height="200" alt="profile picture">
+                <p class="card-text">Description: <?php echo htmlspecialchars($users['description']) ?></p>
                 <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
                 <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
                 <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
@@ -88,18 +88,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     <?php foreach ($currentuser as $currentusers) : ?>
                         <p class="card-text">My buddy is: <?php echo htmlspecialchars($currentusers['firstName']) . " " . htmlspecialchars($currentusers['lastName']) ?></p>
                     <?php endforeach ?>
-                <?php endif ?>
-
-                <!--
-                    CHAT BUTTON
-
-                <form method="POST" enctype="multipart/form-data">
-                <input type="hidden" value="<?php echo htmlspecialchars($user['sender']) ?>" name="sender"></input>
-                <div class="btn-group" role="group" >        
-                    <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input> 
-                </div> 
-                </form>
-                -->
+                <?php endif ?>            
+                        
 
                 <?php if (isset($error)) : ?>
                     <p><?php echo htmlspecialchars($error); ?></p>
@@ -133,8 +123,5 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <?php endforeach ?>
         </div>
     </div>
-
-
 </body>
-
 </html>

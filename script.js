@@ -23,7 +23,7 @@ $(document).ready(function() {
    else
    {
     $.ajax({
-     url:'../Buddyapp/ajax/check_code.php',
+     url:'check_code.php',
      method:"POST",
      data:{code:code},
      success:function(data)
@@ -52,7 +52,7 @@ document.querySelector("#username").addEventListener("blur", function(){
       $("#username_response").show();
 
       $.ajax({
-         url: '../Buddyapp/ajax/checkusername.php',
+         url: 'checkusername.php',
          type: 'post',
          data: {userName:userName},
          success: function(response){
@@ -77,7 +77,7 @@ document.querySelector("#email").addEventListener("blur", function(){
     $("#email_response").show();
 
     $.ajax({
-       url: '../Buddyapp/ajax/checkemail.php',
+       url: 'checkemail.php',
        type: 'post',
        data: {email:email},
        success: function(response){
@@ -149,7 +149,7 @@ $(document).ready(function() {
           // console.log(signUp);
 
            $.ajax({
-               url: '../Buddyapp/ajax/checkpassword.php',
+               url: 'checkpassword.php',
                type: 'post',
                data: {
                    signUpCheck: signUp

@@ -1,8 +1,8 @@
 <?php
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/classes/Buddies.php");
 
+use \src\BeMyBuddy\SearchBuddy;
+
+spl_autoload_register();
 session_start();
 
 $succes1 = '';
@@ -13,7 +13,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     if (isset($_GET['searchName'])) {
         $searchField = $_GET['searchField'];
-        $searchName = UserManager::searchName($searchField);
+        $searchName = SearchBuddy::searchName($searchField);
 
         if (empty($_GET['searchField'])) {
             $error = "Vul een naam in";
@@ -29,16 +29,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_GET['searchBuddy'])) {
-        //$searchBuddy = new searchBuddy();
         $mainCourseInterest = $_GET['mainCourseInterest'];
         $schoolYear = $_GET['schoolYear'];
         $sportType = $_GET['sportType'];
         $goingOutType = $_GET['goingOutType'];
 
-        $searchBuddy = UserManager::searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType);
+        $searchBuddy = SearchBuddy::searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType);
 
         if (
             empty($_GET['mainCourseInterest']) && empty($_GET['schoolYear'])
@@ -56,18 +54,15 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 } else {
     header("Location: login.php");
 }
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy app | Search for a buddy</title>
 </head>
-
 <body>
+
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <form method="GET" action="">
@@ -100,13 +95,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <?php endif; ?>
     </div>
 
-
     <form method="GET" action="">
         <div class="form-group course-interests">
             <h3>Buddy zoeken via filter</h3>
             <label><b>Opleidingsinteresses</b></label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="mainCourseInterest" id="Frontend development" value="Frontend development">
+                <input class="form-check-input" type="radio" name="mainCourseInterest" id="Frontend development" value="Frontend development" checked>
                 <label class="form-check-label" for="exampleRadios1">Frontend development</label>
             </div>
             <div class="form-check">
@@ -122,11 +116,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="form-group">
             <label class="title"><b>Opleidingsjaar</b></label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="schoolYear" id="1 IMD" value="1 IMD">
-                <label class="form-check-label" for="exampleRadios1">1 IMD</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="schoolYear" id="2 IMD" value="2 IMD">
+                <input class="form-check-input" type="radio" name="schoolYear" id="2 IMD" value="2 IMD" checked>
                 <label class="form-check-label" for="exampleRadios2">2 IMD</label>
             </div>
             <div class="form-check">
@@ -138,7 +128,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="form-group">
             <label class="title"><b>Type sporter</b></label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="sportType" id="Waterrat" value="Waterrat">
+                <input class="form-check-input" type="radio" name="sportType" id="Waterrat" value="Waterrat" checked>
                 <label class="form-check-label" for="exampleRadios1">Waterrat</label>
             </div>
             <div class="form-check">
@@ -162,7 +152,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="form-group">
             <label class="title"><b>Uitgaanstype</b></label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="goingOutType" id="Party animal" value="Party animal">
+                <input class="form-check-input" type="radio" name="goingOutType" id="Party animal" value="Party animal" checked>
                 <label class="form-check-label" for="exampleRadios1">Party animal</label>
             </div>
             <div class="form-check">
@@ -196,6 +186,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
     <script src="js/autocomplete.js"></script>
-</body>
 
+</body>
 </html>

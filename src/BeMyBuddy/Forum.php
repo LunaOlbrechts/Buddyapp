@@ -1,6 +1,9 @@
 <?php
 
+namespace src\BeMyBuddy;
+
 use function PHPSTORM_META\type;
+use \PDO;
 
 class Forum
 {

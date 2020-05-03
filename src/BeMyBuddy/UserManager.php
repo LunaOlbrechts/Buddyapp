@@ -1,5 +1,9 @@
 <?php
 
+namespace src\BeMyBuddy;
+
+use \PDO;
+
 class UserManager
 {
     public static function save(User $user)
@@ -18,7 +22,7 @@ class UserManager
                 $results = $conn->query($sql);
 
                 if ($results->rowCount() > 0) {
-                    throw new Exception("Email is already used");
+                    throw new \Exception("Email is already used");
                 }
             }
 
@@ -28,7 +32,7 @@ class UserManager
             $domain = array_pop($tmp);
 
             if (!in_array($domain, $domainWhiteList)) {
-                throw new Exception("Username should end with @student.thomasmore.be");
+                throw new \Exception("Username should end with @student.thomasmore.be");
             }
 
             // insert query
@@ -186,7 +190,7 @@ class UserManager
 
             $result = $statement->execute();
         } else {
-            throw new Exception("Password is incorrect");
+            throw new \Exception("Password is incorrect");
         }
 
         return $result;
@@ -220,10 +224,10 @@ class UserManager
 
                 $result = $statement->execute();
             } else {
-                throw new Exception("Old Password is incorrect");
+                throw new \Exception("Old Password is incorrect");
             }
         } else {
-            throw new Exception("Reapated new password is not the same!");
+            throw new \Exception("Reapated new password is not the same!");
         }
     }
 
@@ -254,7 +258,7 @@ class UserManager
             $_SESSION['lastName'] = $lastName;
             header("Location:index.php");  //redirect moet in de frontend
         } else {
-            throw new Exception("Email & password don't match");
+            throw new \Exception("Email & password don't match");
         }
     }
 
@@ -383,122 +387,6 @@ class UserManager
         return $user2;
     }
 
-
-    public static function searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType)
-    {
-        $conn = Db::getConnection();
-
-        /*$mainCourseInterest = $searchBuddy->getMainCourseInterest();
-        $schoolYear = $searchBuddy->getSchoolYear();
-        $sportType = $searchBuddy->getSportType();
-        $goingOutType = $searchBuddy->getGoingOutType();*/
-
-        $statement = $conn->prepare("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
-        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
-
-        $statement->bindValue(':mainCourseInterest', $mainCourseInterest);
-        $statement->bindValue(':schoolYear', $schoolYear);
-        $statement->bindValue(':sportType', $sportType);
-        $statement->bindValue(':goingOutType', $goingOutType);
-
-        $statement->execute();
-
-        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $count;
-    }
-
-    /*$extra = "";
-
-        if (!empty($_POST['mainCourseInterest'])) {
-            $extra .= "AND mainCourseInterest = :mainCourseInterest";
-        } elseif (!empty($_POST['schoolYear'])) {
-            $extra .= " AND schoolYear = :schoolYear";
-        } elseif (!empty($_POST['sportType'])) {
-            $extra .= "AND sportType = :sportType";
-        } elseif (!empty($_POST['goingOutType'])) {
-            $extra .= "AND goingOutType = :goingOutType";
-        }
-        
-        $statement = "SELECT * FROM tl_user WHERE buddyType = 'wantToBeABuddy' . $extra";*/
-
-    //$query = $conn->prepare($statement);
-
-
-    /*if(isset($_POST['mainCourseInterest'])){
-            $mainCourseInterest = $_POST['mainCourseInterest'];
-        } elseif (isset($_POST['schoolYear'])){
-            $schoolYear = $_POST['schoolYear'];
-        } elseif (isset($_POST['sportType'])){
-            $sportType = $_POST['sportType'];
-        } elseif (isset($_POST['goingOutType'])){
-            $goingOutType = $_POST['goingOutType'];
-        }*/
-
-    /*if(isset($_POST['mainCourseInterest'])){
-            if($_POST['mainCourseInterest']){
-                $statement = "SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest) AND buddyType = 'wantToBeABuddy'";
-            } 
-        } elseif (isset($_POST['schoolYear'])){
-            if($_POST['schoolYear']){
-                $statement = "SELECT * FROM tl_user WHERE (schoolYear = :schoolYear) AND buddyType = 'wantToBeABuddy'";
-            }
-        } elseif (isset($_POST['sportType'])){
-            if($_POST['sportType']){
-                $statement = "SELECT * FROM tl_user WHERE (sportType = :sportType) AND buddyType = 'wantToBeABuddy'";
-            }
-        }*/
-
-    /*
-        $conn = Db::getConnection();
-
-        //Select users that have minimum one match with the current user filters 
-
-        $statement = $conn->prepare("SELECT * FROM tl_user WHERE firstName LIKE :%searchFirstName% OR lastName LIKE :%searchFirstName% OR city = :city OR mainCourseInterest = :mainCourseInterest
-        OR schoolYear = :schoolYear OR sportType = :sportType OR goingOutType = :goingOutType");
-
-        $statement->bindValue(":%searchFirstName%", $searchFirstName);
-        $statement->bindValue(":%searchFirstName%", $searchLastName);
-        $statement->bindValue(":city", $location);
-        $statement->bindValue(":mainCourseInterest", $mainCourseInterest);
-        $statement->bindValue(":schoolYear", $schoolYear);
-        $statement->bindValue(":sportType", $sportType);
-        $statement->bindValue(":goingOutType", $goingOutType);
-
-        $statement->execute();
-        $searchBuddy = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        return $searchBuddy;*/
-
-    public static function searchName($searchField)
-    {
-        $conn = Db::getConnection();
-
-        $statement = $conn->prepare("SELECT * FROM tl_user WHERE LOWER(firstName) LIKE LOWER(:name) OR LOWER(lastName) LIKE LOWER(:name)");
-
-        $statement->bindValue(':name', '%' . $searchField . '%');
-
-        $statement->execute();
-
-        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $count;
-    }
-
-    public static function autocompleteSearchName($input)
-    {
-        $conn = Db::getConnection();
-        $statement = ("SELECT Firstname, lastName FROM tl_user WHERE firstName LIKE :name OR lastName LIKE :name LIMIT 1");
-        $query = $conn->prepare($statement);
-        
-        $query->bindValue(':name', $input.'%');
-
-        $query->execute();
-        
-        $suggestion = $query->fetch(PDO::FETCH_ASSOC);
-
-        return $suggestion;
-    }
-    
-
     public static function numberOfUsersInDatabase()
     {
         $conn = Db::getConnection();
@@ -521,34 +409,5 @@ class UserManager
         $number_of_buddy_matches = $statement->fetchColumn();
 
         return $number_of_buddy_matches;
-    }
-
-    public static function findClass($searchField)
-    {
-        $conn = Db::getConnection();
-
-        $statement = $conn->prepare("SELECT * FROM tl_classfinder WHERE LOWER(classRoom) LIKE LOWER(:classRoom)");
-
-        $statement->bindValue(':classRoom', $searchField);
-
-        $statement->execute();
-
-        $count = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $count;
-    }
-
-    public static function autocompleteClass($searchClass)
-    {
-        $conn = Db::getConnection();
-
-        $statement = $conn->prepare("SELECT classRoom FROM tl_classfinder WHERE classRoom LIKE :classRoom");
-
-        $statement->bindValue(':classRoom', '%' .$searchClass . '%');
-
-        $statement->execute();
-
-        $autocomplete = $statement->fetch(PDO::FETCH_ASSOC);
-        return $autocomplete;
-
     }
 }

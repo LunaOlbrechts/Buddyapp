@@ -1,13 +1,14 @@
 <?php
 
-include_once(__DIR__ . "../../classes/Db.php");
+namespace src\BeMyBuddy;
+
+use \PDO;
 
 class Buddies
 {
     private $sender;
     private $receiver;
     private $denyMessage;
-
 
     // DO THE REQUEST   
     public static function sendRequest(Buddies $buddy)
@@ -21,7 +22,7 @@ class Buddies
         // $result = $statement->execute();
 
         if ($statement->execute()) {
-            throw new Exception("Buddy Request send!");
+            throw new \Exception("Buddy Request send!");
         }
 
         return $statement;
@@ -67,19 +68,24 @@ class Buddies
         if ($deleteStatement->execute()) {
             $sender = $_SESSION['user_id'];
             $receiver = $_SESSION['requested'];
-            $statement = $conn->prepare("INSERT INTO tl_buddies (user_one, user_two) VALUES ($sender, $receiver)");
+            $statement = $conn->prepare("INSERT INTO tl_buddies (user_one, user_two) VALUES (:sender, :receiver)");
+            $statement->bindValue(":sender", $sender);
+            $statement->bindValue(":receiver", $receiver);
             $statement->execute();
         }
     }
 
 
     // REFUSE BUDDY
-    public static function denyNoMessage()
+    public static function denyNoMessage($denied)
     {
         $conn = Db::getConnection();
-        $sender = $_SESSION['user_id'];
-        $receiver = $_SESSION['requested'];
-        $statement = $conn->prepare("INSERT INTO buddie_denied (sender, receiver, message) VALUES ($sender, $receiver, NULL)");
+        $sender = $denied->getSender();
+        $receiver = $denied->getReceiver();
+        $statement = $conn->prepare("INSERT INTO buddie_denied (sender, receiver, message) VALUES (:sender, :receiver, NULL)");
+        $statement->bindValue(":sender", $sender);
+        $statement->bindValue(":receiver", $receiver);
+        
 
         if ($statement->execute()) {
             $deleteStatement = $conn->prepare("DELETE FROM buddie_request WHERE receiver= '" . $_SESSION['user_id'] . "'");
@@ -87,13 +93,16 @@ class Buddies
         }
     }
 
-    public static function denyMessage($messageForDeny)
+    public static function denyMessage($denied)
     {
         $conn = Db::getConnection();
-        $sender = $_SESSION['user_id'];
-        $receiver = $_SESSION['requested'];
-        $denyMessage = $messageForDeny->getDenyMessage();
-        $statement = $conn->prepare("INSERT INTO buddie_denied (sender, receiver, message) VALUES ($sender, $receiver, $denyMessage)");
+        $sender = $denied->getSender();
+        $receiver = $denied->getReceiver();
+        $denyMessage = $denied->getDenyMessage();
+        $statement = $conn->prepare("INSERT INTO buddie_denied (sender, receiver, message) VALUES (:sender, :receiver, :denyMessage)");
+        $statement->bindValue(":sender", $sender);
+        $statement->bindValue(":receiver", $receiver);
+        $statement->bindValue(":denyMessage", $denyMessage);
 
         if ($statement->execute()) {
             $deleteStatement = $conn->prepare("DELETE FROM buddie_request WHERE receiver= '" . $_SESSION['user_id'] . "'");

@@ -1,15 +1,13 @@
 <?php
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
 
+use \src\BeMyBuddy\SearchClass;
+
+spl_autoload_register();
 session_start();
-
-//$searchField = $_GET['searchField'];
-//$replace_string = str_replace('.','',$searchField);
 
 if (isset($_GET['searchClass'])) {
     $searchField = trim($_GET['searchField'], " t.");
-    $searchClass = UserManager::findClass($searchField);
+    $searchClass = SearchClass::findClass($searchField);
 
     if (empty($searchField)) {
         $error = 'Vul een klaslokaal in';
@@ -28,18 +26,15 @@ if (isset($_GET['searchClass'])) {
         }
     }
 }
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy app | Lokaal vinder</title>
 </head>
-
 <body>
+
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <form method="GET" action="">
@@ -66,8 +61,6 @@ if (isset($_GET['searchClass'])) {
         <?php if (isset($error)) : ?>
             <p><?php echo $error; ?></p>
         <?php endif; ?>
-
-        <p><?php echo $class['classRoom']; ?> </p>
 
 
     </div>
