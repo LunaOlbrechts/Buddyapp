@@ -1,6 +1,7 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/SearchBuddy.php");
+
 session_start();
 
 $succes1 = '';
@@ -10,7 +11,7 @@ $succes2 = '';
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_GET['searchName'])) {
         $searchField = $_GET['searchField'];
-        $searchName = \src\BeMyBuddy\SearchBuddy::searchName($searchField);
+        $searchName = SearchBuddy::searchName($searchField);
 
         if (empty($_GET['searchField'])) {
             $error = "Vul een naam in";
@@ -33,7 +34,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $sportType = $_GET['sportType'];
         $goingOutType = $_GET['goingOutType'];
 
-        $searchBuddy = \src\BeMyBuddy\SearchBuddy::searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType);
+        $searchBuddy = SearchBuddy::searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType);
 
         if (
             empty($_GET['mainCourseInterest']) && empty($_GET['schoolYear'])

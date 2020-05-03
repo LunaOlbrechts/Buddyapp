@@ -1,17 +1,19 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Buddies.php");
+include_once(__DIR__ . "/classes/UserManager.php");
+
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    $number_of_users = \src\BeMyBuddy\UserManager::numberOfUsersInDatabase();
-    $number_of_buddy_matches = \src\BeMyBuddy\UserManager::numberOfBuddyMatches();
+    $number_of_users = UserManager::numberOfUsersInDatabase();
+    $number_of_buddy_matches = UserManager::numberOfBuddyMatches();
 
-    $currentUser = \src\BeMyBuddy\UserManager::getUserFromDatabase();
-    $matchedUsers = \src\BeMyBuddy\UserManager::matchUsersByFilters($currentUser);
-    $scoresOfMatchedUsers = \src\BeMyBuddy\UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
-    $denyMessage = \src\BeMyBuddy\Buddies::checkDenyMessage();
-    $denied = \src\BeMyBuddy\Buddies::printDenyMessage();
+    $currentUser = UserManager::getUserFromDatabase();
+    $matchedUsers = UserManager::matchUsersByFilters($currentUser);
+    $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
+    $denyMessage = Buddies::checkDenyMessage();
+    $denied = Buddies::printDenyMessage();
     //var_dump($currentUser);
 
     if (isset($_POST['chat']) && ($_POST['chat'])) {
@@ -29,7 +31,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     }
 
     if (isset($_POST['DeniedOK']) && ($_POST['DeniedOK'])) {
-        \src\BeMyBuddy\Buddies::deleteMessage();
+        Buddies::deleteMessage();
     }
 } else {
     header("Location: login.php");

@@ -1,13 +1,14 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Buddies.php");
+
 session_start();
 
 $id =  $_SESSION["user_id"];
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    $buddy = new \src\BeMyBuddy\Buddies();
-    $buddies = \src\BeMyBuddy\Buddies::findRequest();
+    $buddy = new Buddies();
+    $buddies = Buddies::findRequest();
     $deny = 0;
 
     if (isset($_POST['accept']) && ($_POST['accept'])) {
@@ -19,8 +20,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     // ACCEPT BUDDY REQUEST
     if (isset($_POST['accept']) && ($_POST['accept'])) {
-        $buddy = new \src\BeMyBuddy\Buddies();
-        \src\BeMyBuddy\Buddies::makeBuddy();
+        $buddy = new Buddies();
+        Buddies::makeBuddy();
         header("Location: index.php");
     }
 
@@ -33,20 +34,20 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     // DENY BUDDY REQUEST WITH REASON
     if (isset($_POST['goReason']) && !empty($_POST['messageDeny'])) {
-        $denied = new \src\BeMyBuddy\Buddies();
+        $denied = new Buddies();
         $denied->setSender($_SESSION['user_id']);
         $denied->setReceiver($_SESSION['requested']);
         $denied->setDenyMessage(htmlspecialchars($_POST['messageDeny']));
-        \src\BeMyBuddy\Buddies::denyMessage($denied);
+        Buddies::denyMessage($denied);
         header("Location: index.php");
     }
 
     // DENY BUDDY REQUEST WITH NO REASON
     if (isset($_POST['goNoReason']) && $_POST['goNoReason']) {
-        $denied = new \src\BeMyBuddy\Buddies();
+        $denied = new Buddies();
         $denied->setSender($_SESSION['user_id']);
         $denied->setReceiver($_SESSION['requested']);
-        \src\BeMyBuddy\Buddies::denyNoMessage($denied);
+        Buddies::denyNoMessage($denied);
         header("Location: index.php");
     }   
 }

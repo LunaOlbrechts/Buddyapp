@@ -1,6 +1,9 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Mail.php");
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/UserManager.php");
+
 session_start();
 
 if(isset($_GET['token']) && isset($_GET['email'])){
@@ -12,7 +15,7 @@ if (!$token || !$email) {
     header("Location: signup.php");
 }
 
-$result = \src\BeMyBuddy\Mail::matchToken($token, $email);
+$result = Mail::matchToken($token, $email);
 
 if ($result) {
     // check !empty post
@@ -20,7 +23,7 @@ if ($result) {
     if (!empty($_POST)) {
         // set properties and connect to save filter in the database 
         try {
-            $user = new \src\BeMyBuddy\User();
+            $user = new User();
             $user->setId($id);
             $user->setLocation($_POST['inputLocation']);
             $user->setMainCourseInterest($_POST['mainCourseInterest']);
@@ -29,7 +32,7 @@ if ($result) {
             $user->setGoingOutType($_POST['goingOutType']);
             $user->setBuddyType($_POST['buddyType']);
 
-            $result = \src\BeMyBuddy\UserManager::saveCompletedProfile($user);
+            $result = UserManager::saveCompletedProfile($user);
 
             if($result){
                 $_SESSION['logged_in'] =true;

@@ -1,9 +1,9 @@
 <?php 
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Emoji.php");
 
 if(!empty($_POST)){
-    $e = new \src\BeMyBuddy\Emoji();
+    $e = new Emoji();
     $e->setMessageId($_POST['id']);
     $e->setEmoji($_POST['emoji']);
 

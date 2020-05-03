@@ -1,7 +1,8 @@
 <?php
 
-namespace src;
-$currentUser = BeMyBuddy\UserManager::getUserFromDatabase();
+include_once(__DIR__ . "/../classes/UserManager.php");
+
+$currentUser = UserManager::getUserFromDatabase();
 
 ?>
 <!DOCTYPE html>

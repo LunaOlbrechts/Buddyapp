@@ -1,6 +1,8 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/UserManager.php");
+
 session_start();
 
 $id =  $_SESSION["user_id"];
@@ -9,13 +11,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_POST['updateDetails']) && $_POST['updateDetails']) {
         try {
             if (!empty($_POST['updateDetails'])) {
-                $user = new \src\BeMyBuddy\User();
+                $user = new User();
                 $user->setDescription($_POST['description']);
                 $user->setId($id);
 
-                \src\BeMyBuddy\UserManager::updateUserDetails($user);
+                UserManager::updateUserDetails($user);
 
-                $profileInformationSuccess = "Profiel informatie succesvol aangepast!";
+                $profileInformationSuccess = "Successfully updated your profile information!";
             }
         } catch (\Throwable $th) {
             $profileInformationError = $th->getMessage();
@@ -33,47 +35,47 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                 {
                     if ($size < 5000000) {
                         move_uploaded_file($temp, "uploads/" . $image_file); //move upload file temperory directory to your upload folder
-                        $user = new \src\BeMyBuddy\User();
+                        $user = new User();
                         $user->setProfilePicture("uploads/" . $image_file);
                         $user->setId($id);
-                        \src\BeMyBuddy\UserManager::updateUserProfilePicture($user);
-                        $ProfilePicturesuccess = "Profielfoto succesvol aangepast!";
+                        UserManager::updateUserProfilePicture($user);
+                        $ProfilePicturesuccess = "Your profile picture has been updated!";
                     } else {
-                        $ProfilePictureError = "De maximale bestandsgrootte is 5mb!"; //error message file extension
+                        $ProfilePictureError = "The max upload size is 5MB!"; //error message file extension
                     }
                 } else {
-                    $ProfilePictureError = "Enkel bestanden met extensie JPG , JPEG , PNG zijn toegelaten!"; //error message file extension
+                    $ProfilePictureError = "Only files with the extension JPG , JPEG , PNG are supported!"; //error message file extension
                 }
             } else {
-                $ProfilePictureError = "Geen afbeelding geselecteerd!";
+                $ProfilePictureError = "You need to upload a picture first!";
             }
         } catch (\Throwable $th) {
             $ProfilePictureError = $th->getMessage();
         }
     } else if (isset($_POST['updateEmail']) && $_POST['updateEmail']) {
         try {
-            $user = new \src\BeMyBuddy\User();
+            $user = new User();
             $user->setPasswordForVerification($_POST['passwordForEmailVerification']);
             $user->setEmail($_POST['email']);
             $user->setId($id);
 
-            \src\BeMyBuddy\UserManager::updateEmail($user);
+            UserManager::updateEmail($user);
 
-            $emailSuccess = "Email succesvol aangepast!";
+            $emailSuccess = "Your email has been updated";
         } catch (\Throwable $th) {
             $emailerror = $th->getMessage();
         }
     } else if (isset($_POST['updatePassword']) && $_POST['updatePassword']) {
         try {
-            $user = new \src\BeMyBuddy\User();
+            $user = new User();
             $user->setPasswordForVerification($_POST['oldPassword']);
             $user->setnewPassword($_POST['newPassword']);
             $user->setRepeatedNewPassword($_POST['reapeatNewPassword']);
             $user->setId($id);
 
-            \src\BeMyBuddy\UserManager::updatePassword($user);
+            UserManager::updatePassword($user);
 
-            $passwordSuccess = "Wachtwoord succesvol aangepast!";
+            $passwordSuccess = "Your password has been updated!";
         } catch (\Throwable $th) {
             $passworderror = $th->getMessage();
         }
@@ -82,7 +84,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-$userData = \src\BeMyBuddy\UserManager::getUserFromDatabase($id);
+$userData = UserManager::getUserFromDatabase($id);
 
 ?><!DOCTYPE html>
 <html lang="en">

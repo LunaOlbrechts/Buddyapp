@@ -1,30 +1,32 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Forum.php");
+include_once(__DIR__ . "/classes/UserManager.php");
+
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    $user = \src\BeMyBuddy\UserManager::getUserFromDatabase();
-    $questions = \src\BeMyBuddy\Forum::getQuestions();
-    $comments = \src\BeMyBuddy\Forum::getComments();
-    $pinned = \src\BeMyBuddy\Forum::getPinnedQuestion();
-    $votedComments = \src\BeMyBuddy\Forum::getVotedComments($_SESSION["user_id"]);
+    $user = UserManager::getUserFromDatabase();
+    $questions = Forum::getQuestions();
+    $comments = Forum::getComments();
+    $pinned = Forum::getPinnedQuestion();
+    $votedComments = Forum::getVotedComments($_SESSION["user_id"]);
 
     $username = $user[0]['userName'];
 
     if ($questions) {
         if (!empty($_POST['comment'])) {
             $comment = $_POST['comment'];
-            \src\BeMyBuddy\Forum::saveComment($comment, $username);
+            Forum::saveComment($comment, $username);
         }
         if (isset($_POST['pin']) && $_POST['pin'] == "on") {
-            $result = \src\BeMyBuddy\Forum::savePinnedQuestion();
+            $result = Forum::savePinnedQuestion();
         } else {
-            $notPinned = \src\BeMyBuddy\Forum::deletePinnedQuestion();
+            $notPinned = Forum::deletePinnedQuestion();
         }
     }
     if (!empty($_POST['postedQuestion'])) {
-        \src\BeMyBuddy\Forum::saveQuestion($_POST['postedQuestion'], $username);
+        Forum::saveQuestion($_POST['postedQuestion'], $username);
     }
 } else {
     header("Location: login.php");
@@ -136,7 +138,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                             <div class="collapse" id="collapse<?php echo htmlspecialchars($question["id"]) ?>">
                                                 <div class="card card-body">
                                                     <p><?php echo  htmlspecialchars($comment["userName"] . ": " . $comment["comment"]) ?></p>
-                                                    <?php if (in_array($comment["id"], $votedComments)) { ?>
+                                                    <?php if (isset($comment["id"], $votedComments)) { ?>
                                                         <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote on voted" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
                                                     <?php } else { ?>
                                                         <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
@@ -162,7 +164,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-    <script src="/js/vote.js"></script>
+    <script src="js/vote.js"></script>
 
 </body>
 </html>

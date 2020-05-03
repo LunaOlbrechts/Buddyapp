@@ -1,13 +1,14 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Forum.php");
+
 session_start();
 
 if(!empty($_POST)){
     $userId = $_SESSION["user_id"];
     $id = $_POST["id"];
-    \src\BeMyBuddy\Forum::upvote($id);
-    \src\BeMyBuddy\Forum::addVote($id, $userId);
+    Forum::upvote($id);
+    Forum::addVote($id, $userId);
 
     $response = [
         'status' => 'success',

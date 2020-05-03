@@ -1,6 +1,7 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Post.php");
+
 session_start();
 
 $userId = $_SESSION["user_id"];
@@ -8,7 +9,7 @@ $userId = $_SESSION["user_id"];
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_POST['addPost']) && $_POST['addPost']) {
 
-        $post = New \src\BeMyBuddy\Post();
+        $post = New Post();
         $post->setUserId($userId);
         $post->setTitle($_POST['title']);
         $post->setDescription($_POST['description']);
@@ -17,7 +18,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     }
 }
 
-$posts = \src\BeMyBuddy\Post::getAllPosts($userId);
+$posts = Post::getAllPosts($userId);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,9 +57,9 @@ $posts = \src\BeMyBuddy\Post::getAllPosts($userId);
         <div class="container m-0 p-0">
             <?php foreach ($posts as $post) : ?>
                 <div class="container mt-3 mb-5 p-0">
-                    <h2><?php echo htmlspecialchars($post['title'])?></h2>
-                    <p><?php echo htmlspecialchars($post['description'])?></p>
-                    <p><?php $date = date_create($post['posted_on']);  echo htmlspecialchars(date_format($date, 'd/m/Y')) ?></p>
+                    <h2><?php echo $post['title'] ?></h2>
+                    <p><?php echo $post['description'] ?></p>
+                    <p><?php $date = date_create($post['posted_on']);  echo date_format($date, 'd/m/Y') ?></p>
                 </div>
             <?php endforeach ?>
         </div>

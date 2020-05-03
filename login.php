@@ -1,6 +1,8 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/User.php");
+
 // make form log in user
 // check ih 
 // if user doesn't exist in db => message: "can't login user" of "mag niet leeg zijn" "geen geldig email"
@@ -20,13 +22,13 @@ if (!empty($_POST)) {
         try {
             
             // nieuwe instantie klasse User
-            $user = new \src\BeMyBuddy\User();
+            $user = new User();
             // stellen pw gelijk aan ingevulde veldje 'password'
             $user->setPasswordForVerification($_POST['password']);
             // stellen email gelijk aan ingevulde veldje 'email'
             $user->setEmail($_POST['email']);
             
-            $result = \src\BeMyBuddy\UserManager::logIn($user);
+            $result = UserManager::logIn($user);
         
         } catch (\Throwable $th) {
             $error = $th->getMessage();

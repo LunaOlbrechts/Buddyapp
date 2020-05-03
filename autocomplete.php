@@ -1,12 +1,12 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/../classes/UserManager.php");
 
 if (!empty($_POST)) {
 
     $input = $_POST['text'];
 
-    $result = \src\BeMyBuddy\SearchBuddy::autocompleteSearchName($input);
+    $result = SearchBuddy::autocompleteSearchName($input);
 
     $resp_body = $result ? [$result] : [];
     $response = [

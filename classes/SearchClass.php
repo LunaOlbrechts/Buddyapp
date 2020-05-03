@@ -1,8 +1,6 @@
 <?php
 
-namespace src\BeMyBuddy;
-
-use \PDO;
+include_once(__DIR__ . "/Db.php");
 
 class SearchClass
 {

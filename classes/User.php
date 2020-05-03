@@ -1,6 +1,6 @@
 <?php
 
-namespace src\BeMyBuddy;
+include_once(__DIR__ . "/Db.php");
 
 class User
 {

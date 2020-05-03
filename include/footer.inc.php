@@ -1,8 +1,8 @@
 <?php
 
-use \src\BeMyBuddy\Buddies;
-use \src\BeMyBuddy\UserManager;
-use \src\BeMyBuddy\Chat;
+include_once(__DIR__ . "/../classes/Buddies.php");
+include_once(__DIR__ . "/../classes/Chat.php");
+include_once(__DIR__ . "/../classes/UserManager.php");
 
 //Check if there needs to be displayed an unread message
 $receiverId = $_SESSION['user_id'];

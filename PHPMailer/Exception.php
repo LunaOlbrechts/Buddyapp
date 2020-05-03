@@ -1,5 +1,4 @@
 <?php
-namespace src\PHPMailer;
 
 /**
  * PHPMailer Exception class.

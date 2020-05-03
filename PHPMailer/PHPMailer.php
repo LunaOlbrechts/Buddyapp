@@ -19,7 +19,6 @@
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-namespace src\PHPMailer;
 
 /**
  * PHPMailer - PHP email creation and transport class.

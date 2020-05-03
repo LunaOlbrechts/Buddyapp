@@ -1,16 +1,18 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/Mail.php");
 
 if (!empty($_POST)) {
     try {
-        $user = new \src\BeMyBuddy\User();
+        $user = new User();
         $user->setEmail(htmlspecialchars($_POST['email']));
         $user->setFirstName(htmlspecialchars($_POST['firstName']));
         $user->setLastName(htmlspecialchars($_POST['lastName']));
         $user->setUserName(htmlspecialchars($_POST['userName']));
         $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
-        $id = \src\BeMyBuddy\UserManager::save($user);
+        $id = UserManager::save($user);
         
         if ($id) {
             session_start();
@@ -18,7 +20,7 @@ if (!empty($_POST)) {
             $_SESSION['first_name'] = $user->getFirstName();
             $_SESSION['email'] = $user->getEmail();
             $success = "Sign up completed!";
-            \src\BeMyBuddy\Mail::sendEmailSignup();
+            Mail::sendEmailSignup();
             header("Location: signup.mail.php");
         }             
     } catch (\Throwable $th) {

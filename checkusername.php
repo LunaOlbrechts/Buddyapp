@@ -1,11 +1,11 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Db.php");
 
 if (isset($_POST['userName'])) {
 
     $userName = $_POST['userName'];
-    $conn = \src\BeMyBuddy\Db::getConnection();
+    $conn = Db::getConnection();
     $sql = "SELECT * FROM tl_user WHERE userName='$userName'";
     $results = $conn->query($sql);
 

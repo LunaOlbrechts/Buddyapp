@@ -1,17 +1,20 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/UserManager.php");
+include_once(__DIR__ . "/classes/User.php");
+
 session_start();
 
 $id =  $_SESSION["user_id"];
 $user1;
 $user2;
 
+
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-    $user = new \src\BeMyBuddy\User;
+    $user = new User;
     $user->setId($id);
-    $user1 = \src\BeMyBuddy\Usermanager::matches1($user);
-    $user2 = \src\BeMyBuddy\Usermanager::matches2($user);       
+    $user1 = Usermanager::matches1($user);
+    $user2 = Usermanager::matches2($user);       
 } else {
     header("Location: login.php");
 }

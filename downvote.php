@@ -1,13 +1,14 @@
 <?php
 
-spl_autoload_register();
+include_once(__DIR__ . "/classes/Forum.php");
+
 session_start();
 
 if (!empty($_POST)) {
     $userId = $_SESSION["user_id"];
     $id = $_POST["id"];
-    \src\BeMyBuddy\Forum::downVote($id);
-    \src\BeMyBuddy\Forum::removeVote($id, $userId);
+    Forum::downVote($id);
+    Forum::removeVote($id, $userId);
 
     $response = [
         'status' => 'success',

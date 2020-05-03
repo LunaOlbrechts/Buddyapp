@@ -1,8 +1,7 @@
 <?php
 
-namespace src\BeMyBuddy;
+include_once(__DIR__ . "/Db.php");
 
-use \PDO;
 
 class UserManager
 {
