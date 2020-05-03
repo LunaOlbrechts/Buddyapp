@@ -98,11 +98,11 @@ if ($result) {
                     <div class="form-group">
                         <label class="form-title">Buddy</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="lookingForABuddy" name="buddyType" value="lookingForABuddy" checked>
+                            <input class="form-check-input" type="radio" id="lookingForABuddy" name="buddyType" value="Op zoek naar een buddy" checked>
                             <label class="form-check-label" for="lookingForABuddy">Ik ben op zoek naar een buddy</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="wantToBeABuddy" name="buddyType" value="wantToBeABuddy">
+                            <input class="form-check-input" type="radio" id="wantToBeABuddy" name="buddyType" value="Wil een buddy zijn">
                             <label class="form-check-label" for="isABuddy">Ik wil een buddy zijn</label>
                         </div>
                     </div>
