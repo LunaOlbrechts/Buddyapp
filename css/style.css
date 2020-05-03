@@ -27,8 +27,6 @@
    ======================
 */
 
-.login-form {}
-
 .email-input {
   border: 1px solid #7AD3BB !important;
 
@@ -192,8 +190,6 @@
   background-color: #327374 !important;
   border: none !important;
 }
-
-
 
 
 /* ======================
@@ -398,3 +394,9 @@ span {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+/* ======================
+          Signup
+   ======================
+*/
+

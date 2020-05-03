@@ -55,7 +55,7 @@ if (!empty($_POST)) {
 <body>
 
     <form action="" method="post" id="captch_form">
-        <div class="container mt-5 login-form">
+        <div class="container mt-5 login-form shadow-lg p-3 mb-5 bg-white rounded">
             <h2 form__title>Sign In</h2>
 
             <?php if (isset($error)) : ?>

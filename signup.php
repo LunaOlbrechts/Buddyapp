@@ -39,7 +39,7 @@ if (!empty($_POST)) {
 </head>
 <body>
 
-    <div class="container mt-5">
+    <div class="container mt-5 signup shadow-lg p-3 mb-5 bg-white rounded">
         <h2 form__title>Sign up</h2>
 
         <?php if (isset($error)) : ?>
@@ -57,15 +57,15 @@ if (!empty($_POST)) {
                 <input class="form-control" type="text" name="email" id="email" placeholder="Enter your e-mail">
                 <div id="email_response"></div>
             </div>
-
-            <div class="form-group">
-                <label for="firstname">First name:</label>
-                <input class="form-control" type="text" name="firstName" id="firstname" placeholder="Enter your first name">
-            </div>
-
-            <div class="form-group">
-                <label for="lastname">Last name:</label>
-                <input class="form-control" type="text" name="lastName" id="lastname" placeholder="Enter your last name">
+            <div class="form-row">
+                <div class="col">
+                    <label for="firstname">First name:</label>
+                    <input class="form-control" type="text" name="firstName" id="firstname" placeholder="Enter your first name">
+                </div>
+                <div class="col">
+                    <label for="lastname">Last name:</label>
+                    <input class="form-control" type="text" name="lastName" id="lastname" placeholder="Enter your last name">
+                </div>
             </div>
 
             <div class="form-group">
