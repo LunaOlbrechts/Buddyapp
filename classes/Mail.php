@@ -17,12 +17,12 @@ class Mail
 
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = "smtp.gmail.com";
+        $mail->Host = "mail.bemybuddy.be";
         $mail->SMTPAuth = true;
         $mail->Username = $fromEmail;
         $mail->Password = $password;
         $mail->setFrom($fromEmail, "IMD buddy");
-        $mail->Port = 587;
+        $mail->Port = 465;
         $mail->SMTPSecure = "ssl";
 
         return $mail;
