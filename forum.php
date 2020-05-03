@@ -119,7 +119,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo htmlspecialchars($question["id"]) ?>" aria-expanded="false" aria-controls="collapse<?php echo htmlspecialchars($question["id"]) ?>">
                                         Bekijk opmerkingen
                                     </button>
-
+                                    
+                                    <?php if (array_key_exists("admin", $user[0])): ?>
                                     <?php if ($user[0]['admin'] == 1) : ?>
                                         <form method="POST">
                                             <div class="form-check">
@@ -132,6 +133,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                                 <button type="submit" class="btn btn-primary">Bevesting pin</button>
                                             </div>
                                         </form>
+                                    <?php endif ?>
                                     <?php endif ?>
 
                                     <!-- php for each comments as comment-->
