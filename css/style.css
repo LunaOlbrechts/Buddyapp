@@ -400,3 +400,7 @@ span {
    ======================
 */
 
+.btn.btn-primary{
+  background-color: #7AD3BB !important;
+  border: none;
+}
