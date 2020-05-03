@@ -333,7 +333,7 @@ class PHPMailer
      * @var array
      */
     public $SMTPOptions = [];
-
+    
     /**
      * SMTP username.
      *

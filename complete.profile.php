@@ -6,18 +6,18 @@ include_once(__DIR__ . "/classes/UserManager.php");
 
 session_start();
 
-if(isset($_GET['token']) && isset($_GET['email'])){
-    $token = $_GET['token'];
-    $email = $_GET['email'];
-}
+// if(isset($_GET['token']) && isset($_GET['email'])){
+//     $token = $_GET['token'];
+//     $email = $_GET['email'];
+// }
 
-if (!$token || !$email) {
-    header("Location: signup.php");
-}
+// if (!$token || !$email) {
+//     header("Location: signup.php");
+// }
 
-$result = Mail::matchToken($token, $email);
+// $result = Mail::matchToken($token, $email);
 
-if ($result) {
+//if ($result) {
     // check !empty post
     $id = $_SESSION['user_id'];
     if (!empty($_POST)) {
@@ -44,10 +44,10 @@ if ($result) {
             $error = $th->getMessage();
         }
     }
-} else {
+//} else {
     // When there is no valid email the user will be redirected to the login page
-    header("Location: signup.php");
-}
+ //   header("Location: signup.php");
+//}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

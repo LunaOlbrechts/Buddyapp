@@ -1,8 +1,8 @@
 <?php
 
-include_once(__DIR__ . "/../PHPMailer/PHPMailer.php");
-include_once(__DIR__ . "/../PHPMailer/SMTP.php");
-include_once(__DIR__ . "/../PHPMailer/Exception.php");
+include_once(__DIR__ . "/../PHPMailer.php");
+include_once(__DIR__ . "/../SMTP.php");
+include_once(__DIR__ . "/../Exception.php");
 include_once(__DIR__ . "/SettingsEmail.php");
 include_once(__DIR__ . "/Db.php");
 
@@ -22,7 +22,7 @@ class Mail
         $mail->Username = $fromEmail;
         $mail->Password = $password;
         $mail->setFrom($fromEmail, "IMD buddy");
-        $mail->Port = "465";
+        $mail->Port = 587;
         $mail->SMTPSecure = "ssl";
 
         return $mail;
