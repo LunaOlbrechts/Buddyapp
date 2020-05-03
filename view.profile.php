@@ -73,8 +73,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <?php foreach ($userdata as $users) : ?>
             <div class="card">
                 <h2 class="card-title">Profiel van <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
-                <img class="card-img-top mx-auto" src="><?php echo ($users['profilePicture']) ?>" width="200" height="200" alt="profile picture">
-                <p class="card-text">Description: <?php echo htmlspecialchars($users['description']) ?></p>
+                <div style="background-image: url(<?php echo htmlspecialchars($users['profilePicture']) ?>); width: auto; height: 250px; background-size: cover; background-position: center" ;></div>                <p class="card-text">Description: <?php echo htmlspecialchars($users['description']) ?></p>
                 <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
                 <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
                 <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
@@ -99,8 +98,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                 <?php if ($haveRequestOrBuddy == 0) : ?>
                     <form method="POST" enctype="multipart/form-data">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
-                            <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
+                            <input type="hidden" value="<?php echo htmlspecialchars($users['firstName']) ?>" name="receiverName"></input>
+                            <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($users['id']) ?>" name="receiverId"></input>
                             <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
                         </div>
                     </form>
@@ -116,10 +115,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="container m-0 p-0">
             <?php foreach ($posts as $post) : ?>
                 <div class="container mt-3 mb-5 p-0">
-                    <h2><?php echo $post['title'] ?></h2>
-                    <p><?php echo $post['description'] ?></p>
+                    <h2><?php echo htmlspecialchars($post['title']) ?></h2>
+                    <p><?php echo htmlspecialchars($post['description']) ?></p>
                     <p><?php $date = date_create($post['posted_on']);
-                        echo date_format($date, 'd/m/Y') ?></p>
+                        echo htmlspecialchars(date_format($date, 'd/m/Y')) ?></p>
                 </div>
             <?php endforeach ?>
         </div>
