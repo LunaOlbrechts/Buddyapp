@@ -3,11 +3,22 @@
    ======================
 */
 
-*{
+* {
   font-weight: normal;
 }
 
-.navbar > a{
+
+/* ======================
+        Footer
+   ======================
+*/
+
+.request {
+  background-color: #327374;
+  border: none;
+}
+
+.navbar>a {
   color: black;
 }
 
@@ -16,22 +27,24 @@
    ======================
 */
 
-.login-form{
+.login-form {}
+
+.email-input {
+  border: 1px solid #7AD3BB !important;
 
 }
-.email-input{
-  border: 1px solid #7AD3BB !important ;
+
+.password-input {
+  border: 1px solid #7AD3BB !important;
 
 }
-.password-input{
-  border: 1px solid #7AD3BB !important ;
 
-}
-.login-btn{
+.login-btn {
   background-color: #7AD3BB !important;
   color: white !important;
 }
-.signup-btn{
+
+.signup-btn {
   color: #327374 !important;
 }
 
@@ -40,41 +53,47 @@
    ======================
 */
 
-.buddyProfile{
+.buddyProfile {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background: rgb(255, 255, 255);
- 
+
 }
-.form{
+
+.form {
   background-color: rgb(240, 236, 236);
   padding-top: 46px;
   border-radius: 0.5em;
   margin-top: 50px;
-  padding:20px;
+  padding: 20px;
   display: grid;
 }
-.title-complete-profile{
+
+.title-complete-profile {
   padding-bottom: 0.6em;
   text-align: center;
 }
-.alert{
+
+.alert {
   text-align: center !important;
 }
-.form-title{
+
+.form-title {
   padding-top: 0.8em;
   font-size: 1em;
   margin-bottom: 0.5em;
 }
-.btn{
+
+.btn {
   margin-top: 2.3em;
   display: flex !important;
   justify-content: center !important;
   width: 30%;
 }
-.btn-submit{
+
+.btn-submit {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -86,37 +105,44 @@
    ======================
 */
 
-.card-text.amount{
+.card-text.amount {
   margin-top: 20px;
   color: white;
   display: flex;
   justify-content: center;
 }
-.card-text.amount > div{
+
+.card-text.amount>div {
   width: 350px;
   text-align: center;
   border-radius: 3px;
 }
-.amount-students{
+
+.amount-students {
   background-color: #A9D7CC;
   border-radius: 3px;
 }
-.amount-students > p{
+
+.amount-students>p {
   padding: 10px;
 }
-.amount-buddies{
+
+.amount-buddies {
   background-color: #A9D7CC;
   border-radius: 3px;
 }
-.amount-buddies > p{
+
+.amount-buddies>p {
   padding: 10px;
 }
-.profileMatchesByFilters{
+
+.profileMatchesByFilters {
   background-color: #DEEDE5 !important;
   margin-left: 20px;
   margin-right: 20px;
 }
-.row-test{
+
+.row-test {
   display: flex !important;
   flex-direction: row !important;
   justify-content: center !important;
@@ -126,39 +152,48 @@
   margin-left: auto;
   margin-right: auto;
 }
-.col-sm-6{
+
+.col-sm-6 {
   display: flex;
   justify-content: center;
   height: 100% !important;
   width: unset !important;
   flex: unset !important;
 }
-.person-card{
+
+.person-card {
   height: 100% !important;
   border: 3px solid #A9D7CC !important;
   max-width: 300px;
   float: right;
 }
-.card-body > a{
+
+.card-body>a {
   text-decoration: none;
   color: black;
 }
-.card-title{
+
+.card-title {
   font-weight: bold !important;
 }
-.card-body > ul{
+
+.card-body>ul {
   text-decoration: none;
   list-style: none;
   display: inline !important;
   padding: 0;
 }
-.card-body > ul > li{
+
+.card-body>ul>li {
   display: inline !important;
 }
-.chat{
+
+.chat {
   background-color: #327374 !important;
   border: none !important;
 }
+
+
 
 
 /* ======================
@@ -201,12 +236,13 @@ span {
   font-weight: bold;
 }
 
-.container{
+.container {
   background-color: white !important;
   border: 1px solid #DEEDE5;
   border-radius: 4px;
 }
-.container-matches{
+
+.container-matches {
   margin-top: 3%;
   margin-left: 68px;
   margin-right: 68px;
@@ -216,7 +252,7 @@ span {
   padding-left: 10%;
 }
 
-.display-chat{
+.display-chat {
   height: 50vh;
   margin-bottom: 4%;
   overflow: auto;
@@ -224,33 +260,36 @@ span {
   border-bottom: 1px solid #25474E;
 }
 
-.message{
+.message {
   background-color: #DEEDE5;
-  color: rgb(255, 255, 255);;
+  color: rgb(255, 255, 255);
+  ;
   border-radius: 5px;
   padding: 5px;
   margin-bottom: 3%;
   width: auto;
 }
 
-.message > p{
+.message>p {
   background-color: #DEEDE5;
 }
 
-.profile-btn{
+.profile-btn {
   background-color: #7AD3BB;
   border: unset !important;
-  color: white;
+  border-radius: 3px !important;
+  text-decoration: none !important;
+  color: white !important;
   height: 50px;
 }
 
-.btn-buddy{
+.btn-buddy {
   background-color: #7AD3BB !important;
   border: unset !important;
   border-radius: 3px !important;
 }
 
-.send-message-btn{
+.send-message-btn {
   background-color: #327374 !important;
   border: unset !important;
   border-radius: 3px !important;
@@ -261,27 +300,27 @@ span {
    ======================
 */
 
-.search{
+.search {
   border: 3px solid #7AD3BB !important;
 }
 
-.title{
+.title {
   color: #25474E;
   margin-top: 20px;
 }
 
-.search-btn{
+.search-btn {
   background-color: #7AD3BB !important;
   color: white !important;
 }
 
-.search-name-btn{
+.search-name-btn {
   background-color: #7AD3BB !important;
   color: white !important;
 }
 
-.search-name-input{
-  border: 1px solid #7AD3BB !important ;
+.search-name-input {
+  border: 1px solid #7AD3BB !important;
 }
 
 /* ======================
@@ -299,12 +338,26 @@ span {
   background-position: 0 -25px;
 }
 
+.on {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 19px;
+  cursor: pointer;
+  background: url('http://i.stack.imgur.com/iqN2k.png');
+  background-position: 0 1px;
+}
+
 .voteNumber {
   display: inline;
 }
 
 .card-body {
   min-width: 300px;
+}
+
+.on{
+  background-position: 0 1px;
 }
 
 .btn {
@@ -317,4 +370,31 @@ span {
 
 .card {
   margin-bottom: 10px;
+}
+
+/* ======================
+      Notification
+   ======================
+*/
+
+.newMessages {
+  width: auto;
+  background-color: #7AD3BB;
+  position: fixed;
+  bottom: 0;
+  right: 100px;
+  color: white;
+}
+
+.newMessages p {
+  padding-left: 20px;
+}
+
+.newMessages p:first-of-type {
+  font-weight: 500;
+  background-color: #327374;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

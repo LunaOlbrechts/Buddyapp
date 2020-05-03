@@ -42,8 +42,7 @@ if ($result) {
     // When there is no valid email the user will be redirected to the login page
     header("Location: signup.php");
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

@@ -16,24 +16,22 @@ if (!empty($_POST)) {
         $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
         //echo $user->getPassword();
         $id = UserManager::save($user);
-
+        
         if ($id) {
+            session_start();
             $_SESSION['user_id'] = $id;
             $_SESSION['first_name'] = $user->getFirstName();
-            $success = "user saved!";
-            //   header("Location: complete.profile.php");
-        }
+            $_SESSION['email'] = $user->getEmail();
+            $success = "Sign up completed!";
+            header("Location: login.php");
+        }             
     } catch (\Throwable $th) {
         //throw error
         $error = $th->getMessage();
     }
 }
-
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,11 +39,9 @@ if (!empty($_POST)) {
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <title>Buddy app | Signup</title>
 </head>
-
 <body>
 
     <div class="container mt-5">
-
         <h2 form__title>Sign up</h2>
 
         <?php if (isset($error)) : ?>
@@ -58,7 +54,6 @@ if (!empty($_POST)) {
 
 
         <form action="" method="post">
-
             <div class="form-group">
                 <label for="email">E-mail:</label>
                 <input class="form-control" type="text" name="email" id="email" placeholder="Enter your e-mail">
@@ -103,13 +98,11 @@ if (!empty($_POST)) {
             <div>
                 <a href="login.php" class="signup-btn">Already have an account? Log in here</a>
             </div>
-
         </form>
-
     </div>
+
+    <script src="jquery-3.5.0.js"></script>
+    <script src="script.js"></script>
+
 </body>
-
-<script src="jquery-3.5.0.js"></script>
-<script src="script.js"></script>
-
 </html>

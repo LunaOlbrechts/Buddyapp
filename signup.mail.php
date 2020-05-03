@@ -1,7 +1,3 @@
-<?php 
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,13 +7,9 @@
     <title>Document</title>
 </head>
 <body>
-
     <div class="container mt-5">
-
         <h2 form__title>Register</h2>
         <h4>Er is een email verzonden, bevestig jouw email door op de link te klikken</h4>
-        
     </div>
-    
 </body>
 </html>

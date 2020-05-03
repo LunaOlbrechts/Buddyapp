@@ -85,26 +85,23 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-
 $userData = UserManager::getUserFromDatabase($user);
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Buddy app | Profiel</title>
+    <title>Buddy app | Profiel aanpasssen</title>
 </head>
-
 <body>
+
     <?php include_once("include/nav.inc.php"); ?>
+
     <div class="container mt-5">
         <h1>Profiel</h1>
-
+        <a href="/userFeed.php" class="btn btn-primary">Mijn posts</a>
         <?php foreach ($userData as $data) : ?>
             <div class="container mt-5 p-0">
                 <h2>Profielfoto</h2>
@@ -204,7 +201,8 @@ $userData = UserManager::getUserFromDatabase($user);
             </div>
         <?php endforeach; ?>
     </div>
-    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
-</body>
 
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
+
+</body>
 </html>

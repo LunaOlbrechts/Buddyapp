@@ -1,41 +1,26 @@
 <?php
 
-namespace src;
+use \src\BeMyBuddy\Buddies;
+use \src\BeMyBuddy\UserManager;
+use \src\BeMyBuddy\Chat;
 
 //Check if there needs to be displayed an unread message
 $receiverId = $_SESSION['user_id'];
-$unreadMessages = BeMyBuddy\Chat::checkForNotification($receiverId);
+$unreadMessages = Chat::checkForNotification($receiverId);
+$request = Buddies::checkRequest();
 ?>
-<style>
-    .newMessages{
-        width: auto;
-        background-color: #7AD3BB;
-        position: fixed;
-        bottom: 0;
-        right: 100px;
-        color: white;
-    }
-
-    .newMessages p{
-        padding-left: 20px;
-    }
-
-    .newMessages p:first-of-type{
-        font-weight: 500;
-        background-color: #327374;
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-</style>
 <footer>
     <div class="newMessages">
+        <?php if ($request == true) : ?>
+            <form method="POST">
+                <input type="submit" value="You got a buddy request!" name="request" class="request">
+            </form>
+        <?php endif ?>
         <!-- For each user that you have unread messages from !-->
         <?php foreach ($unreadMessages as $unreadMessage) {
             //Get user data en show name
             $id = $unreadMessage['senderId'];
-            $userdata = BeMyBuddy\UserManager::getUserFromDatabaseById($id)
+            $userdata = UserManager::getUserFromDatabaseById($id)
             ?>
             <?php foreach ($userdata as $data): ?>
                 <p>Nieuwe berichten van:</p>
@@ -44,5 +29,3 @@ $unreadMessages = BeMyBuddy\Chat::checkForNotification($receiverId);
         <?php } ?>
     </div>
 </footer>
-
-</html>

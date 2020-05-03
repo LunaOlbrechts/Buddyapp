@@ -1,16 +1,13 @@
 <?php
 
-use \src\BeMyBuddy\UserManager;
+use \src\BeMyBuddy\SearchClass;
 
 spl_autoload_register();
 session_start();
 
-//$searchField = $_GET['searchField'];
-//$replace_string = str_replace('.','',$searchField);
-
 if (isset($_GET['searchClass'])) {
     $searchField = trim($_GET['searchField'], " t.");
-    $searchClass = UserManager::findClass($searchField);
+    $searchClass = SearchClass::findClass($searchField);
 
     if (empty($searchField)) {
         $error = 'Vul een klaslokaal in';
@@ -29,18 +26,15 @@ if (isset($_GET['searchClass'])) {
         }
     }
 }
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy app | Lokaal vinder</title>
 </head>
-
 <body>
+
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <form method="GET" action="">
@@ -49,26 +43,36 @@ if (isset($_GET['searchClass'])) {
             <p>Geef hieronder een lokaal in om te zoeken naar een beschrijving</p>
             <div class="form-group">
                 <label for="class"><b>Geef een lokaal in (vb: Z3.04)</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Lokaal">
+                <input class="form-control" type="text" name="searchField" placeholder="Lokaal" id='searchClass' autocomplete="off">
+                <div><a href="?searchField=<?php echo $class['classRoom'];?>&searchClass=Zoek" id="autocompleteClass"></a></div>
             </div>
 
             <div class="form-group">
-                <input class="btn border" type="submit" value="Zoek" name='searchClass'>
+                <input class="btn border search-name-btn" type="submit" value="Zoek" name='searchClass'>
             </div>
         </div>
     </form>
 
-    <div class="container mt-5">
+    <div class="container mt-5 class-description">
         <?php if (isset($succes)) : ?>
-            <p><?php echo $succes; ?></p>
+            <p id="description"><?php echo $succes; ?></p>
         <?php endif; ?>
 
         <?php if (isset($error)) : ?>
             <p><?php echo $error; ?></p>
         <?php endif; ?>
 
+
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
+
+    <script src="js/autocompleteClass.js">
+    /*$("#autocompleteClass").on('click', function myFunction() {
+        document.querySelector('#description').innerHTML = '<div class="font-weight-bold">' + 'Lokaal: ' 
+        + htmlspecialchars($class['classRoom']) + '</div>' + '<div>' + htmlspecialchars($class['description']) + '</div>';
+    });*/
+    
+    </script>
 </body>
 
 </html>

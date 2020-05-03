@@ -25,9 +25,8 @@ $currentUser = BeMyBuddy\UserManager::getUserFromDatabase();
         <!--<a href="mylist.php"></a>-->
         <!--<a href="mylist.php"></a>-->
         <a href="search.php">Zoek een buddy</a>
-
         <a href="logout.php" class="navbar__logout">Hey <?php echo $currentUser[0]['firstName'] ?>, uitloggen?</a>
-        <a class="navbar-brand" href="profile.php">
+        <a class="navbar-brand" href="userFeed.php">
             <img src="<?php echo $currentUser[0]['profilePicture'] ?>" width="50" height="50" alt="profile picture">
         </a>
     </nav>

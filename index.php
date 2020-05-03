@@ -3,7 +3,6 @@
 use \src\BeMyBuddy\UserManager;
 use \src\BeMyBuddy\Buddies;
 
-
 spl_autoload_register();
 session_start();
 
@@ -14,7 +13,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $currentUser = UserManager::getUserFromDatabase();
     $matchedUsers = UserManager::matchUsersByFilters($currentUser);
     $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matchedUsers);
-    $request = Buddies::checkRequest();
     $denyMessage = Buddies::checkDenyMessage();
     $denied = Buddies::printDenyMessage();
     //var_dump($currentUser);
@@ -39,11 +37,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 } else {
     header("Location: login.php");
 }
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,15 +46,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <link rel="stylesheet" href="./css/style.css">
     <title>Buddy app | Home</title>
 </head>
-
 <body>
-    <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <?php if ($request == true) : ?>
-        <form method="POST">
-            <input type="submit" value="You got a buddy request!" name="request" class="btn btn-primary">
-        </form>
-    <?php endif ?>
+    <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <?php if ($denyMessage == true) : ?>
         <?php foreach ($denied as $deny) : ?>
@@ -74,8 +63,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <?php endforeach ?>
     <?php endif ?>
 
-    <?php // echo(json_encode($_SESSION)); 
-    ?>
     <div class="card-text amount">
         <div class="flex-amount">
             <div class="amount-students ml-5 mt-2">
@@ -99,7 +86,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                         <div class="card mb-3 person-card">
                             <div style="background-image: url(<?php echo htmlspecialchars($user['profilePicture']) ?>); height: 250px; background-size: cover; background-position: center" ;></div>
                             <div class="card-body">
-                                <a href="/view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
+                                <a href="view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
                                     <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
                                 </a>
                                 <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
@@ -113,6 +100,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                     <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
                                     <input type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
                                     <input type="submit" value="Chat" name="chat" class="btn btn-primary chat"></input>
+                                    <button class="profile-btn btn"><a  href="view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">Bekijk profiel</a></button>
                                 </form>
                             </div>
                         </div>
@@ -121,9 +109,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <?php endforeach ?>
         </div>
     </div>
-    <script src="script.js"></script>
 
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
-</body>
 
+    <script src="script.js"></script>
+
+</body>
 </html>

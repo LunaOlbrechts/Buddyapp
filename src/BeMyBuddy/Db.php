@@ -2,7 +2,7 @@
 
 namespace src\BeMyBuddy;
 
-use \PDO;
+use PDO;
 
     class Db {
 

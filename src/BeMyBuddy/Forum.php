@@ -146,5 +146,88 @@ class Forum
 
         return false;
     }
+
+    public static function downVote($id)
+    {
+        $conn = Db::getConnection();
+        
+        $statement = $conn->prepare("UPDATE tl_forum_comment set votes = votes - 1 WHERE id = :id");
+        $statement->bindValue(":id", $id);
+
+        $result = $statement->execute();
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function addVote($commentId, $userId)
+    {
+        $conn = Db::getConnection();
+        
+        $statement = $conn->prepare("INSERT INTO tl_votes (commentId, userId) VALUES (:commentId, :userId)");
+        $statement->bindValue(":commentId", $commentId);
+        $statement->bindValue(":userId", $userId);
+
+        $result = $statement->execute();
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function removeVote($commentId, $userId)
+    {
+        $conn = Db::getConnection();
+        
+        $statement = $conn->prepare("DELETE FROM tl_votes WHERE commentId = :commentId AND userId = :userId");
+        $statement->bindValue(":commentId", $commentId);
+        $statement->bindValue(":userId", $userId);
+
+        $result = $statement->execute();
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
+    // public static function addVote($commentId, $userId)
+    // {
+    //     $conn = Db::getConnection();
+        
+    //     $statement = $conn->prepare("INSERT INTO tl_votes (commentId, userId) VALUES (:commentId, :userId)");
+    //     $statement->bindValue(":commentId", $commentId);
+    //     $statement->bindValue(":userId", $userId);
+
+    //     $result = $statement->execute();
+
+    //     if ($result) {
+    //         return true;
+    //     }
+
+    //     return false;
+    // }
+
+    public static function getVotedComments($userId)
+    {
+        $conn = Db::getConnection();
+        
+        $statement = $conn->prepare("SELECT commentId FROM tl_votes WHERE userId = :userId");
+        $statement->bindValue(":userId", $userId);
+
+        $result = $statement->execute();
+        $votedComments = $statement->fetchAll(PDO::FETCH_COLUMN);
+
+        if ($result) {
+            return $votedComments;
+        }
+
+        return false;
+    }
     
 }

@@ -2,11 +2,18 @@
 
 use \src\BeMyBuddy\Buddies;
 use \src\BeMyBuddy\UserManager;
+use \src\BeMyBuddy\Post;
+use \src\BeMyBuddy\Mail;
+
 
 spl_autoload_register();
 session_start();
 
 $id =  $_SESSION["user_id"];
+
+$profileId = $_GET['id'];
+
+$posts = Post::getAllPosts($profileId);
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
@@ -36,7 +43,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $buddy->setSender($_SESSION['user_id']);
             $buddy->setReceiver($_GET['id']);
             Buddies::sendRequest($buddy);
-            //Mail::sendEmail();
+            Mail::sendEmailBuddyRequest();
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
@@ -50,8 +57,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         $currentuser = Buddies::displayBuddy($id);
     }
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -66,6 +72,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <?php foreach ($userdata as $users) : ?>
             <div class="card">
                 <h2 class="card-title">Profiel van <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
+                <img class="card-img-top mx-auto" src="><?php echo ($users['profilePicture']) ?>" width="200" height="200" alt="profile picture">
+                <p class="card-text">Description: <?php echo htmlspecialchars($users['description']) ?></p>
                 <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
                 <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
                 <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
@@ -80,18 +88,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     <?php foreach ($currentuser as $currentusers) : ?>
                         <p class="card-text">My buddy is: <?php echo htmlspecialchars($currentusers['firstName']) . " " . htmlspecialchars($currentusers['lastName']) ?></p>
                     <?php endforeach ?>
-                <?php endif ?>
-
-                <!--
-                    CHAT BUTTON
-
-                <form method="POST" enctype="multipart/form-data">
-                <input type="hidden" value="<?php echo htmlspecialchars($user['sender']) ?>" name="sender"></input>
-                <div class="btn-group" role="group" >        
-                    <input type="submit" value="Chat" name="chat" class="btn btn-primary mr-3"></input> 
-                </div> 
-                </form>
-                -->
+                <?php endif ?>            
+                        
 
                 <?php if (isset($error)) : ?>
                     <p><?php echo htmlspecialchars($error); ?></p>
@@ -110,7 +108,20 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <?php endforeach ?>
     </div>
 
-
+    <div class="container">
+        <?php foreach ($userdata as $users) : ?>
+            <h2>Posts van <?php echo htmlspecialchars($users['firstName']) ?> :</h2>
+        <?php endforeach ?>
+        <div class="container m-0 p-0">
+            <?php foreach ($posts as $post) : ?>
+                <div class="container mt-3 mb-5 p-0">
+                    <h2><?php echo $post['title'] ?></h2>
+                    <p><?php echo $post['description'] ?></p>
+                    <p><?php $date = date_create($post['posted_on']);
+                        echo date_format($date, 'd/m/Y') ?></p>
+                </div>
+            <?php endforeach ?>
+        </div>
+    </div>
 </body>
-
 </html>

@@ -4,7 +4,6 @@ use \src\BeMyBuddy\User;
 use \src\BeMyBuddy\UserManager;
 
 spl_autoload_register();
-
 // make form log in user
 // check ih 
 // if user doesn't exist in db => message: "can't login user" of "mag niet leeg zijn" "geen geldig email"
@@ -47,7 +46,6 @@ if (!empty($_POST)) {
 
 ?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,8 +53,8 @@ if (!empty($_POST)) {
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <title>Buddy app | Sign In</title>
 </head>
-
 <body>
+
     <form action="" method="post" id="captch_form">
         <div class="container mt-5 login-form">
             <h2 form__title>Sign In</h2>
@@ -102,9 +100,8 @@ if (!empty($_POST)) {
         </div>
     </form>
 
+    <script src="jquery-3.5.0.js"></script>
+    <script src="script.js"></script>
+
 </body>
-
-<script src="jquery-3.5.0.js"></script>
-<script src="script.js"></script>
-
 </html>

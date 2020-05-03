@@ -35,22 +35,24 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     // DENY BUDDY REQUEST WITH REASON
     if (isset($_POST['goReason']) && !empty($_POST['messageDeny'])) {
-        $messageForDeny = new Buddies();
-        $messageForDeny->setDenyMessage(htmlspecialchars($_POST['messageDeny']));
-        Buddies::denyMessage($messageForDeny);
+        $denied = new Buddies();
+        $denied->setSender($_SESSION['user_id']);
+        $denied->setReceiver($_SESSION['requested']);
+        $denied->setDenyMessage(htmlspecialchars($_POST['messageDeny']));
+        Buddies::denyMessage($denied);
         header("Location: index.php");
     }
 
     // DENY BUDDY REQUEST WITH NO REASON
     if (isset($_POST['goNoReason']) && $_POST['goNoReason']) {
-        Buddies::denyNoMessage();
+        $denied = new Buddies();
+        $denied->setSender($_SESSION['user_id']);
+        $denied->setReceiver($_SESSION['requested']);
+        Buddies::denyNoMessage($denied);
         header("Location: index.php");
     }   
-
 }
-  
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -60,8 +62,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <title>Buddy app | Request</title>
 </head>
 <body>
-    <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
+    <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
     <div class="card-group container mt-5">
 
@@ -71,16 +73,14 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     <?php echo htmlspecialchars($buddy["firstName"]) . " wants to be your buddy!"; ?>
                     <form method="GET" class="mx-auto"> 
 
-
                     <div class="btn-group" role="group" > 
-                        <button><a href="http://localhost/files/GitHub/Buddyapp/view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Profile</a>
+                        <button class="profile-btn btn"><a class="profile-btn" href="view.profile.php?id=<?php echo $buddy['sender']; ?>" class="collection__item">Bekijk profiel</a>
                     </div>
 
                     </form>
 
                     <form method="POST" class="mx-auto">
                         <input type="hidden" value="<?php echo htmlspecialchars($buddy['sender']) ?>" name="requested">
-
 
                         <div class="btn-group" role="group">
                             <input type="submit" value="Accept" name="accept" class="btn btn-success mr-3"></input>
@@ -92,7 +92,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
                 <?php if ($deny == true) : ?>
                     <form method="POST">
-                        <textarea name="messageDeny" class="form-control" placeholder="Give a reason why you denied this buddy request."></textarea>
+                        <input type="text" name="messageDeny" class="form-control" placeholder="Give a reason why you denied this buddy request."></input>
                     
                         <div class="btn-group" role="group" >        
                                 <input type="submit" value="Send reason" name="goReason" class="btn btn-info mr-3"></input>
@@ -102,11 +102,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                 <?php endif ?>
             <?php endforeach ?>
 
-
         </div>
-
     </div>
-    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
-</body>
 
+    <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
+
+</body>
 </html>

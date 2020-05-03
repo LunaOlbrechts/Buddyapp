@@ -3,24 +3,22 @@
 use \src\BeMyBuddy\UserManager;
 use \src\BeMyBuddy\User;
 
-    spl_autoload_register();
+spl_autoload_register();
+session_start();
 
-    session_start();
-    $id =  $_SESSION["user_id"];
-    $user1;
-    $user2;
-
-
-    if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-        $user = new User;
-        $user->setId($id);
-        $user1 = Usermanager::matches1($user);
-        $user2 = Usermanager::matches2($user);       
-    } else {
-        header("Location: login.php");
-    }
+$id =  $_SESSION["user_id"];
+$user1;
+$user2;
 
 
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    $user = new User;
+    $user->setId($id);
+    $user1 = Usermanager::matches1($user);
+    $user2 = Usermanager::matches2($user);       
+} else {
+    header("Location: login.php");
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
