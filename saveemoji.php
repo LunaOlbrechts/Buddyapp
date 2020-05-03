@@ -1,5 +1,8 @@
 <?php 
-include_once(__DIR__ . "/../classes/Emojis.php");
+
+use \src\BeMyBuddy\Emoji;
+
+spl_autoload_register();
 
     if(!empty($_POST)){
         $e = new Emoji();
@@ -17,4 +20,3 @@ include_once(__DIR__ . "/../classes/Emojis.php");
         header('Content-Type: application/json');
         echo json_encode($response);
     }
-?>

@@ -1,6 +1,9 @@
 <?php
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
+
+use \src\BeMyBuddy\User;
+use \src\BeMyBuddy\UserManager;
+
+spl_autoload_register();
 
 // make form log in user
 // check ih 

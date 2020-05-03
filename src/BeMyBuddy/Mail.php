@@ -1,13 +1,7 @@
 <?php
+namespace src\BeMyBuddy;
 
-use PHPMailer\PHPMailer\PHPMailer;
-
-include_once(__DIR__ . "/../PHPMailer/PHPMailer.php");
-include_once(__DIR__ . "/../PHPMailer/SMTP.php");
-include_once(__DIR__ . "/../PHPMailer/Exception.php");
-include_once(__DIR__ . "/SettingsEmail.php");
-include_once(__DIR__ . "/Db.php");
-
+use \src\PHPMailer\PHPMailer;
 
 
 class Mail

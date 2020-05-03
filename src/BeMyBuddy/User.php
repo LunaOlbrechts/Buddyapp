@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/Db.php");
+namespace src\BeMyBuddy;
 
 class User
 {
@@ -60,7 +60,7 @@ class User
     public function setFirstName($firstName)
     {
         if (empty($_POST['firstName'])) {
-            throw new Exception("Firstname cannot be empty");
+            throw new \Exception("Firstname cannot be empty");
         }
 
         $this->firstName = $firstName;
@@ -84,7 +84,7 @@ class User
     public function setLastName($lastName)
     {
         if (empty($_POST['lastName'])) {
-            throw new Exception("Lastname cannot be empty");
+            throw new \Exception("Lastname cannot be empty");
         }
 
         $this->lastName = $lastName;
@@ -110,7 +110,7 @@ class User
     {
 
         if (empty($_POST['userName'])) {
-            throw new Exception("Username cannot be empty");
+            throw new \Exception("Username cannot be empty");
         }
 
         $this->userName = $userName;
@@ -132,7 +132,7 @@ class User
     public function setEmail($email)
     {
         if (empty($_POST['email'])) {
-            throw new Exception("E-mail cannot be empty");
+            throw new \Exception("E-mail cannot be empty");
         }
 
         $this->email = $email;
@@ -156,10 +156,10 @@ class User
     public function setPassword($password)
     {
         if (empty($_POST['password'])) {
-            throw new Exception("Password cannot be empty");
+            throw new \Exception("Password cannot be empty");
         }
         if (isset($_POST['password']) && $_POST['password'] !== $_POST['passwordconf']) {
-            throw new Exception("Can't register you, the two passwords do not match");
+            throw new \Exception("Can't register you, the two passwords do not match");
         }
 
         $this->password = $password;
@@ -237,7 +237,7 @@ class User
         if (empty($location)) {
             $showError = true;
             $message = "Location can't be empty";
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 
         $this->location = $location;
@@ -263,7 +263,7 @@ class User
         if (empty($schoolYear)) {
             $showError = true;
             $message = "school year can't be empty";
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 
         $this->schoolYear = $schoolYear;
@@ -289,7 +289,7 @@ class User
         if (empty($sportType)) {
             $showError = true;
             $message = "sport type can't be empty";
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 
         $this->sportType = $sportType;
@@ -315,7 +315,7 @@ class User
         if (empty($mainCourseInterest)) {
             $showError = true;
             $message = "course intererest can't be empty";
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 
         $this->mainCourseInterest = $mainCourseInterest;
@@ -341,7 +341,7 @@ class User
         if (empty($goingOutType)) {
             $showError = true;
             $message = "going-out type can't be empty";
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 
         $this->goingOutType = $goingOutType;

@@ -1,7 +1,8 @@
 <?php
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
 
+use \src\BeMyBuddy\UserManager;
+
+spl_autoload_register();
 session_start();
 
 $succes1 = '';
@@ -193,7 +194,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     </div>
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
-    <script src="autocomplete.js"></script>
+    <script src="js/autocomplete.js"></script>
 </body>
 
 </html>

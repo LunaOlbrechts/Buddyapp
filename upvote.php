@@ -1,12 +1,12 @@
 <?php
 
-include_once(__DIR__ . "/../classes/Db.php");
-include_once(__DIR__ . "/../classes/Forum.php");
+use \src\BeMyBuddy\Forum;
 
+spl_autoload_register();
 session_start();
 
-if(!empty($_POST)){
-    
+if (!empty($_POST)) {
+
     $id = $_POST["id"];
     Forum::upvote($id);
 

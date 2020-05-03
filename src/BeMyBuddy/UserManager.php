@@ -1,5 +1,9 @@
 <?php
 
+namespace src\BeMyBuddy;
+
+use PDO;
+
 class UserManager
 {
     public static function save(User $user)
@@ -18,7 +22,7 @@ class UserManager
                 $results = $conn->query($sql);
 
                 if ($results->rowCount() > 0) {
-                    throw new Exception("Email is already used");
+                    throw new \Exception("Email is already used");
                 }
             }
 
@@ -28,7 +32,7 @@ class UserManager
             $domain = array_pop($tmp);
 
             if (!in_array($domain, $domainWhiteList)) {
-                throw new Exception("Username should end with @student.thomasmore.be");
+                throw new \Exception("Username should end with @student.thomasmore.be");
             }
 
             // insert query
@@ -186,7 +190,7 @@ class UserManager
 
             $result = $statement->execute();
         } else {
-            throw new Exception("Password is incorrect");
+            throw new \Exception("Password is incorrect");
         }
 
         return $result;
@@ -220,10 +224,10 @@ class UserManager
 
                 $result = $statement->execute();
             } else {
-                throw new Exception("Old Password is incorrect");
+                throw new \Exception("Old Password is incorrect");
             }
         } else {
-            throw new Exception("Reapated new password is not the same!");
+            throw new \Exception("Reapated new password is not the same!");
         }
     }
 
@@ -254,7 +258,7 @@ class UserManager
             $_SESSION['lastName'] = $lastName;
             header("Location:index.php");  //redirect moet in de frontend
         } else {
-            throw new Exception("Email & password don't match");
+            throw new \Exception("Email & password don't match");
         }
     }
 

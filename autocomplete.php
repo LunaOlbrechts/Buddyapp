@@ -1,17 +1,17 @@
-<?php 
+<?php
+spl_autoload_register();
 
-include_once(__DIR__ . "/../classes/UserManager.php");
-include_once(__DIR__ . "/../classes/Db.php");
+use \src\BeMyBuddy\UserManager;
 
 if (!empty($_POST)) {
 
     $input = $_POST['text'];
-    
+
     $result = UserManager::autocompleteSearchName($input);
 
     $resp_body = $result ? [$result] : [];
     $response = [
-        'status'=> "succes", 
+        'status' => "succes",
         'body' => $resp_body
     ];
 

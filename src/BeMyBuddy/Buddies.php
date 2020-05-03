@@ -1,13 +1,14 @@
 <?php
 
-include_once(__DIR__ . "../../classes/Db.php");
+namespace src\BeMyBuddy;
+
+use \PDO;
 
 class Buddies
 {
     private $sender;
     private $receiver;
     private $denyMessage;
-
 
     // DO THE REQUEST   
     public static function sendRequest(Buddies $buddy)
@@ -21,7 +22,7 @@ class Buddies
         // $result = $statement->execute();
 
         if ($statement->execute()) {
-            throw new Exception("Buddy Request send!");
+            throw new \Exception("Buddy Request send!");
         }
 
         return $statement;

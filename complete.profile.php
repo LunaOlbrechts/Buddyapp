@@ -1,8 +1,10 @@
 <?php
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/classes/Mail.php");
 
+use \src\BeMyBuddy\Mail;
+use \src\BeMyBuddy\User;
+use \src\BeMyBuddy\UserManager;
+
+spl_autoload_register();
 session_start();
 
 $token = array_key_exists('token', $GET) ? $_GET['token'] : null;

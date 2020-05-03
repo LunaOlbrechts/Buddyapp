@@ -1,8 +1,8 @@
 <?php
-include_once(__CLASS__ . "classes/User.php");
-include_once(__CLASS__ . "classes/UserManager.php");
 
-$currentUser = UserManager::getUserFromDatabase();
+namespace src;
+$currentUser = BeMyBuddy\UserManager::getUserFromDatabase();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

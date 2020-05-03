@@ -1,17 +1,14 @@
 <?php
 
-use PHPMailer\PHPMailer\PHPMailer;
+use \src\BeMyBuddy\Buddies;
+use \src\BeMyBuddy\Chat;
+use \src\BeMyBuddy\UserManager;
+use \src\BeMyBuddy\Mail;
 
+spl_autoload_register();
 session_start();
 
-include_once(__DIR__ . "/classes/Db.php");
-include_once(__DIR__ . "/classes/Chat.php");
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/classes/Buddies.php");
-
 $id =  $_SESSION["user_id"];
-include_once(__DIR__ . "/classes/Mail.php");
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $buddy = new Buddies();
@@ -39,7 +36,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $buddy->setSender($_SESSION['user_id']);
             $buddy->setReceiver($_SESSION['receiver_id']);
             Buddies::sendRequest($buddy);
-            //Mail::sendEmail();
+            Mail::sendEmailBuddyRequest();
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
@@ -108,7 +105,12 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
                     <p>
                         <?php echo htmlspecialchars($message['message']); ?>
                     </p>
-                    <div class="reaction"><?php echo htmlspecialchars($message['emoji']) ?></div>
+                    <div class="reaction">
+                        <?php
+                        if (isset($message["emoji"])) {
+                            echo htmlspecialchars($message['emoji']);
+                        }
+                        ?></div>
                     <ul class="emojis">
                         <li class="emoji">❤️</li>
                         <li class="emoji">😂</li>
@@ -137,7 +139,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="/js/emojiChat.js"></script>
+<script src="js/emojiChat.js"></script>
 
 <script>
     //Send message with AJAX
@@ -145,7 +147,7 @@ $scoresOfMatchedUsers = UserManager::getScoresOfMatchedUsers($currentUser, $matc
         let chat_message = $('#message').val();
 
         $.ajax({
-            url: 'ajax/sendMessage.php',
+            url: 'sendMessage.php',
             type: 'POST',
             data: {
                 chat_message: chat_message

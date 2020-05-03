@@ -1,9 +1,8 @@
 <?php
 
-include_once(__DIR__ . "../../classes/Db.php");
-include_once(__DIR__ . "/Db.php");
+namespace src\BeMyBuddy;
 
-// session_start();
+use \PDO;
 
 class Chat
 {

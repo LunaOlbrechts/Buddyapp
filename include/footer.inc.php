@@ -1,10 +1,10 @@
 <?php
-include_once(__DIR__ . "/../classes/Chat.php");
-include_once(__DIR__ . "/../classes/UserManager.php");
+
+namespace src;
 
 //Check if there needs to be displayed an unread message
 $receiverId = $_SESSION['user_id'];
-$unreadMessages = Chat::checkForNotification($receiverId);
+$unreadMessages = BeMyBuddy\Chat::checkForNotification($receiverId);
 ?>
 <style>
     .newMessages{
@@ -35,7 +35,7 @@ $unreadMessages = Chat::checkForNotification($receiverId);
         <?php foreach ($unreadMessages as $unreadMessage) {
             //Get user data en show name
             $id = $unreadMessage['senderId'];
-            $userdata = UserManager::getUserFromDatabaseById($id)
+            $userdata = BeMyBuddy\UserManager::getUserFromDatabaseById($id)
             ?>
             <?php foreach ($userdata as $data): ?>
                 <p>Nieuwe berichten van:</p>

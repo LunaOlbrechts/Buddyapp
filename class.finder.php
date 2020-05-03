@@ -1,7 +1,8 @@
 <?php
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/UserManager.php");
 
+use \src\BeMyBuddy\UserManager;
+
+spl_autoload_register();
 session_start();
 
 //$searchField = $_GET['searchField'];

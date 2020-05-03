@@ -1,10 +1,10 @@
 <?php
 
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/Forum.php");
-include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/classes/Buddies.php");
 
+use \src\BeMyBuddy\UserManager;
+use \src\BeMyBuddy\Forum;
+
+spl_autoload_register();
 session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
@@ -161,6 +161,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-    <script src="/js/vote.js"></script>
+    <script src="js/vote.js"></script>
 </body>
 </html>
