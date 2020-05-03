@@ -92,7 +92,6 @@ document.querySelector("#email").addEventListener("blur", function(){
  }
 
 });
-     
 
 
 $(document).ready(function() {
@@ -102,7 +101,6 @@ $(document).ready(function() {
    password.addEventListener('keyup', function() {
        checkPassword(password.value)
    })
-
 
    function checkPassword(password) {
        var strengthBar = document.getElementById('strength')
@@ -147,22 +145,19 @@ $(document).ready(function() {
        if (password != '') {
 
           // console.log(signUp);
-
            $.ajax({
-               url: 'checkpassword.php',
-               type: 'post',
-               data: {
-                   signUpCheck: signUp
-               },
-               success: function(result) {
-
+                url: 'checkpassword.php',
+                type: 'post',
+                data: {
+                    signUpCheck: signUp
+                },
+                success: function(result) {
                    if (result == "success") {
                        $('#btnSignUp').attr('disabled', false);
                    } else {
                        $('#btnSignUp').attr('disabled', 'disabled');
                    }
-
-               }
+                }
            });
        } else {
            $("#allowed").hide();

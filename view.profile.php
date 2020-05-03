@@ -13,9 +13,8 @@ $id =  $_SESSION["user_id"];
 
 $profileId = $_GET['id'];
 
-$posts = Post::getAllPosts($profileId);
-
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+    $posts = Post::getAllPosts($profileId);
     $buddy = new Buddies();
     $id = $_GET['id'];
     $otherId = $_SESSION["user_id"];
@@ -56,6 +55,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if ($haveBuddy == 1) {
         $currentuser = Buddies::displayBuddy($id);
     }
+} else {
+    header("Location: login.php");
 }
 ?><!DOCTYPE html>
 <html lang="en">

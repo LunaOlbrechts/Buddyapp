@@ -10,7 +10,6 @@ $succes2 = '';
 
 // Search for name in db 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
-
     if (isset($_GET['searchName'])) {
         $searchField = $_GET['searchField'];
         $searchName = SearchBuddy::searchName($searchField);
@@ -18,9 +17,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         if (empty($_GET['searchField'])) {
             $error = "Vul een naam in";
         } elseif (count($searchName) > 0) {
-                foreach ($searchName as $name) {
-                    $succes1 .= '<a href="view.profile.php?id=' . htmlspecialchars($name['id']) . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
-                }
+            foreach ($searchName as $name) {
+                $succes1 .= '<a href="view.profile.php?id=' . htmlspecialchars($name['id']) . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
+            }
         } else {
             $error = "Geen resultaten";
         }
@@ -54,13 +53,16 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 } else {
     header("Location: login.php");
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy app | Search for a buddy</title>
 </head>
+
 <body>
 
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
@@ -188,4 +190,5 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <script src="js/autocomplete.js"></script>
 
 </body>
+
 </html>

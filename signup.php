@@ -2,9 +2,9 @@
 
 use \src\BeMyBuddy\User;
 use \src\BeMyBuddy\UserManager;
+use \src\BeMyBuddy\Mail;
 
 spl_autoload_register();
-session_start();
 
 if (!empty($_POST)) {
     try {
@@ -14,7 +14,6 @@ if (!empty($_POST)) {
         $user->setLastName(htmlspecialchars($_POST['lastName']));
         $user->setUserName(htmlspecialchars($_POST['userName']));
         $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
-        //echo $user->getPassword();
         $id = UserManager::save($user);
         
         if ($id) {
@@ -23,7 +22,8 @@ if (!empty($_POST)) {
             $_SESSION['first_name'] = $user->getFirstName();
             $_SESSION['email'] = $user->getEmail();
             $success = "Sign up completed!";
-            header("Location: login.php");
+            Mail::sendEmailSignup();
+            header("Location: signup.mail.php");
         }             
     } catch (\Throwable $th) {
         //throw error
