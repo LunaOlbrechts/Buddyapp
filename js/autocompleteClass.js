@@ -9,7 +9,7 @@ document.querySelector('#searchClass').addEventListener("keyup", event => {
         let formData = new FormData();
         formData.append("text",input);
 
-        fetch('autocompleteclass.php', {
+        fetch('ajax/autocompleteclass.php', {
             method: "POST",
             body: formData
         }).then(response => response.json())

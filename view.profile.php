@@ -58,8 +58,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 }
 ?><!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+<head><meta charset="windows-1252">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy app | Profiel</title>
 </head>
@@ -69,18 +69,19 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     <div class="d-flex justify-content-center">
         <?php foreach ($userdata as $users) : ?>
-            <div class="card profile">
-                <h2 class="card-title"><b> <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></b></h2>
-                <img class="card-img-top mx-auto" src="><?php echo ($users['profilePicture']) ?>" width="200" height="200" alt="profile picture">
-                <p class="card-text"><b>Description:</b> <?php echo htmlspecialchars($users['description']) ?></p>
-                <p class="card-text"><b>Woonplaats:</b> <?php echo htmlspecialchars($users['city']) ?></p>
-                <p class="card-text"><b>opleidingsjaar:</b> <?php echo htmlspecialchars($users['schoolYear']) ?></p>
-                <p class="card-text"><b>opleidingsintresse:</b> <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
-                <p class="card-text"><b>Sport type:</b> <?php echo htmlspecialchars($users['sportType']) ?></p>
-                <p class="card-text"><b>Uitgaanstype:</b> <?php echo htmlspecialchars($users['goingOutType']) ?></p>
+            <div class="card">
+                <h2 class="card-title">Profiel van <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
+                <div style="background-image: url(<?php echo htmlspecialchars($users['profilePicture']) ?>); width: auto; height: 250px; background-size: cover; background-position: center" ;></div>
+                <p class="card-text">Description: <?php echo htmlspecialchars($users['description']) ?></p>
+                <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
+                <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
+                <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
+                <p class="card-text">Sport type: <?php echo htmlspecialchars($users['sportType']) ?></p>
+                <p class="card-text">Uitgaanstype: <?php echo htmlspecialchars($users['goingOutType']) ?></p>
                 <?php if ($haveBuddy == false) : ?>
-                    <p class="card-text"><b>Buddy:</b> <?php if($users['buddyType'] == "lookingForABuddy"){echo "Opzoek naar een buddy"; } else { echo "Ik wil een buddy zijn";}?></p>
+                    <p class="card-text">Buddy: <?php echo htmlspecialchars($users['buddyType']) ?></p>
                 <?php endif ?>
+
 
                 <?php if ($haveBuddy == true) : ?>
                     <?php foreach ($currentuser as $currentusers) : ?>
@@ -88,6 +89,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     <?php endforeach ?>
                 <?php endif ?>            
                         
+
                 <?php if (isset($error)) : ?>
                     <p><?php echo htmlspecialchars($error); ?></p>
                 <?php endif; ?>
@@ -97,7 +99,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <input type="hidden" value="<?php echo htmlspecialchars($user['firstName']) ?>" name="receiverName"></input>
                             <input id="receiver" type="hidden" value="<?php echo htmlspecialchars($user['user_id']) ?>" name="receiverId"></input>
-                            <input type="submit" value="Be my buddy" class="btn btn-success btn-buddy" name="buddyRequest"></input>
+                            <input type="submit" value="Be My Buddy" class="btn btn-success" name="buddyRequest"></input>
                         </div>
                     </form>
                 <?php endif ?>

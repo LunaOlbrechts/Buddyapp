@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/../classes/UserManager.php");
+include_once(__DIR__ . "/../classes/SearchBuddy.php");
 
 if (!empty($_POST)) {
 

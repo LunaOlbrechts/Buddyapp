@@ -1,7 +1,7 @@
 <?php
    
-include_once(__DIR__ . "/classes/UserManager.php");
-include_once(__DIR__ . "/classes/Db.php");
+include_once(__DIR__ . "/../classes/SearchClass.php");
+include_once(__DIR__ . "/../classes/Db.php");
 
 if (!empty($_POST)){
     

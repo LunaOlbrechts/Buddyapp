@@ -331,7 +331,7 @@ span {
   width: 40px;
   height: 19px;
   cursor: pointer;
-  background: url('http://i.stack.imgur.com/iqN2k.png');
+  background: url('https://i.stack.imgur.com/iqN2k.png');
   background-position: 0 -25px;
 }
 
@@ -341,7 +341,7 @@ span {
   width: 40px;
   height: 19px;
   cursor: pointer;
-  background: url('http://i.stack.imgur.com/iqN2k.png');
+  background: url('https://i.stack.imgur.com/iqN2k.png');
   background-position: 0 1px;
 }
 
@@ -419,12 +419,3 @@ span {
 */
 
 
-.card.profile{
-  margin-top: 40px !important;
-  min-width: 360px !important;
-  padding: 20px !important;
-}
-
-.profile.btn-buddy{
-  background-color: #7AD3BB !important;
-}

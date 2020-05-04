@@ -2,6 +2,7 @@
 
 
 use function PHPSTORM_META\type;
+include_once(__DIR__ . "/Db.php");
 
 class Forum
 {

@@ -72,7 +72,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Name" id="searchName">
+                <input class="form-control" type="text" name="searchField" placeholder="Name" id="searchName" autocomplete="off">
                 <div id="suggesstionBox"></div>
             </div>
 

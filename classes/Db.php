@@ -1,6 +1,6 @@
 <?php 
 
-include_once(__DIR__ . "../../settings/Settings.php");
+
 
     class Db {
 
@@ -9,7 +9,7 @@ include_once(__DIR__ . "../../settings/Settings.php");
         public static function getConnection(){
             
             if (self::$conn === null) {
-                self::$conn = new PDO('mysql:host=' . SETTINGS['db']['host'] . ';dbname=' . SETTINGS['db']['db'] . ';charset=utf8mb4' , SETTINGS['db']['user'], SETTINGS['db']['password']);
+                self::$conn = new PDO('mysql:host=localhost;dbname=bemybuddy_buddy_app', 'bemybuddy_buddy_app', 'JorisIsEenSlavendrijver');
                 return self::$conn;
             }
             else {

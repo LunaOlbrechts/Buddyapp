@@ -7,7 +7,7 @@ document.querySelector("#searchName").addEventListener("keyup", event => {
     let formData = new FormData();
     formData.append("text", input);
 
-    fetch('autocomplete.php', {
+    fetch('/ajax/autocomplete.php', {
         method: "POST",
         body: formData
     }).then(response => response.json())

@@ -142,7 +142,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                             <div class="collapse" id="collapse<?php echo htmlspecialchars($question["id"]) ?>">
                                                 <div class="card card-body">
                                                     <p><?php echo  htmlspecialchars($comment["userName"] . ": " . $comment["comment"]) ?></p>
-                                                    <?php if (isset($comment["id"], $votedComments)) { ?>
+                                                    <?php if (in_array($comment["id"], $votedComments)) { ?>
                                                         <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote on voted" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
                                                     <?php } else { ?>
                                                         <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
@@ -166,7 +166,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     <?php include_once(__DIR__ . "/include/footer.inc.php"); ?>
 
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="js/vote.js"></script>
 
