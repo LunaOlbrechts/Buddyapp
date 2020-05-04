@@ -17,7 +17,8 @@ class UserManager
 
                 $email = $user->getEmail();
                 $conn = Db::getConnection();
-                $sql = "SELECT * FROM tl_user WHERE email='$email'";
+                $sql = "SELECT * FROM tl_user WHERE email=':email'";
+                $sql->bindValue(":email", $email);
                 $results = $conn->query($sql);
 
                 if ($results->rowCount() > 0) {
