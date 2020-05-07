@@ -106,7 +106,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     </form>
                 <?php endforeach ?>
 
-                <h3>Questions</h3>
+                <h3>Vragen</h3>
                 <!-- php for each questions as question-->
                 <?php foreach ($questions as $question) : ?>
                     <!-- Questions cards-->
