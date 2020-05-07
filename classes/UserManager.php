@@ -16,12 +16,12 @@ class UserManager
             if (isset($_POST['email'])) {
 
                 $email = $user->getEmail();
-                $conn = Db::getConnection();
-                $sql = "SELECT * FROM tl_user WHERE email=':email'";
-                $sql->bindValue(":email", $email);
-                $results = $conn->query($sql);
+                $statement = $conn->prepare("SELECT * FROM tl_user WHERE email=:email");
+                $statement->bindValue(":email", $email);
+                $statement->execute();
+                $results = $statement->fetchColumn();
 
-                if ($results->rowCount() > 0) {
+                if (!empty($results)) {
                     throw new \Exception("Email is al in gebruik");
                 }
             }
