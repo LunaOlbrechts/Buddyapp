@@ -71,8 +71,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <h3>Zoek hier naar een buddy</h3>
 
             <div class="form-group">
-                <label for="name"><b>Name</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Name" id="searchName" autocomplete="off">
+                <label for="name"><b>Naam</b></label>
+                <input class="form-control" type="text" name="searchField" placeholder="Naam" id="searchName" autocomplete="off">
                 <div id="suggesstionBox"></div>
             </div>
 
