@@ -23,7 +23,7 @@ $(document).ready(function() {
    else
    {
     $.ajax({
-     url:'check_code.php',
+     url:'ajax/check_code.php',
      method:"POST",
      data:{code:code},
      success:function(data)
@@ -52,7 +52,7 @@ document.querySelector("#username").addEventListener("blur", function(){
       $("#username_response").show();
 
       $.ajax({
-         url: 'checkusername.php',
+         url: 'ajax/checkusername.php',
          type: 'post',
          data: {userName:userName},
          success: function(response){
@@ -77,7 +77,7 @@ document.querySelector("#email").addEventListener("blur", function(){
     $("#email_response").show();
 
     $.ajax({
-       url: 'checkemail.php',
+       url: 'ajax/checkemail.php',
        type: 'post',
        data: {email:email},
        success: function(response){
@@ -146,7 +146,7 @@ $(document).ready(function() {
 
           // console.log(signUp);
            $.ajax({
-                url: 'checkpassword.php',
+                url: 'ajax/checkpassword.php',
                 type: 'post',
                 data: {
                     signUpCheck: signUp

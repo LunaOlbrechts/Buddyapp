@@ -8,7 +8,7 @@ $(".vote").on("click", function () {
     if($(this).hasClass('voted')){
         if (click) {
             $.ajax({
-                url: 'upvote.php',
+                url: '/ajax/upvote.php',
                 type: 'POST',
                 data: {
                     id: id
@@ -45,7 +45,7 @@ $(".vote").on("click", function () {
             $(this).parent().find('.number').html($new);
 
             $.ajax({
-                url: 'downvote.php',
+                url: '/ajax/downvote.php',
                 type: 'POST',
                 data: {
                     id: id
@@ -56,7 +56,7 @@ $(".vote").on("click", function () {
             });
         }else{
             $.ajax({
-                url: 'upvote.php',
+                url: '/ajax/upvote.php',
                 type: 'POST',
                 data: {
                     id: id

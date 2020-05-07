@@ -106,7 +106,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     </form>
                 <?php endforeach ?>
 
-                <h3>Questions</h3>
+                <h3>Vragen</h3>
                 <!-- php for each questions as question-->
                 <?php foreach ($questions as $question) : ?>
                     <!-- Questions cards-->
@@ -152,7 +152,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                         <?php endif ?>
                                     <?php endforeach ?>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="" name="comment" placeholder="opmerking">
+                                        <input type="text" class="form-control" id="" name="comment" placeholder="Opmerking">
                                         <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
                                     </div>
                                 </div>

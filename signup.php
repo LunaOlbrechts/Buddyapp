@@ -54,7 +54,7 @@ if (!empty($_POST)) {
         <form action="" method="post">
             <div class="form-group">
                 <label for="email">E-mail:</label>
-                <input class="form-control" type="text" name="email" id="email" placeholder="Enter your e-mail">
+                <input class="form-control" type="text" name="email" id="email" placeholder="Geef je e-mail adres in">
                 <div id="email_response"></div>
             </div>
             <div class="form-row">
@@ -90,7 +90,7 @@ if (!empty($_POST)) {
             </div>
 
             <div class="form-group">
-                <input class='btn border login-btn' name='signup-btn' id='btnSignUp' type='submit' value='Sign me up'>
+                <input class='btn border login-btn' name='signup-btn' id='btnSignUp' type='submit' value='Registreer mij'>
             </div>
 
             <div>

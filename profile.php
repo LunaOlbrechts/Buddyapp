@@ -121,7 +121,7 @@ $userData = UserManager::getUserFromDatabase($id);
                         <label>Profielfoto aanpassen</label>
                         <input type="file" name="profilePicture" class="form-control" />
                     </div>
-                    <input class="btn btn-primary m-0" type="submit" value="Update profielfoto" name="updateProfilePicture">
+                    <input class="btn btn-primary m-0" type="submit" value="Profielfoto wijzigen" name="updateProfilePicture">
                 </form>
             </div>
 
@@ -142,7 +142,7 @@ $userData = UserManager::getUserFromDatabase($id);
                         <label>Beschrijving</label>
                         <textarea name="description" class="form-control" rows="3"><?php echo htmlspecialchars($data['description']) ?></textarea>
                     </div>
-                    <input class="btn btn-primary m-0" type="submit" value="Update informatie" name="updateDetails">
+                    <input class="btn btn-primary m-0" type="submit" value="Informatie wijzigen" name="updateDetails">
                 </form>
             </div>
 
@@ -167,7 +167,7 @@ $userData = UserManager::getUserFromDatabase($id);
                         <label for="exampleInputPassword1">Vul wachtwoord in als verificatie</label>
                         <input name="passwordForEmailVerification" type="password" class="form-control" placeholder="Wachtwoord">
                     </div>
-                    <input class="btn btn-primary m-0" type="submit" value="Update Email" name="updateEmail">
+                    <input class="btn btn-primary m-0" type="submit" value="Email wijzigen" name="updateEmail">
                 </form>
             </div>
 
@@ -196,7 +196,7 @@ $userData = UserManager::getUserFromDatabase($id);
                         <label for="exampleInputPassword1">Herhaal nieuw wachtwoord</label>
                         <input name="reapeatNewPassword" type="password" class="form-control" placeholder="Herhaal nieuw wachtwoord">
                     </div>
-                    <input class="btn btn-primary m-0" type="submit" value="Change Password" name="updatePassword">
+                    <input class="btn btn-primary m-0" type="submit" value="Wachtwoord wijzigen" name="updatePassword">
                 </form>
             </div>
         <?php endforeach; ?>

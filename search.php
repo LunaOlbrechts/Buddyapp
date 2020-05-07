@@ -72,12 +72,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
             <div class="form-group">
                 <label for="name"><b>Naam</b></label>
-                <input class="form-control" type="text" name="searchField" placeholder="Name" id="searchName" autocomplete="off">
+                <input class="form-control" type="text" name="searchField" placeholder="Naam" id="searchName" autocomplete="off">
                 <div id="suggesstionBox"></div>
             </div>
 
             <div class="form-group">
-                <input class="btn border search-name-btn" type="submit" value="Search for a name" name='searchName'>
+                <input class="btn border search-name-btn" type="submit" value="Naam zoeken" name='searchName'>
             </div>
     </form>
 
@@ -166,7 +166,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         </div>
 
         <div>
-            <input class="btn border search-btn" type="submit" value="Search for a buddy" name='searchBuddy'>
+            <input class="btn border search-btn" type="submit" value="Buddy zoeken" name='searchBuddy'>
         </div>
     </form>
 
