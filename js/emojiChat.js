@@ -6,7 +6,7 @@ $(".emoji").on("click", function(e) {
     let id = message.data("messageid");
     
     $.ajax({
-       url: 'saveemoji.php',
+       url: '/ajax/saveemoji.php',
        type: 'POST',
        data: {
           emoji: clickedEmoji,
