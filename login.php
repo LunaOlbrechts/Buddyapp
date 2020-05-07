@@ -35,11 +35,11 @@ if (!empty($_POST)) {
         }
 
     } elseif (empty($email) && empty($password)) {
-        $error = "Email & password are required";
+        $error = "Email en wachtwoord zijn verplicht";
     } elseif (empty($email)) {
-        $error = "Email is required";
+        $error = "Email is verplicht";
     } elseif (empty($password)) {
-        $error = "Password is required";
+        $error = "Wachtwoord is verplicht";
     }
 }
 
@@ -50,13 +50,13 @@ if (!empty($_POST)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Buddy app | Sign In</title>
+    <title>Buddy app | inloggen</title>
 </head>
 <body>
 
     <form action="" method="post" id="captch_form">
         <div class="container mt-5 login-form shadow-lg p-3 mb-5 bg-white rounded">
-            <h2 form__title>Sign In</h2>
+            <h2 form__title>Inloggen</h2>
 
             <?php if (isset($error)) : ?>
                 <div class="mr-5">
@@ -68,16 +68,16 @@ if (!empty($_POST)) {
 
             <div class="form-group">
                 <label class="title" for="email">E-mail:</label>
-                <input class="form-control email-input" type="text" id='email' name='email' placeholder="Enter e-mail">
+                <input class="form-control email-input" type="text" id='email' name='email' placeholder="E-mail">
             </div>
             <div class="form-group">
-                <label class="title" for="password">Password:</label>
-                <input class="form-control password-input" type="password" id='password' name='password' placeholder="Enter password">
+                <label class="title" for="password">Wachtwoord:</label>
+                <input class="form-control password-input" type="password" id='password' name='password' placeholder="Wachtwoord">
             </div>
             
             <div class="form-group">
             <div class="form-group">
-                <label>Fill in the code to prove that you are not a bot!</label>
+                <label>Vul de code in als bevestiging:</label>
                 <div class="input-group">
                     <input class="form-control email-input" type="text" name="captcha_code" id="captcha_code" class="form-control" />
                     <span class="input-group-addon" style="padding:0">
@@ -94,7 +94,7 @@ if (!empty($_POST)) {
             </div>
 
             <div>
-                <a href="signup.php" class="signup-btn">Don't have an account yet? Sign up here</a>
+                <a href="signup.php" class="signup-btn">Nog geen account? Registreer hier</a>
             </div>
         </div>
     </form>

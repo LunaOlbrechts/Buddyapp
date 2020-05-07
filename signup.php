@@ -35,12 +35,12 @@ if (!empty($_POST)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
-    <title>Buddy app | Signup</title>
+    <title>Buddy app | Registreren</title>
 </head>
 <body>
 
     <div class="container mt-5 signup shadow-lg p-3 mb-5 bg-white rounded">
-        <h2 form__title>Sign up</h2>
+        <h2 form__title>Registreren</h2>
 
         <?php if (isset($error)) : ?>
             <div class="error mr-5"><?php echo htmlspecialchars($error); ?></div>
@@ -59,23 +59,23 @@ if (!empty($_POST)) {
             </div>
             <div class="form-row">
                 <div class="col">
-                    <label for="firstname">First name:</label>
-                    <input class="form-control" type="text" name="firstName" id="firstname" placeholder="Enter your first name">
+                    <label for="firstname">Voornaam:</label>
+                    <input class="form-control" type="text" name="firstName" id="firstname" placeholder="Voornaam">
                 </div>
                 <div class="col">
-                    <label for="lastname">Last name:</label>
-                    <input class="form-control" type="text" name="lastName" id="lastname" placeholder="Enter your last name">
+                    <label for="lastname">Achternaam:</label>
+                    <input class="form-control" type="text" name="lastName" id="lastname" placeholder="Achternaam">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input class="form-control" type="text" name="userName" id="username" placeholder="Enter your username">
+                <label for="username">Gebruikersnaam:</label>
+                <input class="form-control" type="text" name="userName" id="username" placeholder="Gebruikersnaam">
                 <div id="username_response"></div>
             </div>
 
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password">Wachtwoord:</label>
                 <input class="form-control" type="password" name="password" id="password">
             </div>
 
@@ -84,7 +84,7 @@ if (!empty($_POST)) {
             </div>
 
             <div class="form-group">
-                <label for="passwordconf">Password Confirm:</label>
+                <label for="passwordconf">Bevestig wachtwoord:</label>
                 <input class="form-control" type="password" name="passwordconf" id="passwordconf">
                 <div id="message"></div>
             </div>
@@ -94,7 +94,7 @@ if (!empty($_POST)) {
             </div>
 
             <div>
-                <a href="login.php" class="signup-btn">Already have an account? Log in here</a>
+                <a href="login.php" class="signup-btn">Heb je al een account? Log in hier.</a>
             </div>
         </form>
     </div>

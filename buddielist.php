@@ -23,12 +23,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buddy app | Buddy list</title>
+    <title>Buddy app | Buddy lijst</title>
 </head>
 <body>
     <?php include_once("include/nav.inc.php"); ?>
     <div class="container mt-5">
-        <h1 class="col-md-4">Buddy list!</h1>
+        <h1 class="col-md-4">Buddy lijst!</h1>
         
         <?php
        // $i = 0;

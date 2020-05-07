@@ -10,9 +10,9 @@ if (isset($_POST['email'])) {
     $results = $conn->query($sql);
 
         if ($results->rowCount() > 0) {
-            $response = "<span style='color: red;'>This email is already taken</span>";
+            $response = "<span style='color: red;'>Dit email is al in gebruik</span>";
         } else {
-            $response = "<span style='color: green;'>Available.</span>";
+            $response = "<span style='color: green;'>Beschikbaar.</span>";
         }
 
         echo $response;

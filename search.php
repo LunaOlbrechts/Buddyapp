@@ -59,7 +59,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buddy app | Search for a buddy</title>
+    <title>Buddy app | Een buddy zoeken</title>
 </head>
 
 <body>
@@ -71,7 +71,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <h3>Zoek hier naar een buddy</h3>
 
             <div class="form-group">
-                <label for="name"><b>Name</b></label>
+                <label for="name"><b>Naam</b></label>
                 <input class="form-control" type="text" name="searchField" placeholder="Name" id="searchName" autocomplete="off">
                 <div id="suggesstionBox"></div>
             </div>

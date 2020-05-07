@@ -11,7 +11,7 @@ if(!empty($_POST)){
 
     $response = [
         'status' => 'success',
-        'body' => 'test',
+        'body' => 'Added emoji',
         'message' => 'Emoji saved'
     ];
 

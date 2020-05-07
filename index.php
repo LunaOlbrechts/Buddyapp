@@ -52,8 +52,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <?php if ($denyMessage == true) : ?>
         <?php foreach ($denied as $deny) : ?>
             <div class="alert alert-danger" role="alert">
-                <p name="denyMessage">Your buddy request has been denied</p>
-                <p>Reason:</p>
+                <p name="denyMessage">Jouw buddy verzoek is afgewezen.</p>
+                <p>Reden:</p>
                 <?php echo htmlspecialchars($deny["message"]) ?>
                 <form method="POST">
                     <input type="submit" value="Ok" name="DeniedOK" class="btn-danger">
