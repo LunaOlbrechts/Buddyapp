@@ -19,10 +19,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $comment = $_POST['comment'];
             Forum::saveComment($comment, $username);
         }
-        if (isset($_POST['pin']) && $_POST['pin'] == "on") {
-            $result = Forum::savePinnedQuestion();
-        } else {
-            $notPinned = Forum::deletePinnedQuestion();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['pin']) && $_POST['pin'] == "on") {
+                $result = Forum::savePinnedQuestion();
+            } else {
+                $notPinned = Forum::deletePinnedQuestion();
+            }
         }
     }
     if (!empty($_POST['postedQuestion'])) {
@@ -32,8 +35,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     header("Location: login.php");
 }
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,6 +46,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <link rel="stylesheet" href="./css/style.css">
     <title>Buddy app | forum</title>
 </head>
+
 <body>
 
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
@@ -86,16 +92,16 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 <?php endif ?>
 
                                 <!-- php for each comments as comment-->
-                                <?php if(!empty($comments)): ?>
-                                <?php foreach ($comments as $comment) : ?>
-                                    <?php if ($comment['forum_question_id'] == $pinnedQuestion["id"]) : ?>
-                                        <div class="collapse" id="collapse<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>">
-                                            <div class="card card-body">
-                                                <?php echo  htmlspecialchars($comment["userName"]) . ": " . htmlspecialchars($comment["comment"]) ?>
+                                <?php if (!empty($comments)) : ?>
+                                    <?php foreach ($comments as $comment) : ?>
+                                        <?php if ($comment['forum_question_id'] == $pinnedQuestion["id"]) : ?>
+                                            <div class="collapse" id="collapse<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>">
+                                                <div class="card card-body">
+                                                    <?php echo  htmlspecialchars($comment["userName"]) . ": " . htmlspecialchars($comment["comment"]) ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php endif ?>
-                                <?php endforeach ?>
+                                        <?php endif ?>
+                                    <?php endforeach ?>
                                 <?php endif ?>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="" name="comment" placeholder="Opmerking">
@@ -119,21 +125,21 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?php echo htmlspecialchars($question["id"]) ?>" aria-expanded="false" aria-controls="collapse<?php echo htmlspecialchars($question["id"]) ?>">
                                         Bekijk opmerkingen
                                     </button>
-                                    
-                                    <?php if (array_key_exists("admin", $user[0])): ?>
-                                    <?php if ($user[0]['admin'] == 1) : ?>
-                                        <form method="POST">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="pin" 
-                                                    <?php if ($question['pinned'] == 1) : echo "checked";endif ?>>
-                                                <label class="form-check-label" for="pin">
-                                                    Pin
-                                                </label>
-                                                <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
-                                                <button type="submit" class="btn btn-primary">Bevesting pin</button>
-                                            </div>
-                                        </form>
-                                    <?php endif ?>
+
+                                    <?php if (array_key_exists("admin", $user[0])) : ?>
+                                        <?php if ($user[0]['admin'] == 1) : ?>
+                                            <form method="POST">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="pin" <?php if ($question['pinned'] == 1) : echo "checked";
+                                                                                                                endif ?>>
+                                                    <label class="form-check-label" for="pin">
+                                                        Pin
+                                                    </label>
+                                                    <input type="hidden" value="<?php echo htmlspecialchars($question["id"]) ?>" name="questionId"></input>
+                                                    <button type="submit" class="btn btn-primary">Bevesting pin</button>
+                                                </div>
+                                            </form>
+                                        <?php endif ?>
                                     <?php endif ?>
 
                                     <!-- php for each comments as comment-->
@@ -171,4 +177,5 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <script src="js/vote.js"></script>
 
 </body>
+
 </html>
