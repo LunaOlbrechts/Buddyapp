@@ -16,6 +16,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
         $post->save();
     }
+} else {
+    header("Location: login.php");
 }
 
 $posts = Post::getAllPosts($userId);
