@@ -40,7 +40,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             empty($_GET['mainCourseInterest']) && empty($_GET['schoolYear'])
             && empty($_GET['sportType']) && empty($_GET['goingOutType'])
         ) {
-            $error2 = "Check a filter";
+            $error2 = "Duid een filter aan";
         } elseif (count($searchBuddy) > 0) {
             foreach ($searchBuddy as $name) {
                 $succes2 .= '<a href="view.profile.php?id=' . htmlspecialchars($name['id']) . '" >' . '<div>' . htmlspecialchars($name['firstName']) . " " . htmlspecialchars($name['lastName']) . '</div>' . '</a>';
@@ -100,7 +100,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <h3>Buddy zoeken via filter</h3>
             <label><b>Opleidingsinteresses</b></label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="mainCourseInterest" id="Frontend development" value="Frontend development" checked>
+                <input class="form-check-input" type="radio" name="mainCourseInterest" id="Frontend development" value="Frontend development">
                 <label class="form-check-label" for="exampleRadios1">Frontend development</label>
             </div>
             <div class="form-check">
@@ -116,7 +116,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="form-group">
             <label class="title"><b>Opleidingsjaar</b></label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="schoolYear" id="2 IMD" value="2 IMD" checked>
+                <input class="form-check-input" type="radio" name="schoolYear" id="2 IMD" value="2 IMD">
                 <label class="form-check-label" for="exampleRadios2">2 IMD</label>
             </div>
             <div class="form-check">
@@ -128,7 +128,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="form-group">
             <label class="title"><b>Type sporter</b></label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="sportType" id="Waterrat" value="Waterrat" checked>
+                <input class="form-check-input" type="radio" name="sportType" id="Waterrat" value="Waterrat">
                 <label class="form-check-label" for="exampleRadios1">Waterrat</label>
             </div>
             <div class="form-check">
@@ -152,7 +152,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         <div class="form-group">
             <label class="title"><b>Uitgaanstype</b></label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="goingOutType" id="Party animal" value="Party animal" checked>
+                <input class="form-check-input" type="radio" name="goingOutType" id="Party animal" value="Party animal">
                 <label class="form-check-label" for="exampleRadios1">Party animal</label>
             </div>
             <div class="form-check">
