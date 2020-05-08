@@ -15,7 +15,8 @@ document.querySelector("#searchName").addEventListener("keyup", event => {
             sugesstionBox.style.display = "block";
             sugesstionBox.innerHTML = "";
             result.body.forEach(element => {
-                let suggestion = document.createElement('p');
+                let suggestion = document.createElement('a');
+                suggestion.setAttribute("href", "./view.profile.php?id="+element.id)
                 suggestion.innerHTML = element.Firstname + " " + element.lastName;
                 sugesstionBox.appendChild(suggestion);
             });

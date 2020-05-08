@@ -56,13 +56,17 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 } else {
     header("Location: login.php");
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="windows-1252">
-    
+
+<head>
+    <meta charset="windows-1252">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy app | Profiel</title>
 </head>
+
 <body>
 
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
@@ -87,8 +91,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                     <?php foreach ($currentuser as $currentusers) : ?>
                         <p class="card-text">My buddy is: <?php echo htmlspecialchars($currentusers['firstName']) . " " . htmlspecialchars($currentusers['lastName']) ?></p>
                     <?php endforeach ?>
-                <?php endif ?>            
-                        
+                <?php endif ?>
+
 
                 <?php if (isset($error)) : ?>
                     <p><?php echo htmlspecialchars($error); ?></p>
@@ -123,4 +127,5 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
         </div>
     </div>
 </body>
+
 </html>

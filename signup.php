@@ -13,7 +13,7 @@ if (!empty($_POST)) {
         $user->setUserName(htmlspecialchars($_POST['userName']));
         $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]));
         $id = UserManager::save($user);
-        
+
         if ($id) {
             session_start();
             $_SESSION['user_id'] = $id;
@@ -22,14 +22,16 @@ if (!empty($_POST)) {
             $success = "Sign up completed!";
             Mail::sendEmailSignup();
             header("Location: signup.mail.php");
-        }             
+        }
     } catch (\Throwable $th) {
         //throw error
         $error = $th->getMessage();
     }
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,6 +39,7 @@ if (!empty($_POST)) {
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <title>Buddy app | Registreren</title>
 </head>
+
 <body>
 
     <div class="container mt-5 signup shadow-lg p-3 mb-5 bg-white rounded">
@@ -103,4 +106,5 @@ if (!empty($_POST)) {
     <script src="script.js"></script>
 
 </body>
+
 </html>

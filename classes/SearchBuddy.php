@@ -107,7 +107,7 @@ class SearchBuddy
     public static function autocompleteSearchName($input)
     {
         $conn = Db::getConnection();
-        $statement = ("SELECT Firstname, lastName FROM tl_user WHERE firstName LIKE :name OR lastName LIKE :name LIMIT 1");
+        $statement = ("SELECT Firstname, lastName, id FROM tl_user WHERE firstName LIKE :name OR lastName LIKE :name LIMIT 1");
         $query = $conn->prepare($statement);
 
         $query->bindValue(':name', $input . '%');

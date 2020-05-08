@@ -9,7 +9,7 @@ $userId = $_SESSION["user_id"];
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     if (isset($_POST['addPost']) && $_POST['addPost']) {
 
-        $post = New Post();
+        $post = new Post();
         $post->setUserId($userId);
         $post->setTitle($_POST['title']);
         $post->setDescription($_POST['description']);
@@ -19,8 +19,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 }
 
 $posts = Post::getAllPosts($userId);
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +33,7 @@ $posts = Post::getAllPosts($userId);
         display: none;
     }
 </style>
+
 <body>
 
     <?php include_once("include/nav.inc.php"); ?>
@@ -59,12 +62,13 @@ $posts = Post::getAllPosts($userId);
                 <div class="container mt-3 mb-5 p-0">
                     <h2><?php echo $post['title'] ?></h2>
                     <p><?php echo $post['description'] ?></p>
-                    <p><?php $date = date_create($post['posted_on']);  echo date_format($date, 'd/m/Y') ?></p>
+                    <p><?php $date = date_create($post['posted_on']);
+                        echo date_format($date, 'd/m/Y') ?></p>
                 </div>
             <?php endforeach ?>
         </div>
     </div>
-    
+
     <?php include_once("include/footer.inc.php"); ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -84,4 +88,5 @@ $posts = Post::getAllPosts($userId);
     </script>
 
 </body>
+
 </html>
