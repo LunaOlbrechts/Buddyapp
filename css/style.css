@@ -389,6 +389,7 @@ span {
   bottom: 0;
   right: 100px;
   color: white;
+  border-radius: 3px !important;
 }
 
 .newMessages p {
@@ -402,6 +403,12 @@ span {
   padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.request{
+  color: white !important;
+  padding: 10px;
+  background-color: #BCDEF8 !important;
 }
 
 /* ======================

@@ -13,7 +13,7 @@ $request = Buddies::checkRequest();
     <div class="newMessages">
         <?php if ($request == true) : ?>
             <form method="POST">
-                <input type="submit" value="You got a buddy request!" name="request" class="request">
+                <input type="submit" value="Je hebt een buddy verzoek!" name="request" class="request">
             </form>
         <?php endif ?>
         <!-- For each user that you have unread messages from !-->
