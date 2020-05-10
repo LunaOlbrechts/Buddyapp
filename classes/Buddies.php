@@ -17,9 +17,9 @@ class Buddies
         $receiver = $buddy->getReceiver();
         $statement->bindValue(":sender", $sender);
         $statement->bindValue(":receiver", $receiver);
-        // $result = $statement->execute();
-
-        if ($statement->execute()) {
+        $result = $statement->execute();
+        print_r($statement->errorInfo());
+        if ($result) {
             throw new \Exception("Buddy Request send!");
         }
 

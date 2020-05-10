@@ -271,15 +271,6 @@ span {
   background-color: #DEEDE5;
 }
 
-.profile-btn {
-  background-color: #7AD3BB;
-  border: unset !important;
-  border-radius: 3px !important;
-  text-decoration: none !important;
-  color: white !important;
-  height: 50px;
-}
-
 .btn-buddy {
   background-color: #7AD3BB !important;
   border: unset !important;
@@ -414,8 +405,49 @@ span {
 }
 
 /* ======================
-          Signup
+          Request
    ======================
 */
 
+.card-request{
+border: none !important;
+}
 
+.profile-btn {
+  background-color: #7AD3BB;
+  border: unset !important;
+  border-radius: 3px !important;
+  text-decoration: none !important;
+  color: white !important;
+  height: 50px;
+  display: flex !important;
+  align-items: center !important;
+  padding: 30px;
+}
+
+.accept{
+  background-color: #7AD3BB !important;
+  border-radius: 3px !important;
+  border: none !important;
+}
+
+.deny{
+  border-radius: 3px !important;
+  border: none !important;
+}
+
+.container-request{
+  border: none !important;
+}
+
+.send-reason{
+  background-color: #7AD3BB !important;
+  border: none !important;
+  border-radius: 3px !important;
+}
+
+.no-reason{
+  background-color: #D75358 !important;
+  border: none !important;
+  border-radius: 3px !important;
+}

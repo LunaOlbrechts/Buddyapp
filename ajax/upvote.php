@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/classes/Forum.php");
+include_once(__DIR__ . "/../classes/Forum.php");
 
 session_start();
 

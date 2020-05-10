@@ -1,6 +1,6 @@
 <?php 
 
-include_once(__DIR__ . "/classes/Emoji.php");
+include_once(__DIR__ . "/../classes/Emoji.php");
 
 if(!empty($_POST)){
     $e = new Emoji();

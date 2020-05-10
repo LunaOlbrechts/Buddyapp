@@ -112,12 +112,11 @@ class Forum
         return false;
     }
 
-    public static function deletePinnedQuestion()
+    public static function deletePinnedQuestion($questionId)
     {
         $conn = Db::getConnection();
         $statement = $conn->prepare("UPDATE tl_forum_questions SET pinned = :pinned WHERE id = :id");
 
-        $questionId = $_POST['questionId'];
         $statement->bindValue(":id", $questionId);
         $statement->bindValue(":pinned", 0);
 

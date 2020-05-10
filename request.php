@@ -64,12 +64,12 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
     <?php include_once(__DIR__ . "/include/nav.inc.php"); ?>
 
-    <div class="card-group container mt-5">
+    <div class="card-group container mt-5 container-request">
 
-        <div class="card">
+        <div class="card card-request shadow  p-3 mb-5 bg-white rounded">
             <?php foreach ($buddies as $buddy) :  ?>
                 <?php if($deny == 0) : ?>
-                    <?php echo htmlspecialchars($buddy["firstName"]) . " wants to be your buddy!"; ?>
+                    <?php echo htmlspecialchars($buddy["firstName"]) . " wil jouw buddy zijn!"; ?>
                     <form method="GET" class="mx-auto"> 
 
                     <div class="btn-group" role="group" > 
@@ -82,8 +82,8 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                         <input type="hidden" value="<?php echo htmlspecialchars($buddy['sender']) ?>" name="requested">
 
                         <div class="btn-group" role="group">
-                            <input type="submit" value="Accept" name="accept" class="btn btn-success mr-3"></input>
-                            <input type="submit" value="Deny" name="deny" class="btn btn-danger mr-3"></input>
+                            <input type="submit" value="Accepteer" name="accept" class="btn btn-success mr-3 accept"></input>
+                            <input type="submit" value="Weiger" name="deny" class="btn btn-danger mr-3 deny"></input>
                         </div>
 
                     </form>
@@ -91,11 +91,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
                 <?php if ($deny == true) : ?>
                     <form method="POST">
-                        <input type="text" name="messageDeny" class="form-control" placeholder="Give a reason why you denied this buddy request."></input>
+                        <input type="text" name="messageDeny" class="form-control" placeholder="Geef een reden waarom je deze buddy verzoek geweigerd hebt."></input>
                     
                         <div class="btn-group" role="group" >        
-                                <input type="submit" value="Send reason" name="goReason" class="btn btn-info mr-3"></input>
-                                <input type="submit" value="No reason" name="goNoReason" class="btn btn-info mr-3"></input>
+                                <input type="submit" value="Stuur reden" name="goReason" class="btn btn-info mr-3 send-reason"></input>
+                                <input type="submit" value="Geen reden" name="goNoReason" class="btn btn-info mr-3 no-reason"></input>
                         </div>
                     </form>
                 <?php endif ?>

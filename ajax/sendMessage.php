@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/classes/Chat.php");
+include_once(__DIR__ . "/../classes/Chat.php");
 
 session_start();
 

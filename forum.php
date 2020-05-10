@@ -7,27 +7,30 @@ session_start();
 
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     $user = UserManager::getUserFromDatabase();
+
+    $username = $user[0]['userName'];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['pin']) && $_POST['pin'] == "on") {
+            $result = Forum::savePinnedQuestion();
+        } else if (!isset($_POST['pin'])){
+            if(isset($_POST['questionId'])){
+                $questionId = $_POST['questionId'];
+                $notPinned = Forum::deletePinnedQuestion($questionId);
+            }
+        }
+    }
+
+    if (!empty($_POST['comment'])) {
+        $comment = $_POST['comment'];
+        Forum::saveComment($comment, $username);
+    }
+
     $questions = Forum::getQuestions();
     $comments = Forum::getComments();
     $pinned = Forum::getPinnedQuestion();
     $votedComments = Forum::getVotedComments($_SESSION["user_id"]);
 
-    $username = $user[0]['userName'];
-
-    if ($questions) {
-        if (!empty($_POST['comment'])) {
-            $comment = $_POST['comment'];
-            Forum::saveComment($comment, $username);
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['pin']) && $_POST['pin'] == "on") {
-                $result = Forum::savePinnedQuestion();
-            } else {
-                $notPinned = Forum::deletePinnedQuestion();
-            }
-        }
-    }
     if (!empty($_POST['postedQuestion'])) {
         Forum::saveQuestion($_POST['postedQuestion'], $username);
     }
@@ -80,13 +83,13 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 <?php if ($user[0]['admin'] == 1) : ?>
                                     <form method="POST">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="pin" <?php if ($pinnedQuestion['pinned'] == 1) : echo "checked";
-                                                                                                        endif ?>>
+                                            <input class="faqCheckbox" type="checkbox" name="pin" <?php if ($pinnedQuestion['pinned'] == 1) : echo "checked";
+                                                                                                            endif ?>>
                                             <label class="form-check-label" for="pin">
                                                 Pin
                                             </label>
                                             <input type="hidden" value="<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>" name="questionId"></input>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Bevesting pin</button>
                                         </div>
                                     </form>
                                 <?php endif ?>
@@ -98,6 +101,11 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                             <div class="collapse" id="collapse<?php echo htmlspecialchars($pinnedQuestion["id"]) ?>">
                                                 <div class="card card-body">
                                                     <?php echo  htmlspecialchars($comment["userName"]) . ": " . htmlspecialchars($comment["comment"]) ?>
+                                                    <?php if (in_array($comment["id"], $votedComments)) { ?>
+                                                        <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote on voted" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
+                                                    <?php } else { ?>
+                                                        <p class="voteNumber"><span class="number"><?php echo htmlspecialchars($comment["votes"]) ?></span><span class="vote" data-id="<?php echo htmlspecialchars($comment["id"]) ?>"></span></p>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         <?php endif ?>
@@ -175,7 +183,6 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./css/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
     <script src="js/vote.js"></script>
-
 </body>
 
 </html>
