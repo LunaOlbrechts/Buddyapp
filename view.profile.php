@@ -73,10 +73,10 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             <div class="card">
                 <h2 class="card-title">Profiel van <?php echo htmlspecialchars($users['firstName']) . " " . htmlspecialchars($users['lastName']) ?></h2>
                 <div style="background-image: url(<?php echo htmlspecialchars($users['profilePicture']) ?>); width: auto; height: 250px; background-size: cover; background-position: center" ;></div>
-                <p class="card-text">Description: <?php echo htmlspecialchars($users['description']) ?></p>
+                <p class="card-text">Beschrijving: <?php echo htmlspecialchars($users['description']) ?></p>
                 <p class="card-text">Woonplaats: <?php echo htmlspecialchars($users['city']) ?></p>
-                <p class="card-text">opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
-                <p class="card-text">opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
+                <p class="card-text">Opleidingsjaar: <?php echo htmlspecialchars($users['schoolYear']) ?></p>
+                <p class="card-text">Opleidingsintresse: <?php echo htmlspecialchars($users['mainCourseInterest']) ?></p>
                 <p class="card-text">Sport type: <?php echo htmlspecialchars($users['sportType']) ?></p>
                 <p class="card-text">Uitgaanstype: <?php echo htmlspecialchars($users['goingOutType']) ?></p>
                 <?php if ($haveBuddy == false) : ?>

@@ -88,7 +88,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
                                 <a href="view.profile.php?id=<?php echo $user['user_id']; ?>" class="collection__item">
                                     <h5 class="card-title"><?php echo htmlspecialchars($user['firstName'] . " " . $user['lastName']) ?></h5>
                                 </a>
-                                <p class="card-text">jullie hebben deze kenmerken gemeen:</p>
+                                <p class="card-text">Jullie hebben deze kenmerken gemeen:</p>
                                 <ul>
                                     <?php foreach ($user['matches'] as $match) : ?>
                                         <?php if (trim($match) !== '') : ?><li><?php echo $match . ", " ?></li><?php endif ?>
