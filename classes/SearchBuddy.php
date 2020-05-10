@@ -9,13 +9,8 @@ class SearchBuddy
     {
         $conn = Db::getConnection();
 
-        /*$mainCourseInterest = $searchBuddy->getMainCourseInterest();
-        $schoolYear = $searchBuddy->getSchoolYear();
-        $sportType = $searchBuddy->getSportType();
-        $goingOutType = $searchBuddy->getGoingOutType();*/
-
         $statement = $conn->prepare("SELECT * FROM tl_user WHERE (mainCourseInterest = :mainCourseInterest OR  schoolYear = :schoolYear 
-        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'wantToBeABuddy'");
+        OR sportType = :sportType OR goingOutType = :goingOutType) AND buddyType = 'Wil een buddy zijn'");
 
         $statement->bindValue(':mainCourseInterest', $mainCourseInterest);
         $statement->bindValue(':schoolYear', $schoolYear);
