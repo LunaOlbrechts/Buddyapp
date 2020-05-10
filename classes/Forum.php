@@ -1,7 +1,7 @@
 <?php
 
-
 use function PHPSTORM_META\type;
+
 include_once(__DIR__ . "/Db.php");
 
 class Forum
@@ -25,8 +25,8 @@ class Forum
     {
         $conn = Db::getConnection();
         $statement = $conn->prepare("INSERT INTO tl_forum_questions (user_id, question, userName, pinned, date) VALUES (:user_id, :question, :userName, :pinned, :date)");
-        $today = strval(date("y-m-d"));     
-        
+        $today = strval(date("y-m-d"));
+
         $statement->bindValue(":user_id", $_SESSION['user_id']);
         $statement->bindValue(":userName", $username);
         $statement->bindValue(":question", $question);
@@ -132,7 +132,7 @@ class Forum
     public static function upvote($id)
     {
         $conn = Db::getConnection();
-        
+
         $statement = $conn->prepare("UPDATE tl_forum_comment set votes = votes + 1 WHERE id = :id");
         $statement->bindValue(":id", $id);
 
@@ -148,7 +148,7 @@ class Forum
     public static function downVote($id)
     {
         $conn = Db::getConnection();
-        
+
         $statement = $conn->prepare("UPDATE tl_forum_comment set votes = votes - 1 WHERE id = :id");
         $statement->bindValue(":id", $id);
 
@@ -164,7 +164,7 @@ class Forum
     public static function addVote($commentId, $userId)
     {
         $conn = Db::getConnection();
-        
+
         $statement = $conn->prepare("INSERT INTO tl_votes (commentId, userId) VALUES (:commentId, :userId)");
         $statement->bindValue(":commentId", $commentId);
         $statement->bindValue(":userId", $userId);
@@ -181,7 +181,7 @@ class Forum
     public static function removeVote($commentId, $userId)
     {
         $conn = Db::getConnection();
-        
+
         $statement = $conn->prepare("DELETE FROM tl_votes WHERE commentId = :commentId AND userId = :userId");
         $statement->bindValue(":commentId", $commentId);
         $statement->bindValue(":userId", $userId);
@@ -198,7 +198,7 @@ class Forum
     public static function getVotedComments($userId)
     {
         $conn = Db::getConnection();
-        
+
         $statement = $conn->prepare("SELECT commentId FROM tl_votes WHERE userId = :userId");
         $statement->bindValue(":userId", $userId);
 
@@ -211,5 +211,4 @@ class Forum
 
         return false;
     }
-    
 }

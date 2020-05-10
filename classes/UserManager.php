@@ -2,7 +2,6 @@
 
 include_once(__DIR__ . "/Db.php");
 
-
 class UserManager
 {
     public static function save(User $user)

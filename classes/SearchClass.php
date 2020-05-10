@@ -4,7 +4,6 @@ include_once(__DIR__ . "/Db.php");
 
 class SearchClass
 {
-
     public static function findClass($searchField)
     {
         $conn = Db::getConnection();

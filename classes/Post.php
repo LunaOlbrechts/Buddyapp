@@ -4,7 +4,6 @@ include_once(__DIR__ . "/Db.php");
 
 class Post
 {
-
     private $userId;
     private $title;
     private $description;
@@ -26,7 +25,8 @@ class Post
         return $result;
     }
 
-    public static function getAllPosts($userId){
+    public static function getAllPosts($userId)
+    {
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("SELECT * FROM tl_post WHERE (userId = '" . $userId . "') ORDER BY posted_on ASC");

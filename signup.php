@@ -28,10 +28,8 @@ if (!empty($_POST)) {
         $error = $th->getMessage();
     }
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,9 +37,8 @@ if (!empty($_POST)) {
     <link rel="stylesheet" href="./css/bootstrap-4.4.1-dist/css/bootstrap.css">
     <title>Buddy app | Registreren</title>
 </head>
-
 <body>
-
+    
     <div class="container mt-5 signup shadow-lg p-3 mb-5 bg-white rounded">
         <h2 form__title>Registreren</h2>
 

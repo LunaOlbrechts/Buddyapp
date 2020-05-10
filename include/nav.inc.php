@@ -4,10 +4,8 @@ include_once(__DIR__ . "/../classes/UserManager.php");
 
 $currentUser = UserManager::getUserFromDatabase();
 
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,9 +19,8 @@ $currentUser = UserManager::getUserFromDatabase();
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-    <title>Navigation</title>
+<title>Navigation</title>
 </head>
-
 <body>
     <nav class="navbar nav bg-light">
         <a href="index.php">Home</a>

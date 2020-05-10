@@ -429,7 +429,9 @@ border: none !important;
   height: 50px;
   display: flex !important;
   align-items: center !important;
-  padding: 30px;
+  padding: 26px;
+  display: flex !important;
+  align-self: center !important;
 }
 
 .accept{
@@ -457,4 +459,8 @@ border: none !important;
   background-color: #D75358 !important;
   border: none !important;
   border-radius: 3px !important;
+}
+
+.btn.profile-btn{
+  padding: 0;
 }

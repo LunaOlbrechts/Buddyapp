@@ -6,10 +6,8 @@ include_once(__DIR__ . "/../PHPMailer/Exception.php");
 include_once(__DIR__ . "/SettingsEmail.php");
 include_once(__DIR__ . "/Db.php");
 
-
 class Mail
 {
-
     public static function settings()
     {
         $password = SettingsEmail::PASSWORD;

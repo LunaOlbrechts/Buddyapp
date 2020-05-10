@@ -4,7 +4,6 @@ include_once(__DIR__ . "/Db.php");
 
 class SearchBuddy
 {
-
     public static function searchBuddyByFilter($mainCourseInterest, $schoolYear, $sportType, $goingOutType)
     {
         $conn = Db::getConnection();

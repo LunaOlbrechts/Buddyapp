@@ -18,7 +18,7 @@ class Buddies
         $statement->bindValue(":sender", $sender);
         $statement->bindValue(":receiver", $receiver);
         $result = $statement->execute();
-        print_r($statement->errorInfo());
+
         if ($result) {
             throw new \Exception("Buddy Request send!");
         }
@@ -83,7 +83,7 @@ class Buddies
         $statement = $conn->prepare("INSERT INTO buddie_denied (sender, receiver, message) VALUES (:sender, :receiver, NULL)");
         $statement->bindValue(":sender", $sender);
         $statement->bindValue(":receiver", $receiver);
-        
+
 
         if ($statement->execute()) {
             $deleteStatement = $conn->prepare("DELETE FROM buddie_request WHERE receiver= '" . $_SESSION['user_id'] . "'");
@@ -201,8 +201,6 @@ class Buddies
             return $currentuser;
         }
     }
-
-
 
     /**
      * Get the value of sender

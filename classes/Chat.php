@@ -10,7 +10,6 @@ class Chat
     private $receiverId;
     private $receiverName;
 
-
     public static function sendMessage(Chat $message)
     {
         $conn = Db::getConnection();

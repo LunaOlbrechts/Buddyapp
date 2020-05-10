@@ -34,7 +34,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
             $buddy = new Buddies();
             $buddy->setSender($_SESSION['user_id']);
             $buddy->setReceiver($_SESSION['receiver_id']);
-            var_dump($buddy);
+
             Buddies::sendRequest($buddy);
             Mail::sendEmailBuddyRequest();
         } catch (\Throwable $th) {
